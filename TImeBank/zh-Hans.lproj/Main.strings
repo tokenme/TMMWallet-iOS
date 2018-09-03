@@ -1,0 +1,66 @@
+
+/* Class = "UIButton"; normalTitle = "Reset Password"; ObjectID = "0VL-BZ-aiT"; */
+"0VL-BZ-aiT.normalTitle" = "重置密码";
+
+/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "2du-Al-HCo"; */
+"2du-Al-HCo.normalTitle" = "发送验证码";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "8Mk-eR-iBm"; */
+"8Mk-eR-iBm.normalTitle" = "注册";
+
+/* Class = "UILabel"; text = "Loaded by FirstViewController"; ObjectID = "A5M-7J-77L"; */
+"A5M-7J-77L.text" = "Loaded by FirstViewController";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "ACT-Q3-Q2c"; */
+"ACT-Q3-Q2c.normalTitle" = "登录";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "Ei6-99-j3p"; */
+"Ei6-99-j3p.title" = "注册";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "F0n-pl-Ng2"; */
+"F0n-pl-Ng2.normalTitle" = "注册";
+
+/* Class = "UILabel"; text = "First View"; ObjectID = "KQZ-1w-vlD"; */
+"KQZ-1w-vlD.text" = "First View";
+
+/* Class = "UIButton"; normalTitle = "ResetPassword"; ObjectID = "KmA-cN-0qe"; */
+"KmA-cN-0qe.normalTitle" = "重置密码";
+
+/* Class = "UILabel"; text = "Loaded by SecondViewController"; ObjectID = "NDk-cv-Gan"; */
+"NDk-cv-Gan.text" = "Loaded by SecondViewController";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "O7Y-wJ-L0T"; */
+"O7Y-wJ-L0T.title" = "注册";
+
+/* Class = "UITabBarItem"; title = "Tasks"; ObjectID = "Pps-xm-akW"; */
+"Pps-xm-akW.title" = "任务";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "Q9x-pf-0ws"; */
+"Q9x-pf-0ws.text" = "电话号码";
+
+/* Class = "UITabBarItem"; title = "Wallet"; ObjectID = "acW-dT-cKf"; */
+"acW-dT-cKf.title" = "钱包";
+
+/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "avc-Yd-Rio"; */
+"avc-Yd-Rio.normalTitle" = "发送验证码";
+
+/* Class = "UITabBarItem"; title = "App"; ObjectID = "cPa-gy-q4n"; */
+"cPa-gy-q4n.title" = "应用";
+
+/* Class = "UINavigationItem"; title = "登录"; ObjectID = "chn-14-80l"; */
+"chn-14-80l.title" = "登录";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "eKL-JC-fM4"; */
+"eKL-JC-fM4.normalTitle" = "登录";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "i2S-2i-1P2"; */
+"i2S-2i-1P2.normalTitle" = "登录";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "jRX-73-bNi"; */
+"jRX-73-bNi.text" = "电话号码";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "p0X-cz-g1d"; */
+"p0X-cz-g1d.text" = "电话号码";
+
+/* Class = "UILabel"; text = "Second View"; ObjectID = "zEq-FU-wV5"; */
+"zEq-FU-wV5.text" = "Second View";
