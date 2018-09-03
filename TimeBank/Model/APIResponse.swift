@@ -38,3 +38,19 @@ let dateTimeTransform = TransformOf<Date, String>(fromJSON: { (value: String?) -
     }
     return nil
 })
+
+let decimalTransform = TransformOf<NSDecimalNumber, String>(fromJSON: { (value: String?) -> NSDecimalNumber? in
+    if let value = value {
+        return NSDecimalNumber.init(string: value)
+    }
+    return nil
+}, toJSON: { (value: NSDecimalNumber?) -> String? in
+    if let value = value {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 9
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        return formatter.string(from: value)
+    }
+    return nil
+})

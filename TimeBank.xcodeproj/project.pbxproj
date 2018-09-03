@@ -12,6 +12,11 @@
 		1D151E64213D03FC007C87DD /* i18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E63213D03FC007C87DD /* i18n.swift */; };
 		1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E65213D0775007C87DD /* TMMDeviceService.swift */; };
 		1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */; };
+		1D151E6F213D3161007C87DD /* APIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E6E213D3161007C87DD /* APIDevice.swift */; };
+		1D151E71213D3995007C87DD /* NSDecimalNumber+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E70213D3995007C87DD /* NSDecimalNumber+Utils.swift */; };
+		1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E74213D463D007C87DD /* DeviceTableViewCell.swift */; };
+		1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D151E75213D463D007C87DD /* DeviceTableViewCell.xib */; };
+		1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E78213D5434007C87DD /* Time+Utils.swift */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -67,6 +72,11 @@
 		1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		1D151E6B213D1450007C87DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		1D151E6D213D146E007C87DD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		1D151E6E213D3161007C87DD /* APIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDevice.swift; sourceTree = "<group>"; };
+		1D151E70213D3995007C87DD /* NSDecimalNumber+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Utils.swift"; sourceTree = "<group>"; };
+		1D151E74213D463D007C87DD /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
+		1D151E75213D463D007C87DD /* DeviceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceTableViewCell.xib; sourceTree = "<group>"; };
+		1D151E78213D5434007C87DD /* Time+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Time+Utils.swift"; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -126,6 +136,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D151E72213D460E007C87DD /* WalletViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */,
+				1D151E73213D4623007C87DD /* Cell */,
+			);
+			path = WalletViewController;
+			sourceTree = "<group>";
+		};
+		1D151E73213D4623007C87DD /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D151E74213D463D007C87DD /* DeviceTableViewCell.swift */,
+				1D151E75213D463D007C87DD /* DeviceTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,7 +169,7 @@
 		1D3441BD213CF66800B8E157 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */,
+				1D151E72213D460E007C87DD /* WalletViewController */,
 				1D36D9A2213CED5E0002EDBF /* AppsViewController.swift */,
 				1D3441AA213CF39600B8E157 /* TasksViewController.swift */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
@@ -169,6 +197,7 @@
 				1D3441CB213CF78000B8E157 /* APIAccessToken.swift */,
 				1D3441CC213CF78000B8E157 /* APIResponse.swift */,
 				1D3441CA213CF78000B8E157 /* APIUser.swift */,
+				1D151E6E213D3161007C87DD /* APIDevice.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +215,8 @@
 				1D3441D4213CF94200B8E157 /* DefaultKeys.swift */,
 				1D3441D5213CF94200B8E157 /* UITableView+Utils.swift */,
 				1D3441E5213CFB1200B8E157 /* Moya+ObjectMapper.swift */,
+				1D151E70213D3995007C87DD /* NSDecimalNumber+Utils.swift */,
+				1D151E78213D5434007C87DD /* Time+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -334,6 +365,7 @@
 				1D151E5F213D03AE007C87DD /* Localizable.strings in Resources */,
 				1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */,
 				1D151E59213D0048007C87DD /* InfoPlist.strings in Resources */,
+				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D344200213CFBB500B8E157 /* Info.plist in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
 				1D3441DA213CF94F00B8E157 /* Default-568h@2x.png in Resources */,
@@ -437,6 +469,7 @@
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
+				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,
 				1D36D9A3213CED5E0002EDBF /* AppsViewController.swift in Sources */,
 				1D3441FC213CFBB500B8E157 /* SpinerLayer.swift in Sources */,
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
@@ -448,6 +481,7 @@
 				1D3441D8213CF94200B8E157 /* UITableView+Utils.swift in Sources */,
 				1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */,
 				1D3441D7213CF94200B8E157 /* DefaultKeys.swift in Sources */,
+				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */,
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
@@ -461,8 +495,10 @@
 				1D3441C7213CF74800B8E157 /* TMMBaseService.swift in Sources */,
 				1D3441F1213CFBA300B8E157 /* TweeAttributedTextField.swift in Sources */,
 				1D36D9A1213CED5E0002EDBF /* WalletViewController.swift in Sources */,
+				1D151E6F213D3161007C87DD /* APIDevice.swift in Sources */,
 				1D3441FD213CFBB500B8E157 /* TransitionButton.swift in Sources */,
 				1D3441E0213CF9BD00B8E157 /* UIScreen+Utils.swift in Sources */,
+				1D151E71213D3995007C87DD /* NSDecimalNumber+Utils.swift in Sources */,
 				1D3441FB213CFBB500B8E157 /* CustomTransitionViewController.swift in Sources */,
 				1D3441E2213CFA0600B8E157 /* UIColor+Utils.swift in Sources */,
 				1D3441FE213CFBB500B8E157 /* FadeTransition.swift in Sources */,

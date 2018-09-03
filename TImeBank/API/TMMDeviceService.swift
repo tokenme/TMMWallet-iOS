@@ -12,6 +12,7 @@ import Hydra
 
 enum TMMDeviceService {
     case bind(idfa: String)
+    case list()
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -27,24 +28,32 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .bind(_):
             return "/bind"
+        case .list():
+            return "/list"
         }
     }
     var method: Moya.Method {
         switch self {
         case .bind:
             return .post
+        case .list:
+            return .get
         }
     }
     var task: Task {
         switch self {
         case let .bind(idfa):
             return .requestParameters(parameters: ["idfa": idfa], encoding: JSONEncoding.default)
+        case .list():
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
         case .bind(_):
             return "ok".utf8Encoded
+        case .list():
+            return "[]".utf8Encoded
         }
     }
     var headers: [String: String]? {
@@ -71,6 +80,39 @@ extension TMMDeviceService {
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getDevices(provider: MoyaProvider<TMMDeviceService>) -> Promise<[APIDevice]> {
+        return Promise<[APIDevice]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .list()
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let devices: [APIDevice] = try response.mapArray(APIDevice.self)
+                        resolve(devices)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
                     }
                 case let .failure(error):
                     reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
