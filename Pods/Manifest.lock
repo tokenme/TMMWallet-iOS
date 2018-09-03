@@ -1,0 +1,121 @@
+PODS:
+  - Alamofire (4.7.3)
+  - CountryPickerView (2.1.1)
+  - GrandTime (1.3.0)
+  - HydraAsync (1.2.1)
+  - IQKeyboardManagerSwift (6.1.1)
+  - Kingfisher (4.8.1)
+  - KMNavigationBarTransition (1.1.5)
+  - moa (9.0.2)
+  - Moya (11.0.2):
+    - Moya/Core (= 11.0.2)
+  - Moya/Core (11.0.2):
+    - Alamofire (~> 4.1)
+    - Result (~> 3.0)
+  - NVActivityIndicatorView (4.3.0):
+    - NVActivityIndicatorView/Presenter (= 4.3.0)
+  - NVActivityIndicatorView/Presenter (4.3.0)
+  - ObjectMapper (3.3.0)
+  - Pastel (0.4.0)
+  - PhoneNumberKit (2.1.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 2.1.0)
+    - PhoneNumberKit/UIKit (= 2.1.0)
+  - PhoneNumberKit/PhoneNumberKitCore (2.1.0)
+  - PhoneNumberKit/UIKit (2.1.0):
+    - PhoneNumberKit/PhoneNumberKitCore
+  - QuickLayout (2.0.2)
+  - Result (3.2.4)
+  - Reusable (4.0.3):
+    - Reusable/Storyboard (= 4.0.3)
+    - Reusable/View (= 4.0.3)
+  - Reusable/Storyboard (4.0.3)
+  - Reusable/View (4.0.3)
+  - Schedule (0.1.0)
+  - ShadowView (1.2)
+  - SnapKit (4.0.0)
+  - StatusAlert (0.10.1)
+  - SwiftEntryKit (0.6.0):
+    - QuickLayout (= 2.0.2)
+  - SwiftyUserDefaults (4.0.0-alpha.1)
+  - Toucan (1.0.0)
+  - ZHRefresh (0.1.9)
+
+DEPENDENCIES:
+  - CountryPickerView (~> 2.1.0)
+  - GrandTime
+  - HydraAsync
+  - IQKeyboardManagerSwift (~> 6.0)
+  - Kingfisher
+  - KMNavigationBarTransition (~> 1.1)
+  - moa (~> 9.0)
+  - Moya (~> 11.0)
+  - NVActivityIndicatorView (~> 4.2)
+  - ObjectMapper (~> 3.2)
+  - Pastel
+  - PhoneNumberKit (~> 2.1)
+  - Reusable (~> 4.0.2)
+  - Schedule (~> 0.1)
+  - ShadowView
+  - SnapKit (~> 4.0.0)
+  - StatusAlert (~> 0.10.1)
+  - SwiftEntryKit (~> 0.2)
+  - SwiftyUserDefaults (= 4.0.0-alpha.1)
+  - Toucan (~> 1.0)
+  - ZHRefresh
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - CountryPickerView
+    - GrandTime
+    - HydraAsync
+    - IQKeyboardManagerSwift
+    - Kingfisher
+    - KMNavigationBarTransition
+    - moa
+    - Moya
+    - NVActivityIndicatorView
+    - ObjectMapper
+    - Pastel
+    - PhoneNumberKit
+    - QuickLayout
+    - Result
+    - Reusable
+    - Schedule
+    - ShadowView
+    - SnapKit
+    - StatusAlert
+    - SwiftEntryKit
+    - SwiftyUserDefaults
+    - Toucan
+    - ZHRefresh
+
+SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
+  GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
+  HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
+  IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
+  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
+  KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
+  moa: b73dc5e0efa1fad00711c4608e41b197f4d15b12
+  Moya: a725035953bc1c0eb1be505ab903984501d82440
+  NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  Pastel: 7fa5e26123b3dbe11f7ed255654bf37100b199a5
+  PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
+  QuickLayout: a730730b646b231fd4ef7cffaeb1e81fe0e1ca92
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
+  Schedule: 62cd2defb026a3607349b2a2b1bd8ec3fd12cccd
+  ShadowView: e686f2e27fc281c0118419b1fb314b6e534a4682
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  StatusAlert: 123d79043ee371f0a57102b35e79e2c8c8684388
+  SwiftEntryKit: ba070426598304c5773d84b54ed8b0763b5f2060
+  SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
+  Toucan: 61867fb10948c02e9804280a95eb183e98eac97a
+  ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
+
+PODFILE CHECKSUM: 074aa52a63a56a127f033de69e4e08c5b893722f
+
+COCOAPODS: 1.6.0.beta.1
