@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.3)
+  - AutoInsetter (1.2.6)
   - CountryPickerView (2.1.1)
   - GrandTime (1.3.0)
   - HydraAsync (1.2.1)
@@ -16,6 +17,7 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.3.0)
   - NVActivityIndicatorView/Presenter (4.3.0)
   - ObjectMapper (3.3.0)
+  - Pageboy (2.5.4)
   - Pastel (0.4.0)
   - PhoneNumberKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.1.0)
@@ -38,6 +40,9 @@ PODS:
   - SwiftEntryKit (0.6.0):
     - QuickLayout (= 2.0.2)
   - SwiftyUserDefaults (4.0.0-alpha.1)
+  - Tabman (1.9.2):
+    - AutoInsetter (~> 1.2.0)
+    - Pageboy (~> 2.5.0)
   - Toucan (1.0.0)
   - ViewAnimator (2.1.2)
   - ZHRefresh (0.1.9)
@@ -63,6 +68,7 @@ DEPENDENCIES:
   - StatusAlert (~> 0.10.1)
   - SwiftEntryKit (~> 0.2)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
+  - Tabman
   - Toucan (~> 1.0)
   - ViewAnimator
   - ZHRefresh
@@ -70,6 +76,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AutoInsetter
     - CountryPickerView
     - GrandTime
     - HydraAsync
@@ -80,6 +87,7 @@ SPEC REPOS:
     - Moya
     - NVActivityIndicatorView
     - ObjectMapper
+    - Pageboy
     - Pastel
     - PhoneNumberKit
     - QuickLayout
@@ -92,12 +100,14 @@ SPEC REPOS:
     - StatusAlert
     - SwiftEntryKit
     - SwiftyUserDefaults
+    - Tabman
     - Toucan
     - ViewAnimator
     - ZHRefresh
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AutoInsetter: 3713c857f3c0cc4b6265fe55ecf0c14bfe8622ee
   CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
   GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
   HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
@@ -108,6 +118,7 @@ SPEC CHECKSUMS:
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  Pageboy: 46d743783414a18f8b27a988485e0ed2ea219ff7
   Pastel: 7fa5e26123b3dbe11f7ed255654bf37100b199a5
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
   QuickLayout: a730730b646b231fd4ef7cffaeb1e81fe0e1ca92
@@ -120,10 +131,11 @@ SPEC CHECKSUMS:
   StatusAlert: 123d79043ee371f0a57102b35e79e2c8c8684388
   SwiftEntryKit: ba070426598304c5773d84b54ed8b0763b5f2060
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
+  Tabman: a09f7d7aa62b231ec475ca9eb9171f7cc973a3d7
   Toucan: 61867fb10948c02e9804280a95eb183e98eac97a
   ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: 12989530c2383b66d7d9de3112257a3422142d18
+PODFILE CHECKSUM: 40415b5e0d608691720cc0c443a7b45c18c58124
 
 COCOAPODS: 1.6.0.beta.1

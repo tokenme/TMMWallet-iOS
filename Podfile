@@ -26,6 +26,7 @@ target 'TimeBank' do
   pod 'HydraAsync'
   pod 'SkeletonView'
   pod 'ViewAnimator'
+  pod 'Tabman'
 end
 
 post_install do |installer|

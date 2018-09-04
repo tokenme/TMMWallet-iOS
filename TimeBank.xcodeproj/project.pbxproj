@@ -32,6 +32,8 @@
 		1D151EA4213E4D9D007C87DD /* DetectApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EA3213E4D9D007C87DD /* DetectApp.m */; };
 		1D151EA8213E54A4007C87DD /* NSString+Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EA7213E54A4007C87DD /* NSString+Encrypt.m */; };
 		1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EAA213E67BC007C87DD /* NSData+Base64.m */; };
+		1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EB4213E6E20007C87DD /* AppTasksTableViewController.swift */; };
+		1D151EB7213E6E73007C87DD /* ShareTasksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EB6213E6E73007C87DD /* ShareTasksTableViewController.swift */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -112,6 +114,8 @@
 		1D151EA7213E54A4007C87DD /* NSString+Encrypt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Encrypt.m"; sourceTree = "<group>"; };
 		1D151EA9213E67BB007C87DD /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		1D151EAA213E67BC007C87DD /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		1D151EB4213E6E20007C87DD /* AppTasksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTasksTableViewController.swift; sourceTree = "<group>"; };
+		1D151EB6213E6E73007C87DD /* ShareTasksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTasksTableViewController.swift; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -241,6 +245,24 @@
 			path = DetectApp;
 			sourceTree = "<group>";
 		};
+		1D151EB2213E6BCD007C87DD /* TasksViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D3441AA213CF39600B8E157 /* TasksViewController.swift */,
+				1D151EB3213E6E00007C87DD /* ViewControllers */,
+			);
+			path = TasksViewController;
+			sourceTree = "<group>";
+		};
+		1D151EB3213E6E00007C87DD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1D151EB4213E6E20007C87DD /* AppTasksTableViewController.swift */,
+				1D151EB6213E6E73007C87DD /* ShareTasksTableViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,7 +282,7 @@
 				1D151E72213D460E007C87DD /* WalletViewController */,
 				1D151E7C213D60DE007C87DD /* DeviceAppsViewController */,
 				1D151E95213E3839007C87DD /* SDKAppsViewController */,
-				1D3441AA213CF39600B8E157 /* TasksViewController.swift */,
+				1D151EB2213E6BCD007C87DD /* TasksViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
@@ -500,6 +522,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TimeBank/Pods-TimeBank-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
 				"${BUILT_PRODUCTS_DIR}/GrandTime/GrandTime.framework",
 				"${BUILT_PRODUCTS_DIR}/HydraAsync/Hydra.framework",
@@ -509,6 +532,7 @@
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
 				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
 				"${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework",
@@ -521,6 +545,7 @@
 				"${BUILT_PRODUCTS_DIR}/StatusAlert/StatusAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/Toucan/Toucan.framework",
 				"${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/ZHRefresh/ZHRefresh.framework",
@@ -529,6 +554,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrandTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hydra.framework",
@@ -538,6 +564,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickLayout.framework",
@@ -550,6 +577,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatusAlert.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftEntryKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toucan.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZHRefresh.framework",
@@ -592,10 +620,12 @@
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
+				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
 				1D3441EF213CFBA300B8E157 /* TweePlaceholderTextField.swift in Sources */,
 				1D3441DF213CF9BD00B8E157 /* Font.swift in Sources */,
 				1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */,
 				1D3441F0213CFBA300B8E157 /* TweeBorderedTextField.swift in Sources */,
+				1D151EB7213E6E73007C87DD /* ShareTasksTableViewController.swift in Sources */,
 				1D3441DC213CF98E00B8E157 /* String+Utils.swift in Sources */,
 				1D151E82213D6394007C87DD /* DeviceAppTableViewCell.swift in Sources */,
 				1D151E9B213E392C007C87DD /* SDKAppTableViewCell.swift in Sources */,

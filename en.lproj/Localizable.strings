@@ -34,3 +34,7 @@
 "SDKApps" = "Minable Apps";
 "Install" = "Install";
 "Installed" = "Installed";
+
+// Tasks
+"AppTasks" = "App Tasks";
+"ShareTasks" = "Share Tasks";

@@ -95,7 +95,7 @@ class SDKAppsTableViewController: UITableViewController {
     }
     
     private func refresh() {
-        getApps()
+        getApps(true)
     }
 }
 
@@ -173,11 +173,17 @@ extension SDKAppsTableViewController {
         })
     }
     
-    private func getApps() {
+    private func getApps(_ refresh: Bool) {
         if self.loadingApps {
             return
         }
         self.loadingApps = true
+        
+        if refresh {
+            currentPage = 1
+        } else {
+            currentPage += 1
+        }
         
         TMMAppService.getSdks(
             page: currentPage,
