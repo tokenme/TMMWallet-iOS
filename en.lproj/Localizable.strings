@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  TimeBank
+
+  Created by Syd Xu on 2018/9/3.
+  Copyright © 2018年 Tokenmama.io. All rights reserved.
+*/
+// API
+"Error" = "Error";
+"Close" = "Close";
+"UnknownError" = "Unknown Error";
+"NotFoundError" = "Not Found Request";
+"UnauthorizedError" = "Unauthorized";
+"InvalidPasswordError" = "Invalid Password";
+"DuplicateUserError" = "User Already Exists";
+"InactivatedUserError" = "User not activated";
+
+// Login
+"Password" = "Password";
+"Repassword" = "Repassword";
+"VerifyCode" = "Verify code";
+"InvalidPhoneNumber" = "Invalid Phone Number";
+"EmptyPassword" = "Password must be input";
+"EmptyRepassword" = "Repassword must be input";
+"EmptyVerifyCode" = "Verify code must be input";
+"PasswordNotMatch" = "Password doesn't match";
+"SuggestOptions" = "Suggested Options";
+"ChooseCountry" = "Choose Country";
+"Resend" = "Resend";
+"Sent" = "Sent";
+"Sending" = "Sending";
+
+// Apps
+"SDKApps" = "Minable Apps";
+"Install" = "Install";
+"Installed" = "Installed";
+
+// Tasks
+"AppTasks" = "App Tasks";
+"ShareTasks" = "Share Tasks";
+"Earn" = "Earn";
+"PointsPerViewer" = "Points/Viewer";
+"MaxBonus" = "Max bonus";
+"Points" = "Points";

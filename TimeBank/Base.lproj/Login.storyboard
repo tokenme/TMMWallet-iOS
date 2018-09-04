@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--登录-->
+        <scene sceneID="FuJ-s8-MiG">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gqX-gj-wlP" customClass="LoginViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J6a-mT-DIx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPq-PK-3ih">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxw-MT-14e">
+                                        <rect key="frame" x="25" y="130.5" width="324" height="386"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tair" translatesAutoresizingMaskIntoConstraints="NO" id="Bls-9c-aeX">
+                                                <rect key="frame" x="122" y="0.0" width="80" height="80"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="80" id="2VL-Xv-ddb"/>
+                                                    <constraint firstAttribute="width" secondItem="Bls-9c-aeX" secondAttribute="height" multiplier="1:1" id="AI4-Yb-xJU"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ha5-1N-fxv">
+                                                <rect key="frame" x="0.0" y="122" width="324" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="5OH-u7-Ue9">
+                                                <rect key="frame" x="0.0" y="140" width="324" height="100"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Ux-vg-0Zz" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="324" height="30"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" returnKeyType="next" textContentType="tel"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="15"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="gqX-gj-wlP" id="UKr-QV-vHB"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rJr-TC-xdn" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="70" width="324" height="30"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="15"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="tweePlaceholder" value="Password"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="gqX-gj-wlP" id="dY1-TF-uHs"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="kS4-Xk-qzb"/>
+                                                </constraints>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vf3-Li-53z" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="270" width="324" height="40"/>
+                                                <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="30" id="QDy-yy-GCc"/>
+                                                    <constraint firstAttribute="height" constant="40" id="TrR-wh-Bpi"/>
+                                                </constraints>
+                                                <state key="normal" title="Login">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="login" destination="gqX-gj-wlP" eventType="touchUpInside" id="yHh-Ye-bXz"/>
+                                                </connections>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="5fh-C1-2ki" userLabel="subbuttons">
+                                                <rect key="frame" x="0.0" y="326" width="324" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLC-26-HEN">
+                                                        <rect key="frame" x="0.0" y="0.0" width="153" height="40"/>
+                                                        <state key="normal" title="ResetPassword"/>
+                                                        <connections>
+                                                            <segue destination="BNP-UW-1ao" kind="show" id="skU-Ou-oEL"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2QR-ET-XRH">
+                                                        <rect key="frame" x="213" y="0.0" width="111" height="40"/>
+                                                        <state key="normal" title="Register"/>
+                                                        <connections>
+                                                            <segue destination="xF8-d6-1r0" kind="show" id="HSS-yO-CE7"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="D7u-yh-iru"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="5fh-C1-2ki" firstAttribute="trailing" secondItem="5OH-u7-Ue9" secondAttribute="trailing" id="2Ey-kV-aGN"/>
+                                            <constraint firstItem="Vf3-Li-53z" firstAttribute="top" secondItem="5OH-u7-Ue9" secondAttribute="bottom" constant="30" id="2ja-aV-91Z"/>
+                                            <constraint firstItem="Vf3-Li-53z" firstAttribute="width" secondItem="5OH-u7-Ue9" secondAttribute="width" id="2zX-gE-ZPn"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="8nf-nO-6S1"/>
+                                            <constraint firstItem="5OH-u7-Ue9" firstAttribute="centerX" secondItem="Bxw-MT-14e" secondAttribute="centerX" id="BZ7-Ez-Lur"/>
+                                            <constraint firstAttribute="bottom" secondItem="5fh-C1-2ki" secondAttribute="bottom" constant="20" id="DiM-6v-hHQ"/>
+                                            <constraint firstItem="5OH-u7-Ue9" firstAttribute="top" secondItem="Bls-9c-aeX" secondAttribute="bottom" constant="60" id="FvM-sG-a9G"/>
+                                            <constraint firstItem="5fh-C1-2ki" firstAttribute="top" secondItem="Vf3-Li-53z" secondAttribute="bottom" constant="16" id="Ieg-qP-wu8"/>
+                                            <constraint firstItem="Vf3-Li-53z" firstAttribute="centerX" secondItem="Bxw-MT-14e" secondAttribute="centerX" id="RQm-rY-9SE"/>
+                                            <constraint firstItem="1Ux-vg-0Zz" firstAttribute="top" secondItem="ha5-1N-fxv" secondAttribute="bottom" constant="6" id="SLP-ds-X2d"/>
+                                            <constraint firstItem="5fh-C1-2ki" firstAttribute="leading" secondItem="5OH-u7-Ue9" secondAttribute="leading" id="ZUw-ud-tTt"/>
+                                            <constraint firstItem="ha5-1N-fxv" firstAttribute="leading" secondItem="5OH-u7-Ue9" secondAttribute="leading" id="map-WW-I9e"/>
+                                            <constraint firstItem="Bls-9c-aeX" firstAttribute="centerX" secondItem="Bxw-MT-14e" secondAttribute="centerX" id="ndp-3m-uD9"/>
+                                            <constraint firstItem="5OH-u7-Ue9" firstAttribute="width" secondItem="Bxw-MT-14e" secondAttribute="width" id="prc-V9-qyH"/>
+                                            <constraint firstItem="ha5-1N-fxv" firstAttribute="trailing" secondItem="5OH-u7-Ue9" secondAttribute="trailing" id="vHt-2I-opd"/>
+                                            <constraint firstItem="Bls-9c-aeX" firstAttribute="top" secondItem="Bxw-MT-14e" secondAttribute="top" id="yhq-n4-M3o"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Bxw-MT-14e" firstAttribute="centerY" secondItem="pPq-PK-3ih" secondAttribute="centerY" id="1Fb-3Y-cjD"/>
+                                    <constraint firstItem="Bxw-MT-14e" firstAttribute="centerX" secondItem="pPq-PK-3ih" secondAttribute="centerX" id="7sO-RU-adZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bxw-MT-14e" secondAttribute="bottom" priority="250" constant="10" id="aNF-vn-epL"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bxw-MT-14e" secondAttribute="trailing" constant="25" id="gUC-bD-hrW"/>
+                                    <constraint firstItem="Bxw-MT-14e" firstAttribute="top" secondItem="pPq-PK-3ih" secondAttribute="top" priority="250" constant="10" id="kBb-Hl-dAb"/>
+                                    <constraint firstItem="Bxw-MT-14e" firstAttribute="leading" secondItem="pPq-PK-3ih" secondAttribute="leading" constant="25" id="l9D-lw-MPV"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="pPq-PK-3ih" firstAttribute="height" secondItem="SW0-9u-Ojs" secondAttribute="height" id="8Gs-ob-agF"/>
+                            <constraint firstItem="pPq-PK-3ih" firstAttribute="leading" secondItem="SW0-9u-Ojs" secondAttribute="leading" id="YOv-bk-aYT"/>
+                            <constraint firstItem="pPq-PK-3ih" firstAttribute="top" secondItem="SW0-9u-Ojs" secondAttribute="top" id="jw2-YT-sqw"/>
+                            <constraint firstItem="pPq-PK-3ih" firstAttribute="width" secondItem="SW0-9u-Ojs" secondAttribute="width" id="vcu-9P-Rmc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="SW0-9u-Ojs"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="登录" id="Yvp-V4-lJ0"/>
+                    <connections>
+                        <outlet property="loginButton" destination="Vf3-Li-53z" id="BHl-ZN-kk4"/>
+                        <outlet property="passwordTextfield" destination="rJr-TC-xdn" id="dtC-wc-5KR"/>
+                        <outlet property="telephoneTextField" destination="1Ux-vg-0Zz" id="R39-gd-mAl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Mv-VZ-A5l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1650" y="13"/>
+        </scene>
+        <!--注册-->
+        <scene sceneID="E7H-MB-Km3">
+            <objects>
+                <viewController storyboardIdentifier="RegisterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xF8-d6-1r0" customClass="RegisterViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2bv-kd-YgC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKy-F6-sK8">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UlZ-gG-3Kd">
+                                        <rect key="frame" x="25" y="8" width="38" height="30"/>
+                                        <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="close" destination="xF8-d6-1r0" eventType="touchUpInside" id="yVa-mB-Qd6"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAj-QV-MOC">
+                                        <rect key="frame" x="25" y="93.5" width="326" height="460"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tair" translatesAutoresizingMaskIntoConstraints="NO" id="DfY-zS-DRN">
+                                                <rect key="frame" x="123" y="0.0" width="80" height="80"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="DfY-zS-DRN" secondAttribute="height" multiplier="1:1" id="Z2P-ob-3JW"/>
+                                                    <constraint firstAttribute="width" constant="80" id="x8j-LO-U3m"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ire-bS-7KQ">
+                                                <rect key="frame" x="0.0" y="122" width="326" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="hs4-9l-Tnw">
+                                                <rect key="frame" x="0.0" y="140" width="326" height="240"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e6M-Qs-ovT" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="326" height="30"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" returnKeyType="next" textContentType="tel"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="14"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="xF8-d6-1r0" id="lKc-ta-dJm"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tcv-N4-ZfM">
+                                                        <rect key="frame" x="0.0" y="70" width="326" height="30"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PG2-aP-4Kq" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="210" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="210" id="60T-Ju-fO1"/>
+                                                                </constraints>
+                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                        <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                        <real key="value" value="0.69999999999999996"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                        <real key="value" value="11"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                        <real key="value" value="0.29999999999999999"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                        <real key="value" value="15"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                        <real key="value" value="0.40000000000000002"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="tweePlaceholder" value="Verify Code"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="xF8-d6-1r0" id="xG8-gT-6nw"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-SL-ggJ" customClass="RNCountdownButton" customModule="TimeBank" customModuleProvider="target">
+                                                                <rect key="frame" x="229" y="-1" width="81" height="32"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <state key="normal" title="Send Code">
+                                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="sendVerifyCode" destination="xF8-d6-1r0" eventType="touchUpInside" id="p0m-AT-oqq"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="PG2-aP-4Kq" firstAttribute="leading" secondItem="Tcv-N4-ZfM" secondAttribute="leading" id="4gy-Y9-ehv"/>
+                                                            <constraint firstItem="PG2-aP-4Kq" firstAttribute="top" secondItem="Tcv-N4-ZfM" secondAttribute="top" id="FKI-q1-gUa"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Hj1-SL-ggJ" secondAttribute="trailing" constant="16" id="TGv-DZ-94i"/>
+                                                            <constraint firstAttribute="bottom" secondItem="PG2-aP-4Kq" secondAttribute="bottom" id="YmS-NK-9XQ"/>
+                                                            <constraint firstItem="Hj1-SL-ggJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PG2-aP-4Kq" secondAttribute="trailing" constant="8" id="gpK-oW-GEX"/>
+                                                            <constraint firstItem="Hj1-SL-ggJ" firstAttribute="centerY" secondItem="Tcv-N4-ZfM" secondAttribute="centerY" id="vwv-qg-qPH"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VPG-wE-fM0" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="140" width="326" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES" textContentType="password"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="15"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="tweePlaceholder" value="Password"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="xF8-d6-1r0" id="342-vK-nGL"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BMp-QN-TMY" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="210" width="326" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="15"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="tweePlaceholder" value="Repassword"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="xF8-d6-1r0" id="HBc-Fr-QVI"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="240" id="nYV-X9-w2e"/>
+                                                </constraints>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UP3-eG-L2t" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="410" width="326" height="40"/>
+                                                <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Rbh-9N-U51"/>
+                                                </constraints>
+                                                <state key="normal" title="Register">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="register" destination="xF8-d6-1r0" eventType="touchUpInside" id="i73-OR-heB"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="UP3-eG-L2t" firstAttribute="centerX" secondItem="VAj-QV-MOC" secondAttribute="centerX" id="1pv-XM-bIH"/>
+                                            <constraint firstItem="hs4-9l-Tnw" firstAttribute="top" secondItem="DfY-zS-DRN" secondAttribute="bottom" constant="60" id="2g1-ek-DH8"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="FZH-Xd-3Vw"/>
+                                            <constraint firstAttribute="bottom" secondItem="UP3-eG-L2t" secondAttribute="bottom" constant="10" id="GCh-7c-IbJ"/>
+                                            <constraint firstItem="UP3-eG-L2t" firstAttribute="width" secondItem="hs4-9l-Tnw" secondAttribute="width" id="Guh-5Q-6wO"/>
+                                            <constraint firstItem="e6M-Qs-ovT" firstAttribute="top" secondItem="ire-bS-7KQ" secondAttribute="bottom" constant="6" id="IwG-Ac-mhT"/>
+                                            <constraint firstItem="ire-bS-7KQ" firstAttribute="leading" secondItem="e6M-Qs-ovT" secondAttribute="leading" id="Jdh-dl-g1g"/>
+                                            <constraint firstItem="hs4-9l-Tnw" firstAttribute="centerX" secondItem="VAj-QV-MOC" secondAttribute="centerX" id="K51-gX-OnV"/>
+                                            <constraint firstItem="DfY-zS-DRN" firstAttribute="top" secondItem="VAj-QV-MOC" secondAttribute="top" id="NXK-VX-qFm"/>
+                                            <constraint firstItem="UP3-eG-L2t" firstAttribute="top" secondItem="hs4-9l-Tnw" secondAttribute="bottom" constant="30" id="bJn-Cv-Ky8"/>
+                                            <constraint firstItem="hs4-9l-Tnw" firstAttribute="width" secondItem="VAj-QV-MOC" secondAttribute="width" id="isb-uE-Sj1"/>
+                                            <constraint firstItem="DfY-zS-DRN" firstAttribute="centerX" secondItem="VAj-QV-MOC" secondAttribute="centerX" id="ptX-NM-4OE"/>
+                                            <constraint firstItem="ire-bS-7KQ" firstAttribute="trailing" secondItem="e6M-Qs-ovT" secondAttribute="trailing" id="zcs-4N-q6z"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="VAj-QV-MOC" secondAttribute="trailing" constant="25" id="3w9-3V-78C"/>
+                                    <constraint firstItem="VAj-QV-MOC" firstAttribute="leading" secondItem="zKy-F6-sK8" secondAttribute="leading" constant="25" id="5hN-07-ESH"/>
+                                    <constraint firstItem="VAj-QV-MOC" firstAttribute="centerX" secondItem="zKy-F6-sK8" secondAttribute="centerX" id="Cye-DS-BCU"/>
+                                    <constraint firstItem="VAj-QV-MOC" firstAttribute="top" secondItem="zKy-F6-sK8" secondAttribute="top" priority="250" constant="10" id="Eks-lo-Xc4"/>
+                                    <constraint firstItem="VAj-QV-MOC" firstAttribute="centerY" secondItem="zKy-F6-sK8" secondAttribute="centerY" id="K5g-FA-v97"/>
+                                    <constraint firstItem="UlZ-gG-3Kd" firstAttribute="leading" secondItem="zKy-F6-sK8" secondAttribute="leading" constant="25" id="RT2-H1-hJc"/>
+                                    <constraint firstItem="UlZ-gG-3Kd" firstAttribute="top" secondItem="zKy-F6-sK8" secondAttribute="top" constant="8" id="X2a-xK-Gqc"/>
+                                    <constraint firstAttribute="bottom" secondItem="VAj-QV-MOC" secondAttribute="bottom" priority="250" constant="10" id="gGx-mW-PXl"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UlZ-gG-3Kd" secondAttribute="trailing" constant="10" id="nap-Fd-gcz"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zKy-F6-sK8" firstAttribute="leading" secondItem="mnB-cn-JCw" secondAttribute="leading" id="kYe-XD-DM9"/>
+                            <constraint firstItem="zKy-F6-sK8" firstAttribute="width" secondItem="mnB-cn-JCw" secondAttribute="width" id="mUG-iR-sL0"/>
+                            <constraint firstItem="zKy-F6-sK8" firstAttribute="top" secondItem="mnB-cn-JCw" secondAttribute="top" id="n6H-DF-iZD"/>
+                            <constraint firstItem="zKy-F6-sK8" firstAttribute="height" secondItem="mnB-cn-JCw" secondAttribute="height" id="p3T-QQ-3rA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mnB-cn-JCw"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="注册" id="jUR-JD-eUo"/>
+                    <connections>
+                        <outlet property="countdownButton" destination="Hj1-SL-ggJ" id="cAc-aC-w10"/>
+                        <outlet property="passwordTextfield" destination="VPG-wE-fM0" id="J5A-fP-fx2"/>
+                        <outlet property="registerButton" destination="UP3-eG-L2t" id="Rrg-9D-J34"/>
+                        <outlet property="repasswordTextfield" destination="BMp-QN-TMY" id="hva-Rs-Quf"/>
+                        <outlet property="telephoneTextField" destination="e6M-Qs-ovT" id="GdN-JN-12i"/>
+                        <outlet property="verifyCodeTextField" destination="PG2-aP-4Kq" id="Ixe-ip-iZM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x95-a2-Bao" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-951" y="12"/>
+        </scene>
+        <!--注册-->
+        <scene sceneID="tvd-FN-PLz">
+            <objects>
+                <viewController storyboardIdentifier="ResetPasswordViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BNP-UW-1ao" customClass="ResetPasswordViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0x9-go-tbk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vOw-mp-lbb">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oXq-fX-xBe">
+                                        <rect key="frame" x="29" y="8" width="38" height="30"/>
+                                        <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="close" destination="BNP-UW-1ao" eventType="touchUpInside" id="ohd-HJ-3Ie"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36g-OZ-l79">
+                                        <rect key="frame" x="25" y="93.5" width="326" height="460"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tair" translatesAutoresizingMaskIntoConstraints="NO" id="psq-Zx-TIi">
+                                                <rect key="frame" x="123" y="0.0" width="80" height="80"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="psq-Zx-TIi" secondAttribute="height" multiplier="1:1" id="KrC-ny-kXb"/>
+                                                    <constraint firstAttribute="width" constant="80" id="wM5-gG-IVk"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Wc-21-jHh">
+                                                <rect key="frame" x="0.0" y="122" width="326" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="5XY-0r-hl5">
+                                                <rect key="frame" x="0.0" y="140" width="326" height="240"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACG-cf-V0k" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="326" height="30"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" returnKeyType="next" textContentType="tel"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="14"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BNP-UW-1ao" id="ETH-Rv-FST"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ml-DX-uFt">
+                                                        <rect key="frame" x="0.0" y="70" width="326" height="30"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NlA-Q2-JP7" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="210" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="210" id="Zyt-Uy-DVa"/>
+                                                                </constraints>
+                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                        <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                        <real key="value" value="0.69999999999999996"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                        <real key="value" value="11"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                        <real key="value" value="0.29999999999999999"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                        <real key="value" value="15"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                        <real key="value" value="0.40000000000000002"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="tweePlaceholder" value="Verify Code"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="BNP-UW-1ao" id="mnO-Fs-SM1"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgP-Iw-nP7" customClass="RNCountdownButton" customModule="TimeBank" customModuleProvider="target">
+                                                                <rect key="frame" x="229" y="-1" width="81" height="32"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <state key="normal" title="Send Code">
+                                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="sendVerifyCode" destination="BNP-UW-1ao" eventType="touchUpInside" id="Xz7-2Z-HQI"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="FgP-Iw-nP7" secondAttribute="trailing" constant="16" id="CB2-pz-Wq0"/>
+                                                            <constraint firstItem="NlA-Q2-JP7" firstAttribute="top" secondItem="9Ml-DX-uFt" secondAttribute="top" id="CDZ-tO-Als"/>
+                                                            <constraint firstItem="FgP-Iw-nP7" firstAttribute="centerY" secondItem="9Ml-DX-uFt" secondAttribute="centerY" id="EzH-Iq-sLZ"/>
+                                                            <constraint firstAttribute="bottom" secondItem="NlA-Q2-JP7" secondAttribute="bottom" id="eiO-0c-gRm"/>
+                                                            <constraint firstItem="FgP-Iw-nP7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NlA-Q2-JP7" secondAttribute="trailing" constant="8" id="qqm-Nv-wvx"/>
+                                                            <constraint firstItem="NlA-Q2-JP7" firstAttribute="leading" secondItem="9Ml-DX-uFt" secondAttribute="leading" id="weW-M6-w22"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="89V-2C-3qX" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="140" width="326" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES" textContentType="password"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="15"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="tweePlaceholder" value="Password"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BNP-UW-1ao" id="cv0-NO-fVz"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9pU-Ba-pcb" customClass="TweeAttributedTextField" customModule="TimeBank" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="210" width="326" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="infoTextColor">
+                                                                <color key="value" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoAnimationDuration">
+                                                                <real key="value" value="0.69999999999999996"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="activeLineColor">
+                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="infoFontSize">
+                                                                <real key="value" value="11"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="activeLineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="animationDuration">
+                                                                <real key="value" value="0.29999999999999999"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumPlaceholderFontSize">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="originalPlaceholderFontSize">
+                                                                <real key="value" value="15"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                <color key="value" white="0.66666666669999997" alpha="0.70267016270000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderDuration">
+                                                                <real key="value" value="0.40000000000000002"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="tweePlaceholder" value="Repassword"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BNP-UW-1ao" id="tf9-um-fm9"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="240" id="gVq-4P-RAP"/>
+                                                </constraints>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jB4-1U-k9S" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="410" width="326" height="40"/>
+                                                <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="5bc-Sl-xLU"/>
+                                                </constraints>
+                                                <state key="normal" title="Reset Password">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="resetPassword" destination="BNP-UW-1ao" eventType="touchUpInside" id="GbB-83-fUF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="jB4-1U-k9S" firstAttribute="top" secondItem="5XY-0r-hl5" secondAttribute="bottom" constant="30" id="0DP-ox-Ied"/>
+                                            <constraint firstItem="jB4-1U-k9S" firstAttribute="width" secondItem="5XY-0r-hl5" secondAttribute="width" id="BFY-Qi-OzJ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="GNV-Re-zDa"/>
+                                            <constraint firstAttribute="bottom" secondItem="jB4-1U-k9S" secondAttribute="bottom" constant="10" id="HEl-jK-NUg"/>
+                                            <constraint firstItem="ACG-cf-V0k" firstAttribute="top" secondItem="9Wc-21-jHh" secondAttribute="bottom" constant="6" id="NT4-A5-5lW"/>
+                                            <constraint firstItem="9Wc-21-jHh" firstAttribute="trailing" secondItem="ACG-cf-V0k" secondAttribute="trailing" id="RnO-LY-ABi"/>
+                                            <constraint firstItem="9Wc-21-jHh" firstAttribute="leading" secondItem="ACG-cf-V0k" secondAttribute="leading" id="UQr-sB-7Xn"/>
+                                            <constraint firstItem="5XY-0r-hl5" firstAttribute="top" secondItem="psq-Zx-TIi" secondAttribute="bottom" constant="60" id="a78-MC-1h0"/>
+                                            <constraint firstItem="jB4-1U-k9S" firstAttribute="centerX" secondItem="36g-OZ-l79" secondAttribute="centerX" id="aOK-U2-Pwg"/>
+                                            <constraint firstItem="5XY-0r-hl5" firstAttribute="width" secondItem="36g-OZ-l79" secondAttribute="width" id="gSL-Dc-u6Q"/>
+                                            <constraint firstItem="psq-Zx-TIi" firstAttribute="centerX" secondItem="36g-OZ-l79" secondAttribute="centerX" id="sYq-4F-YoY"/>
+                                            <constraint firstItem="psq-Zx-TIi" firstAttribute="top" secondItem="36g-OZ-l79" secondAttribute="top" id="ssN-Gm-9nj"/>
+                                            <constraint firstItem="5XY-0r-hl5" firstAttribute="centerX" secondItem="36g-OZ-l79" secondAttribute="centerX" id="y1i-B3-FNo"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="oXq-fX-xBe" firstAttribute="leading" secondItem="vOw-mp-lbb" secondAttribute="leading" constant="29" id="0VT-JV-Co1"/>
+                                    <constraint firstItem="36g-OZ-l79" firstAttribute="leading" secondItem="vOw-mp-lbb" secondAttribute="leading" constant="25" id="GAy-I2-SfE"/>
+                                    <constraint firstItem="36g-OZ-l79" firstAttribute="top" secondItem="vOw-mp-lbb" secondAttribute="top" priority="250" constant="10" id="IP6-6u-H5c"/>
+                                    <constraint firstItem="oXq-fX-xBe" firstAttribute="top" secondItem="vOw-mp-lbb" secondAttribute="top" constant="8" id="OaK-QU-Upx"/>
+                                    <constraint firstItem="36g-OZ-l79" firstAttribute="centerX" secondItem="vOw-mp-lbb" secondAttribute="centerX" id="Ute-UI-bzJ"/>
+                                    <constraint firstItem="36g-OZ-l79" firstAttribute="centerY" secondItem="vOw-mp-lbb" secondAttribute="centerY" id="YXR-Dy-8pm"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oXq-fX-xBe" secondAttribute="trailing" constant="10" id="Zqj-9v-GE6"/>
+                                    <constraint firstAttribute="trailing" secondItem="36g-OZ-l79" secondAttribute="trailing" constant="25" id="etm-1o-3Do"/>
+                                    <constraint firstAttribute="bottom" secondItem="36g-OZ-l79" secondAttribute="bottom" priority="250" constant="10" id="ivE-Aj-OzP"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vOw-mp-lbb" firstAttribute="width" secondItem="Ox1-Fk-gbH" secondAttribute="width" id="6Cq-iu-PoM"/>
+                            <constraint firstItem="vOw-mp-lbb" firstAttribute="leading" secondItem="Ox1-Fk-gbH" secondAttribute="leading" id="Xem-Hg-ulK"/>
+                            <constraint firstItem="vOw-mp-lbb" firstAttribute="height" secondItem="Ox1-Fk-gbH" secondAttribute="height" id="jCx-2R-20d"/>
+                            <constraint firstItem="vOw-mp-lbb" firstAttribute="top" secondItem="Ox1-Fk-gbH" secondAttribute="top" id="rue-LV-Wt5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ox1-Fk-gbH"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="注册" id="3pm-eB-8RO"/>
+                    <connections>
+                        <outlet property="countdownButton" destination="FgP-Iw-nP7" id="tJ8-P7-HGb"/>
+                        <outlet property="passwordTextfield" destination="89V-2C-3qX" id="zTX-Vd-tGw"/>
+                        <outlet property="repasswordTextfield" destination="9pU-Ba-pcb" id="OEz-tD-y9t"/>
+                        <outlet property="resetButton" destination="jB4-1U-k9S" id="uHL-sk-vha"/>
+                        <outlet property="telephoneTextField" destination="ACG-cf-V0k" id="oNS-xk-SR8"/>
+                        <outlet property="verifyCodeTextField" destination="NlA-Q2-JP7" id="PYo-CS-Srd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mN1-dR-mh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1651" y="843"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Tair" width="16" height="16"/>
+    </resources>
+</document>

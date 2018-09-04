@@ -1,0 +1,4 @@
+module TMMSDKPrivate {
+    export *
+}
+

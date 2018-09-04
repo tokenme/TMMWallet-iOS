@@ -1,0 +1,6 @@
+framework module Pods_TimeBank {
+  umbrella header "Pods-TimeBank-umbrella.h"
+
+  export *
+  module * { export * }
+}
