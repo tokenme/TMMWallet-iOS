@@ -29,6 +29,9 @@
 		1D151E9C213E392C007C87DD /* SDKAppTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D151E9A213E392C007C87DD /* SDKAppTableViewCell.xib */; };
 		1D151E9E213E3C56007C87DD /* TMMAppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E9D213E3C56007C87DD /* TMMAppService.swift */; };
 		1D151EA0213E453A007C87DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D151E9F213E453A007C87DD /* StoreKit.framework */; };
+		1D151EA4213E4D9D007C87DD /* DetectApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EA3213E4D9D007C87DD /* DetectApp.m */; };
+		1D151EA8213E54A4007C87DD /* NSString+Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EA7213E54A4007C87DD /* NSString+Encrypt.m */; };
+		1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EAA213E67BC007C87DD /* NSData+Base64.m */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -65,7 +68,6 @@
 		1D344200213CFBB500B8E157 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D3441FA213CFBB500B8E157 /* Info.plist */; };
 		1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D36D99E213CED5E0002EDBF /* AppDelegate.swift */; };
 		1D36D9A1213CED5E0002EDBF /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */; };
-		1D36D9A3213CED5E0002EDBF /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D36D9A2213CED5E0002EDBF /* AppsViewController.swift */; };
 		1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A4213CED5E0002EDBF /* Main.storyboard */; };
 		1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A7213CED5E0002EDBF /* Assets.xcassets */; };
 		1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A9213CED5E0002EDBF /* LaunchScreen.storyboard */; };
@@ -103,6 +105,13 @@
 		1D151E9A213E392C007C87DD /* SDKAppTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SDKAppTableViewCell.xib; sourceTree = "<group>"; };
 		1D151E9D213E3C56007C87DD /* TMMAppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMAppService.swift; sourceTree = "<group>"; };
 		1D151E9F213E453A007C87DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		1D151EA2213E4D9C007C87DD /* TimeBank-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TimeBank-Bridging-Header.h"; sourceTree = "<group>"; };
+		1D151EA3213E4D9D007C87DD /* DetectApp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetectApp.m; sourceTree = "<group>"; };
+		1D151EA5213E4DD8007C87DD /* DetectApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetectApp.h; sourceTree = "<group>"; };
+		1D151EA6213E54A4007C87DD /* NSString+Encrypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Encrypt.h"; sourceTree = "<group>"; };
+		1D151EA7213E54A4007C87DD /* NSString+Encrypt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Encrypt.m"; sourceTree = "<group>"; };
+		1D151EA9213E67BB007C87DD /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		1D151EAA213E67BC007C87DD /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -141,7 +150,6 @@
 		1D36D99B213CED5D0002EDBF /* TimeBank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeBank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D36D99E213CED5E0002EDBF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
-		1D36D9A2213CED5E0002EDBF /* AppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsViewController.swift; sourceTree = "<group>"; };
 		1D36D9A5213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D36D9A7213CED5E0002EDBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D36D9AA213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -219,11 +227,26 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		1D151EA1213E4D75007C87DD /* DetectApp */ = {
+			isa = PBXGroup;
+			children = (
+				1D151EA9213E67BB007C87DD /* NSData+Base64.h */,
+				1D151EAA213E67BC007C87DD /* NSData+Base64.m */,
+				1D151EA3213E4D9D007C87DD /* DetectApp.m */,
+				1D151EA5213E4DD8007C87DD /* DetectApp.h */,
+				1D151EA2213E4D9C007C87DD /* TimeBank-Bridging-Header.h */,
+				1D151EA6213E54A4007C87DD /* NSString+Encrypt.h */,
+				1D151EA7213E54A4007C87DD /* NSString+Encrypt.m */,
+			);
+			path = DetectApp;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
 				1D3441B4213CF61300B8E157 /* LoaderModal.swift */,
 				1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */,
+				1D151EA1213E4D75007C87DD /* DetectApp */,
 				1D3441F4213CFBB500B8E157 /* TransitionButton */,
 				1D3441E9213CFBA200B8E157 /* TweeTextField */,
 				1D3441B7213CF61400B8E157 /* TMMSDK.framework */,
@@ -236,7 +259,6 @@
 			children = (
 				1D151E72213D460E007C87DD /* WalletViewController */,
 				1D151E7C213D60DE007C87DD /* DeviceAppsViewController */,
-				1D36D9A2213CED5E0002EDBF /* AppsViewController.swift */,
 				1D151E95213E3839007C87DD /* SDKAppsViewController */,
 				1D3441AA213CF39600B8E157 /* TasksViewController.swift */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
@@ -406,6 +428,7 @@
 				TargetAttributes = {
 					1D36D99A213CED5D0002EDBF = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 0940;
 					};
 				};
 			};
@@ -549,8 +572,8 @@
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
 				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,
-				1D36D9A3213CED5E0002EDBF /* AppsViewController.swift in Sources */,
 				1D3441FC213CFBB500B8E157 /* SpinerLayer.swift in Sources */,
+				1D151EA8213E54A4007C87DD /* NSString+Encrypt.m in Sources */,
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
 				1D3441C5213CF74800B8E157 /* TMMError.swift in Sources */,
 				1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */,
@@ -571,6 +594,7 @@
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1D3441EF213CFBA300B8E157 /* TweePlaceholderTextField.swift in Sources */,
 				1D3441DF213CF9BD00B8E157 /* Font.swift in Sources */,
+				1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */,
 				1D3441F0213CFBA300B8E157 /* TweeBorderedTextField.swift in Sources */,
 				1D3441DC213CF98E00B8E157 /* String+Utils.swift in Sources */,
 				1D151E82213D6394007C87DD /* DeviceAppTableViewCell.swift in Sources */,
@@ -589,6 +613,7 @@
 				1D151E7B213D5DBA007C87DD /* APIApp.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
 				1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */,
+				1D151EA4213E4D9D007C87DD /* DetectApp.m in Sources */,
 				1D3441D6213CF94200B8E157 /* Alert.swift in Sources */,
 				1D151E9E213E3C56007C87DD /* TMMAppService.swift in Sources */,
 				1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */,
@@ -769,6 +794,7 @@
 			baseConfigurationReference = 07E98AACD8560ACEB6EAD77A /* Pods-TimeBank.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 54X3D7LXEG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -846,6 +872,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tokenmama.TimeBank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Dependencies/DetectApp/TimeBank-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -856,6 +884,7 @@
 			baseConfigurationReference = D7B76C9CA759822F52730D52 /* Pods-TimeBank.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 54X3D7LXEG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -933,6 +962,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tokenmama.TimeBank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Dependencies/DetectApp/TimeBank-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

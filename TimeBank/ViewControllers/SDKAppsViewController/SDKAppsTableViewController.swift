@@ -124,7 +124,7 @@ extension SDKAppsTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as SDKAppTableViewCell
         let app = self.apps[indexPath.row]
-        cell.fill(app, installed: false)
+        cell.fill(app, installed: DetectApp.isInstalled(app.bundleId))
         return cell
     }
     
