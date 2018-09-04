@@ -12,6 +12,8 @@ import Pastel
 import Moya
 import Hydra
 import ZHRefresh
+import SkeletonView
+import ViewAnimator
 
 class WalletViewController: UIViewController {
     
@@ -60,18 +62,34 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.transitioningDelegate = self
+        if let navigationController = self.navigationController {
+            if #available(iOS 11.0, *) {
+                navigationController.navigationBar.prefersLargeTitles = false
+                self.navigationItem.largeTitleDisplayMode = .automatic;
+            }
+            navigationController.navigationBar.isTranslucent = true
+            navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationController.navigationBar.shadowImage = UIImage()
+        }
         setupSummaryView()
         setupTableView()
         refresh()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let navigationController = self.navigationController {
+            if #available(iOS 11.0, *) {
+                navigationController.navigationBar.prefersLargeTitles = false
+                self.navigationItem.largeTitleDisplayMode = .automatic;
+            }
+            navigationController.navigationBar.isTranslucent = true
+            navigationController.setNavigationBarHidden(true, animated: animated)
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if userInfo == nil {
-            let vc = LoginViewController.instantiate()
-            vc.delegate = self
-            self.present(vc, animated: true, completion: nil)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,6 +120,7 @@ class WalletViewController: UIViewController {
     
     private func setupTableView() {
         tableView.register(cellType: DeviceTableViewCell.self)
+        tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
         tableView.estimatedRowHeight = 66.0
@@ -112,6 +131,9 @@ class WalletViewController: UIViewController {
             guard let weakSelf = self else { return }
             weakSelf.refresh()
         }
+        
+        SkeletonAppearance.default.multilineHeight = 10
+        tableView.showAnimatedSkeleton()
     }
     
     private func refresh() {
@@ -159,10 +181,28 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
+        let device = self.devices[indexPath.row]
+        let vc = DeviceAppsViewController.instantiate()
+        vc.setDevice(device)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return true
+    }
+}
+
+extension WalletViewController: SkeletonTableViewDataSource {
+    
+    func numSections(in collectionSkeletonView: UITableView) -> Int {
+        return 1
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return LoadingTableViewCell.self.reuseIdentifier
     }
 }
 
@@ -172,7 +212,6 @@ extension WalletViewController {
             return
         }
         self.loadingDevices = true
-        
         TMMDeviceService.getDevices(
             provider: self.deviceServiceProvider)
             .then(in: .main, {[weak self] devices in
@@ -187,8 +226,11 @@ extension WalletViewController {
                     return
                 }
                 weakSelf.loadingDevices = false
+                weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()
+                let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
+                UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
             }
         )
     }

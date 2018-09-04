@@ -55,6 +55,9 @@ blades:
   - source: images/android.png
     mount: TimeBank/Assets.xcassets/Android.imageset
     contents: true
+  - source: images/version.png
+    mount: TimeBank/Assets.xcassets/Version.imageset
+    contents: true
 #  - source: iTunesArtwork@2x.png
 #    template: templates/iphone-appicon.json # use a template if you want to batch build catalogs regardless of an xcode project (e.g. as part of a CI process)
 #    out: out/newiphone

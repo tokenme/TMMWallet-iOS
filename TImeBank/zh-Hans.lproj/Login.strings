@@ -1,0 +1,45 @@
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "2QR-ET-XRH"; */
+"2QR-ET-XRH.normalTitle" = "注册";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "3pm-eB-8RO"; */
+"3pm-eB-8RO.title" = "注册";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "9Wc-21-jHh"; */
+"9Wc-21-jHh.text" = "手机号码";
+
+/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "FgP-Iw-nP7"; */
+"FgP-Iw-nP7.normalTitle" = "发送验证码";
+
+/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "Hj1-SL-ggJ"; */
+"Hj1-SL-ggJ.normalTitle" = "发送验证码";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "UP3-eG-L2t"; */
+"UP3-eG-L2t.normalTitle" = "注册";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "UlZ-gG-3Kd"; */
+"UlZ-gG-3Kd.normalTitle" = "登录";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "Vf3-Li-53z"; */
+"Vf3-Li-53z.normalTitle" = "登录";
+
+/* Class = "UINavigationItem"; title = "登录"; ObjectID = "Yvp-V4-lJ0"; */
+"Yvp-V4-lJ0.title" = "登录";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "ha5-1N-fxv"; */
+"ha5-1N-fxv.text" = "手机号码";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "ire-bS-7KQ"; */
+"ire-bS-7KQ.text" = "手机号码";
+
+/* Class = "UIButton"; normalTitle = "Reset Password"; ObjectID = "jB4-1U-k9S"; */
+"jB4-1U-k9S.normalTitle" = "重置密码";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "jUR-JD-eUo"; */
+"jUR-JD-eUo.title" = "注册";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "oXq-fX-xBe"; */
+"oXq-fX-xBe.normalTitle" = "登录";
+
+/* Class = "UIButton"; normalTitle = "ResetPassword"; ObjectID = "tLC-26-HEN"; */
+"tLC-26-HEN.normalTitle" = "重置密码";

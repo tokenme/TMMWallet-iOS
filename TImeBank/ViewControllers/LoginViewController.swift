@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
     
     static func instantiate() -> LoginViewController
     {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        return UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
     }
     
     //================

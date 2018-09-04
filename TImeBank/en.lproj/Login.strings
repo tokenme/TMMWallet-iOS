@@ -1,0 +1,45 @@
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "2QR-ET-XRH"; */
+"2QR-ET-XRH.normalTitle" = "Register";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "3pm-eB-8RO"; */
+"3pm-eB-8RO.title" = "Register";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "9Wc-21-jHh"; */
+"9Wc-21-jHh.text" = "Mobile";
+
+/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "FgP-Iw-nP7"; */
+"FgP-Iw-nP7.normalTitle" = "Send Code";
+
+/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "Hj1-SL-ggJ"; */
+"Hj1-SL-ggJ.normalTitle" = "Send Code";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "UP3-eG-L2t"; */
+"UP3-eG-L2t.normalTitle" = "Register";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "UlZ-gG-3Kd"; */
+"UlZ-gG-3Kd.normalTitle" = "Login";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "Vf3-Li-53z"; */
+"Vf3-Li-53z.normalTitle" = "Login";
+
+/* Class = "UINavigationItem"; title = "登录"; ObjectID = "Yvp-V4-lJ0"; */
+"Yvp-V4-lJ0.title" = "Login";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "ha5-1N-fxv"; */
+"ha5-1N-fxv.text" = "Mobile";
+
+/* Class = "UILabel"; text = "Mobile"; ObjectID = "ire-bS-7KQ"; */
+"ire-bS-7KQ.text" = "Mobile";
+
+/* Class = "UIButton"; normalTitle = "Reset Password"; ObjectID = "jB4-1U-k9S"; */
+"jB4-1U-k9S.normalTitle" = "Reset Password";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "jUR-JD-eUo"; */
+"jUR-JD-eUo.title" = "Register";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "oXq-fX-xBe"; */
+"oXq-fX-xBe.normalTitle" = "Login";
+
+/* Class = "UIButton"; normalTitle = "ResetPassword"; ObjectID = "tLC-26-HEN"; */
+"tLC-26-HEN.normalTitle" = "ResetPassword";

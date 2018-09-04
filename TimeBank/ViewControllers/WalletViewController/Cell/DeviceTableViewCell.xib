@@ -99,8 +99,8 @@
                                             <constraint firstAttribute="width" secondItem="s4h-Sm-QJN" secondAttribute="height" multiplier="1:1" id="Zou-6S-9qe"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="growth factor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEi-Jp-3Nk">
-                                        <rect key="frame" x="16" y="0.5" width="61.5" height="14.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEi-Jp-3Nk">
+                                        <rect key="frame" x="16" y="0.5" width="12" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>

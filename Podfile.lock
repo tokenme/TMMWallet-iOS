@@ -32,12 +32,14 @@ PODS:
   - Reusable/View (4.0.3)
   - Schedule (0.1.0)
   - ShadowView (1.2)
+  - SkeletonView (1.4)
   - SnapKit (4.0.0)
   - StatusAlert (0.10.1)
   - SwiftEntryKit (0.6.0):
     - QuickLayout (= 2.0.2)
   - SwiftyUserDefaults (4.0.0-alpha.1)
   - Toucan (1.0.0)
+  - ViewAnimator (2.1.2)
   - ZHRefresh (0.1.9)
 
 DEPENDENCIES:
@@ -56,11 +58,13 @@ DEPENDENCIES:
   - Reusable (~> 4.0.2)
   - Schedule (~> 0.1)
   - ShadowView
+  - SkeletonView
   - SnapKit (~> 4.0.0)
   - StatusAlert (~> 0.10.1)
   - SwiftEntryKit (~> 0.2)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
   - Toucan (~> 1.0)
+  - ViewAnimator
   - ZHRefresh
 
 SPEC REPOS:
@@ -83,11 +87,13 @@ SPEC REPOS:
     - Reusable
     - Schedule
     - ShadowView
+    - SkeletonView
     - SnapKit
     - StatusAlert
     - SwiftEntryKit
     - SwiftyUserDefaults
     - Toucan
+    - ViewAnimator
     - ZHRefresh
 
 SPEC CHECKSUMS:
@@ -109,13 +115,15 @@ SPEC CHECKSUMS:
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
   Schedule: 62cd2defb026a3607349b2a2b1bd8ec3fd12cccd
   ShadowView: e686f2e27fc281c0118419b1fb314b6e534a4682
+  SkeletonView: 50f7a9b04e3a62bd0ae964859c19317fabaea367
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StatusAlert: 123d79043ee371f0a57102b35e79e2c8c8684388
   SwiftEntryKit: ba070426598304c5773d84b54ed8b0763b5f2060
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   Toucan: 61867fb10948c02e9804280a95eb183e98eac97a
+  ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: 074aa52a63a56a127f033de69e4e08c5b893722f
+PODFILE CHECKSUM: 12989530c2383b66d7d9de3112257a3422142d18
 
 COCOAPODS: 1.6.0.beta.1

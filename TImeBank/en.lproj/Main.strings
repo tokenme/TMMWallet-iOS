@@ -1,69 +1,42 @@
 
-/* Class = "UIButton"; normalTitle = "Reset Password"; ObjectID = "0VL-BZ-aiT"; */
-"0VL-BZ-aiT.normalTitle" = "Reset Password";
+/* Class = "UILabel"; text = "0.0"; ObjectID = "09m-xb-wwH"; */
+"09m-xb-wwH.text" = "0.0";
 
-/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "2du-Al-HCo"; */
-"2du-Al-HCo.normalTitle" = "Send Code";
+/* Class = "UITabBarItem"; title = "Wallet"; ObjectID = "3zn-JK-oKg"; */
+"3zn-JK-oKg.title" = "Wallet";
 
-/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "8Mk-eR-iBm"; */
-"8Mk-eR-iBm.normalTitle" = "Register";
+/* Class = "UITabBarItem"; title = "Tasks"; ObjectID = "7wD-NH-0kC"; */
+"7wD-NH-0kC.title" = "Tasks";
 
-/* Class = "UILabel"; text = "Loaded by FirstViewController"; ObjectID = "A5M-7J-77L"; */
-"A5M-7J-77L.text" = "Loaded by FirstViewController";
+/* Class = "UILabel"; text = "Points"; ObjectID = "BhT-mn-xAa"; */
+"BhT-mn-xAa.text" = "Points";
 
-/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "ACT-Q3-Q2c"; */
-"ACT-Q3-Q2c.normalTitle" = "Login";
+/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "Ia2-YO-q7a"; */
+"Ia2-YO-q7a.title" = "Root View Controller";
 
-/* Class = "UINavigationItem"; title = "Register"; ObjectID = "Ei6-99-j3p"; */
-"Ei6-99-j3p.title" = "Register";
+/* Class = "UILabel"; text = "TMM"; ObjectID = "KNV-eI-E4j"; */
+"KNV-eI-E4j.text" = "TMM";
 
-/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "F0n-pl-Ng2"; */
-"F0n-pl-Ng2.normalTitle" = "Register";
+/* Class = "UILabel"; text = "Points"; ObjectID = "RAP-xT-Qzn"; */
+"RAP-xT-Qzn.text" = "Points";
 
-/* Class = "UILabel"; text = "First View"; ObjectID = "KQZ-1w-vlD"; */
-"KQZ-1w-vlD.text" = "First View";
-
-/* Class = "UIButton"; normalTitle = "ResetPassword"; ObjectID = "KmA-cN-0qe"; */
-"KmA-cN-0qe.normalTitle" = "ResetPassword";
-
-/* Class = "UILabel"; text = "Loaded by SecondViewController"; ObjectID = "NDk-cv-Gan"; */
-"NDk-cv-Gan.text" = "Loaded by SecondViewController";
-
-/* Class = "UINavigationItem"; title = "Register"; ObjectID = "O7Y-wJ-L0T"; */
-"O7Y-wJ-L0T.title" = "Register";
-
-/* Class = "UITabBarItem"; title = "Tasks"; ObjectID = "Pps-xm-akW"; */
-"Pps-xm-akW.title" = "Tasks";
-
-/* Class = "UILabel"; text = "Mobile"; ObjectID = "Q9x-pf-0ws"; */
-"Q9x-pf-0ws.text" = "Mobile";
+/* Class = "UILabel"; text = "0.0"; ObjectID = "XVl-rc-PqY"; */
+"XVl-rc-PqY.text" = "0.0";
 
 /* Class = "UITabBarItem"; title = "Wallet"; ObjectID = "acW-dT-cKf"; */
 "acW-dT-cKf.title" = "Wallet";
 
-/* Class = "UIButton"; normalTitle = "Send Code"; ObjectID = "avc-Yd-Rio"; */
-"avc-Yd-Rio.normalTitle" = "Send Code";
+/* Class = "UILabel"; text = "TMM"; ObjectID = "edI-op-QY4"; */
+"edI-op-QY4.text" = "TMM";
 
-/* Class = "UITabBarItem"; title = "App"; ObjectID = "cPa-gy-q4n"; */
-"cPa-gy-q4n.title" = "App";
+/* Class = "UILabel"; text = "0.0"; ObjectID = "omi-yB-wom"; */
+"omi-yB-wom.text" = "0.0";
 
-/* Class = "UINavigationItem"; title = "Login"; ObjectID = "chn-14-80l"; */
-"chn-14-80l.title" = "Login";
+/* Class = "UILabel"; text = "0.0"; ObjectID = "pJx-8E-3Wc"; */
+"pJx-8E-3Wc.text" = "0.0";
 
-/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "eKL-JC-fM4"; */
-"eKL-JC-fM4.normalTitle" = "Login";
+/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "rf2-4m-CLT"; */
+"rf2-4m-CLT.title" = "Root View Controller";
 
-/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "i2S-2i-1P2"; */
-"i2S-2i-1P2.normalTitle" = "Login";
-
-/* Class = "UILabel"; text = "Mobile"; ObjectID = "jRX-73-bNi"; */
-"jRX-73-bNi.text" = "Mobile";
-
-/* Class = "UILabel"; text = "Mobile"; ObjectID = "p0X-cz-g1d"; */
-"p0X-cz-g1d.text" = "Mobile";
-
-/* Class = "UILabel"; text = "Second View"; ObjectID = "zEq-FU-wV5"; */
-"zEq-FU-wV5.text" = "Second View";
-
-"BhT-mn-xAa.text" = "Points";
-"KNV-eI-E4j.text" = "TMM";
+/* Class = "UITabBarItem"; title = "Apps"; ObjectID = "yvo-pS-BZM"; */
+"yvo-pS-BZM.title" = "Apps";

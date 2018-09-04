@@ -24,6 +24,8 @@ target 'TimeBank' do
   pod 'ShadowView'
   pod 'Kingfisher'
   pod 'HydraAsync'
+  pod 'SkeletonView'
+  pod 'ViewAnimator'
 end
 
 post_install do |installer|
