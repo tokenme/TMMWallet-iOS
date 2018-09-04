@@ -125,16 +125,16 @@
             </objects>
             <point key="canvasLocation" x="1650" y="-286"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Apps Table View Controller-->
         <scene sceneID="fRM-44-dVe">
             <objects>
-                <tableViewController id="LH4-ZW-cQn" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SDKAppsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LH4-ZW-cQn" customClass="SDKAppsTableViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="laR-Wr-8Ni">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="qUa-8E-D83">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="qUa-8E-D83" customClass="SDKAppTableViewCell" customModule="TimeBank" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qUa-8E-D83" id="4PB-6a-4Lv">
@@ -148,7 +148,7 @@
                             <outlet property="delegate" destination="LH4-ZW-cQn" id="jG3-LQ-STO"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="Ia2-YO-q7a"/>
+                    <navigationItem key="navigationItem" id="Ia2-YO-q7a"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Doi-qg-dpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

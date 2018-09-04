@@ -29,3 +29,8 @@
 "Resend" = "Resend";
 "Sent" = "Sent";
 "Sending" = "Sending";
+
+// Apps
+"SDKApps" = "Minable Apps";
+"Install" = "Install";
+"Installed" = "Installed";

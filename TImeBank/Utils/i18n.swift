@@ -30,6 +30,9 @@ enum I18n: CustomStringConvertible {
     case sent
     case resend
     case sending
+    case sdkApps
+    case install
+    case installed
     
     var description : String {
         switch self {
@@ -75,6 +78,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Resend", comment: "Resend")
         case .sending:
             return NSLocalizedString("Sending", comment: "Sending")
+        case .sdkApps:
+            return NSLocalizedString("SDKApps", comment: "Minable Apps")
+        case .install:
+            return NSLocalizedString("Install", comment: "Install")
+        case .installed:
+            return NSLocalizedString("Installed", comment: "Installed")
         }
     }
 }

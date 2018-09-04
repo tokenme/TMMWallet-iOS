@@ -29,3 +29,8 @@
 "Resend" = "重新发送";
 "Sent" = "已发送";
 "Sending" = "发送中";
+
+// Apps
+"SDKApps" = "可挖矿应用";
+"Install" = "安装";
+"Installed" = "已安装";
