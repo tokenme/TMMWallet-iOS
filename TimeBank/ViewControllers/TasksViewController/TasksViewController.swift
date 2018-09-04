@@ -47,12 +47,12 @@ class TasksViewController: TabmanViewController {
             navigationController.navigationBar.shadowImage = UIImage()
         }
         
-        self.dataSource = self
-        
         // configure the bar
         self.bar.items = [Item(title: I18n.appTasks.description),
                           Item(title: I18n.shareTasks.description)]
         self.bar.style = .buttonBar
+        self.automaticallyAdjustsChildViewInsets = true
+        self.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {

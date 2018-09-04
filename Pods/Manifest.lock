@@ -5,7 +5,7 @@ PODS:
   - GrandTime (1.3.0)
   - HydraAsync (1.2.1)
   - IQKeyboardManagerSwift (6.1.1)
-  - Kingfisher (4.8.1)
+  - Kingfisher (4.9.0)
   - KMNavigationBarTransition (1.1.5)
   - moa (9.0.2)
   - Moya (11.0.2):
@@ -39,6 +39,7 @@ PODS:
   - StatusAlert (0.10.1)
   - SwiftEntryKit (0.6.0):
     - QuickLayout (= 2.0.2)
+  - SwiftWebVC (0.4.5)
   - SwiftyUserDefaults (4.0.0-alpha.1)
   - Tabman (1.9.2):
     - AutoInsetter (~> 1.2.0)
@@ -67,6 +68,7 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - StatusAlert (~> 0.10.1)
   - SwiftEntryKit (~> 0.2)
+  - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
   - Tabman
   - Toucan (~> 1.0)
@@ -105,6 +107,15 @@ SPEC REPOS:
     - ViewAnimator
     - ZHRefresh
 
+EXTERNAL SOURCES:
+  SwiftWebVC:
+    :git: https://github.com/tokenme/SwiftWebVC.git
+
+CHECKOUT OPTIONS:
+  SwiftWebVC:
+    :commit: 5078679c019578121e7495861410c1c471ad6d3d
+    :git: https://github.com/tokenme/SwiftWebVC.git
+
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AutoInsetter: 3713c857f3c0cc4b6265fe55ecf0c14bfe8622ee
@@ -112,7 +123,7 @@ SPEC CHECKSUMS:
   GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
   HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
   IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
-  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
+  Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
   moa: b73dc5e0efa1fad00711c4608e41b197f4d15b12
   Moya: a725035953bc1c0eb1be505ab903984501d82440
@@ -130,12 +141,13 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StatusAlert: 123d79043ee371f0a57102b35e79e2c8c8684388
   SwiftEntryKit: ba070426598304c5773d84b54ed8b0763b5f2060
+  SwiftWebVC: d3e2c4530b079e7647d5be1a457cf46cb65fb89a
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   Tabman: a09f7d7aa62b231ec475ca9eb9171f7cc973a3d7
   Toucan: 61867fb10948c02e9804280a95eb183e98eac97a
   ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: 40415b5e0d608691720cc0c443a7b45c18c58124
+PODFILE CHECKSUM: 195bd58273bf4756b5deb939aa5f9f5b0b8faf37
 
 COCOAPODS: 1.6.0.beta.1

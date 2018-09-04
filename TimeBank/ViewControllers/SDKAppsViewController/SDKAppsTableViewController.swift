@@ -89,7 +89,11 @@ class SDKAppsTableViewController: UITableViewController {
             guard let weakSelf = self else { return }
             weakSelf.refresh()
         }
-        
+        tableView.footer = ZHRefreshAutoNormalFooter.footerWithRefreshing { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.getApps(false)
+        }
+        tableView.footer?.isHidden = true
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }
@@ -181,8 +185,6 @@ extension SDKAppsTableViewController {
         
         if refresh {
             currentPage = 1
-        } else {
-            currentPage += 1
         }
         
         TMMAppService.getSdks(
@@ -194,12 +196,25 @@ extension SDKAppsTableViewController {
                     return
                 }
                 weakSelf.apps = apps
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else {
-                    return
+                if apps.count < DefaultPageSize {
+                    if weakSelf.apps.count <= DefaultPageSize {
+                        weakSelf.tableView.footer?.isHidden = true
+                    } else {
+                        weakSelf.tableView.footer?.isHidden = false
+                        weakSelf.tableView.footer?.endRefreshingWithNoMoreData()
+                    }
+                } else {
+                    weakSelf.tableView.footer?.isHidden = false
+                    weakSelf.tableView.footer?.endRefreshing()
+                    weakSelf.currentPage += 1
                 }
+            }).catch(in: .main, {[weak self] error in
+                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                guard let weakSelf = self else { return }
+                weakSelf.tableView.footer?.isHidden = false
+                weakSelf.tableView.footer?.endRefreshing()
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
                 weakSelf.loadingApps = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()

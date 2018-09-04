@@ -35,6 +35,10 @@ enum I18n: CustomStringConvertible {
     case installed
     case appTasks
     case shareTasks
+    case earn
+    case pointsPerViewer
+    case maxBonus
+    case points
     
     var description : String {
         switch self {
@@ -90,6 +94,14 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("AppTasks", comment: "App Tasks")
         case .shareTasks:
             return NSLocalizedString("ShareTasks", comment: "Share Tasks")
+        case .earn:
+            return NSLocalizedString("Earn", comment: "Earn")
+        case .pointsPerViewer:
+            return NSLocalizedString("PointsPerViewer", comment: "Points/Viewer")
+        case .maxBonus:
+            return NSLocalizedString("MaxBonus", comment: "Max bonus")
+        case .points:
+            return NSLocalizedString("Points", comment: "Points")
         }
     }
 }

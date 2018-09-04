@@ -27,6 +27,7 @@ target 'TimeBank' do
   pod 'SkeletonView'
   pod 'ViewAnimator'
   pod 'Tabman'
+  pod 'SwiftWebVC', :git=>'https://github.com/tokenme/SwiftWebVC.git'
 end
 
 post_install do |installer|
