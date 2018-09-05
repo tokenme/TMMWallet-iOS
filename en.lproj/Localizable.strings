@@ -39,6 +39,10 @@
 "AppTasks" = "App Tasks";
 "ShareTasks" = "Share Tasks";
 "Earn" = "Earn";
+"MinusPoints" = "Punish";
 "PointsPerViewer" = "Points/Viewer";
 "MaxBonus" = "Max bonus";
 "Points" = "Points";
+"PointsPerInstall" = "Points/Install";
+"AppTaskSuccess" = "App Task Success";
+"AppTaskFailed" = "App Task Failed";

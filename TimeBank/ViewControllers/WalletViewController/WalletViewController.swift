@@ -73,7 +73,9 @@ class WalletViewController: UIViewController {
         }
         setupSummaryView()
         setupTableView()
-        refresh()
+        if userInfo != nil {
+            refresh()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,6 +92,11 @@ class WalletViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if userInfo == nil {
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {

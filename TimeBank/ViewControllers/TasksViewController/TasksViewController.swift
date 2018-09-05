@@ -67,6 +67,15 @@ class TasksViewController: TabmanViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if userInfo == nil {
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -99,5 +108,17 @@ extension TasksViewController: PageboyViewControllerDataSource {
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
+    }
+}
+
+extension TasksViewController: LoginViewDelegate {
+    func loginSucceeded(token: APIAccessToken?) {
+        if let vc = self.currentViewController {
+            if vc.isMember(of: AppTasksTableViewController.self) {
+                (vc as? AppTasksTableViewController)?.refresh()
+            } else if vc.isMember(of: ShareTaskTableViewCell.self) {
+                (vc as? ShareTasksTableViewController)?.refresh()
+            }
+        }
     }
 }

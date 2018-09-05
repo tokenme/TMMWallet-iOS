@@ -48,7 +48,9 @@ class ShareTasksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        refresh()
+        if userInfo != nil {
+            refresh()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,7 +85,7 @@ class ShareTasksTableViewController: UITableViewController {
         tableView.showAnimatedSkeleton()
     }
     
-    private func refresh() {
+    func refresh() {
         getTasks(true)
     }
 }
@@ -163,7 +165,7 @@ extension ShareTasksTableViewController {
         }
         
         TMMTaskService.getShares(
-            deviceId: TMMBeacon.shareInstance().deviceId(),
+            idfa: TMMBeacon.shareInstance().deviceId(),
             page: currentPage,
             pageSize: DefaultPageSize,
             provider: self.taskServiceProvider)

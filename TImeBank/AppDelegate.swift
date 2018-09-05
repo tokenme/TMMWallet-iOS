@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let tmmBeacon = TMMBeacon.initWithKey("e515a8899e7a43944a68502969154e4cb87a03a3", secret: "47535bf74a8072c0b6246b4fb73508eeb12f5982")
         tmmBeacon?.start()
+        AppTaskChecker.sharedInstance.start()
         return true
     }
 

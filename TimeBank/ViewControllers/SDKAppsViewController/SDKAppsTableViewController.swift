@@ -36,6 +36,7 @@ class SDKAppsTableViewController: UITableViewController {
     private var apps: [APIApp] = []
     
     private var loadingApps = false
+    private var presentingAppStore = false
     
     private var appServiceProvider = MoyaProvider<TMMAppService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
@@ -57,7 +58,9 @@ class SDKAppsTableViewController: UITableViewController {
             navigationItem.title = I18n.sdkApps.description
         }
         setupTableView()
-        refresh()
+        if userInfo != nil {
+            refresh()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +72,15 @@ class SDKAppsTableViewController: UITableViewController {
             }
             navigationController.navigationBar.isTranslucent = true
             navigationController.setNavigationBarHidden(false, animated: animated)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if userInfo == nil {
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
@@ -137,11 +149,18 @@ extension SDKAppsTableViewController {
         cell?.isSelected = false
         let app = self.apps[indexPath.row]
         guard let storeId = app.storeId else {return}
-        cell?.startLoading()
+        if DetectApp.isInstalled(app.bundleId) {
+            return
+        }
         showAppStore(storeId, cell: cell)
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let app = self.apps[indexPath.row]
+        guard let _ = app.storeId else {return false}
+        if DetectApp.isInstalled(app.bundleId) {
+            return false
+        }
         return true
     }
 }
@@ -162,16 +181,20 @@ extension SDKAppsTableViewController: SkeletonTableViewDataSource {
 extension SDKAppsTableViewController {
     
     private func showAppStore(_ storeId: UInt64, cell: SDKAppTableViewCell?) {
+        if self.presentingAppStore { return }
+        self.presentingAppStore = true
+        cell?.startLoading()
         let storeVC = SKStoreProductViewController.init()
         storeVC.delegate = self
         storeVC.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "\(storeId)"], completionBlock: {[weak self, weak cell] result, error in
             if let weakCell = cell {
                 weakCell.endLoading()
             }
+            guard let weakSelf = self else {return}
             if result {
-                guard let weakSelf = self else {return}
                 weakSelf.present(storeVC, animated: true, completion: nil)
             } else {
+                weakSelf.presentingAppStore = false
                 UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
             }
         })
@@ -229,7 +252,16 @@ extension SDKAppsTableViewController {
 extension SDKAppsTableViewController: SKStoreProductViewControllerDelegate {
     
     func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true, completion: nil)
+        viewController.dismiss(animated: true, completion: {[weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.presentingAppStore = false
+        })
     }
     
+}
+
+extension SDKAppsTableViewController: LoginViewDelegate {
+    func loginSucceeded(token: APIAccessToken?) {
+        self.refresh()
+    }
 }

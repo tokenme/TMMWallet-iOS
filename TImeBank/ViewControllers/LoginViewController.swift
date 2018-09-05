@@ -249,6 +249,5 @@ extension LoginViewController: CountryPickerViewDataSource {
 }
 
 public protocol LoginViewDelegate: NSObjectProtocol {
-    /// Called when the user selects a country from the list.
     func loginSucceeded(token: APIAccessToken?)
 }

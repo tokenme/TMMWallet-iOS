@@ -65,7 +65,9 @@ class DeviceAppsViewController: UIViewController {
         guard let _ = self.device else { return }
         setupSummaryView()
         setupTableView()
-        refresh()
+        if userInfo != nil {
+            refresh()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +79,15 @@ class DeviceAppsViewController: UIViewController {
             }
             navigationController.navigationBar.isTranslucent = true
             navigationController.setNavigationBarHidden(false, animated: animated)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if userInfo == nil {
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
@@ -252,5 +263,11 @@ extension DeviceAppsViewController {
                 UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
             }
         )
+    }
+}
+
+extension DeviceAppsViewController: LoginViewDelegate {
+    func loginSucceeded(token: APIAccessToken?) {
+        self.refresh()
     }
 }

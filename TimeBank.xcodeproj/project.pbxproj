@@ -40,6 +40,11 @@
 		1D151EC0213E759C007C87DD /* ShareTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D151EBE213E759C007C87DD /* ShareTaskTableViewCell.xib */; };
 		1D151EC3213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EC1213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift */; };
 		1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */; };
+		1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151EC8213F8CE2007C87DD /* APIAppTask.swift */; };
+		1D151ECC213F8F14007C87DD /* AppTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151ECA213F8F14007C87DD /* AppTaskTableViewCell.swift */; };
+		1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D151ECB213F8F14007C87DD /* AppTaskTableViewCell.xib */; };
+		1D151ECF213FB575007C87DD /* AppTaskChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151ECE213FB575007C87DD /* AppTaskChecker.swift */; };
+		1D151ED2213FC206007C87DD /* AppTaskFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151ED1213FC206007C87DD /* AppTaskFetcher.swift */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -128,6 +133,11 @@
 		1D151EBE213E759C007C87DD /* ShareTaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskTableViewCell.xib; sourceTree = "<group>"; };
 		1D151EC1213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingShareTaskTableViewCell.swift; sourceTree = "<group>"; };
 		1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingShareTaskTableViewCell.xib; sourceTree = "<group>"; };
+		1D151EC8213F8CE2007C87DD /* APIAppTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAppTask.swift; sourceTree = "<group>"; };
+		1D151ECA213F8F14007C87DD /* AppTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTaskTableViewCell.swift; sourceTree = "<group>"; };
+		1D151ECB213F8F14007C87DD /* AppTaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTaskTableViewCell.xib; sourceTree = "<group>"; };
+		1D151ECE213FB575007C87DD /* AppTaskChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTaskChecker.swift; sourceTree = "<group>"; };
+		1D151ED1213FC206007C87DD /* AppTaskFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTaskFetcher.swift; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -283,8 +293,19 @@
 				1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */,
 				1D151EBD213E759C007C87DD /* ShareTaskTableViewCell.swift */,
 				1D151EBE213E759C007C87DD /* ShareTaskTableViewCell.xib */,
+				1D151ECA213F8F14007C87DD /* AppTaskTableViewCell.swift */,
+				1D151ECB213F8F14007C87DD /* AppTaskTableViewCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		1D151ED0213FC1EE007C87DD /* AppTaskChecker */ = {
+			isa = PBXGroup;
+			children = (
+				1D151ECE213FB575007C87DD /* AppTaskChecker.swift */,
+				1D151ED1213FC206007C87DD /* AppTaskFetcher.swift */,
+			);
+			path = AppTaskChecker;
 			sourceTree = "<group>";
 		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
@@ -337,6 +358,7 @@
 				1D151E6E213D3161007C87DD /* APIDevice.swift */,
 				1D151E7A213D5DBA007C87DD /* APIApp.swift */,
 				1D151EB8213E734D007C87DD /* APIShareTask.swift */,
+				1D151EC8213F8CE2007C87DD /* APIAppTask.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -356,6 +378,7 @@
 				1D3441E5213CFB1200B8E157 /* Moya+ObjectMapper.swift */,
 				1D151E70213D3995007C87DD /* NSDecimalNumber+Utils.swift */,
 				1D151E78213D5434007C87DD /* Time+Utils.swift */,
+				1D151ED0213FC1EE007C87DD /* AppTaskChecker */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -511,6 +534,7 @@
 				1D151E59213D0048007C87DD /* InfoPlist.strings in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
+				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D344200213CFBB500B8E157 /* Info.plist in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
@@ -633,6 +657,7 @@
 				1D3441FC213CFBB500B8E157 /* SpinerLayer.swift in Sources */,
 				1D151EA8213E54A4007C87DD /* NSString+Encrypt.m in Sources */,
 				1D151EB9213E734D007C87DD /* APIShareTask.swift in Sources */,
+				1D151ED2213FC206007C87DD /* AppTaskFetcher.swift in Sources */,
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
 				1D3441C5213CF74800B8E157 /* TMMError.swift in Sources */,
 				1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */,
@@ -649,8 +674,10 @@
 				1D151EC3213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift in Sources */,
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
 				1D151E93213E2FCA007C87DD /* LoadingTableViewCell.swift in Sources */,
+				1D151ECC213F8F14007C87DD /* AppTaskTableViewCell.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
+				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
 				1D3441EF213CFBA300B8E157 /* TweePlaceholderTextField.swift in Sources */,
@@ -661,6 +688,7 @@
 				1D151EBF213E759C007C87DD /* ShareTaskTableViewCell.swift in Sources */,
 				1D3441DC213CF98E00B8E157 /* String+Utils.swift in Sources */,
 				1D151EBB213E744D007C87DD /* TMMTaskService.swift in Sources */,
+				1D151ECF213FB575007C87DD /* AppTaskChecker.swift in Sources */,
 				1D151E82213D6394007C87DD /* DeviceAppTableViewCell.swift in Sources */,
 				1D151E9B213E392C007C87DD /* SDKAppTableViewCell.swift in Sources */,
 				1D3441E6213CFB1200B8E157 /* Moya+ObjectMapper.swift in Sources */,
