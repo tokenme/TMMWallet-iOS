@@ -36,8 +36,9 @@
 "Installed" = "Installed";
 
 // Tasks
-"AppTasks" = "App Tasks";
-"ShareTasks" = "Share Tasks";
+"EarnPointsTasks" = "Earn Points";
+"AppTasks" = "Install Apps";
+"ShareTasks" = "Share Links";
 "Earn" = "Earn";
 "MinusPoints" = "Punish";
 "PointsPerViewer" = "Points/Viewer";

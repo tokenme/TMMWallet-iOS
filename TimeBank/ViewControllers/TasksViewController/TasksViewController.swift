@@ -43,8 +43,9 @@ class TasksViewController: TabmanViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = true
-            navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationController.navigationBar.shadowImage = UIImage()
+            //navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            //navigationController.navigationBar.shadowImage = UIImage()
+            navigationItem.title = I18n.earnPointsTasks.description
         }
         
         // configure the bar
@@ -63,7 +64,7 @@ class TasksViewController: TabmanViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = true
-            navigationController.setNavigationBarHidden(true, animated: animated)
+            navigationController.setNavigationBarHidden(false, animated: animated)
         }
     }
     
@@ -78,7 +79,6 @@ class TasksViewController: TabmanViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 

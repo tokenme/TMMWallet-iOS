@@ -962,7 +962,7 @@
 					"-framework",
 					"\"moa\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tokenmama.TimeBank;
+				PRODUCT_BUNDLE_IDENTIFIER = io.tokenmama.TimeBank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Dependencies/DetectApp/TimeBank-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1052,7 +1052,7 @@
 					"-framework",
 					"\"moa\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tokenmama.TimeBank;
+				PRODUCT_BUNDLE_IDENTIFIER = io.tokenmama.TimeBank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Dependencies/DetectApp/TimeBank-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

@@ -36,8 +36,9 @@
 "Installed" = "已安装";
 
 // Tasks
-"AppTasks" = "下载应用任务";
-"ShareTasks" = "分享任务";
+"EarnPointsTasks" = "做任务赚积分";
+"AppTasks" = "安装应用";
+"ShareTasks" = "分享链接";
 "Earn" = "获得";
 "MinusPoints" = "扣除";
 "PointsPerViewer" = "积分/分享后浏览用户";

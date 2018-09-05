@@ -33,6 +33,7 @@ enum I18n: CustomStringConvertible {
     case sdkApps
     case install
     case installed
+    case earnPointsTasks
     case appTasks
     case shareTasks
     case earn
@@ -94,6 +95,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Install", comment: "Install")
         case .installed:
             return NSLocalizedString("Installed", comment: "Installed")
+        case .earnPointsTasks:
+            return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .appTasks:
             return NSLocalizedString("AppTasks", comment: "App Tasks")
         case .shareTasks:
