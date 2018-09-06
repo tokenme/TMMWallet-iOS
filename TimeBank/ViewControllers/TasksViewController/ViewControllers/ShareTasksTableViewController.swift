@@ -16,6 +16,7 @@ import ViewAnimator
 import TMMSDK
 import SwiftWebVC
 import Kingfisher
+import EmptyDataSet_Swift
 
 fileprivate let DefaultPageSize: UInt = 10
 
@@ -71,6 +72,9 @@ class ShareTasksTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 125.0
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
@@ -149,6 +153,24 @@ extension ShareTasksTableViewController: SkeletonTableViewDataSource {
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return LoadingShareTaskTableViewCell.self.reuseIdentifier
+    }
+}
+
+extension ShareTasksTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
+        return self.tasks.count == 0
+    }
+    
+    func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
+        return false
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyShareTasksTitle.description)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyShareTasksDesc.description)
     }
 }
 

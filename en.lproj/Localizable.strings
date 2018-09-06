@@ -50,3 +50,9 @@
 "AppTaskSuccess" = "App Task Success";
 "AppTaskFailed" = "App Task Failed";
 "TaskRecords" = "Task Records";
+"EmptyTaskRecordsTitle" = "No Task Records";
+"EmptyTaskRecordsDesc" = "Win points with complete tasks now!";
+"EmptyAppTasksTitle" = "No Available APP Install Tasks";
+"EmptyAppTasksDesc" = "Please come back and check later.";
+"EmptyShareTasksTitle" = "No Available Share Link Tasks";
+"EmptyShareTasksDesc" = "Please come back and check later.";

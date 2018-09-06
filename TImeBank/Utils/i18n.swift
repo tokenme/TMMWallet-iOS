@@ -47,6 +47,12 @@ enum I18n: CustomStringConvertible {
     case appTaskSuccess
     case appTaskFailed
     case taskRecords
+    case emptyTaskRecordsTitle
+    case emptyTaskRecordsDesc
+    case emptyAppTasksTitle
+    case emptyAppTasksDesc
+    case emptyShareTasksTitle
+    case emptyShareTasksDesc
     
     var description : String {
         switch self {
@@ -126,6 +132,18 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("AppTaskFailed", comment: "appTaskFailed")
         case .taskRecords:
             return NSLocalizedString("TaskRecords", comment: "Task Records")
+        case .emptyTaskRecordsTitle:
+            return NSLocalizedString("EmptyTaskRecordsTitle", comment: "EmptyTaskRecordsTitle")
+        case .emptyTaskRecordsDesc:
+            return NSLocalizedString("EmptyTaskRecordsDesc", comment: "EmptyTaskRecordsDesc")
+        case .emptyAppTasksTitle:
+            return NSLocalizedString("EmptyAppTasksTitle", comment: "EmptyAppTasksTitle")
+        case .emptyAppTasksDesc:
+            return NSLocalizedString("EmptyAppTasksDesc", comment: "EmptyAppTasksDesc")
+        case .emptyShareTasksTitle:
+            return NSLocalizedString("EmptyShareTasksTitle", comment: "EmptyShareTasksTitle")
+        case .emptyShareTasksDesc:
+            return NSLocalizedString("EmptyShareTasksDesc", comment: "EmptyShareTasksDesc")
         }
     }
 }

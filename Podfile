@@ -25,6 +25,8 @@ target 'TimeBank' do
   pod 'ViewAnimator'
   pod 'Tabman'
   pod 'SwiftWebVC', :git=>'https://github.com/tokenme/SwiftWebVC.git'
+  pod 'EmptyDataSet-Swift'
+  pod 'SnapKit'
 end
 
 post_install do |installer|

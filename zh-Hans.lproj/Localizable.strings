@@ -50,3 +50,9 @@
 "AppTaskSuccess" = "安装应用任务成功";
 "AppTaskFailed" = "安装应用任务被卸载";
 "TaskRecords" = "任务记录";
+"EmptyTaskRecordsTitle" = "还没有任务记录";
+"EmptyTaskRecordsDesc" = "马上做任务赢积分吧!";
+"EmptyAppTasksTitle" = "暂时还没有应用安装任务";
+"EmptyAppTasksDesc" = "请稍后回来查看任务列表。";
+"EmptyShareTasksTitle" = "暂时还没有分享任务";
+"EmptyShareTasksDesc" = "请稍后回来查看任务列表。";

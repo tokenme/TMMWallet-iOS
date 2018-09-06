@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double ToucanVersionNumber;
-FOUNDATION_EXPORT const unsigned char ToucanVersionString[];
+FOUNDATION_EXPORT double EmptyDataSet_SwiftVersionNumber;
+FOUNDATION_EXPORT const unsigned char EmptyDataSet_SwiftVersionString[];
 

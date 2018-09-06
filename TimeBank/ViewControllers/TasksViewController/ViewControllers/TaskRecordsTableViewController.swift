@@ -14,6 +14,7 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import Kingfisher
+import EmptyDataSet_Swift
 
 fileprivate let DefaultPageSize: UInt = 10
 
@@ -94,6 +95,9 @@ class TaskRecordsTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.refresh()
@@ -150,6 +154,24 @@ extension TaskRecordsTableViewController {
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+}
+
+extension TaskRecordsTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
+        return self.tasks.count == 0
+    }
+    
+    func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
+        return false
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyTaskRecordsTitle.description)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyTaskRecordsDesc.description)
     }
 }
 
