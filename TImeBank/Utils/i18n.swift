@@ -41,9 +41,12 @@ enum I18n: CustomStringConvertible {
     case pointsPerViewer
     case maxBonus
     case points
+    case view
+    case times
     case pointsPerInstall
     case appTaskSuccess
     case appTaskFailed
+    case taskRecords
     
     var description : String {
         switch self {
@@ -111,12 +114,18 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("MaxBonus", comment: "Max bonus")
         case .points:
             return NSLocalizedString("Points", comment: "Points")
+        case .view:
+            return NSLocalizedString("View", comment: "View")
+        case .times:
+            return NSLocalizedString("Times", comment: "times")
         case .pointsPerInstall:
             return NSLocalizedString("PointsPerInstall", comment: "Points/Install")
         case .appTaskSuccess:
             return NSLocalizedString("AppTaskSuccess", comment: "appTaskSuccess")
         case .appTaskFailed:
             return NSLocalizedString("AppTaskFailed", comment: "appTaskFailed")
+        case .taskRecords:
+            return NSLocalizedString("TaskRecords", comment: "Task Records")
         }
     }
 }

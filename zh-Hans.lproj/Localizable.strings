@@ -44,6 +44,9 @@
 "PointsPerViewer" = "积分/分享后浏览用户";
 "MaxBonus" = "最多奖励";
 "Points" = "积分";
+"View" = "浏览";
+"Times" = "次";
 "PointsPerInstall" = "积分/安装";
 "AppTaskSuccess" = "安装应用任务成功";
 "AppTaskFailed" = "安装应用任务被卸载";
+"TaskRecords" = "任务记录";

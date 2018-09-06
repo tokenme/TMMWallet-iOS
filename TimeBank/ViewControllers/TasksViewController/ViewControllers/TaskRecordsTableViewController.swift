@@ -1,8 +1,8 @@
 //
-//  AppTasksTableViewController.swift
+//  TaskRecordsTableViewController.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/9/4.
+//  Created by Syd Xu on 2018/9/6.
 //  Copyright © 2018年 Tokenmama.io. All rights reserved.
 //
 
@@ -13,14 +13,11 @@ import Hydra
 import ZHRefresh
 import SkeletonView
 import ViewAnimator
-import TMMSDK
-import SwiftWebVC
 import Kingfisher
-import StoreKit
 
 fileprivate let DefaultPageSize: UInt = 10
 
-class AppTasksTableViewController: UITableViewController {
+class TaskRecordsTableViewController: UITableViewController {
     
     private var userInfo: APIUser? {
         get {
@@ -36,7 +33,7 @@ class AppTasksTableViewController: UITableViewController {
     
     private var currentPage: UInt = 1
     
-    private var tasks: [APIAppTask] = []
+    private var tasks: [APITaskRecord] = []
     
     private var loadingTasks = false
     private var presentingAppStore = false
@@ -49,9 +46,32 @@ class AppTasksTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.transitioningDelegate = self
+        if let navigationController = self.navigationController {
+            if #available(iOS 11.0, *) {
+                navigationController.navigationBar.prefersLargeTitles = true
+                self.navigationItem.largeTitleDisplayMode = .automatic;
+            }
+            navigationController.navigationBar.isTranslucent = true
+            //navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            //navigationController.navigationBar.shadowImage = UIImage()
+            navigationItem.title = I18n.taskRecords.description
+        }
         setupTableView()
         if userInfo != nil {
             refresh()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let navigationController = self.navigationController {
+            if #available(iOS 11.0, *) {
+                navigationController.navigationBar.prefersLargeTitles = true
+                self.navigationItem.largeTitleDisplayMode = .automatic;
+            }
+            navigationController.navigationBar.isTranslucent = true
+            navigationController.setNavigationBarHidden(false, animated: animated)
         }
     }
     
@@ -59,13 +79,14 @@ class AppTasksTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
     
-    static func instantiate() -> AppTasksTableViewController
+    static func instantiate() -> TaskRecordsTableViewController
     {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AppTasksTableViewController") as! AppTasksTableViewController
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TaskRecordsTableViewController") as! TaskRecordsTableViewController
     }
     
     private func setupTableView() {
-        tableView.register(cellType: AppTaskTableViewCell.self)
+        tableView.register(cellType: AppTaskRecordTableViewCell.self)
+        tableView.register(cellType: ShareTaskRecordTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -93,9 +114,20 @@ class AppTasksTableViewController: UITableViewController {
     }
 }
 
-// MARK: - Table view data source
-extension AppTasksTableViewController {
+extension TaskRecordsTableViewController: UIViewControllerTransitioningDelegate {
     
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
+    }
+    
+}
+
+// MARK: - Table view data source
+extension TaskRecordsTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -105,30 +137,23 @@ extension AppTasksTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(for: indexPath) as AppTaskTableViewCell
         let task = self.tasks[indexPath.row]
-        cell.fill(task, installed: DetectApp.isInstalled(task.bundleId))
+        if task.type == .app {
+            let cell = tableView.dequeueReusableCell(for: indexPath) as AppTaskRecordTableViewCell
+            cell.fill(task)
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskRecordTableViewCell
+        cell.fill(task)
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? AppTaskTableViewCell
-        cell?.isSelected = false
-        let task = self.tasks[indexPath.row]
-        showAppStore(task, cell: cell)
-    }
-    
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        let task = self.tasks[indexPath.row]
-        guard let _ = task.storeId else {return false}
-        if DetectApp.isInstalled(task.bundleId) {
-            return false
-        }
-        return true
+        return false
     }
 }
 
-extension AppTasksTableViewController: SkeletonTableViewDataSource {
+extension TaskRecordsTableViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
         return 1
@@ -141,45 +166,7 @@ extension AppTasksTableViewController: SkeletonTableViewDataSource {
     }
 }
 
-extension AppTasksTableViewController {
-    
-    private func showAppStore(_ task: APIAppTask, cell: AppTaskTableViewCell?) {
-        guard let storeId = task.storeId else {return}
-        if self.presentingAppStore { return }
-        self.presentingAppStore = true
-        cell?.startLoading()
-        let storeVC = SKStoreProductViewController.init()
-        storeVC.delegate = self
-        storeVC.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "\(storeId)"], completionBlock: {[weak self, weak cell, weak task] result, error in
-            if let weakCell = cell {
-                weakCell.endLoading()
-            }
-            guard let weakSelf = self else {return}
-            if result {
-                weakSelf.present(storeVC, animated: true, completion: nil)
-                guard let weakTask = task else {return}
-                weakSelf.preInstall(weakTask)
-            } else {
-                weakSelf.presentingAppStore = false
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
-            }
-        })
-    }
-    
-    private func preInstall(_ task: APIAppTask) {
-        guard let taskId = task.id else {return}
-        TMMTaskService.appInstall(
-            idfa: TMMBeacon.shareInstance().deviceId(),
-            bundleId: task.bundleId,
-            taskId: taskId,
-            status: 0,
-            provider: self.taskServiceProvider)
-            .then(in: .background, { task in
-                AppTaskChecker.sharedInstance.addTask(task)
-            }).catch(in: .main, {error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            })
-    }
+extension TaskRecordsTableViewController {
     
     private func getTasks(_ refresh: Bool) {
         if self.loadingTasks {
@@ -191,8 +178,7 @@ extension AppTasksTableViewController {
             currentPage = 1
         }
         
-        TMMTaskService.getApps(
-            idfa: TMMBeacon.shareInstance().deviceId(),
+        TMMTaskService.getRecords(
             page: currentPage,
             pageSize: DefaultPageSize,
             provider: self.taskServiceProvider)
@@ -231,15 +217,3 @@ extension AppTasksTableViewController {
         )
     }
 }
-
-extension AppTasksTableViewController: SKStoreProductViewControllerDelegate {
-    
-    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true, completion: {[weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.presentingAppStore = false
-        })
-    }
-    
-}
-

@@ -44,6 +44,9 @@
 "PointsPerViewer" = "Points/Viewer";
 "MaxBonus" = "Max bonus";
 "Points" = "Points";
+"View" = "View";
+"Times" = "times";
 "PointsPerInstall" = "Points/Install";
 "AppTaskSuccess" = "App Task Success";
 "AppTaskFailed" = "App Task Failed";
+"TaskRecords" = "Task Records";

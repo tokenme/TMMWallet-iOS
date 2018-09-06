@@ -45,6 +45,12 @@
 		1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D151ECB213F8F14007C87DD /* AppTaskTableViewCell.xib */; };
 		1D151ECF213FB575007C87DD /* AppTaskChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151ECE213FB575007C87DD /* AppTaskChecker.swift */; };
 		1D151ED2213FC206007C87DD /* AppTaskFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151ED1213FC206007C87DD /* AppTaskFetcher.swift */; };
+		1D1D6FA52140F2270001ED49 /* APITaskRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FA42140F2270001ED49 /* APITaskRecord.swift */; };
+		1D1D6FA92140F3F00001ED49 /* TaskRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FA82140F3F00001ED49 /* TaskRecordsTableViewController.swift */; };
+		1D1D6FAC2140F5380001ED49 /* AppTaskRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FAA2140F5380001ED49 /* AppTaskRecordTableViewCell.swift */; };
+		1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FAB2140F5380001ED49 /* AppTaskRecordTableViewCell.xib */; };
+		1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FAE2140F5620001ED49 /* ShareTaskRecordTableViewCell.swift */; };
+		1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FAF2140F5620001ED49 /* ShareTaskRecordTableViewCell.xib */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -138,6 +144,12 @@
 		1D151ECB213F8F14007C87DD /* AppTaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTaskTableViewCell.xib; sourceTree = "<group>"; };
 		1D151ECE213FB575007C87DD /* AppTaskChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTaskChecker.swift; sourceTree = "<group>"; };
 		1D151ED1213FC206007C87DD /* AppTaskFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTaskFetcher.swift; sourceTree = "<group>"; };
+		1D1D6FA42140F2270001ED49 /* APITaskRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITaskRecord.swift; sourceTree = "<group>"; };
+		1D1D6FA82140F3F00001ED49 /* TaskRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRecordsTableViewController.swift; sourceTree = "<group>"; };
+		1D1D6FAA2140F5380001ED49 /* AppTaskRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTaskRecordTableViewCell.swift; sourceTree = "<group>"; };
+		1D1D6FAB2140F5380001ED49 /* AppTaskRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTaskRecordTableViewCell.xib; sourceTree = "<group>"; };
+		1D1D6FAE2140F5620001ED49 /* ShareTaskRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskRecordTableViewCell.swift; sourceTree = "<group>"; };
+		1D1D6FAF2140F5620001ED49 /* ShareTaskRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskRecordTableViewCell.xib; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -281,6 +293,7 @@
 			children = (
 				1D151EB4213E6E20007C87DD /* AppTasksTableViewController.swift */,
 				1D151EB6213E6E73007C87DD /* ShareTasksTableViewController.swift */,
+				1D1D6FA82140F3F00001ED49 /* TaskRecordsTableViewController.swift */,
 				1D151EBC213E7585007C87DD /* Cell */,
 			);
 			path = ViewControllers;
@@ -289,6 +302,10 @@
 		1D151EBC213E7585007C87DD /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				1D1D6FAA2140F5380001ED49 /* AppTaskRecordTableViewCell.swift */,
+				1D1D6FAB2140F5380001ED49 /* AppTaskRecordTableViewCell.xib */,
+				1D1D6FAE2140F5620001ED49 /* ShareTaskRecordTableViewCell.swift */,
+				1D1D6FAF2140F5620001ED49 /* ShareTaskRecordTableViewCell.xib */,
 				1D151EC1213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift */,
 				1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */,
 				1D151EBD213E759C007C87DD /* ShareTaskTableViewCell.swift */,
@@ -359,6 +376,7 @@
 				1D151E7A213D5DBA007C87DD /* APIApp.swift */,
 				1D151EB8213E734D007C87DD /* APIShareTask.swift */,
 				1D151EC8213F8CE2007C87DD /* APIAppTask.swift */,
+				1D1D6FA42140F2270001ED49 /* APITaskRecord.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -532,6 +550,7 @@
 				1D151E9C213E392C007C87DD /* SDKAppTableViewCell.xib in Resources */,
 				1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */,
 				1D151E59213D0048007C87DD /* InfoPlist.strings in Resources */,
+				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
@@ -539,6 +558,7 @@
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
 				1D3441DA213CF94F00B8E157 /* Default-568h@2x.png in Resources */,
+				1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */,
 				1D151E86213D69A9007C87DD /* Login.storyboard in Resources */,
 				1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */,
 				1D151EC0213E759C007C87DD /* ShareTaskTableViewCell.xib in Resources */,
@@ -670,6 +690,7 @@
 				1D3441D7213CF94200B8E157 /* DefaultKeys.swift in Sources */,
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D151E7E213D60FC007C87DD /* DeviceAppsViewController.swift in Sources */,
+				1D1D6FA52140F2270001ED49 /* APITaskRecord.swift in Sources */,
 				1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */,
 				1D151EC3213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift in Sources */,
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
@@ -683,6 +704,7 @@
 				1D3441EF213CFBA300B8E157 /* TweePlaceholderTextField.swift in Sources */,
 				1D3441DF213CF9BD00B8E157 /* Font.swift in Sources */,
 				1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */,
+				1D1D6FA92140F3F00001ED49 /* TaskRecordsTableViewController.swift in Sources */,
 				1D3441F0213CFBA300B8E157 /* TweeBorderedTextField.swift in Sources */,
 				1D151EB7213E6E73007C87DD /* ShareTasksTableViewController.swift in Sources */,
 				1D151EBF213E759C007C87DD /* ShareTaskTableViewCell.swift in Sources */,
@@ -704,10 +726,12 @@
 				1D3441FE213CFBB500B8E157 /* FadeTransition.swift in Sources */,
 				1D151E7B213D5DBA007C87DD /* APIApp.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
+				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,
 				1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */,
 				1D151EA4213E4D9D007C87DD /* DetectApp.m in Sources */,
 				1D3441D6213CF94200B8E157 /* Alert.swift in Sources */,
 				1D151E9E213E3C56007C87DD /* TMMAppService.swift in Sources */,
+				1D1D6FAC2140F5380001ED49 /* AppTaskRecordTableViewCell.swift in Sources */,
 				1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -887,6 +911,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 54X3D7LXEG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -894,6 +919,7 @@
 					"$(PROJECT_DIR)/TimeBank/Dependencies",
 				);
 				INFOPLIST_FILE = TimeBank/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -964,6 +990,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.tokenmama.TimeBank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Dependencies/DetectApp/TimeBank-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -977,6 +1005,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 54X3D7LXEG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -984,6 +1013,7 @@
 					"$(PROJECT_DIR)/TimeBank/Dependencies",
 				);
 				INFOPLIST_FILE = TimeBank/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1054,6 +1084,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.tokenmama.TimeBank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Dependencies/DetectApp/TimeBank-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -46,6 +46,8 @@ class TasksViewController: TabmanViewController {
             //navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             //navigationController.navigationBar.shadowImage = UIImage()
             navigationItem.title = I18n.earnPointsTasks.description
+            let recordButtonItem = UIBarButtonItem(title: I18n.taskRecords.description, style: .plain, target: self, action: #selector(showTaskRecords))
+            navigationItem.rightBarButtonItem = recordButtonItem
         }
         
         // configure the bar
@@ -81,7 +83,10 @@ class TasksViewController: TabmanViewController {
         super.didReceiveMemoryWarning()
     }
     
-
+    @objc func showTaskRecords() {
+        let vc = TaskRecordsTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension TasksViewController: UIViewControllerTransitioningDelegate {

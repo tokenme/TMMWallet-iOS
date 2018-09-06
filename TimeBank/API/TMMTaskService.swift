@@ -15,6 +15,7 @@ enum TMMTaskService {
     case apps(idfa: String, page: UInt, pageSize: UInt)
     case install(idfa: String, bundleId: String, taskId: UInt64, status: Int8)
     case appsCheck(idfa: String)
+    case records(page: UInt, pageSize: UInt)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -36,11 +37,13 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
             return "/app/install"
         case .appsCheck(_):
             return "/apps/check"
+        case .records(_, _):
+            return "/records"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .shares, .apps, .appsCheck:
+        case .shares, .apps, .appsCheck, .records:
             return .get
         case .install:
             return .post
@@ -56,11 +59,13 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "bundle_id": bundleId, "task_id": taskId, "status": status], encoding: JSONEncoding.default)
         case let .appsCheck(idfa):
             return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue], encoding: URLEncoding.default)
+        case let .records(page, pageSize):
+            return .requestParameters(parameters: ["page": page, "page_size": pageSize], encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
-        case .shares(_, _, _), .apps(_, _, _), .appsCheck(_):
+        case .shares(_, _, _), .apps(_, _, _), .appsCheck(_), .records(_, _):
             return "[]".utf8Encoded
         case .install(_, _, _, _):
             return "{}".utf8Encoded
@@ -174,6 +179,39 @@ extension TMMTaskService {
                     do {
                         let tasks: [APIAppTask] = try response.mapArray(APIAppTask.self)
                         resolve(tasks)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getRecords(page: UInt, pageSize: UInt, provider: MoyaProvider<TMMTaskService>) -> Promise<[APITaskRecord]> {
+        return Promise<[APITaskRecord]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .records(page: page, pageSize: pageSize)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let records: [APITaskRecord] = try response.mapArray(APITaskRecord.self)
+                        resolve(records)
                     } catch {
                         do {
                             let err = try response.mapObject(APIResponse.self)
