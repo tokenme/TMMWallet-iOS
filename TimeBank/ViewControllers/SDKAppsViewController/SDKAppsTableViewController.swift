@@ -147,6 +147,7 @@ extension SDKAppsTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? SDKAppTableViewCell
         cell?.isSelected = false
+        if self.apps.count < indexPath.row + 1 { return }
         let app = self.apps[indexPath.row]
         guard let storeId = app.storeId else {return}
         if DetectApp.isInstalled(app.bundleId) {
@@ -161,7 +162,7 @@ extension SDKAppsTableViewController {
         if DetectApp.isInstalled(app.bundleId) {
             return false
         }
-        return true
+        return !self.loadingApps
     }
 }
 

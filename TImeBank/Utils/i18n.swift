@@ -17,6 +17,9 @@ enum I18n: CustomStringConvertible {
     case invalidPasswordError
     case duplicateUserError
     case inactivatedUserError
+    case notEnoughTokenError
+    case notEnoughPointsError
+    case invalidMinPointsError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -33,6 +36,16 @@ enum I18n: CustomStringConvertible {
     case sdkApps
     case install
     case installed
+    case exchangeTMM
+    case pointsAmount
+    case currentPointsTMMExchangeRate
+    case emptyChangePoints
+    case exceedChangePoints
+    case pointsTMMChangeAmount
+    case exchange
+    case viewTransaction
+    case newTransactionTitle
+    case newTransactionDesc
     case earnPointsTasks
     case appTasks
     case shareTasks
@@ -72,6 +85,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("DuplicateUserError", comment: "User already exists!")
         case .inactivatedUserError:
             return NSLocalizedString("InactivatedUserError", comment: "User not activated")
+        case .notEnoughTokenError:
+            return NSLocalizedString("NotEnoughTokenError", comment: "notEnoughTokenError")
+        case .notEnoughPointsError:
+            return NSLocalizedString("NotEnoughPointsError", comment: "notEnoughPointsError")
+        case .invalidMinPointsError:
+            return NSLocalizedString("InvalidMinPointsError", comment: "invalidMinPoints")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .emptyPassword:
@@ -104,6 +123,26 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Install", comment: "Install")
         case .installed:
             return NSLocalizedString("Installed", comment: "Installed")
+        case .exchangeTMM:
+            return NSLocalizedString("ExchangeTMM", comment: "Exchange TMM")
+        case .pointsAmount:
+            return NSLocalizedString("PointsAmount", comment: "Points Amount")
+        case .currentPointsTMMExchangeRate:
+            return NSLocalizedString("CurrentPointsTMMExchangeRate", comment: "CurrentPointsTMMExchangeRate")
+        case .emptyChangePoints:
+            return NSLocalizedString("EmptyChangePoints", comment: "Empty change points")
+        case .exceedChangePoints:
+            return NSLocalizedString("ExceedChangePoints", comment: "Exceeded max change points")
+        case .pointsTMMChangeAmount:
+            return NSLocalizedString("PointsTMMChangeAmount", comment: "PointsTMMChangeAmount")
+        case .exchange:
+            return NSLocalizedString("Exchange", comment: "Change")
+        case .viewTransaction:
+            return NSLocalizedString("ViewTransaction", comment: "View Transaction")
+        case .newTransactionTitle:
+            return NSLocalizedString("NewTransactionTitle", comment: "New Transaction")
+        case .newTransactionDesc:
+            return NSLocalizedString("NewTransactionDesc", comment: "Transaction Receipt")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .appTasks:

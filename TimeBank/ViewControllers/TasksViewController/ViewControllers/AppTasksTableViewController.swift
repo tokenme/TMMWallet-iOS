@@ -118,6 +118,7 @@ extension AppTasksTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? AppTaskTableViewCell
         cell?.isSelected = false
+        if self.tasks.count < indexPath.row + 1 { return }
         let task = self.tasks[indexPath.row]
         showAppStore(task, cell: cell)
     }
@@ -128,7 +129,7 @@ extension AppTasksTableViewController {
         if DetectApp.isInstalled(task.bundleId) {
             return false
         }
-        return true
+        return !self.loadingTasks
     }
 }
 

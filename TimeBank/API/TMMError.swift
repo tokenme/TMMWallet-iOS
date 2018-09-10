@@ -15,11 +15,8 @@ enum TMMAPIResponseType: Int {
     case duplicateUser = 202
     case unactivatedUser = 502
     case notEnoughToken = 600
-    case notEnoughTokenProduct = 601
-    case notEnoughTokenTask = 700
-    case duplicateEvidence = 701
-    case tokenUnderConstruction = 800
-    case productUnderConstruction = 801
+    case notEnoughPoints = 700
+    case invalidMinPoints = 701
 }
 
 enum TMMAPIError: Error, CustomStringConvertible {
@@ -31,11 +28,8 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case duplicateUser
     case unactivatedUser
     case notEnoughToken
-    case notEnoughTokenProduct
-    case notEnoughTokenTask
-    case duplicateEvidence
-    case tokenUnderConstruction
-    case productUnderConstruction
+    case notEnoughPoints
+    case invalidMinPoints
     case unknown(msg: String)
     case ignore
     
@@ -44,17 +38,14 @@ enum TMMAPIError: Error, CustomStringConvertible {
         // Use Internationalization, as appropriate.
         case .badRequest(let msg): return msg
         case .internalError(let msg): return msg
-        case .notFound: return "请求不存在"
-        case .unauthorized: return "用户未授权"
-        case .invalidPassword: return "密码错误"
-        case .duplicateUser: return "用户已经注册"
-        case .unactivatedUser: return "用户未激活"
-        case .notEnoughToken: return "钱包代币不足"
-        case .notEnoughTokenProduct: return "已售罄"
-        case .notEnoughTokenTask: return "超过参与人数上限"
-        case .duplicateEvidence: return "请勿重复提交证明"
-        case .tokenUnderConstruction: return "代币未创建完成，请等待"
-        case .productUnderConstruction: return "代币权益未创建完成，请等待"
+        case .notFound: return I18n.notFoundError.description
+        case .unauthorized: return I18n.unauthorizedError.description
+        case .invalidPassword: return I18n.invalidPasswordError.description
+        case .duplicateUser: return I18n.duplicateUserError.description
+        case .unactivatedUser: return I18n.inactivatedUserError.description
+        case .notEnoughToken: return I18n.notEnoughTokenError.description
+        case .notEnoughPoints: return I18n.notEnoughPointsError.description
+        case .invalidMinPoints: return I18n.invalidMinPointsError.description
         case .unknown(let msg): return msg
         case .ignore: return "ignore"
         }
@@ -81,16 +72,10 @@ extension TMMAPIError {
                 return TMMAPIError.unactivatedUser
             case .notEnoughToken:
                 return TMMAPIError.notEnoughToken
-            case .notEnoughTokenProduct:
-                return TMMAPIError.notEnoughTokenProduct
-            case .notEnoughTokenTask:
-                return TMMAPIError.notEnoughTokenTask
-            case .duplicateEvidence:
-                return TMMAPIError.duplicateEvidence
-            case .tokenUnderConstruction:
-                return TMMAPIError.tokenUnderConstruction
-            case .productUnderConstruction:
-                return TMMAPIError.productUnderConstruction
+            case .notEnoughPoints:
+                return TMMAPIError.notEnoughPoints
+            case .invalidMinPoints:
+                return TMMAPIError.invalidMinPoints
             }
         }
         return TMMAPIError.unknown(msg: msg)

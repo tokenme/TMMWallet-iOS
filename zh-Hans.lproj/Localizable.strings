@@ -14,6 +14,9 @@
 "InvalidPasswordError" = "密码错误";
 "DuplicateUserError" = "用户已经注册";
 "InactivatedUserError" = "用户未激活";
+"NotEnoughTokenError" = "没有足够的代币";
+"NotEnoughPointsError" = "没有足够的积分";
+"InvalidMinPointsError" = "至少需要 #points# 积分";
 
 // Login
 "Password" = "密码";
@@ -34,6 +37,16 @@
 "SDKApps" = "可挖矿应用";
 "Install" = "安装";
 "Installed" = "已安装";
+"ExchangeTMM" = "积分兑换TMM";
+"PointsAmount" = "积分数量";
+"CurrentPointsTMMExchangeRate" = "当前兑换率：1 积分 ≈ #rate# TMM";
+"EmptyChangePoints" = "请输入积分数量";
+"ExceedChangePoints" = "超出最大积分数";
+"PointsTMMChangeAmount" = "兑换 #amount# TMM";
+"Exchange" = "兑换";
+"ViewTransaction" = "查看交易";
+"NewTransactionTitle" = "新交易";
+"NewTransactionDesc" = "交易回执: #receipt#";
 
 // Tasks
 "EarnPointsTasks" = "做任务赚积分";

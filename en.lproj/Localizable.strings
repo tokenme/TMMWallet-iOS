@@ -14,6 +14,9 @@
 "InvalidPasswordError" = "Invalid Password";
 "DuplicateUserError" = "User Already Exists";
 "InactivatedUserError" = "User not activated";
+"NotEnoughTokenError" = "Don't have enough token";
+"NotEnoughPointsError" = "Don't have enough points";
+"InvalidMinPointsError" = "Need at least #points# points";
 
 // Login
 "Password" = "Password";
@@ -34,6 +37,16 @@
 "SDKApps" = "Minable Apps";
 "Install" = "Install";
 "Installed" = "Installed";
+"ExchangeTMM" = "Points->TMM Exchange";
+"PointsAmount" = "Points Amount";
+"CurrentPointsTMMExchangeRate" = "Current Exchange Rate: 1 Points ≈ #rate# TMM";
+"EmptyChangePoints" = "Points amount must be input";
+"ExceedChangePoints" = "Exceeded max points";
+"PointsTMMChangeAmount" = "Equal to #amount# TMM";
+"Exchange" = "Change";
+"ViewTransaction" = "View Transaction";
+"NewTransactionTitle" = "New Transaction";
+"NewTransactionDesc" = "Receipt: #receipt#";
 
 // Tasks
 "EarnPointsTasks" = "Earn Points";

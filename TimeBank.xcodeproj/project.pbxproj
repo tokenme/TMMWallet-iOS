@@ -51,6 +51,13 @@
 		1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FAB2140F5380001ED49 /* AppTaskRecordTableViewCell.xib */; };
 		1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FAE2140F5620001ED49 /* ShareTaskRecordTableViewCell.swift */; };
 		1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FAF2140F5620001ED49 /* ShareTaskRecordTableViewCell.xib */; };
+		1D1D6FB3214129B00001ED49 /* APIExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FB2214129B00001ED49 /* APIExchangeRate.swift */; };
+		1D1D6FB521412A850001ED49 /* TMMExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FB421412A850001ED49 /* TMMExchangeService.swift */; };
+		1D1D6FBA214645B20001ED49 /* PointsTMMExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FB8214645B10001ED49 /* PointsTMMExchangeViewController.swift */; };
+		1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FB9214645B20001ED49 /* PointsTMMExchangeViewController.xib */; };
+		1D1D6FBD2146608A0001ED49 /* APITransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FBC2146608A0001ED49 /* APITransaction.swift */; };
+		1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FBE214689760001ED49 /* APIToken.swift */; };
+		1D1D6FC121468A810001ED49 /* TMMTokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FC021468A810001ED49 /* TMMTokenService.swift */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -150,6 +157,13 @@
 		1D1D6FAB2140F5380001ED49 /* AppTaskRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTaskRecordTableViewCell.xib; sourceTree = "<group>"; };
 		1D1D6FAE2140F5620001ED49 /* ShareTaskRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskRecordTableViewCell.swift; sourceTree = "<group>"; };
 		1D1D6FAF2140F5620001ED49 /* ShareTaskRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskRecordTableViewCell.xib; sourceTree = "<group>"; };
+		1D1D6FB2214129B00001ED49 /* APIExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRate.swift; sourceTree = "<group>"; };
+		1D1D6FB421412A850001ED49 /* TMMExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMExchangeService.swift; sourceTree = "<group>"; };
+		1D1D6FB8214645B10001ED49 /* PointsTMMExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsTMMExchangeViewController.swift; sourceTree = "<group>"; };
+		1D1D6FB9214645B20001ED49 /* PointsTMMExchangeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointsTMMExchangeViewController.xib; sourceTree = "<group>"; };
+		1D1D6FBC2146608A0001ED49 /* APITransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITransaction.swift; sourceTree = "<group>"; };
+		1D1D6FBE214689760001ED49 /* APIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIToken.swift; sourceTree = "<group>"; };
+		1D1D6FC021468A810001ED49 /* TMMTokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMTokenService.swift; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -233,6 +247,8 @@
 			isa = PBXGroup;
 			children = (
 				1D151E7D213D60FC007C87DD /* DeviceAppsViewController.swift */,
+				1D1D6FB8214645B10001ED49 /* PointsTMMExchangeViewController.swift */,
+				1D1D6FB9214645B20001ED49 /* PointsTMMExchangeViewController.xib */,
 				1D151E7F213D637D007C87DD /* Cell */,
 			);
 			path = DeviceAppsViewController;
@@ -362,6 +378,8 @@
 				1D3441C2213CF74800B8E157 /* TMMUserService.swift */,
 				1D151E9D213E3C56007C87DD /* TMMAppService.swift */,
 				1D151EBA213E744D007C87DD /* TMMTaskService.swift */,
+				1D1D6FB421412A850001ED49 /* TMMExchangeService.swift */,
+				1D1D6FC021468A810001ED49 /* TMMTokenService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -377,6 +395,9 @@
 				1D151EB8213E734D007C87DD /* APIShareTask.swift */,
 				1D151EC8213F8CE2007C87DD /* APIAppTask.swift */,
 				1D1D6FA42140F2270001ED49 /* APITaskRecord.swift */,
+				1D1D6FB2214129B00001ED49 /* APIExchangeRate.swift */,
+				1D1D6FBC2146608A0001ED49 /* APITransaction.swift */,
+				1D1D6FBE214689760001ED49 /* APIToken.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -550,6 +571,7 @@
 				1D151E9C213E392C007C87DD /* SDKAppTableViewCell.xib in Resources */,
 				1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */,
 				1D151E59213D0048007C87DD /* InfoPlist.strings in Resources */,
+				1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
@@ -608,6 +630,7 @@
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
 				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Presentr/Presentr.framework",
 				"${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
@@ -640,6 +663,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Presentr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
@@ -674,6 +698,7 @@
 				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,
 				1D3441FC213CFBB500B8E157 /* SpinerLayer.swift in Sources */,
 				1D151EA8213E54A4007C87DD /* NSString+Encrypt.m in Sources */,
+				1D1D6FBD2146608A0001ED49 /* APITransaction.swift in Sources */,
 				1D151EB9213E734D007C87DD /* APIShareTask.swift in Sources */,
 				1D151ED2213FC206007C87DD /* AppTaskFetcher.swift in Sources */,
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
@@ -686,7 +711,9 @@
 				1D3441D8213CF94200B8E157 /* UITableView+Utils.swift in Sources */,
 				1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */,
 				1D3441D7213CF94200B8E157 /* DefaultKeys.swift in Sources */,
+				1D1D6FBA214645B20001ED49 /* PointsTMMExchangeViewController.swift in Sources */,
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
+				1D1D6FC121468A810001ED49 /* TMMTokenService.swift in Sources */,
 				1D151E7E213D60FC007C87DD /* DeviceAppsViewController.swift in Sources */,
 				1D1D6FA52140F2270001ED49 /* APITaskRecord.swift in Sources */,
 				1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */,
@@ -694,7 +721,9 @@
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
 				1D151E93213E2FCA007C87DD /* LoadingTableViewCell.swift in Sources */,
 				1D151ECC213F8F14007C87DD /* AppTaskTableViewCell.swift in Sources */,
+				1D1D6FB3214129B00001ED49 /* APIExchangeRate.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
+				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
@@ -725,6 +754,7 @@
 				1D151E7B213D5DBA007C87DD /* APIApp.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
 				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,
+				1D1D6FB521412A850001ED49 /* TMMExchangeService.swift in Sources */,
 				1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */,
 				1D151EA4213E4D9D007C87DD /* DetectApp.m in Sources */,
 				1D3441D6213CF94200B8E157 /* Alert.swift in Sources */,

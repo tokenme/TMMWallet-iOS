@@ -153,7 +153,7 @@ extension TaskRecordsTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+        return !self.loadingTasks
     }
 }
 

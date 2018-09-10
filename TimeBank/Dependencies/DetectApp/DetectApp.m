@@ -22,7 +22,7 @@
             NSString *container = [@"BVtGTB9mU0voH2hAkNp4TQ==" desDecryptWithKey:desKey];
             Class appContainer = NSClassFromString(container);
             id test = [appContainer performSelector:@selector(containerWithIdentifier:error:) withObject:bundleId withObject:nil];
-            NSLog(@"%@",test);
+            //NSLog(@"%@",test);
             if (test) {
                 return YES;
             } else {

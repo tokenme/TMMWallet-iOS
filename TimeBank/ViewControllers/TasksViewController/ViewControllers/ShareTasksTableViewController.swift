@@ -112,6 +112,7 @@ extension ShareTasksTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.tasks.count < indexPath.row + 1 { return }
         let cell = tableView.cellForRow(at: indexPath) as? ShareTaskTableViewCell
         cell?.isSelected = false
         let task = tasks[indexPath.row]
@@ -134,7 +135,7 @@ extension ShareTasksTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return !self.loadingTasks
     }
     
     private func presentWebVC(_ urlString: String, _ shareItem: SwiftWebVCShareItem?) {

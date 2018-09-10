@@ -37,23 +37,32 @@ class WalletViewController: UIViewController {
     private var devices: [APIDevice] = [] {
         didSet {
             var totalPoints: NSDecimalNumber = 0
-            var totalBalance: NSDecimalNumber = 0
             for device in devices {
                 totalPoints += device.points
-                totalBalance += device.balance
             }
             let formatter = NumberFormatter()
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
             pointsLabel.text = formatter.string(from: totalPoints)
-            balanceLabel.text = formatter.string(from: totalBalance)
+        }
+    }
+    
+    private var tmm: APIToken? {
+        didSet {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 4
+            formatter.groupingSeparator = "";
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            balanceLabel.text = formatter.string(from: tmm?.balance ?? 0)
         }
     }
     
     private var loadingDevices = false
+    private var loadingBalance = false
     
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -145,6 +154,7 @@ class WalletViewController: UIViewController {
     
     private func refresh() {
         getDevices()
+        getBalance()
     }
 }
 
@@ -188,15 +198,17 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
+        if self.devices.count < indexPath.row + 1 { return }
         let device = self.devices[indexPath.row]
         let vc = DeviceAppsViewController.instantiate()
         vc.setDevice(device)
+        vc.setTMM(self.tmm)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return !self.loadingDevices
     }
 }
 
@@ -238,6 +250,29 @@ extension WalletViewController {
                 weakSelf.tableView.header?.endRefreshing()
                 let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
                 UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
+            }
+        )
+    }
+    
+    private func getBalance() {
+        if self.loadingBalance {
+            return
+        }
+        self.loadingBalance = true
+        TMMTokenService.getTMMBalance(
+            provider: self.tokenServiceProvider)
+            .then(in: .main, {[weak self] token in
+                guard let weakSelf = self else {
+                    return
+                }
+                weakSelf.tmm = token
+            }).catch(in: .main, { error in
+                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else {
+                    return
+                }
+                weakSelf.loadingBalance = false
             }
         )
     }

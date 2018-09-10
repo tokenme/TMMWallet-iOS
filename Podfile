@@ -27,6 +27,7 @@ target 'TimeBank' do
   pod 'SwiftWebVC', :git=>'https://github.com/tokenme/SwiftWebVC.git'
   pod 'EmptyDataSet-Swift'
   pod 'SnapKit'
+  pod 'Presentr'
 end
 
 post_install do |installer|

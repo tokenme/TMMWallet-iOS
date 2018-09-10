@@ -297,7 +297,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KAz-CE-g6t" customClass="PastelView" customModule="Pastel">
-                                <rect key="frame" x="20" y="40" width="335" height="130"/>
+                                <rect key="frame" x="20" y="40" width="335" height="175"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="AuR-BY-a6N">
                                         <rect key="frame" x="16" y="16" width="303" height="63"/>
@@ -398,22 +398,49 @@
                                             <constraint firstAttribute="height" constant="35" id="k7y-HW-d0R"/>
                                         </constraints>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzX-YQ-7Xh" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
+                                        <rect key="frame" x="92.5" y="138" width="150" height="29"/>
+                                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="bVL-vM-zM5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" title="Exchange">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                                <color key="value" cocoaTouchSystemColor="darkTextColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                                <color key="value" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="showExchange" destination="eF9-4j-LiV" eventType="touchUpInside" id="dwT-hm-ioV"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1fb-G7-Uh8" secondAttribute="trailing" constant="16" id="1I0-my-M9J"/>
-                                    <constraint firstAttribute="bottom" secondItem="1fb-G7-Uh8" secondAttribute="bottom" constant="8" id="7oC-qc-lIu"/>
                                     <constraint firstItem="AuR-BY-a6N" firstAttribute="top" secondItem="KAz-CE-g6t" secondAttribute="top" constant="16" id="HuX-c4-pay"/>
                                     <constraint firstItem="1fb-G7-Uh8" firstAttribute="top" secondItem="AuR-BY-a6N" secondAttribute="bottom" constant="8" id="MZe-6I-ole"/>
                                     <constraint firstAttribute="trailing" secondItem="AuR-BY-a6N" secondAttribute="trailing" constant="16" id="Ox9-6g-eGe"/>
                                     <constraint firstItem="1fb-G7-Uh8" firstAttribute="centerX" secondItem="KAz-CE-g6t" secondAttribute="centerX" id="POJ-z1-wpt"/>
-                                    <constraint firstAttribute="height" constant="130" id="dHA-px-C69"/>
+                                    <constraint firstItem="qzX-YQ-7Xh" firstAttribute="top" secondItem="1fb-G7-Uh8" secondAttribute="bottom" constant="16" id="TxA-eq-gsv"/>
+                                    <constraint firstAttribute="bottom" secondItem="qzX-YQ-7Xh" secondAttribute="bottom" constant="8" id="iab-qw-gKT"/>
+                                    <constraint firstItem="qzX-YQ-7Xh" firstAttribute="centerX" secondItem="KAz-CE-g6t" secondAttribute="centerX" id="oWU-41-mdi"/>
                                     <constraint firstItem="1fb-G7-Uh8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KAz-CE-g6t" secondAttribute="leading" constant="16" id="r3f-Fd-5Xo"/>
                                     <constraint firstItem="AuR-BY-a6N" firstAttribute="leading" secondItem="KAz-CE-g6t" secondAttribute="leading" constant="16" id="vql-Bq-ea2"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xbf-s2-vU0">
-                                <rect key="frame" x="0.0" y="180" width="375" height="487"/>
+                                <rect key="frame" x="0.0" y="231" width="375" height="436"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="eF9-4j-LiV" id="uxu-Om-AEv"/>
@@ -424,7 +451,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="MYw-cd-oJf" firstAttribute="trailing" secondItem="Xbf-s2-vU0" secondAttribute="trailing" id="B5c-R3-CSg"/>
-                            <constraint firstItem="Xbf-s2-vU0" firstAttribute="top" secondItem="KAz-CE-g6t" secondAttribute="bottom" constant="10" id="TDA-18-0WS"/>
+                            <constraint firstItem="Xbf-s2-vU0" firstAttribute="top" secondItem="KAz-CE-g6t" secondAttribute="bottom" constant="16" id="VEl-Hi-owT"/>
                             <constraint firstItem="KAz-CE-g6t" firstAttribute="top" secondItem="MYw-cd-oJf" secondAttribute="top" constant="20" id="Vir-bn-3PC"/>
                             <constraint firstItem="Xbf-s2-vU0" firstAttribute="leading" secondItem="MYw-cd-oJf" secondAttribute="leading" id="Wjq-cO-dDs"/>
                             <constraint firstItem="MYw-cd-oJf" firstAttribute="trailing" secondItem="KAz-CE-g6t" secondAttribute="trailing" constant="20" id="g7x-W0-v0T"/>
@@ -435,6 +462,7 @@
                     </view>
                     <connections>
                         <outlet property="balanceLabel" destination="XVl-rc-PqY" id="nvu-SQ-dfJ"/>
+                        <outlet property="exchangeButton" destination="qzX-YQ-7Xh" id="c1I-SR-yf4"/>
                         <outlet property="growthFactorImageView" destination="oN7-NE-sgx" id="SJW-Af-Qdo"/>
                         <outlet property="growthFactorLabel" destination="avF-Z5-ZNp" id="pYU-1D-fIL"/>
                         <outlet property="pointsLabel" destination="pJx-8E-3Wc" id="mlX-uR-DY5"/>

@@ -14,6 +14,8 @@ import Hydra
 import ZHRefresh
 import SkeletonView
 import ViewAnimator
+import Presentr
+import SwiftWebVC
 
 class DeviceAppsViewController: UIViewController {
     
@@ -31,7 +33,10 @@ class DeviceAppsViewController: UIViewController {
     
     private var device: APIDevice?
     
+    private var tmm: APIToken?
+    
     @IBOutlet private weak var summaryView: PastelView!
+    @IBOutlet private weak var exchangeButton: TransitionButton!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var pointsLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -40,11 +45,45 @@ class DeviceAppsViewController: UIViewController {
     @IBOutlet private weak var tsImageView: UIImageView!
     @IBOutlet private weak var growthFactorImageView: UIImageView!
     
+    let exchangePresenter: Presentr = {
+        let width = ModalSize.full
+        let height = ModalSize.fluid(percentage: 0.60)
+        let center = ModalCenterPosition.bottomCenter
+        let customType = PresentationType.custom(width: width, height: height, center: center)
+        
+        let customPresenter = Presentr(presentationType: customType)
+        customPresenter.transitionType = .coverVertical
+        customPresenter.dismissTransitionType = .crossDissolve
+        customPresenter.roundCorners = false
+        //customPresenter.blurBackground = true
+        customPresenter.blurStyle = UIBlurEffectStyle.light
+        //customPresenter.keyboardTranslationType = .moveUp
+        //customPresenter.backgroundColor = .green
+        customPresenter.backgroundOpacity = 0.5
+        customPresenter.dismissOnSwipe = true
+        customPresenter.dismissOnSwipeDirection = .bottom
+        return customPresenter
+    }()
+    
+    var txAlertController: AlertViewController?
+    
+    let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
+    
     private var apps: [APIApp] = []
     
     private var loadingApps = false
+    private var gettingTmmExchangeRate = false
+    private var loadingBalance = false
+    private var loadingDevice = false
     
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -62,11 +101,12 @@ class DeviceAppsViewController: UIViewController {
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
         }
+        exchangeButton.setTitle(I18n.exchangeTMM.description, for: .normal)
         guard let _ = self.device else { return }
         setupSummaryView()
         setupTableView()
         if userInfo != nil {
-            refresh()
+            refresh(false)
         }
     }
 
@@ -105,6 +145,10 @@ class DeviceAppsViewController: UIViewController {
         self.device = device
     }
     
+    public func setTMM(_ token: APIToken?) {
+        self.tmm = token
+    }
+    
     private func setupSummaryView() {
         summaryView.layer.cornerRadius = 15.0
         summaryView.layer.borderWidth = 0
@@ -131,6 +175,10 @@ class DeviceAppsViewController: UIViewController {
         let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         growthFactorImageView.image = flashImage
         
+        updateSummaryView()
+    }
+    
+    private func updateSummaryView() {
         guard let device = self.device else { return }
         
         let formatter = NumberFormatter()
@@ -138,7 +186,7 @@ class DeviceAppsViewController: UIViewController {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         pointsLabel.text = formatter.string(from: device.points)
-        balanceLabel.text = formatter.string(from: device.balance)
+        balanceLabel.text = formatter.string(from: tmm?.balance ?? 0)
         tsLabel.text = device.totalTs.timeSpan()
         
         let formatterGs = NumberFormatter()
@@ -159,15 +207,23 @@ class DeviceAppsViewController: UIViewController {
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.refresh()
+            weakSelf.refresh(true)
         }
         
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }
     
-    private func refresh() {
+    private func refresh(_ refresh: Bool=false) {
         getApps()
+        if refresh {
+            refreshSummary()
+        }
+    }
+    
+    private func refreshSummary() {
+        getDevice()
+        getBalance()
     }
 
 }
@@ -215,7 +271,7 @@ extension DeviceAppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+        return !self.loadingApps
     }
 }
 
@@ -233,6 +289,12 @@ extension DeviceAppsViewController: SkeletonTableViewDataSource {
 }
 
 extension DeviceAppsViewController {
+    
+    @IBAction func showExchange() {
+        exchangeButton.startAnimation()
+        getTmmExchangeRate()
+    }
+    
     private func getApps() {
         if self.loadingApps {
             return
@@ -245,16 +307,12 @@ extension DeviceAppsViewController {
             deviceId: deviceId,
             provider: self.deviceServiceProvider)
             .then(in: .main, {[weak self] apps in
-                guard let weakSelf = self else {
-                    return
-                }
+                guard let weakSelf = self else { return }
                 weakSelf.apps = apps
             }).catch(in: .main, { error in
                 UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else {
-                    return
-                }
+                guard let weakSelf = self else { return }
                 weakSelf.loadingApps = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
@@ -264,10 +322,110 @@ extension DeviceAppsViewController {
             }
         )
     }
+    
+    private func getTmmExchangeRate() {
+        if self.gettingTmmExchangeRate {
+            return
+        }
+        self.gettingTmmExchangeRate = true
+        TMMExchangeService.getTMMRate(
+            provider: self.exchangeServiceProvider)
+            .then(in: .main, {[weak self] rate in
+                guard let weakSelf = self else { return }
+                guard let points = weakSelf.device?.points else { return }
+                weakSelf.showExchangeForm(rate, points)
+            }).catch(in: .main, { error in
+                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.gettingTmmExchangeRate = false
+                weakSelf.exchangeButton.stopAnimation(animationStyle: .normal, completion: nil)
+            }
+        )
+    }
+    
+    private func showExchangeForm(_ rate: APIExchangeRate, _ points: NSDecimalNumber) {
+        guard let device = self.device else { return }
+        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device)
+        vc.delegate = self
+        customPresentViewController(exchangePresenter, viewController: vc, animated: true, completion: nil)
+    }
+    
+    private func getBalance() {
+        if self.loadingBalance {
+            return
+        }
+        self.loadingBalance = true
+        TMMTokenService.getTMMBalance(
+            provider: self.tokenServiceProvider)
+            .then(in: .main, {[weak self] token in
+                guard let weakSelf = self else {
+                    return
+                }
+                weakSelf.tmm = token
+                weakSelf.updateSummaryView()
+            }).catch(in: .main, { error in
+                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else {
+                    return
+                }
+                weakSelf.loadingBalance = false
+                }
+        )
+    }
+    
+    private func getDevice() {
+        if self.loadingDevice {
+            return
+        }
+        self.loadingDevice = true
+        guard let deviceId = self.device?.id else {return}
+        TMMDeviceService.getInfo(
+            deviceId: deviceId,
+            provider: self.deviceServiceProvider)
+            .then(in: .main, {[weak self] device in
+                guard let weakSelf = self else {
+                    return
+                }
+                weakSelf.device = device
+                weakSelf.updateSummaryView()
+            }).catch(in: .main, { error in
+                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else {
+                    return
+                }
+                weakSelf.loadingDevice = false
+            }
+        )
+    }
+}
+
+extension DeviceAppsViewController: TransactionDelegate {
+    func newTransaction(tx: APITransaction) {
+        guard let receipt = tx.receipt else { return }
+        let message = I18n.newTransactionDesc.description.replacingOccurrences(of: "#receipt#", with: receipt)
+        let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        let okAction = AlertAction(title: I18n.viewTransaction.description, style: .destructive) {[weak self] alert in
+            guard let weakSelf = self else { return }
+            let urlString = "https://etherscan.io/tx/\(receipt)"
+            let webVC = SwiftWebVC(urlString: urlString, shareItem: nil, sharingEnabled: true)
+            weakSelf.navigationController?.pushViewController(webVC, animated: true)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.txAlertController = alertController
+        customPresentViewController(alertPresenter, viewController: txAlertController!, animated: true)
+        self.refreshSummary()
+    }
 }
 
 extension DeviceAppsViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
-        self.refresh()
+        self.refresh(true)
     }
 }
