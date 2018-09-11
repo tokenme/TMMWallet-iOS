@@ -14,6 +14,8 @@ public class APIToken: APIResponse {
     var symbol: String?
     var balance: NSDecimalNumber = 0
     var decimals: Int8 = 0
+    var icon: String?
+    var price: NSDecimalNumber = 0
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -31,5 +33,7 @@ public class APIToken: APIResponse {
         symbol <- map["symbol"]
         balance <- (map["balance"], decimalTransform)
         decimals <- map["decimals"]
+        icon <- map["icon"]
+        price <- (map["price"], decimalTransform)
     }
 }

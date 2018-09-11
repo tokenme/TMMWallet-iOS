@@ -33,6 +33,10 @@
 "Sent" = "Sent";
 "Sending" = "Sending";
 
+// Wallet
+"ETHWallet" = "ETH Wallet";
+"Assets" = "Assets";
+
 // Apps
 "SDKApps" = "Minable Apps";
 "Install" = "Install";

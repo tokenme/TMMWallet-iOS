@@ -46,6 +46,7 @@ class PointsTMMExchangeViewController: UIViewController {
         exchangeRateLabel.text = I18n.currentPointsTMMExchangeRate.description.replacingOccurrences(of: "#rate#", with: rateStr)
         amountTextField.tweePlaceholder = I18n.pointsAmount.description
         changeButton.setTitle(I18n.exchange.description, for: .normal)
+        amountTextField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,7 +64,6 @@ extension PointsTMMExchangeViewController {
             self.amountTextField.showInfo(I18n.emptyChangePoints.description)
             return false
         }
-        print(points.stringValue)
         if changePoints > points {
             self.amountTextField.showInfo(I18n.exceedChangePoints.description)
             return false
@@ -138,6 +138,7 @@ extension PointsTMMExchangeViewController: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         guard let rate = changeRate?.rate else { return }
         let changePoints = NSDecimalNumber.init(string: amountTextField.text)
+        if changePoints.isNaN() { return }
         let tmmAmount = changePoints.multiplying(by: rate)
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 4

@@ -12,6 +12,7 @@ import Hydra
 
 enum TMMTokenService {
     case tmmBalance()
+    case assets()
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -27,11 +28,13 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmBalance():
             return "/tmm/balance"
+        case .assets():
+            return "/assets"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .tmmBalance:
+        case .tmmBalance, .assets:
             return .get
         }
     }
@@ -39,12 +42,16 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmBalance():
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+        case .assets():
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
     }
     var sampleData: Data {
         switch self {
         case .tmmBalance():
             return "{}".utf8Encoded
+        case .assets():
+            return "[]".utf8Encoded
         }
     }
     var headers: [String: String]? {
@@ -70,6 +77,39 @@ extension TMMTokenService {
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getAssets(provider: MoyaProvider<TMMTokenService>) -> Promise<[APIToken]> {
+        return Promise<[APIToken]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .assets()
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let tokens: [APIToken] = try response.mapArray(APIToken.self)
+                        resolve(tokens)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
                     }
                 case let .failure(error):
                     reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))

@@ -33,6 +33,10 @@
 "Sent" = "已发送";
 "Sending" = "发送中";
 
+// Wallet
+"ETHWallet" = "ETH钱包";
+"Assets" = "资产";
+
 // Apps
 "SDKApps" = "可挖矿应用";
 "Install" = "安装";

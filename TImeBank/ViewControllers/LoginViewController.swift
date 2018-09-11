@@ -80,20 +80,15 @@ class LoginViewController: UIViewController {
         
         self.loginButton.startAnimation()
         async({[weak self] _ in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             let _ = try ..TMMAuthService.doLogin(
                 country: country!,
                 mobile: mobile,
                 password: passwd,
                 provider: weakSelf.authServiceProvider)
-            let _ = try ..weakSelf.getUserInfo()
-            let _ = try ..weakSelf.bindDevice()
-        }).then(in: .main, {[weak self] user in
-            guard let weakSelf = self else {
-                return
-            }
+            let _ = try ..weakSelf.getUserInfoAndBindDevice()
+        }).then(in: .main, {[weak self] _ in
+            guard let weakSelf = self else { return }
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.delegate?.loginSucceeded(token: nil)
                 weakSelf.dismiss(animated: true, completion: nil)
@@ -105,56 +100,64 @@ class LoginViewController: UIViewController {
                 return
             default: break
             }
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return  }
             weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: {})
             UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
         }).always(in: .main, body: {[weak self]  in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             weakSelf.bindingDevice = false
             weakSelf.isLogining = false
         })
     }
     
-    private func getUserInfo() -> Promise<APIUser> {
-        return Promise<APIUser> (in: .background, {[weak self] resolve, reject, _ in
+    private func getUserInfoAndBindDevice() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            all(weakSelf.getUserInfo(), weakSelf.bindDevice()).then(in: .background,  {_ in resolve(())}).catch(in: .background, { error in reject(error) })
+        })
+    }
+    
+    private func getUserInfo() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
             guard let weakSelf = self else {
                 reject(TMMAPIError.ignore)
                 return
             }
             if weakSelf.loadingUserInfo {
                 reject(TMMAPIError.ignore)
+                return
             }
             weakSelf.loadingUserInfo = true
             TMMUserService.getUserInfo(
                 false,
                 provider: weakSelf.userServiceProvider)
                 .then(in: .background, {user in
-                    resolve(user)
+                    resolve(())
                 }).catch(in: .background, { error in
                     reject(error)
                 })
         })
     }
     
-    private func bindDevice() -> Promise<APIResponse> {
-        return Promise<APIResponse> (in: .background, {[weak self] resolve, reject, _ in
+    private func bindDevice() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
             guard let weakSelf = self else {
                 reject(TMMAPIError.ignore)
                 return
             }
             if weakSelf.bindingDevice {
                 reject(TMMAPIError.ignore)
+                return
             }
             weakSelf.bindingDevice = true
             TMMDeviceService.bindUser(
                 idfa: TMMBeacon.shareInstance().deviceId(),
                 provider: weakSelf.deviceServiceProvider)
                 .then(in: .background, {user in
-                    resolve(user)
+                    resolve(())
                 }).catch(in: .background, { error in
                     reject(error)
                 })

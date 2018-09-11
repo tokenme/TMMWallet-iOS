@@ -1,8 +1,8 @@
 //
-//  WalletViewController.swift
+//  ETHWalletViewController.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/9/3.
+//  Created by Syd Xu on 2018/9/11.
 //  Copyright © 2018年 Tokenmama.io. All rights reserved.
 //
 
@@ -15,7 +15,7 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 
-class WalletViewController: UIViewController {
+class ETHWalletViewController: UIViewController {
     
     private var userInfo: APIUser? {
         get {
@@ -31,37 +31,14 @@ class WalletViewController: UIViewController {
     
     @IBOutlet private weak var summaryView: PastelView!
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var pointsLabel: UILabel!
+    @IBOutlet private weak var addressButton: UIButton!
     @IBOutlet private weak var balanceLabel: UILabel!
     
-    private var devices: [APIDevice] = [] {
-        didSet {
-            var totalPoints: NSDecimalNumber = 0
-            for device in devices {
-                totalPoints += device.points
-            }
-            let formatter = NumberFormatter()
-            formatter.maximumFractionDigits = 4
-            formatter.groupingSeparator = "";
-            formatter.numberStyle = NumberFormatter.Style.decimal
-            pointsLabel.text = formatter.string(from: totalPoints)
-        }
-    }
     
-    private var tmm: APIToken? {
-        didSet {
-            let formatter = NumberFormatter()
-            formatter.maximumFractionDigits = 4
-            formatter.groupingSeparator = "";
-            formatter.numberStyle = NumberFormatter.Style.decimal
-            balanceLabel.text = formatter.string(from: tmm?.balance ?? 0)
-        }
-    }
+    private var tokens: [APIToken] = []
     
-    private var loadingDevices = false
-    private var loadingBalance = false
+    private var loadingTokens = false
     
-    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
@@ -79,14 +56,22 @@ class WalletViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
-            let ethWalletBarItem = UIBarButtonItem(title: I18n.ethWallet.description, style: .plain, target: self, action: #selector(self.showETHWalletView))
-            navigationItem.rightBarButtonItem = ethWalletBarItem
+            self.title = I18n.ethWallet.description
         }
+        
         setupSummaryView()
         setupTableView()
         if userInfo != nil {
             refresh()
         }
+        
+        guard let userInfo = self.userInfo else { return }
+        let copyImage = UIImage(named: "Wallet")?.kf.resize(to: CGSize(width: 14, height: 14)).withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        addressButton.set(image: copyImage, title: userInfo.wallet ?? "", titlePosition: .left, additionalSpacing: 5.0, state: .normal)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,10 +94,10 @@ class WalletViewController: UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    static func instantiate() -> ETHWalletViewController
+    {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ETHWalletViewController") as! ETHWalletViewController
     }
     
     private func setupSummaryView() {
@@ -126,22 +111,22 @@ class WalletViewController: UIViewController {
         summaryView.endPastelPoint = .topRight
         summaryView.animationDuration = 3.0
         summaryView.setColors([UIColor(red: 156/255, green: 39/255, blue: 176/255, alpha: 1.0),
-                              UIColor(red: 255/255, green: 64/255, blue: 129/255, alpha: 1.0),
-                              UIColor(red: 123/255, green: 31/255, blue: 162/255, alpha: 1.0),
-                              UIColor(red: 32/255, green: 76/255, blue: 255/255, alpha: 1.0),
-                              UIColor(red: 32/255, green: 158/255, blue: 255/255, alpha: 1.0),
-                              UIColor(red: 90/255, green: 120/255, blue: 127/255, alpha: 1.0),
-                              UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
+                               UIColor(red: 255/255, green: 64/255, blue: 129/255, alpha: 1.0),
+                               UIColor(red: 123/255, green: 31/255, blue: 162/255, alpha: 1.0),
+                               UIColor(red: 32/255, green: 76/255, blue: 255/255, alpha: 1.0),
+                               UIColor(red: 32/255, green: 158/255, blue: 255/255, alpha: 1.0),
+                               UIColor(red: 90/255, green: 120/255, blue: 127/255, alpha: 1.0),
+                               UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
         
         summaryView.startAnimation()
     }
     
     private func setupTableView() {
-        tableView.register(cellType: DeviceTableViewCell.self)
+        tableView.register(cellType: TokenTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        tableView.estimatedRowHeight = 66.0
+        tableView.estimatedRowHeight = 60.0
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -155,17 +140,12 @@ class WalletViewController: UIViewController {
     }
     
     public func refresh() {
-        getDevices()
-        getBalance()
+        getTokens()
     }
-    
-    @IBAction func showETHWalletView() {
-        let vc = ETHWalletViewController.instantiate()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+
 }
 
-extension WalletViewController: UIViewControllerTransitioningDelegate {
+extension ETHWalletViewController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
@@ -177,14 +157,17 @@ extension WalletViewController: UIViewControllerTransitioningDelegate {
     
 }
 
-extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
+extension ETHWalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
+        return SimpleHeaderView.height
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
+        let frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: self.tableView(tableView, heightForHeaderInSection: section))
+        let view = SimpleHeaderView(frame: frame)
+        view.fill(I18n.assets.description)
+        return view
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -192,35 +175,26 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.devices.count
+        return self.tokens.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(for: indexPath) as DeviceTableViewCell
-        let device = self.devices[indexPath.row]
-        cell.fill(device)
+        let cell = tableView.dequeueReusableCell(for: indexPath) as TokenTableViewCell
+        let token = self.tokens[indexPath.row]
+        cell.fill(token)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.isSelected = false
-        if self.devices.count < indexPath.row + 1 { return }
-        let device = self.devices[indexPath.row]
-        let vc = DeviceAppsViewController.instantiate()
-        vc.setDevice(device)
-        vc.setTMM(self.tmm)
-        vc.delegate = self
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
-        self.navigationController?.pushViewController(vc, animated: true)
+        //return false
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !self.loadingDevices
+        return !self.loadingTokens
     }
 }
 
-extension WalletViewController: SkeletonTableViewDataSource {
+extension ETHWalletViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
         return 1
@@ -233,26 +207,22 @@ extension WalletViewController: SkeletonTableViewDataSource {
     }
 }
 
-extension WalletViewController {
-    private func getDevices() {
-        if self.loadingDevices {
+extension ETHWalletViewController {
+    private func getTokens() {
+        if self.loadingTokens {
             return
         }
-        self.loadingDevices = true
-        TMMDeviceService.getDevices(
-            provider: self.deviceServiceProvider)
-            .then(in: .main, {[weak self] devices in
-                guard let weakSelf = self else {
-                    return
-                }
-                weakSelf.devices = devices
+        self.loadingTokens = true
+        TMMTokenService.getAssets(
+            provider: self.tokenServiceProvider)
+            .then(in: .main, {[weak self] tokens in
+                guard let weakSelf = self else { return }
+                weakSelf.tokens = tokens
             }).catch(in: .main, { error in
                 UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else {
-                    return
-                }
-                weakSelf.loadingDevices = false
+                guard let weakSelf = self else { return }
+                weakSelf.loadingTokens = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()
@@ -261,39 +231,10 @@ extension WalletViewController {
             }
         )
     }
-    
-    private func getBalance() {
-        if self.loadingBalance {
-            return
-        }
-        self.loadingBalance = true
-        TMMTokenService.getTMMBalance(
-            provider: self.tokenServiceProvider)
-            .then(in: .main, {[weak self] token in
-                guard let weakSelf = self else { return }
-                weakSelf.tmm = token
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .background, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.loadingBalance = false
-            }
-        )
-    }
 }
 
-extension WalletViewController: LoginViewDelegate {
+extension ETHWalletViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
         self.refresh()
     }
-}
-
-extension WalletViewController: ViewUpdateDelegate {
-    func shouldRefresh() {
-        self.refresh()
-    }
-}
-
-public protocol ViewUpdateDelegate: NSObjectProtocol {
-    func shouldRefresh()
 }

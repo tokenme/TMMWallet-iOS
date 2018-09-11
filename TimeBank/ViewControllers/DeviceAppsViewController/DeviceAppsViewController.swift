@@ -19,6 +19,8 @@ import SwiftWebVC
 
 class DeviceAppsViewController: UIViewController {
     
+    weak public var delegate: ViewUpdateDelegate?
+    
     private var userInfo: APIUser? {
         get {
             if let userInfo: DefaultsUser = Defaults[.user] {
@@ -47,7 +49,7 @@ class DeviceAppsViewController: UIViewController {
     
     let exchangePresenter: Presentr = {
         let width = ModalSize.full
-        let height = ModalSize.fluid(percentage: 0.60)
+        let height = ModalSize.fluid(percentage: 0.70)
         let center = ModalCenterPosition.bottomCenter
         let customType = PresentationType.custom(width: width, height: height, center: center)
         
@@ -64,8 +66,6 @@ class DeviceAppsViewController: UIViewController {
         customPresenter.dismissOnSwipeDirection = .bottom
         return customPresenter
     }()
-    
-    var txAlertController: AlertViewController?
     
     let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
@@ -222,8 +222,17 @@ class DeviceAppsViewController: UIViewController {
     }
     
     private func refreshSummary() {
-        getDevice()
-        getBalance()
+        all(getBalance(), getDevice()).catch(in: .main, { error in
+            switch error as! TMMAPIError {
+            case .ignore:
+                return
+            default: break
+            }
+            UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.updateSummaryView()
+        })
     }
 
 }
@@ -351,60 +360,70 @@ extension DeviceAppsViewController {
         customPresentViewController(exchangePresenter, viewController: vc, animated: true, completion: nil)
     }
     
-    private func getBalance() {
-        if self.loadingBalance {
-            return
-        }
-        self.loadingBalance = true
-        TMMTokenService.getTMMBalance(
-            provider: self.tokenServiceProvider)
-            .then(in: .main, {[weak self] token in
-                guard let weakSelf = self else {
-                    return
+    private func getBalance() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.loadingBalance {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.loadingBalance = true
+            TMMTokenService.getTMMBalance(
+                provider: weakSelf.tokenServiceProvider)
+                .then(in: .main, {[weak weakSelf] token in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.tmm = token
+                    resolve(())
+                }).catch(in: .main, { error in
+                    reject(error)
+                }).always(in: .background, body: {[weak weakSelf] in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.loadingBalance = false
                 }
-                weakSelf.tmm = token
-                weakSelf.updateSummaryView()
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else {
-                    return
-                }
-                weakSelf.loadingBalance = false
-                }
-        )
+            )
+        })
     }
     
-    private func getDevice() {
-        if self.loadingDevice {
-            return
-        }
-        self.loadingDevice = true
-        guard let deviceId = self.device?.id else {return}
-        TMMDeviceService.getInfo(
-            deviceId: deviceId,
-            provider: self.deviceServiceProvider)
-            .then(in: .main, {[weak self] device in
-                guard let weakSelf = self else {
-                    return
-                }
-                weakSelf.device = device
-                weakSelf.updateSummaryView()
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else {
-                    return
-                }
-                weakSelf.loadingDevice = false
+    private func getDevice() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
             }
-        )
+            if weakSelf.loadingDevice {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.loadingDevice = true
+            guard let deviceId = weakSelf.device?.id else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            TMMDeviceService.getInfo(
+                deviceId: deviceId,
+                provider: weakSelf.deviceServiceProvider)
+                .then(in: .background, {[weak weakSelf] device in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.device = device
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                }).always(in: .background, body: {[weak weakSelf] in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.loadingDevice = false
+                }
+            )
+        })
     }
 }
 
 extension DeviceAppsViewController: TransactionDelegate {
     func newTransaction(tx: APITransaction) {
         guard let receipt = tx.receipt else { return }
+        self.delegate?.shouldRefresh()
         let message = I18n.newTransactionDesc.description.replacingOccurrences(of: "#receipt#", with: receipt)
         let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
         let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
@@ -418,8 +437,7 @@ extension DeviceAppsViewController: TransactionDelegate {
         }
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
-        self.txAlertController = alertController
-        customPresentViewController(alertPresenter, viewController: txAlertController!, animated: true)
+        customPresentViewController(alertPresenter, viewController: alertController, animated: true)
         self.refreshSummary()
     }
 }

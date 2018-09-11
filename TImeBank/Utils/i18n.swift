@@ -33,6 +33,8 @@ enum I18n: CustomStringConvertible {
     case sent
     case resend
     case sending
+    case ethWallet
+    case assets
     case sdkApps
     case install
     case installed
@@ -117,6 +119,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Resend", comment: "Resend")
         case .sending:
             return NSLocalizedString("Sending", comment: "Sending")
+        case .ethWallet:
+            return NSLocalizedString("ETHWallet", comment: "ETH Wallet")
+        case .assets:
+            return NSLocalizedString("Assets", comment: "Assets")
         case .sdkApps:
             return NSLocalizedString("SDKApps", comment: "Minable Apps")
         case .install:

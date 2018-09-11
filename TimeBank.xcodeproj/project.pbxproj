@@ -58,6 +58,12 @@
 		1D1D6FBD2146608A0001ED49 /* APITransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FBC2146608A0001ED49 /* APITransaction.swift */; };
 		1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FBE214689760001ED49 /* APIToken.swift */; };
 		1D1D6FC121468A810001ED49 /* TMMTokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FC021468A810001ED49 /* TMMTokenService.swift */; };
+		1D1D6FC42147A5680001ED49 /* ETHWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FC32147A5680001ED49 /* ETHWalletViewController.swift */; };
+		1D1D6FC62147B6030001ED49 /* UIButton+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FC52147B6030001ED49 /* UIButton+Utils.swift */; };
+		1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FC82147B9250001ED49 /* SimpleHeaderView.swift */; };
+		1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FCA2147B9440001ED49 /* SimpleHeaderView.xib */; };
+		1D1D6FCE2147BCF30001ED49 /* TokenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FCC2147BCF30001ED49 /* TokenTableViewCell.swift */; };
+		1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FCD2147BCF30001ED49 /* TokenTableViewCell.xib */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -164,6 +170,12 @@
 		1D1D6FBC2146608A0001ED49 /* APITransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITransaction.swift; sourceTree = "<group>"; };
 		1D1D6FBE214689760001ED49 /* APIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIToken.swift; sourceTree = "<group>"; };
 		1D1D6FC021468A810001ED49 /* TMMTokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMTokenService.swift; sourceTree = "<group>"; };
+		1D1D6FC32147A5680001ED49 /* ETHWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHWalletViewController.swift; sourceTree = "<group>"; };
+		1D1D6FC52147B6030001ED49 /* UIButton+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Utils.swift"; sourceTree = "<group>"; };
+		1D1D6FC82147B9250001ED49 /* SimpleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHeaderView.swift; sourceTree = "<group>"; };
+		1D1D6FCA2147B9440001ED49 /* SimpleHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleHeaderView.xib; sourceTree = "<group>"; };
+		1D1D6FCC2147BCF30001ED49 /* TokenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTableViewCell.swift; sourceTree = "<group>"; };
+		1D1D6FCD2147BCF30001ED49 /* TokenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenTableViewCell.xib; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -341,6 +353,26 @@
 			path = AppTaskChecker;
 			sourceTree = "<group>";
 		};
+		1D1D6FC22147A5270001ED49 /* ETHWalletViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D1D6FC32147A5680001ED49 /* ETHWalletViewController.swift */,
+				1D1D6FC72147B8FA0001ED49 /* Cell */,
+			);
+			path = ETHWalletViewController;
+			sourceTree = "<group>";
+		};
+		1D1D6FC72147B8FA0001ED49 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D1D6FC82147B9250001ED49 /* SimpleHeaderView.swift */,
+				1D1D6FCA2147B9440001ED49 /* SimpleHeaderView.xib */,
+				1D1D6FCC2147BCF30001ED49 /* TokenTableViewCell.swift */,
+				1D1D6FCD2147BCF30001ED49 /* TokenTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +393,7 @@
 				1D151E7C213D60DE007C87DD /* DeviceAppsViewController */,
 				1D151E95213E3839007C87DD /* SDKAppsViewController */,
 				1D151EB2213E6BCD007C87DD /* TasksViewController */,
+				1D1D6FC22147A5270001ED49 /* ETHWalletViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
@@ -417,6 +450,7 @@
 				1D3441E5213CFB1200B8E157 /* Moya+ObjectMapper.swift */,
 				1D151E70213D3995007C87DD /* NSDecimalNumber+Utils.swift */,
 				1D151E78213D5434007C87DD /* Time+Utils.swift */,
+				1D1D6FC52147B6030001ED49 /* UIButton+Utils.swift */,
 				1D151ED0213FC1EE007C87DD /* AppTaskChecker */,
 			);
 			path = Utils;
@@ -573,7 +607,9 @@
 				1D151E59213D0048007C87DD /* InfoPlist.strings in Resources */,
 				1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
+				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
+				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D344200213CFBB500B8E157 /* Info.plist in Resources */,
@@ -704,6 +740,8 @@
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
 				1D3441C5213CF74800B8E157 /* TMMError.swift in Sources */,
 				1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */,
+				1D1D6FCE2147BCF30001ED49 /* TokenTableViewCell.swift in Sources */,
+				1D1D6FC62147B6030001ED49 /* UIButton+Utils.swift in Sources */,
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
 				1D3441F3213CFBA300B8E157 /* FontAnimation.swift in Sources */,
@@ -725,6 +763,7 @@
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
 				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
+				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
@@ -747,6 +786,7 @@
 				1D151E6F213D3161007C87DD /* APIDevice.swift in Sources */,
 				1D3441FD213CFBB500B8E157 /* TransitionButton.swift in Sources */,
 				1D3441E0213CF9BD00B8E157 /* UIScreen+Utils.swift in Sources */,
+				1D1D6FC42147A5680001ED49 /* ETHWalletViewController.swift in Sources */,
 				1D151E71213D3995007C87DD /* NSDecimalNumber+Utils.swift in Sources */,
 				1D3441FB213CFBB500B8E157 /* CustomTransitionViewController.swift in Sources */,
 				1D3441E2213CFA0600B8E157 /* UIColor+Utils.swift in Sources */,
