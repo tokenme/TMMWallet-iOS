@@ -12,6 +12,7 @@ import CountryPickerView
 import Moya
 import SwiftEntryKit
 import Hydra
+import Presentr
 
 class ResetPasswordViewController: UIViewController {
     
@@ -21,6 +22,13 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet private weak var repasswordTextfield: TweeAttributedTextField!
     @IBOutlet private weak var countdownButton: RNCountdownButton!
     @IBOutlet private weak var resetButton: TransitionButton!
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin])
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin])
@@ -78,27 +86,25 @@ class ResetPasswordViewController: UIViewController {
                 mobile: self.telephoneTextField.text!
             )
         ){[weak self] result in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             switch result {
             case let .success(response):
                 do {
                     let resp = try response.mapObject(APIResponse.self)
                     if resp.code ?? 0 > 0 {
                         DispatchQueue.main.async {
-                            UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: resp.message ?? I18n.unknownError.description, closeBtn: I18n.close.description)
+                            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: resp.message ?? I18n.unknownError.description, closeBtn: I18n.close.description)
                         }
                         return
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: I18n.unknownError.description, closeBtn: I18n.close.description)
+                        UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: I18n.unknownError.description, closeBtn: I18n.close.description)
                     }
                 }
             case let .failure(error):
                 DispatchQueue.main.async {
-                    UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: error.errorDescription!, closeBtn: I18n.close.description)
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.errorDescription!, closeBtn: I18n.close.description)
                     weakSelf.countdownButton.stop()
                     weakSelf.countdownButton.showFetchAgain()
                     weakSelf.countdownButton.isEnabled = true
@@ -162,11 +168,9 @@ class ResetPasswordViewController: UIViewController {
                 return
             default: break
             }
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             weakSelf.resetButton.stopAnimation(animationStyle: .shake, completion: {})
-            UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else {
                 return

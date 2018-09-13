@@ -10,12 +10,20 @@ import Foundation
 import Moya
 import Hydra
 import TMMSDK
+import Presentr
 
 class AppTaskFetcher {
     
     weak public var delegate: AppTaskFetcherDelegate?
     private var gettingTasks = false
     private var updatingTask = false
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var taskServiceProvider = MoyaProvider<TMMTaskService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
@@ -29,7 +37,7 @@ class AppTaskFetcher {
                 guard let weakSelf = self else { return }
                 weakSelf.delegate?.updateTasks(tasks)
             }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                // UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .background,  body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.gettingTasks = false
@@ -47,9 +55,7 @@ class AppTaskFetcher {
             status: status,
             provider: self.taskServiceProvider)
             .then(in: .background, {[weak self] task in
-                guard let weakSelf = self else {
-                    return
-                }
+                guard let weakSelf = self else { return }
                 weakSelf.delegate?.updateTask(task)
                 DispatchQueue.main.async {
                     let formatter = NumberFormatter()
@@ -59,14 +65,14 @@ class AppTaskFetcher {
                     let formattedBonus = formatter.string(from: task.bonus)!
                     if task.status == -1 {
                         let title = "\(I18n.minusPoints.description) \(formattedBonus) \(I18n.points.description)"
-                        UCAlert.showAlert(imageName: "Error", title: title, desc: I18n.appTaskFailed.description, closeBtn: I18n.close.description)
+                        UCAlert.showAlert(weakSelf.alertPresenter, title: title, desc: I18n.appTaskFailed.description, closeBtn: I18n.close.description)
                     } else {
                         let title = "\(I18n.earn.description) \(formattedBonus) \(I18n.points.description)"
-                        UCAlert.showAlert(imageName: "Success", title: title, desc: I18n.appTaskSuccess.description, closeBtn: I18n.close.description)
+                        UCAlert.showAlert(weakSelf.alertPresenter, title: title, desc: I18n.appTaskSuccess.description, closeBtn: I18n.close.description)
                     }
                 }
             }).catch(in: .main, {error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                //UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .background,  body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.updatingTask = false

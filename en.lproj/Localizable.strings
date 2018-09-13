@@ -36,6 +36,11 @@
 // Wallet
 "ETHWallet" = "ETH Wallet";
 "Assets" = "Assets";
+"CopyWalletAddress" = "Copy Wallet Address";
+"Receive" = "Receive";
+"Send" = "Send";
+"ReceiveQRCode" = "Receive QRCode";
+"NeedMinGasError" = "Need miniumum #gas# Ether in your wallet";
 
 // Apps
 "SDKApps" = "Minable Apps";

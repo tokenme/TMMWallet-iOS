@@ -36,6 +36,11 @@
 // Wallet
 "ETHWallet" = "ETH钱包";
 "Assets" = "资产";
+"CopyWalletAddress" = "复制钱包地址";
+"Receive" = "收币";
+"Send" = "转币";
+"ReceiveQRCode" = "收币码";
+"NeedMinGasError" = "钱包内至少需要 #gas# Ether";
 
 // Apps
 "SDKApps" = "可挖矿应用";

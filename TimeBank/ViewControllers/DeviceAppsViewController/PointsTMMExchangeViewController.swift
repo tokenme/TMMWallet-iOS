@@ -10,6 +10,7 @@ import UIKit
 import Moya
 import Hydra
 import TMMSDK
+import Presentr
 
 class PointsTMMExchangeViewController: UIViewController {
     
@@ -22,6 +23,13 @@ class PointsTMMExchangeViewController: UIViewController {
     private var isChanging = false
     private var changeRate: APIExchangeRate?
     private var device: APIDevice?
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
@@ -105,8 +113,9 @@ extension PointsTMMExchangeViewController {
                     guard let weakSelf2 = weakSelf else { return }
                     weakSelf2.delegate?.newTransaction(tx: tx)
                 })
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.isChanging = false

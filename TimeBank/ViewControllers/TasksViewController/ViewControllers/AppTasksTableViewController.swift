@@ -18,6 +18,7 @@ import SwiftWebVC
 import Kingfisher
 import StoreKit
 import EmptyDataSet_Swift
+import Presentr
 
 fileprivate let DefaultPageSize: UInt = 10
 
@@ -34,6 +35,13 @@ class AppTasksTableViewController: UITableViewController {
             return nil
         }
     }
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var currentPage: UInt = 1
     
@@ -184,7 +192,7 @@ extension AppTasksTableViewController {
                 weakSelf.preInstall(weakTask)
             } else {
                 weakSelf.presentingAppStore = false
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
             }
         })
     }
@@ -199,8 +207,9 @@ extension AppTasksTableViewController {
             provider: self.taskServiceProvider)
             .then(in: .background, { task in
                 AppTaskChecker.sharedInstance.addTask(task)
-            }).catch(in: .main, {error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             })
     }
     
@@ -223,7 +232,11 @@ extension AppTasksTableViewController {
                 guard let weakSelf = self else {
                     return
                 }
-                weakSelf.tasks = tasks
+                if refresh {
+                    weakSelf.tasks = tasks
+                } else {
+                    weakSelf.tasks.append(contentsOf: tasks)
+                }
                 if tasks.count < DefaultPageSize {
                     if weakSelf.tasks.count <= DefaultPageSize {
                         weakSelf.tableView.footer?.isHidden = true
@@ -237,8 +250,8 @@ extension AppTasksTableViewController {
                     weakSelf.currentPage += 1
                 }
             }).catch(in: .main, {[weak self] error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 weakSelf.tableView.footer?.isHidden = false
                 weakSelf.tableView.footer?.endRefreshing()
             }).always(in: .main, body: {[weak self] in

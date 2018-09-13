@@ -14,6 +14,7 @@ import Hydra
 import ZHRefresh
 import SkeletonView
 import ViewAnimator
+import Presentr
 
 class WalletViewController: UIViewController {
     
@@ -57,6 +58,13 @@ class WalletViewController: UIViewController {
             balanceLabel.text = formatter.string(from: tmm?.balance ?? 0)
         }
     }
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var loadingDevices = false
     private var loadingBalance = false
@@ -246,8 +254,9 @@ extension WalletViewController {
                     return
                 }
                 weakSelf.devices = devices
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else {
                     return
@@ -272,8 +281,9 @@ extension WalletViewController {
             .then(in: .main, {[weak self] token in
                 guard let weakSelf = self else { return }
                 weakSelf.tmm = token
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .background, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingBalance = false

@@ -7,9 +7,22 @@
 //
 
 import SwiftEntryKit
+import Presentr
+import UIKit
 
 class UCAlert {
-    static public func showAlert(imageName: String, title: String, desc: String, closeBtn: String) {
+    static public func showAlert(_ presenter: Presentr, title: String, desc: String, closeBtn: String) {
+        let alertController = Presentr.alertViewController(title: title, body: desc)
+        let cancelAction = AlertAction(title: closeBtn, style: .cancel) { alert in
+            //
+        }
+        alertController.addAction(cancelAction)
+        if let vc = UIViewController.currentViewController() {
+            vc.customPresentViewController(presenter, viewController: alertController, animated: true)
+        }
+    }
+    
+    static public func showAlert2(imageName: String, title: String, desc: String, closeBtn: String) {
         var attributes = EKAttributes()
         attributes = EKAttributes.centerFloat
         attributes.hapticFeedbackType = .error

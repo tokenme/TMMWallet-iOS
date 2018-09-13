@@ -15,6 +15,7 @@ import SkeletonView
 import ViewAnimator
 import Kingfisher
 import EmptyDataSet_Swift
+import Presentr
 
 fileprivate let DefaultPageSize: UInt = 10
 
@@ -31,6 +32,13 @@ class TaskRecordsTableViewController: UITableViewController {
             return nil
         }
     }
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var currentPage: UInt = 1
     
@@ -205,10 +213,12 @@ extension TaskRecordsTableViewController {
             pageSize: DefaultPageSize,
             provider: self.taskServiceProvider)
             .then(in: .main, {[weak self] tasks in
-                guard let weakSelf = self else {
-                    return
+                guard let weakSelf = self else { return }
+                if refresh {
+                    weakSelf.tasks = tasks
+                } else {
+                    weakSelf.tasks.append(contentsOf: tasks)
                 }
-                weakSelf.tasks = tasks
                 if tasks.count < DefaultPageSize {
                     if weakSelf.tasks.count <= DefaultPageSize {
                         weakSelf.tableView.footer?.isHidden = true
@@ -222,8 +232,8 @@ extension TaskRecordsTableViewController {
                     weakSelf.currentPage += 1
                 }
             }).catch(in: .main, {[weak self] error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 weakSelf.tableView.footer?.isHidden = false
                 weakSelf.tableView.footer?.endRefreshing()
             }).always(in: .main, body: {[weak self] in

@@ -13,6 +13,7 @@ import Moya
 import SwiftyUserDefaults
 import Hydra
 import TMMSDK
+import Presentr
 
 class LoginViewController: UIViewController {
     
@@ -28,6 +29,13 @@ class LoginViewController: UIViewController {
     private var isLogining = false
     private var loadingUserInfo = false
     private var bindingDevice = false
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin])
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
@@ -102,7 +110,7 @@ class LoginViewController: UIViewController {
             }
             guard let weakSelf = self else { return  }
             weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: {})
-            UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.bindingDevice = false

@@ -9,8 +9,9 @@
 import UIKit
 import Kingfisher
 import Reusable
+import SwipeCellKit
 
-class TokenTableViewCell: UITableViewCell, NibReusable {
+class TokenTableViewCell: SwipeTableViewCell, NibReusable {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
@@ -32,7 +33,7 @@ class TokenTableViewCell: UITableViewCell, NibReusable {
         if let icon = token.icon {
             iconImageView.kf.setImage(with: URL(string: icon))
         }
-        nameLabel.text = token.name
+        nameLabel.text = token.symbol
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";

@@ -10,12 +10,14 @@ import Foundation
 import ObjectMapper
 
 public class APIToken: APIResponse {
+    var address: String?
     var name: String?
     var symbol: String?
     var balance: NSDecimalNumber = 0
     var decimals: Int8 = 0
     var icon: String?
     var price: NSDecimalNumber = 0
+    var minGas: NSDecimalNumber = 0
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -29,11 +31,13 @@ public class APIToken: APIResponse {
     // Mappable
     override public func mapping(map: Map) {
         super.mapping(map: map)
+        address <- map["address"]
         name <- map["name"]
         symbol <- map["symbol"]
         balance <- (map["balance"], decimalTransform)
         decimals <- map["decimals"]
         icon <- map["icon"]
         price <- (map["price"], decimalTransform)
+        minGas <- (map["min_gas"], decimalTransform)
     }
 }

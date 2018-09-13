@@ -28,6 +28,8 @@ target 'TimeBank' do
   pod 'EmptyDataSet-Swift'
   pod 'SnapKit'
   pod 'Presentr'
+  pod 'swiftScan'
+  pod 'SwipeCellKit'
 end
 
 post_install do |installer|

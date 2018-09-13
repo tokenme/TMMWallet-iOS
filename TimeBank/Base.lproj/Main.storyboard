@@ -28,6 +28,84 @@
             </objects>
             <point key="canvasLocation" x="750" y="-286"/>
         </scene>
+        <!--WalletQR Code View Controller-->
+        <scene sceneID="YGH-Hb-7Ko">
+            <objects>
+                <viewController storyboardIdentifier="WalletQRCodeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Bp6-wR-j6b" customClass="WalletQRCodeViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hbe-r5-qkL">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="331"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="by4-Ri-5s7">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vi-eg-znb">
+                                        <rect key="frame" x="123.5" y="13.5" width="53" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.50980392159999999" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="0vi-eg-znb" firstAttribute="centerX" secondItem="by4-Ri-5s7" secondAttribute="centerX" id="3I6-W0-law"/>
+                                    <constraint firstItem="0vi-eg-znb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="by4-Ri-5s7" secondAttribute="leading" constant="30" id="4C7-XV-fej"/>
+                                    <constraint firstAttribute="height" constant="44" id="Ia1-KD-o3X"/>
+                                    <constraint firstItem="0vi-eg-znb" firstAttribute="centerY" secondItem="by4-Ri-5s7" secondAttribute="centerY" id="ghC-gP-vUe"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0vi-eg-znb" secondAttribute="trailing" constant="30" id="kMD-hZ-QJv"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receive" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43C-g5-E1h">
+                                <rect key="frame" x="125" y="52" width="50.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4bK-nQ-5x9">
+                                <rect key="frame" x="50" y="77" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Etz-Fe-nwz"/>
+                                    <constraint firstAttribute="width" secondItem="4bK-nQ-5x9" secondAttribute="height" multiplier="1:1" id="bwJ-ju-sSu"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Lz-5o-47U">
+                                <rect key="frame" x="79" y="293" width="142" height="30"/>
+                                <state key="normal" title="Copy Wallet Address"/>
+                                <connections>
+                                    <action selector="copyAddress" destination="Bp6-wR-j6b" eventType="touchUpInside" id="ATC-Vu-AYA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iEJ-Uq-WK4" firstAttribute="trailing" secondItem="4bK-nQ-5x9" secondAttribute="trailing" constant="50" id="05D-XQ-Gb6"/>
+                            <constraint firstItem="by4-Ri-5s7" firstAttribute="leading" secondItem="iEJ-Uq-WK4" secondAttribute="leading" id="GqJ-03-aJI"/>
+                            <constraint firstItem="by4-Ri-5s7" firstAttribute="width" secondItem="hbe-r5-qkL" secondAttribute="width" id="HOw-N1-N2L"/>
+                            <constraint firstItem="by4-Ri-5s7" firstAttribute="top" secondItem="iEJ-Uq-WK4" secondAttribute="top" id="R6p-U9-6Kb"/>
+                            <constraint firstItem="43C-g5-E1h" firstAttribute="top" secondItem="by4-Ri-5s7" secondAttribute="bottom" constant="8" id="Rf5-sh-biS"/>
+                            <constraint firstItem="4bK-nQ-5x9" firstAttribute="centerX" secondItem="iEJ-Uq-WK4" secondAttribute="centerX" id="SzI-IU-yHy"/>
+                            <constraint firstItem="43C-g5-E1h" firstAttribute="centerX" secondItem="iEJ-Uq-WK4" secondAttribute="centerX" id="TNV-24-0jM"/>
+                            <constraint firstItem="4bK-nQ-5x9" firstAttribute="leading" secondItem="iEJ-Uq-WK4" secondAttribute="leading" constant="50" id="cZH-ur-JiB"/>
+                            <constraint firstItem="0Lz-5o-47U" firstAttribute="top" secondItem="4bK-nQ-5x9" secondAttribute="bottom" constant="16" id="dtV-qC-Hdg"/>
+                            <constraint firstItem="0Lz-5o-47U" firstAttribute="centerX" secondItem="iEJ-Uq-WK4" secondAttribute="centerX" id="nKJ-rn-FMU"/>
+                            <constraint firstItem="iEJ-Uq-WK4" firstAttribute="bottom" secondItem="0Lz-5o-47U" secondAttribute="bottom" constant="8" id="soo-7U-91A"/>
+                            <constraint firstItem="4bK-nQ-5x9" firstAttribute="top" secondItem="43C-g5-E1h" secondAttribute="bottom" constant="8" id="wkh-Tg-aHl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iEJ-Uq-WK4"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="331"/>
+                    <connections>
+                        <outlet property="addressLabel" destination="0vi-eg-znb" id="mnh-dq-Uc0"/>
+                        <outlet property="copyButton" destination="0Lz-5o-47U" id="soZ-gq-MOk"/>
+                        <outlet property="qrcodeView" destination="4bK-nQ-5x9" id="ogP-92-UPu"/>
+                        <outlet property="receiveLabel" destination="43C-g5-E1h" id="w5M-Nf-XNY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4FZ-VL-6zr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1648" y="-1490"/>
+        </scene>
         <!--Wallet View Controller-->
         <scene sceneID="GJM-To-Hjn">
             <objects>
@@ -44,8 +122,11 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Wallet Address" image="Wallet"/>
+                                        <connections>
+                                            <action selector="showWalletQRCode" destination="g2Y-GJ-Viq" eventType="touchUpInside" id="TUY-0l-9Lx"/>
+                                        </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPT-3t-HLb">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPT-3t-HLb">
                                         <rect key="frame" x="286" y="56" width="39" height="34"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="28"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -94,6 +175,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZe-45-3Js" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1648.8" y="-961.16941529235385"/>
+        </scene>
+        <!--Transactions Table View Controller-->
+        <scene sceneID="alF-aj-wRE">
+            <objects>
+                <tableViewController storyboardIdentifier="TransactionsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3bZ-Ri-OiX" customClass="TransactionsTableViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3DX-cW-uro">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Tag-BV-Pri">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tag-BV-Pri" id="DWq-MY-Wbl">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3bZ-Ri-OiX" id="uCa-7s-ZIK"/>
+                            <outlet property="delegate" destination="3bZ-Ri-OiX" id="0xe-f2-02Z"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jel-1I-gpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2429" y="-963"/>
         </scene>
         <!--Wallet-->
         <scene sceneID="hNz-n2-bh7">

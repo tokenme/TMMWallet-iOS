@@ -14,6 +14,7 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import StoreKit
+import Presentr
 
 fileprivate let DefaultPageSize: UInt = 10
 
@@ -30,6 +31,13 @@ class SDKAppsTableViewController: UITableViewController {
             return nil
         }
     }
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var currentPage: UInt = 1
     
@@ -196,7 +204,7 @@ extension SDKAppsTableViewController {
                 weakSelf.present(storeVC, animated: true, completion: nil)
             } else {
                 weakSelf.presentingAppStore = false
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
             }
         })
     }
@@ -219,7 +227,11 @@ extension SDKAppsTableViewController {
                 guard let weakSelf = self else {
                     return
                 }
-                weakSelf.apps = apps
+                if refresh {
+                    weakSelf.apps = apps
+                } else {
+                    weakSelf.apps.append(contentsOf: apps)
+                }
                 if apps.count < DefaultPageSize {
                     if weakSelf.apps.count <= DefaultPageSize {
                         weakSelf.tableView.footer?.isHidden = true
@@ -233,8 +245,8 @@ extension SDKAppsTableViewController {
                     weakSelf.currentPage += 1
                 }
             }).catch(in: .main, {[weak self] error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 weakSelf.tableView.footer?.isHidden = false
                 weakSelf.tableView.footer?.endRefreshing()
             }).always(in: .main, body: {[weak self] in

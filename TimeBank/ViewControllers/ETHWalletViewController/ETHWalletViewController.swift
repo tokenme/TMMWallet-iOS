@@ -14,6 +14,8 @@ import Hydra
 import ZHRefresh
 import SkeletonView
 import ViewAnimator
+import Presentr
+import SwipeCellKit
 
 class ETHWalletViewController: UIViewController {
     
@@ -35,7 +37,38 @@ class ETHWalletViewController: UIViewController {
     @IBOutlet private weak var balanceLabel: UILabel!
     
     
-    private var tokens: [APIToken] = []
+    let walletQRCodePresenter: Presentr = {
+        let presentationType = PresentationType.dynamic(center: .center)
+        let presenter = Presentr(presentationType: presentationType)
+        presenter.roundCorners = true
+        presenter.transitionType = nil
+        presenter.dismissTransitionType = .coverVerticalFromTop
+        presenter.dismissAnimated = true
+        presenter.dismissOnSwipe = true
+        presenter.dismissOnSwipeDirection = .top
+        return presenter
+    }()
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
+    
+    private var tokens: [APIToken] = [] {
+        didSet {
+            var totalPrice: NSDecimalNumber = 0
+            for token in tokens {
+                totalPrice += token.price * token.balance
+            }
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 4
+            formatter.groupingSeparator = "";
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            balanceLabel.text = formatter.string(from: totalPrice)
+        }
+    }
     
     private var loadingTokens = false
     
@@ -56,7 +89,7 @@ class ETHWalletViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
-            self.title = I18n.ethWallet.description
+            navigationItem.title = I18n.ethWallet.description
         }
         
         setupSummaryView()
@@ -142,7 +175,12 @@ class ETHWalletViewController: UIViewController {
     public func refresh() {
         getTokens()
     }
-
+    
+    @IBAction func showWalletQRCode() {
+        let vc = WalletQRCodeViewController.instantiate()
+        vc.address = userInfo?.wallet
+        customPresentViewController(walletQRCodePresenter, viewController: vc, animated: true)
+    }
 }
 
 extension ETHWalletViewController: UIViewControllerTransitioningDelegate {
@@ -155,6 +193,57 @@ extension ETHWalletViewController: UIViewControllerTransitioningDelegate {
         return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
     }
     
+}
+
+extension ETHWalletViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        if orientation == .left {
+            let receiveAction = SwipeAction(style: .default, title: I18n.receive.description) {[weak self] action, indexPath in
+                guard let weakSelf = self else { return }
+                let vc = WalletQRCodeViewController.instantiate()
+                vc.address = weakSelf.userInfo?.wallet
+                let token = weakSelf.tokens[indexPath.row]
+                vc.token = token
+                weakSelf.customPresentViewController(weakSelf.walletQRCodePresenter, viewController: vc, animated: true)
+            }
+            receiveAction.backgroundColor = UIColor.greenGrass
+            receiveAction.image = UIImage(named: "TransferIn")?.kf.resize(to: CGSize(width: 30, height: 30), for: .aspectFit).withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            
+            return [receiveAction]
+        }else {
+            let sendAction = SwipeAction(style: .default, title: I18n.send.description) {[weak self] action, indexPath in
+                guard let weakSelf = self else { return }
+                var ethBalance: NSDecimalNumber = 0
+                for token in weakSelf.tokens {
+                    if token.address == "" && token.name == "Ethereum" {
+                        ethBalance = token.balance
+                        break
+                    }
+                }
+                let token = weakSelf.tokens[indexPath.row]
+                if ethBalance < token.minGas {
+                    let formatter = NumberFormatter()
+                    formatter.maximumFractionDigits = 4
+                    formatter.groupingSeparator = "";
+                    formatter.numberStyle = NumberFormatter.Style.decimal
+                    let message = I18n.needMinGasError.description.replacingOccurrences(of: "#gas#", with: formatter.string(from: token.minGas)!)
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: message, closeBtn: I18n.close.description)
+                    return
+                }
+            }
+            sendAction.backgroundColor = UIColor.primaryBlue
+            sendAction.image = UIImage(named: "TransferOut")?.kf.resize(to: CGSize(width: 30, height: 30), for: .aspectFit).withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            
+            return [sendAction]
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .selection
+        options.transitionStyle = .border
+        return options
+    }
 }
 
 extension ETHWalletViewController: UITableViewDelegate, UITableViewDataSource {
@@ -180,13 +269,17 @@ extension ETHWalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as TokenTableViewCell
+        cell.delegate = self
         let token = self.tokens[indexPath.row]
         cell.fill(token)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //return false
+        let token = self.tokens[indexPath.row]
+        let vc = TransactionsTableViewController.instantiate()
+        vc.setToken(token: token)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -218,8 +311,9 @@ extension ETHWalletViewController {
             .then(in: .main, {[weak self] tokens in
                 guard let weakSelf = self else { return }
                 weakSelf.tokens = tokens
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingTokens = false

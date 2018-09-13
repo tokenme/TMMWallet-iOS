@@ -35,6 +35,11 @@ enum I18n: CustomStringConvertible {
     case sending
     case ethWallet
     case assets
+    case copyWalletAddress
+    case receive
+    case send
+    case receiveQRCode
+    case needMinGasError
     case sdkApps
     case install
     case installed
@@ -123,6 +128,16 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ETHWallet", comment: "ETH Wallet")
         case .assets:
             return NSLocalizedString("Assets", comment: "Assets")
+        case .copyWalletAddress:
+            return NSLocalizedString("CopyWalletAddress", comment: "Copy Wallet Address")
+        case .receive:
+            return NSLocalizedString("Receive", comment: "Receive")
+        case .send:
+            return NSLocalizedString("Send", comment: "Send")
+        case .receiveQRCode:
+            return NSLocalizedString("ReceiveQRCode", comment: "Receive QRCode")
+        case .needMinGasError:
+            return NSLocalizedString("NeedMinGasError", comment: "NeedMinGasError")
         case .sdkApps:
             return NSLocalizedString("SDKApps", comment: "Minable Apps")
         case .install:

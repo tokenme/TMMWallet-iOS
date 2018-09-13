@@ -40,8 +40,10 @@ PODS:
   - SnapKit (4.0.0)
   - SwiftEntryKit (0.6.0):
     - QuickLayout (= 2.0.2)
+  - swiftScan (1.1.5)
   - SwiftWebVC (0.4.5)
   - SwiftyUserDefaults (4.0.0-alpha.1)
+  - SwipeCellKit (2.4.3)
   - Tabman (1.9.2):
     - AutoInsetter (~> 1.2.0)
     - Pageboy (~> 2.5.0)
@@ -69,8 +71,10 @@ DEPENDENCIES:
   - SkeletonView
   - SnapKit
   - SwiftEntryKit (~> 0.2)
+  - swiftScan
   - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
+  - SwipeCellKit
   - Tabman
   - ViewAnimator
   - ZHRefresh
@@ -102,7 +106,9 @@ SPEC REPOS:
     - SkeletonView
     - SnapKit
     - SwiftEntryKit
+    - swiftScan
     - SwiftyUserDefaults
+    - SwipeCellKit
     - Tabman
     - ViewAnimator
     - ZHRefresh
@@ -142,12 +148,14 @@ SPEC CHECKSUMS:
   SkeletonView: 50f7a9b04e3a62bd0ae964859c19317fabaea367
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftEntryKit: ba070426598304c5773d84b54ed8b0763b5f2060
+  swiftScan: bc6dbf74e6a579c45a861691afc44628d8d9f6ab
   SwiftWebVC: d3e2c4530b079e7647d5be1a457cf46cb65fb89a
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
+  SwipeCellKit: cee9906e6d3a36e22ad1a852fba7f8fa0839d113
   Tabman: a09f7d7aa62b231ec475ca9eb9171f7cc973a3d7
   ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: 390f3127f495f2a1388c24c3ff3d4148c97ee5d7
+PODFILE CHECKSUM: b4b2958ec440ad1c78b415728824c5d50d41f251
 
 COCOAPODS: 1.6.0.beta.1
