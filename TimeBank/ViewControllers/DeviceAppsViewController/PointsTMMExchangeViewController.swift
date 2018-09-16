@@ -16,6 +16,7 @@ class PointsTMMExchangeViewController: UIViewController {
     
     weak public var delegate: TransactionDelegate?
     
+    @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var exchangeRateLabel: UILabel!
     @IBOutlet private weak var amountTextField: TweeAttributedTextField!
     @IBOutlet private weak var changeButton: TransitionButton!
@@ -23,6 +24,7 @@ class PointsTMMExchangeViewController: UIViewController {
     private var isChanging = false
     private var changeRate: APIExchangeRate?
     private var device: APIDevice?
+    private var direction: APIExchangeDirection?
     
     private let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
@@ -37,15 +39,22 @@ class PointsTMMExchangeViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    convenience init(changeRate: APIExchangeRate, device: APIDevice) {
+    convenience init(changeRate: APIExchangeRate, device: APIDevice, direction: APIExchangeDirection) {
         self.init()
         self.changeRate = changeRate
         self.device = device
+        self.direction = direction
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let rate = changeRate?.rate else { return }
+        guard let direction = self.direction else { return }
+        if direction == .TMMIn {
+            titleLabel.text = "\(I18n.points.description) \(I18n.changeTo.description) TBC"
+        } else {
+            titleLabel.text = "TBC \(I18n.changeTo.description) \(I18n.points.description)"
+        }
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
@@ -97,6 +106,7 @@ extension PointsTMMExchangeViewController {
             return
         }
         guard let deviceId = device?.id else { return }
+        guard let direction = self.direction else { return }
         if !self.verifyPoints() { return }
         let changePoints = NSDecimalNumber.init(string: amountTextField.text)
         if changePoints.isNaN() { return }
@@ -106,6 +116,7 @@ extension PointsTMMExchangeViewController {
         TMMExchangeService.changeTMM(
             deviceId: deviceId,
             points: changePoints,
+            direction: direction,
             provider: self.exchangeServiceProvider)
             .then(in: .main, {[weak self] tx in
                 guard let weakSelf = self else { return }

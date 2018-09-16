@@ -9,6 +9,11 @@
 import Foundation
 import ObjectMapper
 
+enum APIExchangeDirection: Int8 {
+    case TMMIn = 1
+    case TMMOut = -1
+}
+
 public class APIExchangeRate: APIResponse {
     var rate: NSDecimalNumber = 0
     var minPoints: NSDecimalNumber = 0

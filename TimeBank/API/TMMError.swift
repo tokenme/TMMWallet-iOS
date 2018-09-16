@@ -17,6 +17,7 @@ enum TMMAPIResponseType: Int {
     case notEnoughToken = 600
     case notEnoughPoints = 700
     case invalidMinPoints = 701
+    case notEnoughEth = 800
 }
 
 enum TMMAPIError: Error, CustomStringConvertible {
@@ -30,6 +31,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case notEnoughToken
     case notEnoughPoints
     case invalidMinPoints
+    case notEnoughEth
     case unknown(msg: String)
     case ignore
     
@@ -46,6 +48,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .notEnoughToken: return I18n.notEnoughTokenError.description
         case .notEnoughPoints: return I18n.notEnoughPointsError.description
         case .invalidMinPoints: return I18n.invalidMinPointsError.description
+        case .notEnoughEth: return I18n.notEnoughETHError.description
         case .unknown(let msg): return msg
         case .ignore: return "ignore"
         }
@@ -76,6 +79,8 @@ extension TMMAPIError {
                 return TMMAPIError.notEnoughPoints
             case .invalidMinPoints:
                 return TMMAPIError.invalidMinPoints
+            case .notEnoughEth:
+                return TMMAPIError.notEnoughEth
             }
         }
         return TMMAPIError.unknown(msg: msg)

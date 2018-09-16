@@ -169,6 +169,7 @@ class WalletViewController: UIViewController {
     
     @IBAction func showETHWalletView() {
         let vc = ETHWalletViewController.instantiate()
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

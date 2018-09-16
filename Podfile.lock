@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.3)
+  - AOPKit (1.0.1)
   - AutoInsetter (1.2.6)
   - CountryPickerView (2.1.1)
   - EmptyDataSet-Swift (4.0.5)
@@ -27,7 +28,7 @@ PODS:
   - PhoneNumberKit/UIKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore
   - Presentr (1.3.2)
-  - QuickLayout (2.0.2)
+  - QCloudCore (5.4.5)
   - Result (3.2.4)
   - Reusable (4.0.3):
     - Reusable/Storyboard (= 4.0.3)
@@ -38,8 +39,6 @@ PODS:
   - ShadowView (1.2)
   - SkeletonView (1.4)
   - SnapKit (4.0.0)
-  - SwiftEntryKit (0.6.0):
-    - QuickLayout (= 2.0.2)
   - swiftScan (1.1.5)
   - SwiftWebVC (0.4.5)
   - SwiftyUserDefaults (4.0.0-alpha.1)
@@ -47,6 +46,14 @@ PODS:
   - Tabman (1.9.2):
     - AutoInsetter (~> 1.2.0)
     - Pageboy (~> 2.5.0)
+  - TACCore (1.0.0):
+    - AOPKit (= 1.0.1)
+    - QCloudCore (= 5.4.5)
+  - TACCrash (1.0.0):
+    - TACCore (= 1.0.0)
+  - TACMessaging (1.0.0):
+    - AOPKit (= 1.0.1)
+    - TACCore (= 1.0.0)
   - ViewAnimator (2.1.2)
   - ZHRefresh (0.1.9)
 
@@ -70,16 +77,24 @@ DEPENDENCIES:
   - ShadowView
   - SkeletonView
   - SnapKit
-  - SwiftEntryKit (~> 0.2)
   - swiftScan
   - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
   - SwipeCellKit
   - Tabman
+  - TACCore
+  - TACCrash
+  - TACMessaging
   - ViewAnimator
   - ZHRefresh
 
 SPEC REPOS:
+  https://git.cloud.tencent.com/qcloud_u/cocopoads-repo:
+    - AOPKit
+    - QCloudCore
+    - TACCore
+    - TACCrash
+    - TACMessaging
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AutoInsetter
@@ -98,14 +113,12 @@ SPEC REPOS:
     - Pastel
     - PhoneNumberKit
     - Presentr
-    - QuickLayout
     - Result
     - Reusable
     - Schedule
     - ShadowView
     - SkeletonView
     - SnapKit
-    - SwiftEntryKit
     - swiftScan
     - SwiftyUserDefaults
     - SwipeCellKit
@@ -124,6 +137,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AOPKit: be229d578279d42607214f07cb3f68c563c4e3cd
   AutoInsetter: 3713c857f3c0cc4b6265fe55ecf0c14bfe8622ee
   CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
   EmptyDataSet-Swift: a25810f50c3adfaa3840aa33ae8b5ba12ac29279
@@ -140,22 +154,24 @@ SPEC CHECKSUMS:
   Pastel: 7fa5e26123b3dbe11f7ed255654bf37100b199a5
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
   Presentr: 797ae6ec8904eaba4ec58a4c2065bd66e31569ea
-  QuickLayout: a730730b646b231fd4ef7cffaeb1e81fe0e1ca92
+  QCloudCore: fdba2fdacb45f3e3f867487136ce804053e09414
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
   Schedule: 62cd2defb026a3607349b2a2b1bd8ec3fd12cccd
   ShadowView: e686f2e27fc281c0118419b1fb314b6e534a4682
   SkeletonView: 50f7a9b04e3a62bd0ae964859c19317fabaea367
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  SwiftEntryKit: ba070426598304c5773d84b54ed8b0763b5f2060
   swiftScan: bc6dbf74e6a579c45a861691afc44628d8d9f6ab
   SwiftWebVC: d3e2c4530b079e7647d5be1a457cf46cb65fb89a
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   SwipeCellKit: cee9906e6d3a36e22ad1a852fba7f8fa0839d113
   Tabman: a09f7d7aa62b231ec475ca9eb9171f7cc973a3d7
+  TACCore: a0d0286c860f02c4f364fcf74c7808b81740ef14
+  TACCrash: 1d794f11ba159001aa9d37e7c8b2edc5c5766ae6
+  TACMessaging: 7e9414193ee6d83b5e19202d7d2bbed8b5498963
   ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: b4b2958ec440ad1c78b415728824c5d50d41f251
+PODFILE CHECKSUM: d163c8ecce95c55193c16178859449bfce41e575
 
 COCOAPODS: 1.6.0.beta.1

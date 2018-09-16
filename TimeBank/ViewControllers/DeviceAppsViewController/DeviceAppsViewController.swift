@@ -38,7 +38,10 @@ class DeviceAppsViewController: UIViewController {
     private var tmm: APIToken?
     
     @IBOutlet private weak var summaryView: PastelView!
-    @IBOutlet private weak var exchangeButton: TransitionButton!
+    @IBOutlet private weak var exchangeTMMButton: TransitionButton!
+    @IBOutlet private weak var exchangePointButton: TransitionButton!
+    @IBOutlet private weak var miningAppsLabel: UILabel!
+    @IBOutlet private weak var moreAppsButton: UIButton!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var pointsLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -101,7 +104,10 @@ class DeviceAppsViewController: UIViewController {
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
         }
-        exchangeButton.setTitle(I18n.exchangeTMM.description, for: .normal)
+        exchangeTMMButton.setTitle(I18n.exchangeTMM.description, for: .normal)
+        exchangePointButton.setTitle(I18n.exchangePoint.description, for: .normal)
+        miningAppsLabel.text = I18n.miningApps.description
+        moreAppsButton.setTitle(I18n.moreApps.description, for: .normal)
         guard let _ = self.device else { return }
         setupSummaryView()
         setupTableView()
@@ -235,7 +241,21 @@ class DeviceAppsViewController: UIViewController {
             weakSelf.updateSummaryView()
         })
     }
-
+    
+    @IBAction func showExchangeTMM() {
+        exchangeTMMButton.startAnimation()
+        getTmmExchangeRate(direction: .TMMIn)
+    }
+    
+    @IBAction func showExchangePoint() {
+        exchangePointButton.startAnimation()
+        getTmmExchangeRate(direction: .TMMOut)
+    }
+    
+    @IBAction func showSDKApps() {
+        let vc = SDKAppsTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension DeviceAppsViewController: UIViewControllerTransitioningDelegate {
@@ -300,11 +320,6 @@ extension DeviceAppsViewController: SkeletonTableViewDataSource {
 
 extension DeviceAppsViewController {
     
-    @IBAction func showExchange() {
-        exchangeButton.startAnimation()
-        getTmmExchangeRate()
-    }
-    
     private func getApps() {
         if self.loadingApps {
             return
@@ -334,7 +349,7 @@ extension DeviceAppsViewController {
         )
     }
     
-    private func getTmmExchangeRate() {
+    private func getTmmExchangeRate(direction: APIExchangeDirection) {
         if self.gettingTmmExchangeRate {
             return
         }
@@ -344,21 +359,25 @@ extension DeviceAppsViewController {
             .then(in: .main, {[weak self] rate in
                 guard let weakSelf = self else { return }
                 guard let points = weakSelf.device?.points else { return }
-                weakSelf.showExchangeForm(rate, points)
+                weakSelf.showExchangeForm(rate, points, direction)
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.gettingTmmExchangeRate = false
-                weakSelf.exchangeButton.stopAnimation(animationStyle: .normal, completion: nil)
+                if direction == .TMMIn {
+                    weakSelf.exchangeTMMButton.stopAnimation(animationStyle: .normal, completion: nil)
+                } else {
+                    weakSelf.exchangePointButton.stopAnimation(animationStyle: .normal, completion: nil)
+                }
             }
         )
     }
     
-    private func showExchangeForm(_ rate: APIExchangeRate, _ points: NSDecimalNumber) {
+    private func showExchangeForm(_ rate: APIExchangeRate, _ points: NSDecimalNumber, _ direction: APIExchangeDirection) {
         guard let device = self.device else { return }
-        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device)
+        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device, direction: direction)
         vc.delegate = self
         customPresentViewController(exchangePresenter, viewController: vc, animated: true, completion: nil)
     }

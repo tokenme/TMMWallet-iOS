@@ -230,6 +230,9 @@ extension ETHWalletViewController: SwipeTableViewCellDelegate {
                     UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: message, closeBtn: I18n.close.description)
                     return
                 }
+                let vc = TransferTableViewController.instantiate()
+                vc.setToken(token: token)
+                weakSelf.navigationController?.pushViewController(vc, animated: true)
             }
             sendAction.backgroundColor = UIColor.primaryBlue
             sendAction.image = UIImage(named: "TransferOut")?.kf.resize(to: CGSize(width: 30, height: 30), for: .aspectFit).withRenderingMode(UIImageRenderingMode.alwaysTemplate)

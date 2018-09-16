@@ -60,9 +60,9 @@ class SDKAppsTableViewController: UITableViewController {
                 navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
-            navigationController.navigationBar.isTranslucent = true
-            //navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            //navigationController.navigationBar.shadowImage = UIImage()
+            navigationController.navigationBar.isTranslucent = false
+            navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
+            navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
             navigationItem.title = I18n.sdkApps.description
         }
         setupTableView()
@@ -78,7 +78,7 @@ class SDKAppsTableViewController: UITableViewController {
                 navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
-            navigationController.navigationBar.isTranslucent = true
+            navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
     }
@@ -90,6 +90,11 @@ class SDKAppsTableViewController: UITableViewController {
             vc.delegate = self
             self.present(vc, animated: true, completion: nil)
         }
+    }
+    
+    static func instantiate() -> SDKAppsTableViewController
+    {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SDKAppsTableViewController") as! SDKAppsTableViewController
     }
     
     override func didReceiveMemoryWarning() {

@@ -14,6 +14,7 @@ enum TMMTokenService {
     case tmmBalance()
     case assets()
     case transactions(address: String, page: UInt, pageSize: UInt)
+    case transfer(token: String, amount: NSDecimalNumber, to: String)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -33,12 +34,16 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
             return "/assets"
         case let .transactions(address, page, pageSize):
             return "/transactions/\(address)/\(page)/\(pageSize)"
+        case .transfer(_, _, _):
+            return "/transfer"
         }
     }
     var method: Moya.Method {
         switch self {
         case .tmmBalance, .assets, .transactions:
             return .get
+        case .transfer:
+            return .post
         }
     }
     var task: Task {
@@ -49,11 +54,13 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .transactions(_, _, _):
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+        case let .transfer(token, amount, to):
+            return .requestParameters(parameters: ["token": token, "amount": amount, "to": to], encoding: JSONEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
-        case .tmmBalance():
+        case .tmmBalance(), .transfer(_, _, _):
             return "{}".utf8Encoded
         case .assets(), .transactions(_, _, _):
             return "[]".utf8Encoded
@@ -148,6 +155,45 @@ extension TMMTokenService {
                                 reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
                             }
                         }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func transferToken(token: String, amount: NSDecimalNumber, to: String, provider: MoyaProvider<TMMTokenService>) -> Promise<APITransaction> {
+        return Promise<APITransaction> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .transfer(token: token, amount: amount, to: to)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APITransaction.self)
+                        if let errorCode = resp.code {
+                            if errorCode == TMMAPIResponseType.notEnoughEth.rawValue {
+                                do {
+                                    let minETH = try response.mapObject(APIMinETH.self)
+                                    let formatter = NumberFormatter()
+                                    formatter.maximumFractionDigits = 6
+                                    formatter.groupingSeparator = "";
+                                    formatter.numberStyle = NumberFormatter.Style.decimal
+                                    let minETHStr = formatter.string(from: minETH.minETH)!
+                                    let message = I18n.invalidMinPointsError.description.replacingOccurrences(of: "#points#", with: minETHStr)
+                                    reject(TMMAPIError.error(code: errorCode, msg: message))
+                                    return
+                                } catch {
+                                    reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                                }
+                            }
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
                     }
                 case let .failure(error):
                     reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))

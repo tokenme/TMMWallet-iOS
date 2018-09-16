@@ -10,7 +10,6 @@ import UIKit
 import PhoneNumberKit
 import CountryPickerView
 import Moya
-import SwiftEntryKit
 import Hydra
 import Presentr
 

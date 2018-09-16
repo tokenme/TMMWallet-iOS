@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Copyright 2016 Bugly, Tencent. All rights reserved.
+#
+# V1.4.0
+#
+# 2016.08.03
+#
+CRASH_SCRIPTS_DIR=$(dirname "${BASH_SOURCE[0]}")
+source "${CRASH_SCRIPTS_DIR}/basements/plistutilities.sh"
+# appID
+searchInfoPlistValueByKey ":services:crash:appId"
+APPID=$SEARCH_VALUE
+
+if [ -n "${APPID}" ];then
+  echo "Configuration Bugly AppID"
+  export BUGLY_APP_ID=$APPID
+else
+  echo "没有获取到 Crash 模块的 APPID， 请确定是否按照配置，将tac_service_configurations.plist 放到了工程目录下面"
+  exit 2
+fi
+
+# appKey
+searchInfoPlistValueByKey ":services:crash:appKey"
+APPKEY=$SEARCH_VALUE
+
+if [ -n "${APPKEY}" ];then
+  echo "Configuration Bugly AppKey"
+  export BUGLY_APP_KEY=$APPKEY
+else
+  echo "没有获取到 Crash 模块的 APPKEY, 请确定是否按照配置，将tac_service_configurations_unpackage.plist 放到了工程目录下面,请注意该文件中包含appKey信息，请不要打进ipa中"
+  exit 2
+fi
+
+# bundle identifier
+export BUNDLE_IDENTIFIER=$PRODUCT_BUNDLE_IDENTIFIER
+
+${CRASH_SCRIPTS_DIR}/dSYMUpload.sh

@@ -17,6 +17,7 @@
 "NotEnoughTokenError" = "Don't have enough token";
 "NotEnoughPointsError" = "Don't have enough points";
 "InvalidMinPointsError" = "Need at least #points# points";
+"NotEnoughETHError" = "Need at least #eth# ETH";
 
 // Login
 "Password" = "Password";
@@ -41,21 +42,33 @@
 "Send" = "Send";
 "ReceiveQRCode" = "Receive QRCode";
 "NeedMinGasError" = "Need miniumum #gas# Ether in your wallet";
+"Balance" = "Balance";
+"TransferAmount" = "Transfer Amount";
+"To" = "To";
+"WalletAddress" = "Wallet Address";
+"EmptyTokenAmount" = "Please input token transfer amount";
+"ExceedTokenAmount" = "Exceeded token amount in your wallet";
+"EmptyWalletAddress" = "Please input receiver wallet address";
+"InvalidWalletAddress" = "Invalid wallet address";
 
 // Apps
 "SDKApps" = "Minable Apps";
+"MiningApps" = "Mining Apps";
+"MoreApps" = "More Apps";
 "Install" = "Install";
 "Installed" = "Installed";
-"ExchangeTMM" = "Points->TMM Exchange";
+"ExchangeTMM" = "Points to TBC";
+"ExchangePoint" = "TBC to Points";
 "PointsAmount" = "Points Amount";
-"CurrentPointsTMMExchangeRate" = "Current Exchange Rate: 1 Points ≈ #rate# TMM";
+"CurrentPointsTMMExchangeRate" = "Current Exchange Rate: 1 Points ≈ #rate# TBC";
 "EmptyChangePoints" = "Points amount must be input";
 "ExceedChangePoints" = "Exceeded max points";
-"PointsTMMChangeAmount" = "Equal to #amount# TMM";
+"PointsTMMChangeAmount" = "≈ #amount# TBC";
 "Exchange" = "Change";
 "ViewTransaction" = "View Transaction";
 "NewTransactionTitle" = "New Transaction";
 "NewTransactionDesc" = "Receipt: #receipt#";
+"ChangeTo" = "Change to";
 
 // Tasks
 "EarnPointsTasks" = "Earn Points";

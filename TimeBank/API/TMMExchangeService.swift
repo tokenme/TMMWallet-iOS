@@ -11,7 +11,7 @@ import Hydra
 
 enum TMMExchangeService {
     case tmmRate()
-    case tmmChange(deviceId: String, points: NSDecimalNumber)
+    case tmmChange(deviceId: String, points: NSDecimalNumber, direction: APIExchangeDirection)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -27,7 +27,7 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmRate():
             return "/tmm/rate"
-        case .tmmChange(_, _):
+        case .tmmChange(_, _, _):
             return "/tmm/change"
         }
     }
@@ -35,7 +35,7 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmRate:
             return .get
-        case .tmmChange(_, _):
+        case .tmmChange(_, _, _):
             return .post
         }
     }
@@ -43,13 +43,13 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmRate():
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case let .tmmChange(deviceId, points):
-            return .requestParameters(parameters: ["device_id": deviceId, "points": points], encoding: JSONEncoding.default)
+        case let .tmmChange(deviceId, points, direction):
+            return .requestParameters(parameters: ["device_id": deviceId, "points": points, "direction": direction.rawValue], encoding: JSONEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
-        case .tmmRate(), .tmmChange(_, _):
+        case .tmmRate(), .tmmChange(_, _, _):
             return "{}".utf8Encoded
         }
     }
@@ -85,10 +85,10 @@ extension TMMExchangeService {
         })
     }
     
-    static func changeTMM(deviceId: String, points: NSDecimalNumber, provider: MoyaProvider<TMMExchangeService>) -> Promise<APITransaction> {
+    static func changeTMM(deviceId: String, points: NSDecimalNumber, direction: APIExchangeDirection, provider: MoyaProvider<TMMExchangeService>) -> Promise<APITransaction> {
         return Promise<APITransaction> (in: .background, { resolve, reject, _ in
             provider.request(
-                .tmmChange(deviceId: deviceId, points: points)
+                .tmmChange(deviceId: deviceId, points: points, direction: direction)
             ){ result in
                 switch result {
                 case let .success(response):

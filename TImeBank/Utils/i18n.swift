@@ -20,6 +20,7 @@ enum I18n: CustomStringConvertible {
     case notEnoughTokenError
     case notEnoughPointsError
     case invalidMinPointsError
+    case notEnoughETHError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -40,10 +41,22 @@ enum I18n: CustomStringConvertible {
     case send
     case receiveQRCode
     case needMinGasError
+    case balance
+    case transferAmount
+    case to
+    case walletAddress
+    case emptyTokenAmount
+    case exceedTokenAmount
+    case emptyWalletAddress
+    case invalidWalletAddress
     case sdkApps
+    case miningApps
+    case moreApps
     case install
     case installed
     case exchangeTMM
+    case exchangePoint
+    case changeTo
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -98,6 +111,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NotEnoughPointsError", comment: "notEnoughPointsError")
         case .invalidMinPointsError:
             return NSLocalizedString("InvalidMinPointsError", comment: "invalidMinPoints")
+        case .notEnoughETHError:
+            return NSLocalizedString("NotEnoughETHError", comment: "notEnoughETHError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .emptyPassword:
@@ -138,14 +153,36 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ReceiveQRCode", comment: "Receive QRCode")
         case .needMinGasError:
             return NSLocalizedString("NeedMinGasError", comment: "NeedMinGasError")
+        case .balance:
+            return NSLocalizedString("Balance", comment: "Balance")
+        case .transferAmount:
+            return NSLocalizedString("TransferAmount", comment: "Transfer Amount")
+        case .to:
+            return NSLocalizedString("To", comment: "To")
+        case .walletAddress:
+            return NSLocalizedString("WalletAddress", comment: "Wallet Address")
+        case .emptyTokenAmount:
+            return NSLocalizedString("EmptyTokenAmount", comment: "EmptyTokenAmount")
+        case .exceedTokenAmount:
+            return NSLocalizedString("ExceedTokenAmount", comment: "ExceedTokenAmount")
+        case .emptyWalletAddress:
+            return NSLocalizedString("EmptyWalletAddress", comment: "EmptyWalletAddress")
+        case .invalidWalletAddress:
+            return NSLocalizedString("InvalidWalletAddress", comment: "InvalidWalletAddress")
         case .sdkApps:
             return NSLocalizedString("SDKApps", comment: "Minable Apps")
+        case .miningApps:
+            return NSLocalizedString("MiningApps", comment: "Mining Apps")
+        case .moreApps:
+            return NSLocalizedString("MoreApps", comment: "More Apps")
         case .install:
             return NSLocalizedString("Install", comment: "Install")
         case .installed:
             return NSLocalizedString("Installed", comment: "Installed")
         case .exchangeTMM:
             return NSLocalizedString("ExchangeTMM", comment: "Exchange TMM")
+        case .exchangePoint:
+            return NSLocalizedString("ExchangePoint", comment: "Exchange Points")
         case .pointsAmount:
             return NSLocalizedString("PointsAmount", comment: "Points Amount")
         case .currentPointsTMMExchangeRate:
@@ -164,6 +201,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NewTransactionTitle", comment: "New Transaction")
         case .newTransactionDesc:
             return NSLocalizedString("NewTransactionDesc", comment: "Transaction Receipt")
+        case .changeTo:
+            return NSLocalizedString("ChangeTo", comment: "Change to")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .appTasks:
