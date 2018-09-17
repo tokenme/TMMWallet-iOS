@@ -1,4 +1,4 @@
-source "https://git.cloud.tencent.com/qcloud_u/cocopoads-repo"
+source 'https://git.cloud.tencent.com/qcloud_u/cocopoads-repo'
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
@@ -29,7 +29,7 @@ target 'TimeBank' do
   pod 'SnapKit'
   pod 'Presentr'
   pod 'swiftScan'
-  pod 'SwipeCellKit'
+  pod 'SwipeCellKit', '2.4.3'
   pod 'TACCore'
   pod 'TACMessaging'
   pod 'TACCrash'

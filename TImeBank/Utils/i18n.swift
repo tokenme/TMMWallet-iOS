@@ -52,11 +52,15 @@ enum I18n: CustomStringConvertible {
     case sdkApps
     case miningApps
     case moreApps
+    case exchangeRecords
     case install
     case installed
     case exchangeTMM
     case exchangePoint
     case changeTo
+    case txPending
+    case txSuccess
+    case txFailed
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -175,6 +179,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("MiningApps", comment: "Mining Apps")
         case .moreApps:
             return NSLocalizedString("MoreApps", comment: "More Apps")
+        case .exchangeRecords:
+            return NSLocalizedString("ExchangeRecords", comment: "Exchange Records")
         case .install:
             return NSLocalizedString("Install", comment: "Install")
         case .installed:
@@ -203,6 +209,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NewTransactionDesc", comment: "Transaction Receipt")
         case .changeTo:
             return NSLocalizedString("ChangeTo", comment: "Change to")
+        case .txPending:
+            return NSLocalizedString("TxPending", comment: "Pending")
+        case .txSuccess:
+            return NSLocalizedString("TxSuccess", comment: "Success")
+        case .txFailed:
+            return NSLocalizedString("TxFailed", comment: "Failed")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .appTasks:

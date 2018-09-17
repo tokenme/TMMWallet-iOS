@@ -261,8 +261,10 @@ extension TransactionsTableViewController {
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()
-                let zoomAnimation = AnimationType.zoom(scale: 0.2)
-                UIView.animate(views: weakSelf.tableView.visibleCells, animations: [zoomAnimation], completion:nil)
+                if refresh {
+                    let zoomAnimation = AnimationType.zoom(scale: 0.2)
+                    UIView.animate(views: weakSelf.tableView.visibleCells, animations: [zoomAnimation], completion:nil)
+                }
             }
         )
     }

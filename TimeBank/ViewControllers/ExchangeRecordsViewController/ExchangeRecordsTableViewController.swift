@@ -1,8 +1,8 @@
 //
-//  ShareTasksTableViewController.swift
+//  ExchangeRecordsTableViewController.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/9/4.
+//  Created by Syd Xu on 2018/9/17.
 //  Copyright © 2018年 Tokenmama.io. All rights reserved.
 //
 
@@ -15,13 +15,12 @@ import SkeletonView
 import ViewAnimator
 import TMMSDK
 import SwiftWebVC
-import Kingfisher
 import EmptyDataSet_Swift
 import Presentr
 
 fileprivate let DefaultPageSize: UInt = 10
 
-class ShareTasksTableViewController: UITableViewController {
+class ExchangeRecordsTableViewController: UITableViewController {
     
     private var userInfo: APIUser? {
         get {
@@ -43,12 +42,13 @@ class ShareTasksTableViewController: UITableViewController {
     }()
     
     private var currentPage: UInt = 1
+    public var direction: APIExchangeDirection = .TMMIn
     
-    private var tasks: [APIShareTask] = []
+    private var records: [APIExchangeRecord] = []
     
-    private var loadingTasks = false
+    private var loadingRecords = false
     
-    private var taskServiceProvider = MoyaProvider<TMMTaskService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -64,20 +64,19 @@ class ShareTasksTableViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    static func instantiate() -> ShareTasksTableViewController
+    static func instantiate() -> ExchangeRecordsTableViewController
     {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShareTasksTableViewController") as! ShareTasksTableViewController
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExchangeRecordsTableViewController") as! ExchangeRecordsTableViewController
     }
     
     private func setupTableView() {
-        tableView.register(cellType: ShareTaskTableViewCell.self)
-        tableView.register(cellType: LoadingShareTaskTableViewCell.self)
+        tableView.register(cellType: ExchangeRecordTableViewCell.self)
+        tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        tableView.estimatedRowHeight = 125.0
+        tableView.estimatedRowHeight = 66.0
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -88,71 +87,63 @@ class ShareTasksTableViewController: UITableViewController {
             guard let weakSelf = self else { return }
             weakSelf.refresh()
         }
+        
         tableView.footer = ZHRefreshAutoNormalFooter.footerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.getTasks(false)
+            weakSelf.getRecords(false)
         }
+        tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }
     
     func refresh() {
-        getTasks(true)
+        getRecords(true)
     }
 }
 
 // MARK: - Table view data source
-extension ShareTasksTableViewController {
+extension ExchangeRecordsTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return records.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskTableViewCell
-        let task = self.tasks[indexPath.row]
-        cell.fill(task)
+        let cell = tableView.dequeueReusableCell(for: indexPath) as ExchangeRecordTableViewCell
+        let record = self.records[indexPath.row]
+        cell.fill(record)
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.tasks.count < indexPath.row + 1 { return }
-        let cell = tableView.cellForRow(at: indexPath) as? ShareTaskTableViewCell
-        cell?.isSelected = false
-        let task = tasks[indexPath.row]
-        if let imageURL = task.image {
-            KingfisherManager.shared.retrieveImage(with: URL(string: imageURL)!, options: nil, progressBlock: nil, completionHandler:{[weak self](_ image: UIImage?, _ error: NSError?, _ cacheType: CacheType?, _ url: URL?) in
-                guard let weakSelf = self else {return}
-                var shareItem: SwiftWebVCShareItem?
-                if image != nil {
-                    let img = image?.kf.resize(to: CGSize(width: 500, height: 500), for: .aspectFit)
-                    shareItem = SwiftWebVCShareItem(title: task.title, image: img, link: URL(string:task.shareLink))
-                } else {
-                    shareItem = SwiftWebVCShareItem(title: task.title, image: nil, link: URL(string:task.shareLink))
-                }
-                weakSelf.presentWebVC(task.link, shareItem)
-            })
-        } else {
-            let shareItem = SwiftWebVCShareItem(title: task.title, image: nil, link: URL(string:task.shareLink))
-            presentWebVC(task.link, shareItem)
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !self.loadingTasks
-    }
-    
-    private func presentWebVC(_ urlString: String, _ shareItem: SwiftWebVCShareItem?) {
-        let webVC = SwiftModalWebVC(urlString: urlString, shareItem: shareItem)
-        self.present(webVC, animated: true, completion: nil)
+        return !self.loadingRecords
     }
 }
 
-extension ShareTasksTableViewController: SkeletonTableViewDataSource {
+extension ExchangeRecordsTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
+        return self.records.count == 0
+    }
+    
+    func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
+        return false
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyTaskRecordsTitle.description)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyTaskRecordsDesc.description)
+    }
+}
+
+extension ExchangeRecordsTableViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
         return 1
@@ -161,54 +152,35 @@ extension ShareTasksTableViewController: SkeletonTableViewDataSource {
         return 6
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return LoadingShareTaskTableViewCell.self.reuseIdentifier
+        return LoadingTableViewCell.self.reuseIdentifier
     }
 }
 
-extension ShareTasksTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
-    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
-        return self.tasks.count == 0
-    }
+extension ExchangeRecordsTableViewController {
     
-    func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
-        return false
-    }
-    
-    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyShareTasksTitle.description)
-    }
-    
-    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyShareTasksDesc.description)
-    }
-}
-
-extension ShareTasksTableViewController {
-    
-    private func getTasks(_ refresh: Bool) {
-        if self.loadingTasks {
+    private func getRecords(_ refresh: Bool) {
+        if self.loadingRecords {
             return
         }
-        self.loadingTasks = true
+        self.loadingRecords = true
         
         if refresh {
             currentPage = 1
         }
-        
-        TMMTaskService.getShares(
-            idfa: TMMBeacon.shareInstance().deviceId(),
+        TMMExchangeService.getRecords(
             page: currentPage,
             pageSize: DefaultPageSize,
-            provider: self.taskServiceProvider)
-            .then(in: .main, {[weak self] tasks in
+            direction: direction,
+            provider: self.exchangeServiceProvider)
+            .then(in: .main, {[weak self] records in
                 guard let weakSelf = self else { return }
                 if refresh {
-                    weakSelf.tasks = tasks
+                    weakSelf.records = records
                 } else {
-                    weakSelf.tasks.append(contentsOf: tasks)
+                    weakSelf.records.append(contentsOf: records)
                 }
-                if tasks.count < DefaultPageSize {
-                    if weakSelf.tasks.count <= DefaultPageSize {
+                if records.count < DefaultPageSize {
+                    if weakSelf.records.count <= DefaultPageSize {
                         weakSelf.tableView.footer?.isHidden = true
                     } else {
                         weakSelf.tableView.footer?.isHidden = false
@@ -226,7 +198,8 @@ extension ShareTasksTableViewController {
                 weakSelf.tableView.footer?.endRefreshing()
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
-                weakSelf.loadingTasks = false
+                weakSelf.loadingRecords = false
+                weakSelf.tableView.header?.isHidden = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()

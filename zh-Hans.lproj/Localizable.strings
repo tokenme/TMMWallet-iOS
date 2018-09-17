@@ -55,6 +55,7 @@
 "SDKApps" = "可挖矿应用";
 "MiningApps" = "挖矿应用";
 "MoreApps" = "更多应用";
+"ExchangeRecords" = "兑换记录";
 "Install" = "安装";
 "Installed" = "已安装";
 "ExchangeTMM" = "积分兑换TBC";
@@ -69,6 +70,9 @@
 "NewTransactionTitle" = "新交易";
 "NewTransactionDesc" = "交易回执: #receipt#";
 "ChangeTo" = "兑换";
+"TxPending" = "转账中";
+"TxSuccess" = "成功";
+"TxFailed" = "失败";
 
 // Tasks
 "EarnPointsTasks" = "做任务赚积分";

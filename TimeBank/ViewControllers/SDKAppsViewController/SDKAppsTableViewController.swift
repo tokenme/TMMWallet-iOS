@@ -260,8 +260,10 @@ extension SDKAppsTableViewController {
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()
-                let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
-                UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
+                if refresh {
+                    let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
+                    UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
+                }
             }
         )
     }

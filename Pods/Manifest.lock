@@ -80,7 +80,7 @@ DEPENDENCIES:
   - swiftScan
   - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
-  - SwipeCellKit
+  - SwipeCellKit (= 2.4.3)
   - Tabman
   - TACCore
   - TACCrash
@@ -172,6 +172,6 @@ SPEC CHECKSUMS:
   ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: d163c8ecce95c55193c16178859449bfce41e575
+PODFILE CHECKSUM: 36b1834b1b0ceea998f6dbb85248013e82573e0f
 
 COCOAPODS: 1.6.0.beta.1

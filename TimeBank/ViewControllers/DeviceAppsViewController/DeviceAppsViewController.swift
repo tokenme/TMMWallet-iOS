@@ -103,6 +103,8 @@ class DeviceAppsViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
+            let exchangeRecordsBarItem = UIBarButtonItem(title: I18n.exchangeRecords.description, style: .plain, target: self, action: #selector(self.showExchangeRecordsView))
+            navigationItem.rightBarButtonItem = exchangeRecordsBarItem
         }
         exchangeTMMButton.setTitle(I18n.exchangeTMM.description, for: .normal)
         exchangePointButton.setTitle(I18n.exchangePoint.description, for: .normal)
@@ -254,6 +256,11 @@ class DeviceAppsViewController: UIViewController {
     
     @IBAction func showSDKApps() {
         let vc = SDKAppsTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func showExchangeRecordsView() {
+        let vc = ExchangeRecordsViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -72,6 +72,7 @@
 		1D1D6FE0214A7C760001ED49 /* TransferTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FDF214A7C760001ED49 /* TransferTableViewController.swift */; };
 		1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */; };
 		1D1D6FE9214D26C30001ED49 /* APIMinETH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */; };
+		1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FEB214EA3470001ED49 /* ExchangeRecordsViewController.swift */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -111,6 +112,11 @@
 		1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A4213CED5E0002EDBF /* Main.storyboard */; };
 		1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A7213CED5E0002EDBF /* Assets.xcassets */; };
 		1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A9213CED5E0002EDBF /* LaunchScreen.storyboard */; };
+		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
+		1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */; };
+		1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC5440214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift */; };
+		1DEC5443214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DEC5441214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib */; };
+		1DEC5445214FA3AF007A46D5 /* UILabelPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC5444214FA3AF007A46D5 /* UILabelPadding.swift */; };
 		F658EBA45F30103182A90E1D /* Pods_TimeBank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */; };
 /* End PBXBuildFile section */
 
@@ -193,6 +199,7 @@
 		1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = tac_services_configurations.plist; path = TimeBank/tac_services_configurations.plist; sourceTree = "<group>"; };
 		1D1D6FE7214D139C0001ED49 /* TimeBank.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeBank.entitlements; sourceTree = "<group>"; };
 		1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMinETH.swift; sourceTree = "<group>"; };
+		1D1D6FEB214EA3470001ED49 /* ExchangeRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsViewController.swift; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -234,6 +241,11 @@
 		1D36D9A5213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D36D9A7213CED5E0002EDBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D36D9AA213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
+		1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsTableViewController.swift; sourceTree = "<group>"; };
+		1DEC5440214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordTableViewCell.swift; sourceTree = "<group>"; };
+		1DEC5441214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExchangeRecordTableViewCell.xib; sourceTree = "<group>"; };
+		1DEC5444214FA3AF007A46D5 /* UILabelPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelPadding.swift; sourceTree = "<group>"; };
 		41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeBank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B76C9CA759822F52730D52 /* Pods-TimeBank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBank.release.xcconfig"; path = "Target Support Files/Pods-TimeBank/Pods-TimeBank.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -427,11 +439,22 @@
 			name = "Support Files";
 			sourceTree = "<group>";
 		};
+		1D1D6FEA214EA3240001ED49 /* ExchangeRecordsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D1D6FEB214EA3470001ED49 /* ExchangeRecordsViewController.swift */,
+				1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */,
+				1DEC543F214F9EF3007A46D5 /* Cell */,
+			);
+			path = ExchangeRecordsViewController;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
 				1D3441B4213CF61300B8E157 /* LoaderModal.swift */,
 				1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */,
+				1DEC5444214FA3AF007A46D5 /* UILabelPadding.swift */,
 				1D151EA1213E4D75007C87DD /* DetectApp */,
 				1D3441F4213CFBB500B8E157 /* TransitionButton */,
 				1D3441E9213CFBA200B8E157 /* TweeTextField */,
@@ -450,6 +473,7 @@
 				1D1D6FC22147A5270001ED49 /* ETHWalletViewController */,
 				1D1D6FD02148C59A0001ED49 /* TransactionsTableViewController */,
 				1D1D6FDE214A7C540001ED49 /* TransferTableViewController */,
+				1D1D6FEA214EA3240001ED49 /* ExchangeRecordsViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
@@ -485,6 +509,7 @@
 				1D151EC8213F8CE2007C87DD /* APIAppTask.swift */,
 				1D1D6FA42140F2270001ED49 /* APITaskRecord.swift */,
 				1D1D6FB2214129B00001ED49 /* APIExchangeRate.swift */,
+				1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */,
 				1D1D6FBC2146608A0001ED49 /* APITransaction.swift */,
 				1D1D6FBE214689760001ED49 /* APIToken.swift */,
 				1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */,
@@ -578,6 +603,15 @@
 			path = TimeBank;
 			sourceTree = "<group>";
 		};
+		1DEC543F214F9EF3007A46D5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1DEC5440214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift */,
+				1DEC5441214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		7B80D9EDE9EDDA13FC0B0936 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,8 +637,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D36D9AF213CED5E0002EDBF /* Build configuration list for PBXNativeTarget "TimeBank" */;
 			buildPhases = (
-				3EBBECB2622B7AEEA3E03A5D /* [TAC] Run Before Script */,
 				01FE09DA524FF541CDC44078 /* [CP] Check Pods Manifest.lock */,
+				3EBBECB2622B7AEEA3E03A5D /* [TAC] Run Before Script */,
 				1D36D997213CED5D0002EDBF /* Sources */,
 				1D36D998213CED5D0002EDBF /* Frameworks */,
 				1D36D999213CED5D0002EDBF /* Resources */,
@@ -675,6 +709,7 @@
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
+				1DEC5443214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib in Resources */,
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
@@ -826,6 +861,7 @@
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
+				1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */,
 				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,
 				1D3441FC213CFBB500B8E157 /* SpinerLayer.swift in Sources */,
 				1D151EA8213E54A4007C87DD /* NSString+Encrypt.m in Sources */,
@@ -840,6 +876,7 @@
 				1D1D6FC62147B6030001ED49 /* UIButton+Utils.swift in Sources */,
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
+				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
 				1D3441F3213CFBA300B8E157 /* FontAnimation.swift in Sources */,
 				1D3441F2213CFBA300B8E157 /* TweeActiveTextField.swift in Sources */,
 				1D3441D8213CF94200B8E157 /* UITableView+Utils.swift in Sources */,
@@ -856,6 +893,7 @@
 				1D151E93213E2FCA007C87DD /* LoadingTableViewCell.swift in Sources */,
 				1D151ECC213F8F14007C87DD /* AppTaskTableViewCell.swift in Sources */,
 				1D1D6FB3214129B00001ED49 /* APIExchangeRate.swift in Sources */,
+				1DEC5445214FA3AF007A46D5 /* UILabelPadding.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
 				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
@@ -863,6 +901,7 @@
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
 				1D1D6FD921492D330001ED49 /* WalletQRCodeViewController.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
+				1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
 				1D3441EF213CFBA300B8E157 /* TweePlaceholderTextField.swift in Sources */,
 				1D3441DF213CF9BD00B8E157 /* Font.swift in Sources */,
@@ -879,6 +918,7 @@
 				1D151E82213D6394007C87DD /* DeviceAppTableViewCell.swift in Sources */,
 				1D151E9B213E392C007C87DD /* SDKAppTableViewCell.swift in Sources */,
 				1D3441E6213CFB1200B8E157 /* Moya+ObjectMapper.swift in Sources */,
+				1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */,
 				1D1D6FE9214D26C30001ED49 /* APIMinETH.swift in Sources */,
 				1D3441C7213CF74800B8E157 /* TMMBaseService.swift in Sources */,
 				1D3441F1213CFBA300B8E157 /* TweeAttributedTextField.swift in Sources */,

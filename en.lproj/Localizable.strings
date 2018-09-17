@@ -55,6 +55,7 @@
 "SDKApps" = "Minable Apps";
 "MiningApps" = "Mining Apps";
 "MoreApps" = "More Apps";
+"ExchangeRecords" = "Change Records";
 "Install" = "Install";
 "Installed" = "Installed";
 "ExchangeTMM" = "Points to TBC";
@@ -69,6 +70,9 @@
 "NewTransactionTitle" = "New Transaction";
 "NewTransactionDesc" = "Receipt: #receipt#";
 "ChangeTo" = "Change to";
+"TxPending" = "Pending";
+"TxSuccess" = "Success";
+"TxFailed" = "Failed";
 
 // Tasks
 "EarnPointsTasks" = "Earn Points";
