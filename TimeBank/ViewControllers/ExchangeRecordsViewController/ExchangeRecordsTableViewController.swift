@@ -135,11 +135,11 @@ extension ExchangeRecordsTableViewController: EmptyDataSetSource, EmptyDataSetDe
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyTaskRecordsTitle.description)
+        return NSAttributedString(string: I18n.emptyExchangeRecordsTitle.description)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyTaskRecordsDesc.description)
+        return NSAttributedString(string: I18n.emptyExchangeRecordsDesc.description)
     }
 }
 

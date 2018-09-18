@@ -33,6 +33,9 @@ target 'TimeBank' do
   pod 'TACCore'
   pod 'TACMessaging'
   pod 'TACCrash'
+  pod 'FTPopOverMenu_Swift'
+  pod 'PhotoSolution'
+  pod 'Qiniu', '~> 7.1'
 end
 
 pre_install do |installer|

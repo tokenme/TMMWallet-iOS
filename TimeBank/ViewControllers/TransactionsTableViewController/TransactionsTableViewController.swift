@@ -188,11 +188,11 @@ extension TransactionsTableViewController: EmptyDataSetSource, EmptyDataSetDeleg
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyTaskRecordsTitle.description)
+        return NSAttributedString(string: I18n.emptyTransactionsTitle.description)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyTaskRecordsDesc.description)
+        return NSAttributedString(string: I18n.emptyTransactionsDesc.description)
     }
 }
 

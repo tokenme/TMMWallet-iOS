@@ -11,6 +11,7 @@ import ObjectMapper
 
 public class APIShareTask: APIResponse {
     var id: UInt64?
+    var creator: UInt64?
     var title: String = ""
     var summary: String = ""
     var link: String = ""
@@ -37,6 +38,7 @@ public class APIShareTask: APIResponse {
     override public func mapping(map: Map) {
         super.mapping(map: map)
         id <- map["id"]
+        creator <- map["creator"]
         title <- map["title"]
         summary <- map["summary"]
         link <- map["link"]

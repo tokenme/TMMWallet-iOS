@@ -37,7 +37,8 @@ class ShareTaskTableViewCell: UITableViewCell, NibReusable {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let formattedBonus: String = formatter.string(from: task.bonus)!
-        bonusLabel.text = "\(I18n.earn.description) \(formattedBonus) \(I18n.pointsPerViewer.description)"
+        let bonusText = I18n.pointsPerViewer.description.replacingOccurrences(of: "#points#", with: formattedBonus)
+        bonusLabel.text = bonusText
         let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
         let formattedMaxBonus: String = formatter.string(from: maxBonus)!
         maxViewersLabel.text = "\(I18n.maxBonus.description) \(formattedMaxBonus) \(I18n.points.description)"

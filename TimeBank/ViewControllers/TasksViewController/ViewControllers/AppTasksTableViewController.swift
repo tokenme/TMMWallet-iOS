@@ -100,7 +100,7 @@ class AppTasksTableViewController: UITableViewController {
         tableView.showAnimatedSkeleton()
     }
     
-    func refresh() {
+    public func refresh() {
         getTasks(true)
     }
 }

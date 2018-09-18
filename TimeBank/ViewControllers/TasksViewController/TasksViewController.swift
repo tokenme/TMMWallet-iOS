@@ -10,6 +10,7 @@ import UIKit
 import SwiftyUserDefaults
 import Tabman
 import Pageboy
+import FTPopOverMenu_Swift
 
 class TasksViewController: TabmanViewController {
     
@@ -26,8 +27,8 @@ class TasksViewController: TabmanViewController {
     }
     
     private let viewControllers = [
-        AppTasksTableViewController.instantiate(),
-        ShareTasksTableViewController.instantiate()
+        ShareTasksTableViewController.instantiate(),
+        AppTasksTableViewController.instantiate()
     ]
     
     deinit {
@@ -43,16 +44,21 @@ class TasksViewController: TabmanViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = true
-            //navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            //navigationController.navigationBar.shadowImage = UIImage()
             navigationItem.title = I18n.earnPointsTasks.description
             let recordButtonItem = UIBarButtonItem(title: I18n.taskRecords.description, style: .plain, target: self, action: #selector(showTaskRecords))
-            navigationItem.rightBarButtonItem = recordButtonItem
+            navigationItem.leftBarButtonItem = recordButtonItem
+            let submitTaskButtonItem = UIBarButtonItem(title: I18n.submitTask.description, style: .plain, target: self, action: #selector(addTaskAction))
+            navigationItem.rightBarButtonItem = submitTaskButtonItem
         }
         
+        let configuration = FTConfiguration.shared
+        configuration.menuWidth = 150.0
+        
         // configure the bar
-        self.bar.items = [Item(title: I18n.appTasks.description),
-                          Item(title: I18n.shareTasks.description)]
+        self.bar.items = [
+            Item(title: I18n.shareTasks.description),
+            Item(title: I18n.appTasks.description)
+        ]
         self.bar.style = .buttonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self
@@ -87,6 +93,25 @@ class TasksViewController: TabmanViewController {
         let vc = TaskRecordsTableViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @objc func addTaskAction(_ sender: UIBarButtonItem, event: UIEvent) {
+        FTPopOverMenu.showForEvent(event: event,
+                                   with: [I18n.submitNewShareTask.description, I18n.submitNewAppTask.description],
+                                   done: { [weak self] (selectedIndex) -> () in
+                                    guard let weakSelf = self else { return }
+                                    if selectedIndex == 0 {
+                                        let vc = SubmitShareTaskTableViewController.instantiate()
+                                        vc.delegate = weakSelf
+                                        weakSelf.navigationController?.pushViewController(vc, animated: true)
+                                    } else if selectedIndex == 1 {
+                                        let vc = SubmitAppTaskTableViewController.instantiate()
+                                        vc.delegate = weakSelf
+                                        weakSelf.navigationController?.pushViewController(vc, animated: true)
+                                    }
+        }) {
+            
+        }
+    }
 }
 
 extension TasksViewController: UIViewControllerTransitioningDelegate {
@@ -118,6 +143,18 @@ extension TasksViewController: PageboyViewControllerDataSource {
 
 extension TasksViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
+        if let vc = self.currentViewController {
+            if vc.isMember(of: AppTasksTableViewController.self) {
+                (vc as? AppTasksTableViewController)?.refresh()
+            } else if vc.isMember(of: ShareTaskTableViewCell.self) {
+                (vc as? ShareTasksTableViewController)?.refresh()
+            }
+        }
+    }
+}
+
+extension TasksViewController: ViewUpdateDelegate {
+    func shouldRefresh() {
         if let vc = self.currentViewController {
             if vc.isMember(of: AppTasksTableViewController.self) {
                 (vc as? AppTasksTableViewController)?.refresh()

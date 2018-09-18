@@ -97,7 +97,7 @@ class ShareTasksTableViewController: UITableViewController {
         tableView.showAnimatedSkeleton()
     }
     
-    func refresh() {
+    public func refresh() {
         getTasks(true)
     }
 }

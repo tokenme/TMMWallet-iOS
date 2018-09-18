@@ -1,42 +1,17 @@
-
-/* Class = "UILabel"; text = "0.0"; ObjectID = "09m-xb-wwH"; */
-"09m-xb-wwH.text" = "0.0";
-
 /* Class = "UITabBarItem"; title = "Wallet"; ObjectID = "3zn-JK-oKg"; */
-"3zn-JK-oKg.title" = "Wallet";
+"3zn-JK-oKg.title" = "钱包";
 
-/* Class = "UITabBarItem"; title = "Tasks"; ObjectID = "7wD-NH-0kC"; */
-"7wD-NH-0kC.title" = "Tasks";
+/* Class = "UITabBarItem"; title = "Account"; ObjectID = "6ZI-vl-ziQ"; */
+"6ZI-vl-ziQ.title" = "账户";
 
-/* Class = "UILabel"; text = "Points"; ObjectID = "BhT-mn-xAa"; */
-"BhT-mn-xAa.text" = "Points";
+/* Class = "UITabBarItem"; title = "Market"; ObjectID = "7wD-NH-0kC"; */
+"7wD-NH-0kC.title" = "交易市场";
 
-/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "Ia2-YO-q7a"; */
-"Ia2-YO-q7a.title" = "Root View Controller";
+/* Class = "UITabBarItem"; title = "Rewards"; ObjectID = "yvo-pS-BZM"; */
+"yvo-pS-BZM.title" = "转积分";
 
-/* Class = "UILabel"; text = "TMM"; ObjectID = "KNV-eI-E4j"; */
-"KNV-eI-E4j.text" = "TBC";
+/* Class = "UILabel"; text = "TBC"; ObjectID = "BhT-mn-xAa"; */
+"BhT-mn-xAa.text" = "积分";
 
-/* Class = "UILabel"; text = "Points"; ObjectID = "RAP-xT-Qzn"; */
-"RAP-xT-Qzn.text" = "Points";
-
-/* Class = "UILabel"; text = "0.0"; ObjectID = "XVl-rc-PqY"; */
-"XVl-rc-PqY.text" = "0.0";
-
-/* Class = "UITabBarItem"; title = "Wallet"; ObjectID = "acW-dT-cKf"; */
-"acW-dT-cKf.title" = "Wallet";
-
-/* Class = "UILabel"; text = "TMM"; ObjectID = "edI-op-QY4"; */
-"edI-op-QY4.text" = "TBC";
-
-/* Class = "UILabel"; text = "0.0"; ObjectID = "omi-yB-wom"; */
-"omi-yB-wom.text" = "0.0";
-
-/* Class = "UILabel"; text = "0.0"; ObjectID = "pJx-8E-3Wc"; */
-"pJx-8E-3Wc.text" = "0.0";
-
-/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "rf2-4m-CLT"; */
-"rf2-4m-CLT.title" = "Root View Controller";
-
-/* Class = "UITabBarItem"; title = "Apps"; ObjectID = "yvo-pS-BZM"; */
-"yvo-pS-BZM.title" = "Apps";
+/* Class = "UILabel"; text = "TBC"; ObjectID = "RAP-xT-Qzn"; */
+"RAP-xT-Qzn.text" = "积分";

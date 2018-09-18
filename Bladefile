@@ -64,6 +64,15 @@ blades:
   - source: images/transferOut.png
     mount: TimeBank/Assets.xcassets/TransferOut.imageset
     contents: true
+  - source: images/selectImage.png
+    mount: TimeBank/Assets.xcassets/SelectImage.imageset
+    contents: true
+  - source: images/reward.png
+    mount: TimeBank/Assets.xcassets/Reward.imageset
+    contents: true
+  - source: images/exchange.png
+    mount: TimeBank/Assets.xcassets/Exchange.imageset
+    contents: true
 #  - source: iTunesArtwork@2x.png
 #    template: templates/iphone-appicon.json # use a template if you want to batch build catalogs regardless of an xcode project (e.g. as part of a CI process)
 #    out: out/newiphone

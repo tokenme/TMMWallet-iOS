@@ -57,12 +57,12 @@ class TaskRecordsTableViewController: UITableViewController {
         self.transitioningDelegate = self
         if let navigationController = self.navigationController {
             if #available(iOS 11.0, *) {
-                navigationController.navigationBar.prefersLargeTitles = true
+                navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
-            navigationController.navigationBar.isTranslucent = true
-            //navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            //navigationController.navigationBar.shadowImage = UIImage()
+            navigationController.navigationBar.isTranslucent = false
+            navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
+            navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
             navigationItem.title = I18n.taskRecords.description
         }
         setupTableView()
@@ -75,10 +75,10 @@ class TaskRecordsTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         if let navigationController = self.navigationController {
             if #available(iOS 11.0, *) {
-                navigationController.navigationBar.prefersLargeTitles = true
+                navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
-            navigationController.navigationBar.isTranslucent = true
+            navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
     }

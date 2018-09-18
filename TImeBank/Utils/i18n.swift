@@ -21,6 +21,7 @@ enum I18n: CustomStringConvertible {
     case notEnoughPointsError
     case invalidMinPointsError
     case notEnoughETHError
+    case uploadImageError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -61,6 +62,10 @@ enum I18n: CustomStringConvertible {
     case txPending
     case txSuccess
     case txFailed
+    case emptyExchangeRecordsTitle
+    case emptyExchangeRecordsDesc
+    case emptyTransactionsTitle
+    case emptyTransactionsDesc
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -90,6 +95,26 @@ enum I18n: CustomStringConvertible {
     case emptyAppTasksDesc
     case emptyShareTasksTitle
     case emptyShareTasksDesc
+    case submitTask
+    case submitNewAppTask
+    case submitNewShareTask
+    case url
+    case title
+    case description
+    case rewardPerView
+    case maxRewardTimes
+    case totalReward
+    case appName
+    case rewardPerInstall
+    case account
+    case signout
+    case myInviteCode
+    case inviteCode
+    case inviteCodePlaceholder
+    case telegramGroup
+    case wechatGroup
+    case feedback
+    case currentVersion
     
     var description : String {
         switch self {
@@ -117,6 +142,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InvalidMinPointsError", comment: "invalidMinPoints")
         case .notEnoughETHError:
             return NSLocalizedString("NotEnoughETHError", comment: "notEnoughETHError")
+        case .uploadImageError:
+            return NSLocalizedString("UploadImageError", comment: "uploadImageError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .emptyPassword:
@@ -215,6 +242,14 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("TxSuccess", comment: "Success")
         case .txFailed:
             return NSLocalizedString("TxFailed", comment: "Failed")
+        case .emptyExchangeRecordsTitle:
+            return NSLocalizedString("EmptyExchangeRecordsTitle", comment: "EmptyExchangeRecordsTitle")
+        case .emptyExchangeRecordsDesc:
+            return NSLocalizedString("EmptyExchangeRecordsDesc", comment: "EmptyExchangeRecordsDesc")
+        case .emptyTransactionsTitle:
+            return NSLocalizedString("EmptyTransactionsTitle", comment: "EmptyTransactionsTitle")
+        case .emptyTransactionsDesc:
+            return NSLocalizedString("EmptyTransactionsDesc", comment: "EmptyTransactionsDesc")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .appTasks:
@@ -255,6 +290,46 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("EmptyShareTasksTitle", comment: "EmptyShareTasksTitle")
         case .emptyShareTasksDesc:
             return NSLocalizedString("EmptyShareTasksDesc", comment: "EmptyShareTasksDesc")
+        case .submitTask:
+            return NSLocalizedString("SubmitTask", comment: "SubmitTask")
+        case .submitNewAppTask:
+            return NSLocalizedString("SubmitNewAppTask", comment: "SubmitNewAppTask")
+        case .submitNewShareTask:
+            return NSLocalizedString("SubmitNewShareTask", comment: "SubmitNewShareTask")
+        case .url:
+            return NSLocalizedString("URL", comment: "Link")
+        case .title:
+            return NSLocalizedString("Title", comment: "Title")
+        case .description:
+            return NSLocalizedString("Description", comment: "Description")
+        case .rewardPerView:
+            return NSLocalizedString("RewardPerView", comment: "rewardPerView")
+        case .maxRewardTimes:
+            return NSLocalizedString("MaxRewardTimes", comment: "maxRewardTimes")
+        case .totalReward:
+            return NSLocalizedString("TotalReward", comment: "totalReward")
+        case .appName:
+            return NSLocalizedString("AppName", comment: "app name")
+        case .rewardPerInstall:
+            return NSLocalizedString("RewardPerInstall", comment: "RewardPerInstall")
+        case .account:
+            return NSLocalizedString("Account", comment: "account")
+        case .signout:
+            return NSLocalizedString("Signout", comment: "Sign Out")
+        case .myInviteCode:
+            return NSLocalizedString("MyInviteCode", comment: "My Invite Code")
+        case .inviteCode:
+            return NSLocalizedString("InviteCode", comment: "Invite Code")
+        case .inviteCodePlaceholder:
+            return NSLocalizedString("InviteCodePlaceholder", comment: "InviteCodePlaceholder")
+        case .telegramGroup:
+            return NSLocalizedString("TelegramGroup", comment: "Telegram Group")
+        case .wechatGroup:
+            return NSLocalizedString("WechatGroup", comment: "Wechat Group")
+        case .feedback:
+            return NSLocalizedString("Feedback", comment: "feedback")
+        case .currentVersion:
+            return NSLocalizedString("CurrentVersion", comment: "Current Version")
         }
     }
 }

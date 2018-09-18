@@ -11,6 +11,7 @@ import ObjectMapper
 
 public class APIAppTask: APIResponse {
     var id: UInt64?
+    var creator: UInt64?
     var name: String = ""
     var platform: APIPlatform = APIPlatform.iOS
     var bundleId: String = ""
@@ -37,6 +38,7 @@ public class APIAppTask: APIResponse {
     override public func mapping(map: Map) {
         super.mapping(map: map)
         id <- map["id"]
+        creator <- map["creator"]
         name <- map["name"]
         platform <- map["platform"]
         bundleId <- map["bundle_id"]
