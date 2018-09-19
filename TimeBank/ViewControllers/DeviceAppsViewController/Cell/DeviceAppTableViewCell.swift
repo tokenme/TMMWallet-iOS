@@ -21,7 +21,7 @@ class DeviceAppTableViewCell: UITableViewCell, NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         growthFactorImageView.image = flashImage
         iconImageView.layer.cornerRadius = 5.0
         iconImageView.layer.borderWidth = 0.0

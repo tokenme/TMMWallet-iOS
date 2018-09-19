@@ -105,9 +105,9 @@ class SDKAppsTableViewController: UITableViewController {
         tableView.register(cellType: SDKAppTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 66.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
@@ -153,7 +153,7 @@ extension SDKAppsTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as SDKAppTableViewCell
         let app = self.apps[indexPath.row]
-        cell.fill(app, installed: DetectApp.isInstalled(app.bundleId))
+        cell.fill(app, installed: DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId))
         return cell
     }
     
@@ -163,7 +163,7 @@ extension SDKAppsTableViewController {
         if self.apps.count < indexPath.row + 1 { return }
         let app = self.apps[indexPath.row]
         guard let storeId = app.storeId else {return}
-        if DetectApp.isInstalled(app.bundleId) {
+        if DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId) {
             return
         }
         showAppStore(storeId, cell: cell)
@@ -172,7 +172,7 @@ extension SDKAppsTableViewController {
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         let app = self.apps[indexPath.row]
         guard let _ = app.storeId else {return false}
-        if DetectApp.isInstalled(app.bundleId) {
+        if DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId) {
             return false
         }
         return !self.loadingApps

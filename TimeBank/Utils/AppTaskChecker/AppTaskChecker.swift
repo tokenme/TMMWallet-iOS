@@ -34,6 +34,8 @@ class AppTaskChecker: NSObject, AppTaskFetcherDelegate {
     
     private var fetcher: AppTaskFetcher?
     
+    private let maxSchemeQuery = MaxSchemeQuery()
+    
     static let sharedInstance = AppTaskChecker()
     
     override init() {
@@ -91,7 +93,10 @@ class AppTaskChecker: NSObject, AppTaskFetcherDelegate {
     private func checkTasks() {
         guard let _ = userInfo else { return }
         for task in self.tasks {
-            let isInstalled = DetectApp.isInstalled(task.bundleId)
+            if task.schemeId > maxSchemeQuery && Double(UIDevice.current.systemVersion)! >= 12.0 {
+                continue
+            }
+            let isInstalled = DetectApp.isInstalled(task.bundleId, schemeId: task.schemeId)
             if isInstalled && task.status != 1 {
                 updateTask(task, 1)
             } else if !isInstalled && task.status == 1 {

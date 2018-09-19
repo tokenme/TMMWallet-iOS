@@ -61,7 +61,7 @@ open class TransitionButton : UIButton, UIViewControllerTransitioningDelegate, C
     private var cachedImage: UIImage?
     
     private let springGoEase:CAMediaTimingFunction  = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
-    private let shrinkCurve:CAMediaTimingFunction   = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+    private let shrinkCurve:CAMediaTimingFunction   = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
     private let expandCurve:CAMediaTimingFunction   = CAMediaTimingFunction(controlPoints: 0.95, 0.02, 1, 0.05)
     private let shrinkDuration: CFTimeInterval      = 0.1
     
@@ -146,7 +146,7 @@ open class TransitionButton : UIButton, UIViewControllerTransitioningDelegate, C
                            NSValue(cgPoint: CGPoint(x: CGFloat(point.x + 10), y: CGFloat(point.y))),
                            NSValue(cgPoint: point)]
         
-        keyFrame.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        keyFrame.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         keyFrame.duration = 0.7
         self.layer.position = point
         self.layer.add(keyFrame, forKey: keyFrame.keyPath)
@@ -167,7 +167,7 @@ open class TransitionButton : UIButton, UIViewControllerTransitioningDelegate, C
         shrinkAnim.toValue = (self.bounds.width)
         shrinkAnim.duration = shrinkDuration
         shrinkAnim.timingFunction = shrinkCurve
-        shrinkAnim.fillMode = kCAFillModeForwards
+        shrinkAnim.fillMode = CAMediaTimingFillMode.forwards
         shrinkAnim.isRemovedOnCompletion = false
         self.layer.add(shrinkAnim, forKey: shrinkAnim.keyPath)
     }
@@ -178,7 +178,7 @@ open class TransitionButton : UIButton, UIViewControllerTransitioningDelegate, C
         shrinkAnim.toValue               = frame.height
         shrinkAnim.duration              = shrinkDuration
         shrinkAnim.timingFunction        = shrinkCurve
-        shrinkAnim.fillMode              = kCAFillModeForwards
+        shrinkAnim.fillMode              = CAMediaTimingFillMode.forwards
         shrinkAnim.isRemovedOnCompletion = false
         
         layer.add(shrinkAnim, forKey: shrinkAnim.keyPath)
@@ -190,7 +190,7 @@ open class TransitionButton : UIButton, UIViewControllerTransitioningDelegate, C
         expandAnim.toValue              = 26.0
         expandAnim.timingFunction       = expandCurve
         expandAnim.duration             = 0.4
-        expandAnim.fillMode             = kCAFillModeForwards
+        expandAnim.fillMode             = CAMediaTimingFillMode.forwards
         expandAnim.isRemovedOnCompletion  = false
         
         CATransaction.setCompletionBlock {

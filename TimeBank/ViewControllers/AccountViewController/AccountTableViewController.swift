@@ -13,6 +13,24 @@ import Hydra
 import Kingfisher
 import Presentr
 
+enum AccountTableSectionType {
+    case account
+    case invite
+    case contact
+    case signout
+}
+
+enum AccountTableCellType {
+    case accountInfo
+    case myInviteCode
+    case inviteCode
+    case inviteRecords
+    case telegramGroup
+    case wechatGroup
+    case feedback
+    case signout
+}
+
 class AccountTableViewController: UITableViewController {
 
     private var userInfo: APIUser? {
@@ -27,6 +45,18 @@ class AccountTableViewController: UITableViewController {
         }
     }
     
+    let myInviteCodePresenter: Presentr = {
+        let presentationType = PresentationType.dynamic(center: .center)
+        let presenter = Presentr(presentationType: presentationType)
+        presenter.roundCorners = true
+        presenter.transitionType = nil
+        presenter.dismissTransitionType = .coverVerticalFromTop
+        presenter.dismissAnimated = true
+        presenter.dismissOnSwipe = true
+        presenter.dismissOnSwipeDirection = .top
+        return presenter
+    }()
+    
     private let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
         presenter.transitionType = TransitionType.coverVerticalFromTop
@@ -34,16 +64,24 @@ class AccountTableViewController: UITableViewController {
         return presenter
     }()
     
+    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.myInviteCode, .inviteCode, .inviteRecords], [.telegramGroup, .wechatGroup, .feedback], [.signout]]
+    
     @IBOutlet private weak var avatarImageView : UIImageView!
     @IBOutlet private weak var mobileLabel: UILabel!
     
     @IBOutlet private weak var myInviteCodeLabel: UILabel!
     @IBOutlet private weak var inviteCodeLabel: UILabel!
     @IBOutlet private weak var inviteCodeTextField: UITextField!
+    @IBOutlet private weak var inviteRecordsLabel: UILabel!
     @IBOutlet private weak var telegramGroupLabel: UILabel!
     @IBOutlet private weak var wechatGroupLabel: UILabel!
     @IBOutlet private weak var feedbackLabel: UILabel!
     @IBOutlet private weak var signOutLabel: UILabel!
+    
+    private var isUpdating: Bool = false
+    private var loadingUserInfo: Bool = false
+    
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,17 +95,14 @@ class AccountTableViewController: UITableViewController {
             navigationItem.title = I18n.account.description
         }
         setupTableView()
-        guard let userInfo = self.userInfo else { return }
-        mobileLabel.text = "+\(userInfo.countryCode!)\(userInfo.mobile!)"
-        if let avatar = userInfo.avatar {
-            avatarImageView.layer.cornerRadius = 20.0
-            avatarImageView.layer.borderWidth = 0.0
-            avatarImageView.clipsToBounds = true
-            avatarImageView.kf.setImage(with: URL(string: avatar))
-        }
+        
+        avatarImageView.layer.cornerRadius = 20.0
+        avatarImageView.layer.borderWidth = 0.0
+        avatarImageView.clipsToBounds = true
         myInviteCodeLabel.text = I18n.myInviteCode.description
         inviteCodeLabel.text = I18n.inviteCode.description
-        inviteCodeTextField.placeholder = I18n.inviteCodePlaceholder.description
+        inviteCodeTextField.attributedPlaceholder = NSAttributedString(string: I18n.inviteCodePlaceholder.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
+        inviteRecordsLabel.text = I18n.inviteRecords.description
         telegramGroupLabel.text = I18n.telegramGroup.description
         wechatGroupLabel.text = I18n.wechatGroup.description
         feedbackLabel.text = I18n.feedback.description
@@ -80,6 +115,7 @@ class AccountTableViewController: UITableViewController {
         versionLabel.textColor = UIColor.lightGray
         versionLabel.font = MainFont.light.with(size: 12)
         tableView.tableFooterView = versionLabel
+        self.updateView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -101,14 +137,34 @@ class AccountTableViewController: UITableViewController {
     
     private func setupTableView() {
         //self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 55.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: CGFloat.leastNormalMagnitude))
     }
     
     public func refresh() {
-        self.tableView.reloadDataWithAutoSizingCellWorkAround()
+        self.updateView()
+    }
+    
+    private func updateView() {
+        guard let userInfo = self.userInfo else { return }
+        mobileLabel.text = "+\(userInfo.countryCode!)\(userInfo.mobile!)"
+        if let avatar = userInfo.avatar {
+            avatarImageView.kf.setImage(with: URL(string: avatar))
+        }
+        let inviterCode = userInfo.inviterCode ?? ""
+        inviteCodeTextField.text = inviterCode
+        if !inviterCode.isEmpty {
+            inviteCodeTextField.isEnabled = false
+        } else {
+            inviteCodeTextField.isEnabled = true
+        }
+    }
+    
+    private func showMyInviteCode() {
+        let vc = MyInviteCodeViewController.instantiate()
+        customPresentViewController(myInviteCodePresenter, viewController: vc, animated: true)
     }
     
 }
@@ -123,6 +179,116 @@ extension AccountTableViewController: UIViewControllerTransitioningDelegate {
         return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
     }
     
+}
+
+// MARK: - Table view data source
+extension AccountTableViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.sections.count < indexPath.section + 1 { return }
+        if self.sections[indexPath.section].count < indexPath.row + 1 { return }
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.isSelected = false
+        switch self.sections[indexPath.section][indexPath.row] {
+        case .myInviteCode:
+            self.showMyInviteCode()
+        case .signout:
+            Defaults.removeAll()
+            Defaults.synchronize()
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
+            return
+        default:
+            return
+        }
+    }
+}
+
+extension AccountTableViewController {
+    
+    private func setInviterCode(_ code: String) {
+        guard let userInfo = self.userInfo else { return }
+        userInfo.inviterCode = code
+        async({[weak self] _ in
+            guard let weakSelf = self else { return }
+            let _ = try ..weakSelf.updateUserInfo(userInfo)
+            let _ = try ..weakSelf.getUserInfo()
+        }).then(in: .main, {[weak self] _ in
+            guard let weakSelf = self else { return }
+            weakSelf.refresh()
+        }).catch(in: .main, {[weak self] error in
+            switch error as! TMMAPIError {
+            case .ignore:
+                return
+            default: break
+            }
+            guard let weakSelf = self else { return  }
+            weakSelf.inviteCodeTextField.text = ""
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+        }).always(in: .background, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.isUpdating = false
+            weakSelf.loadingUserInfo = false
+        })
+    }
+    
+    private func getUserInfo() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.loadingUserInfo {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.loadingUserInfo = true
+            TMMUserService.getUserInfo(
+                true,
+                provider: weakSelf.userServiceProvider)
+                .then(in: .background, {user in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
+    
+    private func updateUserInfo(_ user: APIUser) -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.isUpdating {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.isUpdating = true
+            TMMUserService.updateUserInfo(
+                user,
+                provider: weakSelf.userServiceProvider)
+                .then(in: .background, {user in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
+}
+
+extension AccountTableViewController: UITextFieldDelegate {
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.inviteCodeTextField {
+            let inviteCode = textField.text ?? ""
+            if !inviteCode.isEmpty {
+                self.setInviterCode(inviteCode)
+            }
+        }
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 extension AccountTableViewController: LoginViewDelegate {

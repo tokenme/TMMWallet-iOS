@@ -14,6 +14,7 @@ public class APIAppTask: APIResponse {
     var creator: UInt64?
     var name: String = ""
     var platform: APIPlatform = APIPlatform.iOS
+    var schemeId: UInt64 = 0
     var bundleId: String = ""
     var storeId: UInt64?
     var icon: String?
@@ -41,6 +42,7 @@ public class APIAppTask: APIResponse {
         creator <- map["creator"]
         name <- map["name"]
         platform <- map["platform"]
+        schemeId <- map["scheme_id"]
         bundleId <- map["bundle_id"]
         storeId <- map["store_id"]
         icon <- map["icon"]

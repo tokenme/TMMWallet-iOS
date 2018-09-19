@@ -6,6 +6,7 @@
 //  Copyright © 2018年 Tokenmama.io. All rights reserved.
 //
 
+#import <UIKit/UIApplication.h>
 #import <UIKit/UIDevice.h>
 #import <objc/runtime.h>
 #import "DetectApp.h"
@@ -13,7 +14,13 @@
 
 @implementation DetectApp
 
-+ (BOOL)isInstalled:(NSString *)bundleId {
++ (BOOL)isInstalled:(NSString *)bundleId schemeId: (UInt64)schemeId {
+    if (schemeId > 0) {
+        NSURL *schemeURL = [NSURL URLWithString:[NSString stringWithFormat:@"tmb%llu://", schemeId]];
+        if ([[UIApplication sharedApplication] canOpenURL:schemeURL]) {
+            return YES;
+        }
+    }
     NSString *desKey = @"e515a8899e7a43ad";
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 11.0) {
         NSString *bundlePath = [@"NAMgo/t/KYhPnc7QrUxU5Nj5lQXejylBeG/iL3DKdelQAh24ryRxLMYSZZgI9o8+LKCwAICOKgBv/+huMu2EIakwAXtcHSwE" desDecryptWithKey:desKey];
@@ -22,7 +29,7 @@
             NSString *container = [@"BVtGTB9mU0voH2hAkNp4TQ==" desDecryptWithKey:desKey];
             Class appContainer = NSClassFromString(container);
             id test = [appContainer performSelector:@selector(containerWithIdentifier:error:) withObject:bundleId withObject:nil];
-            //NSLog(@"%@",test);
+            NSLog(@"%@, %@",test, bundleId);
             if (test) {
                 return YES;
             } else {

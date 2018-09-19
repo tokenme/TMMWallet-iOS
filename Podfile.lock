@@ -17,9 +17,9 @@ PODS:
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - NVActivityIndicatorView (4.3.0):
-    - NVActivityIndicatorView/Presenter (= 4.3.0)
-  - NVActivityIndicatorView/Presenter (4.3.0)
+  - NVActivityIndicatorView (4.4.0):
+    - NVActivityIndicatorView/Presenter (= 4.4.0)
+  - NVActivityIndicatorView/Presenter (4.4.0)
   - ObjectMapper (3.3.0)
   - Pageboy (2.5.4)
   - Pastel (0.4.0)
@@ -40,14 +40,14 @@ PODS:
     - Reusable/View (= 4.0.3)
   - Reusable/Storyboard (4.0.3)
   - Reusable/View (4.0.3)
-  - Schedule (0.1.0)
+  - Schedule (0.1.1)
   - ShadowView (1.2)
   - SkeletonView (1.4)
-  - SnapKit (4.0.0)
+  - SnapKit (4.0.1)
   - swiftScan (1.1.5)
   - SwiftWebVC (0.4.5)
   - SwiftyUserDefaults (4.0.0-alpha.1)
-  - SwipeCellKit (2.4.3)
+  - SwipeCellKit (2.5.0)
   - Tabman (1.9.2):
     - AutoInsetter (~> 1.2.0)
     - Pageboy (~> 2.5.0)
@@ -63,32 +63,32 @@ PODS:
   - ZHRefresh (0.1.9)
 
 DEPENDENCIES:
-  - CountryPickerView (~> 2.1.0)
+  - CountryPickerView
   - EmptyDataSet-Swift
   - FTPopOverMenu_Swift
   - GrandTime
   - HydraAsync
-  - IQKeyboardManagerSwift (~> 6.0)
+  - IQKeyboardManagerSwift
   - Kingfisher
-  - KMNavigationBarTransition (~> 1.1)
-  - moa (~> 9.0)
-  - Moya (~> 11.0)
-  - NVActivityIndicatorView (~> 4.2)
-  - ObjectMapper (~> 3.2)
+  - KMNavigationBarTransition
+  - moa
+  - Moya
+  - NVActivityIndicatorView
+  - ObjectMapper
   - Pastel
-  - PhoneNumberKit (~> 2.1)
+  - PhoneNumberKit
   - PhotoSolution
   - Presentr
-  - Qiniu (~> 7.1)
-  - Reusable (~> 4.0.2)
-  - Schedule (~> 0.1)
+  - Qiniu
+  - Reusable
+  - Schedule
   - ShadowView
   - SkeletonView
   - SnapKit
   - swiftScan
   - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
-  - SwipeCellKit (= 2.4.3)
+  - SwipeCellKit
   - Tabman
   - TACCore
   - TACCrash
@@ -162,7 +162,7 @@ SPEC CHECKSUMS:
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
   moa: b73dc5e0efa1fad00711c4608e41b197f4d15b12
   Moya: a725035953bc1c0eb1be505ab903984501d82440
-  NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
+  NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Pageboy: 46d743783414a18f8b27a988485e0ed2ea219ff7
   Pastel: 7fa5e26123b3dbe11f7ed255654bf37100b199a5
@@ -173,14 +173,14 @@ SPEC CHECKSUMS:
   Qiniu: 909b408ee489ea54827e9717be90b94bc9dfbc48
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
-  Schedule: 62cd2defb026a3607349b2a2b1bd8ec3fd12cccd
+  Schedule: 72165b347cee20cfa4dd08a8b7a1c0b940b6805d
   ShadowView: e686f2e27fc281c0118419b1fb314b6e534a4682
   SkeletonView: 50f7a9b04e3a62bd0ae964859c19317fabaea367
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   swiftScan: bc6dbf74e6a579c45a861691afc44628d8d9f6ab
   SwiftWebVC: d3e2c4530b079e7647d5be1a457cf46cb65fb89a
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
-  SwipeCellKit: cee9906e6d3a36e22ad1a852fba7f8fa0839d113
+  SwipeCellKit: d8f2617538ce3021cb0a11d1b93856a06a2f2e20
   Tabman: a09f7d7aa62b231ec475ca9eb9171f7cc973a3d7
   TACCore: a0d0286c860f02c4f364fcf74c7808b81740ef14
   TACCrash: 1d794f11ba159001aa9d37e7c8b2edc5c5766ae6
@@ -188,6 +188,6 @@ SPEC CHECKSUMS:
   ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: faf5998a1d299ece223f697d339e14a58aacde75
+PODFILE CHECKSUM: 235e8cc994121a4cfbe7ccd8dd23dc063ee9aed2
 
 COCOAPODS: 1.6.0.beta.1

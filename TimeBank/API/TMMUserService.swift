@@ -63,6 +63,9 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             if let paymentPasswd = user.paymentPasswd {
                 params["payment_passwd"] = paymentPasswd
             }
+            if let inviterCode = user.inviterCode {
+                params["inviter_code"] = inviterCode
+            }
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
         case let .info(refresh):
             return .requestParameters(parameters: ["refresh": refresh], encoding: URLEncoding.queryString)
@@ -148,7 +151,15 @@ extension TMMUserService {
                             reject(TMMAPIError.error(code: errorCode, msg: userInfo.message ?? I18n.unknownError.description))
                         } else {
                             Defaults[.user] = DefaultsUser.init(
-                                id: userInfo.id!, countryCode: userInfo.countryCode ?? 0, mobile: userInfo.mobile ?? "", showName: userInfo.showName ?? "", avatar: userInfo.avatar ?? "", wallet: userInfo.wallet ?? "", canPay: userInfo.canPay ?? 0)
+                                id: userInfo.id!,
+                                countryCode: userInfo.countryCode ?? 0,
+                                mobile: userInfo.mobile ?? "",
+                                showName: userInfo.showName ?? "",
+                                avatar: userInfo.avatar ?? "",
+                                wallet: userInfo.wallet ?? "",
+                                canPay: userInfo.canPay ?? 0,
+                                inviteCode: userInfo.inviteCode ?? "",
+                                inviterCode: userInfo.inviterCode ?? "")
                             Defaults.synchronize()
                             resolve(userInfo)
                         }

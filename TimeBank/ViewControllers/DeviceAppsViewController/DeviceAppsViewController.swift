@@ -61,7 +61,7 @@ class DeviceAppsViewController: UIViewController {
         customPresenter.dismissTransitionType = .crossDissolve
         customPresenter.roundCorners = false
         //customPresenter.blurBackground = true
-        customPresenter.blurStyle = UIBlurEffectStyle.light
+        customPresenter.blurStyle = UIBlurEffect.Style.light
         //customPresenter.keyboardTranslationType = .moveUp
         //customPresenter.backgroundColor = .green
         customPresenter.backgroundOpacity = 0.5
@@ -177,10 +177,10 @@ class DeviceAppsViewController: UIViewController {
         
         summaryView.startAnimation()
         
-        let tsImage = UIImage(named:"Timer")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let tsImage = UIImage(named:"Timer")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         tsImageView.image = tsImage
         
-        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         growthFactorImageView.image = flashImage
         
         updateSummaryView()
@@ -208,9 +208,9 @@ class DeviceAppsViewController: UIViewController {
         tableView.register(cellType: DeviceAppTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 66.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in

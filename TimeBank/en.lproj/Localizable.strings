@@ -19,6 +19,8 @@
 "InvalidMinPointsError" = "Need at least #points# points";
 "NotEnoughETHError" = "Need at least #eth# ETH";
 "UploadImageError" = "Upload image failed";
+"MaxQuerySchemeError" = "Please upgrade to the latest version otherwise some of the app installation tasks could not be verified!";
+"InvalidInviteCodeError" = "Invalid invide code";
 
 // Login
 "Password" = "Password";
@@ -118,7 +120,9 @@
 "MyInviteCode" = "My Invite Code";
 "InviteCode" = "Invite Code";
 "InviteCodePlaceholder" = "Earn points byinput invite code";
+"InviteRecords" = "Invite Records";
 "TelegramGroup" = "Telegram Group";
 "WechatGroup" = "Wechat Group";
 "Feedback" = "Feedback";
 "CurrentVersion" = "Current Version";
+"CopyInviteCode" = "Copy Invite Code";

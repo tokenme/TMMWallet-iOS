@@ -30,11 +30,11 @@ class TransactionTableViewCell: UITableViewCell, NibReusable {
     func fill(_ tx: APITransaction, wallet: String) {
         var suffix: String = "+"
         if tx.from.lowercased() == wallet.lowercased() {
-            imgView.image = UIImage(named: "TransferOut")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            imgView.image = UIImage(named: "TransferOut")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
             imgView.tintColor = UIColor.primaryBlue
             suffix = "-"
         } else {
-            imgView.image = UIImage(named: "TransferIn")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            imgView.image = UIImage(named: "TransferIn")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
             imgView.tintColor = UIColor.greenGrass
         }
         receiptLabel.text = tx.receipt

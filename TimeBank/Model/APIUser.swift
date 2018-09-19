@@ -19,6 +19,8 @@ public class APIUser: APIResponse {
     var canPay: UInt8?
     var nick: String?
     var paymentPasswd: String?
+    var inviteCode: String?
+    var inviterCode: String?
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -34,6 +36,8 @@ public class APIUser: APIResponse {
         self.avatar = user.avatar
         self.wallet = user.wallet
         self.canPay = user.canPay
+        self.inviteCode = user.inviteCode
+        self.inviterCode = user.inviterCode
     }
     
     convenience init?() {
@@ -50,5 +54,7 @@ public class APIUser: APIResponse {
         avatar <- map["avatar"]
         wallet <- map["wallet"]
         canPay <- map["can_pay"]
+        inviteCode <- map["invite_code"]
+        inviterCode <- map["inviter_code"]
     }
 }

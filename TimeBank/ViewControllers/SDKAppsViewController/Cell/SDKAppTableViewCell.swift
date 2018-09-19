@@ -21,16 +21,16 @@ class SDKAppTableViewCell: UITableViewCell, NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         growthFactorImageView.image = flashImage
         iconImageView.layer.cornerRadius = 5.0
         iconImageView.layer.borderWidth = 0.0
         iconImageView.clipsToBounds = true
         
-        installButton.setTitle(I18n.install.description, for: UIControlState.normal)
-        installButton.setTitle(I18n.installed.description, for: UIControlState.disabled)
-        installButton.setTitleColor(UIColor.white, for: UIControlState.normal)
-        installButton.setTitleColor(UIColor.darkGray, for: UIControlState.disabled)
+        installButton.setTitle(I18n.install.description, for: .normal)
+        installButton.setTitle(I18n.installed.description, for: .disabled)
+        installButton.setTitleColor(UIColor.white, for: .normal)
+        installButton.setTitleColor(UIColor.darkGray, for: .disabled)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

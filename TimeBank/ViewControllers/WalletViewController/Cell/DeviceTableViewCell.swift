@@ -21,8 +21,8 @@ class DeviceTableViewCell: UITableViewCell, NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let pointsImage = UIImage(named: "Points")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let pointsImage = UIImage(named: "Points")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         pointsImageView.image = pointsImage
         growthFactorImageView.image = flashImage
     }

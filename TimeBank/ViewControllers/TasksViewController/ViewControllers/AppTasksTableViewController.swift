@@ -43,6 +43,8 @@ class AppTasksTableViewController: UITableViewController {
         return presenter
     }()
     
+    private let maxSchemeQuery = MaxSchemeQuery()
+    
     private var currentPage: UInt = 1
     
     private var tasks: [APIAppTask] = []
@@ -77,9 +79,9 @@ class AppTasksTableViewController: UITableViewController {
         tableView.register(cellType: AppTaskTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 66.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.emptyDataSetSource = self
@@ -119,7 +121,7 @@ extension AppTasksTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as AppTaskTableViewCell
         let task = self.tasks[indexPath.row]
-        cell.fill(task, installed: DetectApp.isInstalled(task.bundleId))
+        cell.fill(task, installed: DetectApp.isInstalled(task.bundleId, schemeId: task.schemeId))
         return cell
     }
     
@@ -134,7 +136,7 @@ extension AppTasksTableViewController {
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         let task = self.tasks[indexPath.row]
         guard let _ = task.storeId else {return false}
-        if DetectApp.isInstalled(task.bundleId) {
+        if DetectApp.isInstalled(task.bundleId, schemeId: task.schemeId) {
             return false
         }
         return !self.loadingTasks
@@ -248,6 +250,14 @@ extension AppTasksTableViewController {
                     weakSelf.tableView.footer?.isHidden = false
                     weakSelf.tableView.footer?.endRefreshing()
                     weakSelf.currentPage += 1
+                }
+                if Double(UIDevice.current.systemVersion)! >= 12.0 {
+                    for task in tasks {
+                        if task.schemeId > weakSelf.maxSchemeQuery {
+                            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: I18n.maxQuerySchemeError.description, closeBtn: I18n.close.description)
+                            break
+                        }
+                    }
                 }
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }

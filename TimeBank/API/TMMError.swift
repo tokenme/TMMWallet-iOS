@@ -19,6 +19,7 @@ enum TMMAPIResponseType: Int {
     case invalidMinPoints = 701
     case notEnoughEth = 800
     case uploadImageError = 900
+    case invalidInviteCodeError = 1000
 }
 
 enum TMMAPIError: Error, CustomStringConvertible {
@@ -34,6 +35,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case invalidMinPoints
     case notEnoughEth
     case uploadImageError
+    case invalidInviteCodeError
     case unknown(msg: String)
     case ignore
     
@@ -52,6 +54,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .invalidMinPoints: return I18n.invalidMinPointsError.description
         case .notEnoughEth: return I18n.notEnoughETHError.description
         case .uploadImageError: return I18n.uploadImageError.description
+        case .invalidInviteCodeError: return I18n.invalidInviteCodeError.description
         case .unknown(let msg): return msg
         case .ignore: return "ignore"
         }
@@ -86,6 +89,8 @@ extension TMMAPIError {
                 return TMMAPIError.uploadImageError
             case .notEnoughEth:
                 return TMMAPIError.notEnoughEth
+            case .invalidInviteCodeError:
+                return TMMAPIError.invalidInviteCodeError
             }
         }
         return TMMAPIError.unknown(msg: msg)

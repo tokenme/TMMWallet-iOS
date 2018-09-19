@@ -22,6 +22,8 @@ enum I18n: CustomStringConvertible {
     case invalidMinPointsError
     case notEnoughETHError
     case uploadImageError
+    case maxQuerySchemeError
+    case invalidInviteCodeError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -111,10 +113,12 @@ enum I18n: CustomStringConvertible {
     case myInviteCode
     case inviteCode
     case inviteCodePlaceholder
+    case inviteRecords
     case telegramGroup
     case wechatGroup
     case feedback
     case currentVersion
+    case copyInviteCode
     
     var description : String {
         switch self {
@@ -144,6 +148,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NotEnoughETHError", comment: "notEnoughETHError")
         case .uploadImageError:
             return NSLocalizedString("UploadImageError", comment: "uploadImageError")
+        case .maxQuerySchemeError:
+            return NSLocalizedString("MaxQuerySchemeError", comment: "MaxQuerySchemeError")
+        case .invalidInviteCodeError:
+            return NSLocalizedString("InvalidInviteCodeError", comment: "InvalidInviteCodeError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .emptyPassword:
@@ -322,6 +330,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InviteCode", comment: "Invite Code")
         case .inviteCodePlaceholder:
             return NSLocalizedString("InviteCodePlaceholder", comment: "InviteCodePlaceholder")
+        case .inviteRecords:
+            return NSLocalizedString("InviteRecords", comment: "InviteRecords")
         case .telegramGroup:
             return NSLocalizedString("TelegramGroup", comment: "Telegram Group")
         case .wechatGroup:
@@ -330,6 +340,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Feedback", comment: "feedback")
         case .currentVersion:
             return NSLocalizedString("CurrentVersion", comment: "Current Version")
+        case .copyInviteCode:
+            return NSLocalizedString("CopyInviteCode", comment: "Copy Invite Code")
         }
     }
 }

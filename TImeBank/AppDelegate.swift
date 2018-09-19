@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let notificationCenter = UNUserNotificationCenter.current()
         
@@ -66,11 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func initTACMessaging() {
-        TACMessagingService.default().token.bindTag("IDFA:\(TMMBeacon.shareInstance().deviceId())")
+        TACMessagingService.default().token.bindTag("IDFA:\(TMMBeacon.shareInstance().deviceId()!)")
         TACMessagingService.default().token.bindTag("PLATFORM:ios")
         if let userInfo: DefaultsUser = Defaults[.user] {
-            TACMessagingService.default().token.bindTag("USERID:\(userInfo.id)")
-            TACMessagingService.default().token.bindTag("COUNTRYCODE:\(userInfo.countryCode)")
+            TACMessagingService.default().token.bindTag("USERID:\(userInfo.id ?? 0)")
+            TACMessagingService.default().token.bindTag("COUNTRYCODE:\(userInfo.countryCode ?? 0)")
         }
     }
     

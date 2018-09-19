@@ -23,10 +23,10 @@ class AppTaskTableViewCell: UITableViewCell, NibReusable {
         iconImageView.layer.borderWidth = 0.0
         iconImageView.clipsToBounds = true
         
-        installButton.setTitle(I18n.install.description, for: UIControlState.normal)
-        installButton.setTitle(I18n.installed.description, for: UIControlState.disabled)
-        installButton.setTitleColor(UIColor.white, for: UIControlState.normal)
-        installButton.setTitleColor(UIColor.darkGray, for: UIControlState.disabled)
+        installButton.setTitle(I18n.install.description, for: .normal)
+        installButton.setTitle(I18n.installed.description, for: .disabled)
+        installButton.setTitleColor(UIColor.white, for: .normal)
+        installButton.setTitleColor(UIColor.darkGray, for: .disabled)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

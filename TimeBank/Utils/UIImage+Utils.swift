@@ -21,9 +21,9 @@ extension UIImage {
     
     func data() -> Data? {
         if self.hasAlpha() {
-            return UIImagePNGRepresentation(self)
+            return self.pngData()
         }
-        return UIImageJPEGRepresentation(self, 1)
+        return self.jpegData(compressionQuality: 1)
     }
     
     func mime() -> String {

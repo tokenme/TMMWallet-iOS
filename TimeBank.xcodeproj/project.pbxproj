@@ -104,7 +104,6 @@
 		1D3441FD213CFBB500B8E157 /* TransitionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441F7213CFBB500B8E157 /* TransitionButton.swift */; };
 		1D3441FE213CFBB500B8E157 /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441F8213CFBB500B8E157 /* FadeTransition.swift */; };
 		1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441F9213CFBB500B8E157 /* CGRectExtension.swift */; };
-		1D344200213CFBB500B8E157 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D3441FA213CFBB500B8E157 /* Info.plist */; };
 		1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D36D99E213CED5E0002EDBF /* AppDelegate.swift */; };
 		1D36D9A1213CED5E0002EDBF /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */; };
 		1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A4213CED5E0002EDBF /* Main.storyboard */; };
@@ -124,6 +123,7 @@
 		1DEC5456215121BF007A46D5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DEC5454215121BF007A46D5 /* Localizable.strings */; };
 		1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DEC5458215121F5007A46D5 /* InfoPlist.strings */; };
 		1DEC54622151285E007A46D5 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC54612151285E007A46D5 /* AccountTableViewController.swift */; };
+		1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */; };
 		F658EBA45F30103182A90E1D /* Pods_TimeBank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */; };
 /* End PBXBuildFile section */
 
@@ -234,7 +234,6 @@
 		1D3441F7213CFBB500B8E157 /* TransitionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionButton.swift; sourceTree = "<group>"; };
 		1D3441F8213CFBB500B8E157 /* FadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
 		1D3441F9213CFBB500B8E157 /* CGRectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
-		1D3441FA213CFBB500B8E157 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D36D99B213CED5D0002EDBF /* TimeBank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeBank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D36D99E213CED5E0002EDBF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +259,7 @@
 		1DEC545D21512235007A46D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		1DEC545F21512241007A46D5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		1DEC54612151285E007A46D5 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
+		1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInviteCodeViewController.swift; sourceTree = "<group>"; };
 		41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeBank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B76C9CA759822F52730D52 /* Pods-TimeBank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBank.release.xcconfig"; path = "Target Support Files/Pods-TimeBank/Pods-TimeBank.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -581,7 +581,6 @@
 				1D3441F7213CFBB500B8E157 /* TransitionButton.swift */,
 				1D3441F8213CFBB500B8E157 /* FadeTransition.swift */,
 				1D3441F9213CFBB500B8E157 /* CGRectExtension.swift */,
-				1D3441FA213CFBB500B8E157 /* Info.plist */,
 			);
 			path = TransitionButton;
 			sourceTree = "<group>";
@@ -638,8 +637,17 @@
 			isa = PBXGroup;
 			children = (
 				1DEC54612151285E007A46D5 /* AccountTableViewController.swift */,
+				1DF802EE215249200002E054 /* ViewControllers */,
 			);
 			path = AccountViewController;
+			sourceTree = "<group>";
+		};
+		1DF802EE215249200002E054 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		7B80D9EDE9EDDA13FC0B0936 /* Frameworks */ = {
@@ -746,7 +754,6 @@
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
-				1D344200213CFBB500B8E157 /* Info.plist in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
 				1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */,
@@ -934,6 +941,7 @@
 				1D151EC3213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift in Sources */,
 				1DEC5447214FBB5B007A46D5 /* SubmitShareTaskTableViewController.swift in Sources */,
 				1DEC54512150FFD0007A46D5 /* QiniuManager.swift in Sources */,
+				1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */,
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
 				1D151E93213E2FCA007C87DD /* LoadingTableViewCell.swift in Sources */,
 				1D151ECC213F8F14007C87DD /* AppTaskTableViewCell.swift in Sources */,
@@ -1244,7 +1252,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Objc-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1330,7 +1338,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeBank/Objc-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

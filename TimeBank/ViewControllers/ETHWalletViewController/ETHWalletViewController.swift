@@ -99,7 +99,7 @@ class ETHWalletViewController: UIViewController {
         }
         
         guard let userInfo = self.userInfo else { return }
-        let copyImage = UIImage(named: "Wallet")?.kf.resize(to: CGSize(width: 14, height: 14)).withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let copyImage = UIImage(named: "Wallet")?.kf.resize(to: CGSize(width: 14, height: 14)).withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         addressButton.set(image: copyImage, title: userInfo.wallet ?? "", titlePosition: .left, additionalSpacing: 5.0, state: .normal)
     }
 
@@ -158,9 +158,9 @@ class ETHWalletViewController: UIViewController {
         tableView.register(cellType: TokenTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 60.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
@@ -207,7 +207,7 @@ extension ETHWalletViewController: SwipeTableViewCellDelegate {
                 weakSelf.customPresentViewController(weakSelf.walletQRCodePresenter, viewController: vc, animated: true)
             }
             receiveAction.backgroundColor = UIColor.greenGrass
-            receiveAction.image = UIImage(named: "TransferIn")?.kf.resize(to: CGSize(width: 30, height: 30), for: .aspectFit).withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            receiveAction.image = UIImage(named: "TransferIn")?.kf.resize(to: CGSize(width: 30, height: 30), for: .aspectFit).withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
             
             return [receiveAction]
         }else {
@@ -235,7 +235,7 @@ extension ETHWalletViewController: SwipeTableViewCellDelegate {
                 weakSelf.navigationController?.pushViewController(vc, animated: true)
             }
             sendAction.backgroundColor = UIColor.primaryBlue
-            sendAction.image = UIImage(named: "TransferOut")?.kf.resize(to: CGSize(width: 30, height: 30), for: .aspectFit).withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            sendAction.image = UIImage(named: "TransferOut")?.kf.resize(to: CGSize(width: 30, height: 30), for: .aspectFit).withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
             
             return [sendAction]
         }

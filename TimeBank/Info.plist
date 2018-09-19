@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>TMMMaxSchemeQuery</key>
+	<integer>18</integer>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tmb1</string>
+		<string>tmb2</string>
+		<string>tmb3</string>
+		<string>tmb4</string>
+		<string>tmb5</string>
+		<string>tmb6</string>
+		<string>tmb7</string>
+		<string>tmb8</string>
+		<string>tmb9</string>
+		<string>tmb10</string>
+		<string>tmb11</string>
+		<string>tmb12</string>
+		<string>tmb13</string>
+		<string>tmb14</string>
+		<string>tmb15</string>
+		<string>tmb16</string>
+		<string>tmb17</string>
+		<string>tmb18</string>
+		<string>tmb19</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

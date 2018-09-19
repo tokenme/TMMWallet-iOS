@@ -83,9 +83,9 @@ class TransferTableViewController: UITableViewController {
         balanceLabel.text = formatter.string(from: token.balance)
         balanceTitleLabel.text = I18n.balance.description
         
-        transferAmountTextField.attributedPlaceholder = NSAttributedString(string: I18n.transferAmount.description, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize:15), NSAttributedStringKey.foregroundColor:UIColor.lightGray])
+        transferAmountTextField.attributedPlaceholder = NSAttributedString(string: I18n.transferAmount.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         toLabel.text = I18n.to.description
-        walletAddressTextField.attributedPlaceholder = NSAttributedString(string: I18n.walletAddress.description, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize:15), NSAttributedStringKey.foregroundColor:UIColor.lightGray])
+        walletAddressTextField.attributedPlaceholder = NSAttributedString(string: I18n.walletAddress.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         
     }
     
@@ -116,9 +116,9 @@ class TransferTableViewController: UITableViewController {
     
     private func setupTableView() {
         self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 55.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: CGFloat.leastNormalMagnitude))
         
         transferButton.setTitle(I18n.send.description, for: .normal)
