@@ -54,6 +54,7 @@ enum I18n: CustomStringConvertible {
     case exceedTokenAmount
     case emptyWalletAddress
     case invalidWalletAddress
+    case refresh
     case sdkApps
     case miningApps
     case moreApps
@@ -163,6 +164,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("OtherBindDeviceError", comment: "otherBindDeviceError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
+        case .refresh:
+            return NSLocalizedString("Refresh", comment: "refresh")
         case .emptyPassword:
             return NSLocalizedString("EmptyPassword", comment: "Password must be input")
         case .emptyRepassword:

@@ -24,6 +24,8 @@
 "MaxBindDeviceError" = "超出绑定设备数，请先解绑一个设备";
 "OtherBindDeviceError" = "该设备被其他人绑定了";
 
+"Refresh" = "刷新";
+
 // Login
 "Password" = "密码";
 "Repassword" = "重复密码";

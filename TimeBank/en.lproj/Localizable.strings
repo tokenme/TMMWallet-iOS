@@ -24,6 +24,8 @@
 "MaxBindDeviceError" = "Exceeded maximum binding devices limit, please unbind a device";
 "OtherBindDeviceError" = "This device has been binded by some others";
 
+"Refresh" = "Refresh";
+
 // Login
 "Password" = "Password";
 "Repassword" = "Repassword";

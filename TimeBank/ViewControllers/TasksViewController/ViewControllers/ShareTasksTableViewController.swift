@@ -171,7 +171,11 @@ extension ShareTasksTableViewController: EmptyDataSetSource, EmptyDataSetDelegat
     }
     
     func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
-        return false
+        return true
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView, didTapButton button: UIButton) {
+        self.refresh()
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
@@ -180,6 +184,10 @@ extension ShareTasksTableViewController: EmptyDataSetSource, EmptyDataSetDelegat
     
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         return NSAttributedString(string: I18n.emptyShareTasksDesc.description)
+    }
+    
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.refresh.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:17), NSAttributedString.Key.foregroundColor:UIColor.primaryBlue])
     }
 }
 
