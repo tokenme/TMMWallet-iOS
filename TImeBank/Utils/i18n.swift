@@ -24,6 +24,8 @@ enum I18n: CustomStringConvertible {
     case uploadImageError
     case maxQuerySchemeError
     case invalidInviteCodeError
+    case maxBindDeviceError
+    case otherBindDeviceError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -68,6 +70,9 @@ enum I18n: CustomStringConvertible {
     case emptyExchangeRecordsDesc
     case emptyTransactionsTitle
     case emptyTransactionsDesc
+    case bind
+    case unbindDeviceExplain
+    case unbind
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -152,6 +157,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("MaxQuerySchemeError", comment: "MaxQuerySchemeError")
         case .invalidInviteCodeError:
             return NSLocalizedString("InvalidInviteCodeError", comment: "InvalidInviteCodeError")
+        case .maxBindDeviceError:
+            return NSLocalizedString("MaxBindDeviceError", comment: "maxBindDeviceError")
+        case .otherBindDeviceError:
+            return NSLocalizedString("OtherBindDeviceError", comment: "otherBindDeviceError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .emptyPassword:
@@ -258,6 +267,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("EmptyTransactionsTitle", comment: "EmptyTransactionsTitle")
         case .emptyTransactionsDesc:
             return NSLocalizedString("EmptyTransactionsDesc", comment: "EmptyTransactionsDesc")
+        case .bind:
+            return NSLocalizedString("Bind", comment: "Bind")
+        case .unbindDeviceExplain:
+            return NSLocalizedString("UnbindDeviceExplain", comment: "UnbindDeviceExplain")
+        case .unbind:
+            return NSLocalizedString("Unbind", comment: "Unbind")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .appTasks:

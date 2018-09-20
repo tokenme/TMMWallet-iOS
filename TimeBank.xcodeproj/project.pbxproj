@@ -124,6 +124,8 @@
 		1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DEC5458215121F5007A46D5 /* InfoPlist.strings */; };
 		1DEC54622151285E007A46D5 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC54612151285E007A46D5 /* AccountTableViewController.swift */; };
 		1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */; };
+		1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */; };
+		1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */; };
 		F658EBA45F30103182A90E1D /* Pods_TimeBank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */; };
 /* End PBXBuildFile section */
 
@@ -260,6 +262,8 @@
 		1DEC545F21512241007A46D5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		1DEC54612151285E007A46D5 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInviteCodeViewController.swift; sourceTree = "<group>"; };
+		1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnbindDeviceHeaderView.swift; sourceTree = "<group>"; };
+		1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnbindDeviceHeaderView.xib; sourceTree = "<group>"; };
 		41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeBank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B76C9CA759822F52730D52 /* Pods-TimeBank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBank.release.xcconfig"; path = "Target Support Files/Pods-TimeBank/Pods-TimeBank.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -294,6 +298,8 @@
 				1D151E92213E2FCA007C87DD /* LoadingTableViewCell.xib */,
 				1D151E74213D463D007C87DD /* DeviceTableViewCell.swift */,
 				1D151E75213D463D007C87DD /* DeviceTableViewCell.xib */,
+				1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */,
+				1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -757,6 +763,7 @@
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
 				1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */,
+				1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */,
 				1D3441DA213CF94F00B8E157 /* Default-568h@2x.png in Resources */,
 				1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */,
 				1D151E86213D69A9007C87DD /* Login.storyboard in Resources */,
@@ -988,6 +995,7 @@
 				1D3441E2213CFA0600B8E157 /* UIColor+Utils.swift in Sources */,
 				1D3441FE213CFBB500B8E157 /* FadeTransition.swift in Sources */,
 				1D151E7B213D5DBA007C87DD /* APIApp.swift in Sources */,
+				1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
 				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,
 				1D1D6FB521412A850001ED49 /* TMMExchangeService.swift in Sources */,

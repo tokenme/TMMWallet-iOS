@@ -21,6 +21,8 @@
 "UploadImageError" = "上传图片失败";
 "MaxQuerySchemeError" = "请更新App至最新版本，否则部分应用安装任务无法验证是否成功！";
 "InvalidInviteCodeError" = "邀请码错误";
+"MaxBindDeviceError" = "超出绑定设备数，请先解绑一个设备";
+"OtherBindDeviceError" = "该设备被其他人绑定了";
 
 // Login
 "Password" = "密码";
@@ -55,6 +57,9 @@
 "InvalidWalletAddress" = "钱包地址错误";
 "EmptyTransactionsTitle" = "没有转账记录";
 "EmptyTransactionsDesc" = "转点儿代币试试？";
+"Bind" = "绑定";
+"UnbindDeviceExplain" = "该设备未绑定，绑定该设备获取积分。";
+"Unbind" = "解绑";
 
 // Apps
 "SDKApps" = "可挖矿应用";

@@ -164,10 +164,8 @@ class LoginViewController: UIViewController {
             TMMDeviceService.bindUser(
                 idfa: TMMBeacon.shareInstance().deviceId(),
                 provider: weakSelf.deviceServiceProvider)
-                .then(in: .background, {user in
+                .always(in: .background, body: {
                     resolve(())
-                }).catch(in: .background, { error in
-                    reject(error)
                 })
         })
     }

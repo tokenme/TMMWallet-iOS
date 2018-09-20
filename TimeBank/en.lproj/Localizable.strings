@@ -21,6 +21,8 @@
 "UploadImageError" = "Upload image failed";
 "MaxQuerySchemeError" = "Please upgrade to the latest version otherwise some of the app installation tasks could not be verified!";
 "InvalidInviteCodeError" = "Invalid invide code";
+"MaxBindDeviceError" = "Exceeded maximum binding devices limit, please unbind a device";
+"OtherBindDeviceError" = "This device has been binded by some others";
 
 // Login
 "Password" = "Password";
@@ -55,6 +57,9 @@
 "InvalidWalletAddress" = "Invalid wallet address";
 "EmptyTransactionsTitle" = "No Transactions";
 "EmptyTransactionsDesc" = "Try to transfer some token now?";
+"Bind" = "Bind";
+"UnbindDeviceExplain" = "Find unbind device, win points by binding the device";
+"Unbind" = "Unbind";
 
 // Apps
 "SDKApps" = "Minable Apps";

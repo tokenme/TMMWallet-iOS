@@ -19,6 +19,7 @@ public class APIDevice: APIResponse {
     var name: String = ""
     var model: String = ""
     var platform: APIPlatform = APIPlatform.iOS
+    var idfa: String = ""
     var isTablet: Bool = false
     var totalTs: Int = 0
     var totalApps: UInt = 0
@@ -45,6 +46,7 @@ public class APIDevice: APIResponse {
         name <- map["name"]
         model <- map["model"]
         platform <- map["platform"]
+        idfa <- map["idfa"]
         isTablet <- map["is_tablet"]
         totalTs <- map["total_ts"]
         totalApps <- map["total_apps"]

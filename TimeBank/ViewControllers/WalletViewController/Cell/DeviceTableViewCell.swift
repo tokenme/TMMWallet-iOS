@@ -8,8 +8,9 @@
 
 import UIKit
 import Reusable
+import SwipeCellKit
 
-class DeviceTableViewCell: UITableViewCell, NibReusable {
+class DeviceTableViewCell: SwipeTableViewCell, NibReusable {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!

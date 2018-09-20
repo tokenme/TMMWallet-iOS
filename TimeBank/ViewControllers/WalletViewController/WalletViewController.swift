@@ -15,6 +15,8 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import Presentr
+import TMMSDK
+import SwipeCellKit
 
 class WalletViewController: UIViewController {
     
@@ -59,6 +61,23 @@ class WalletViewController: UIViewController {
         }
     }
     
+    private var currentDeviceIsBinded: Bool {
+        get {
+            if self.loadingDevices {
+                return true
+            }
+            guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else {
+                return false
+            }
+            for device in self.devices {
+                if device.idfa == deviceId {
+                    return true
+                }
+            }
+            return false
+        }
+    }
+    
     private let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
         presenter.transitionType = TransitionType.coverVerticalFromTop
@@ -68,6 +87,7 @@ class WalletViewController: UIViewController {
     
     private var loadingDevices = false
     private var loadingBalance = false
+    private var unbindingDevice = false
     
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
@@ -186,14 +206,61 @@ extension WalletViewController: UIViewControllerTransitioningDelegate {
     
 }
 
+extension WalletViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        if orientation == .right {
+            let sendAction = SwipeAction(style: .default, title: I18n.unbind.description) {[weak self] action, indexPath in
+                guard let weakSelf = self else { return }
+                guard let deviceId = weakSelf.devices[indexPath.row].id else { return }
+                weakSelf.unbindDevice(id: deviceId).then(in: .main, {[weak weakSelf] _ in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.refresh()
+                }).catch(in: .main, {[weak weakSelf] error in
+                    switch error as! TMMAPIError {
+                    case .ignore:
+                        return
+                    default: break
+                    }
+                    guard let weakSelf2 = weakSelf else { return  }
+                    UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                }).always(in: .main, body: {[weak weakSelf]  in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.unbindingDevice = false
+                })
+                
+            }
+            sendAction.backgroundColor = UIColor.red
+            sendAction.textColor = UIColor.white
+            
+            return [sendAction]
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .selection
+        options.transitionStyle = .border
+        return options
+    }
+}
+
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
+        if self.currentDeviceIsBinded {
+            return 0
+        }
+        return UnbindDeviceHeaderView.height
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
+        if self.currentDeviceIsBinded {
+            return nil
+        }
+        let view = UnbindDeviceHeaderView()
+        view.delegate = self
+        return view
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -206,6 +273,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as DeviceTableViewCell
+        cell.delegate = self
         let device = self.devices[indexPath.row]
         cell.fill(device)
         return cell
@@ -290,6 +358,28 @@ extension WalletViewController {
                 weakSelf.loadingBalance = false
             }
         )
+    }
+    
+    private func unbindDevice(id: String) -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.unbindingDevice {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.unbindingDevice = true
+            TMMDeviceService.unbindUser(
+                id: id,
+                provider: weakSelf.deviceServiceProvider)
+                .then(in: .background, {user in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
     }
 }
 
