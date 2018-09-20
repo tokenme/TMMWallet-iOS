@@ -126,6 +126,7 @@
 		1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */; };
 		1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */; };
 		1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */; };
+		1DF802FA215382A90002E054 /* APIInviteSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802F9215382A90002E054 /* APIInviteSummary.swift */; };
 		F658EBA45F30103182A90E1D /* Pods_TimeBank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */; };
 /* End PBXBuildFile section */
 
@@ -264,6 +265,7 @@
 		1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInviteCodeViewController.swift; sourceTree = "<group>"; };
 		1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnbindDeviceHeaderView.swift; sourceTree = "<group>"; };
 		1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnbindDeviceHeaderView.xib; sourceTree = "<group>"; };
+		1DF802F9215382A90002E054 /* APIInviteSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInviteSummary.swift; sourceTree = "<group>"; };
 		41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeBank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B76C9CA759822F52730D52 /* Pods-TimeBank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBank.release.xcconfig"; path = "Target Support Files/Pods-TimeBank/Pods-TimeBank.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -540,6 +542,7 @@
 				1D1D6FBE214689760001ED49 /* APIToken.swift */,
 				1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */,
 				1DEC54492150F572007A46D5 /* APIQiniu.swift */,
+				1DF802F9215382A90002E054 /* APIInviteSummary.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
+				1DF802FA215382A90002E054 /* APIInviteSummary.swift in Sources */,
 				1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */,
 				1DEC544C2150F5A9007A46D5 /* TMMQiniuService.swift in Sources */,
 				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,

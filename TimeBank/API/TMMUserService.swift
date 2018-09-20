@@ -15,6 +15,7 @@ enum TMMUserService {
     case resetPassword(country: UInt, mobile: String, verifyCode: String, password: String, repassword: String)
     case update(user: APIUser)
     case info(refresh: Bool)
+    case inviteSummary()
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -36,13 +37,15 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             return "/update"
         case .info(_):
             return "/info"
+        case .inviteSummary():
+            return "/invite/summary"
         }
     }
     var method: Moya.Method {
         switch self {
         case .create, .update, .resetPassword:
             return .post
-        case .info:
+        case .info, .inviteSummary:
             return .get
         }
     }
@@ -69,6 +72,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
         case let .info(refresh):
             return .requestParameters(parameters: ["refresh": refresh], encoding: URLEncoding.queryString)
+        case .inviteSummary():
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
     }
     var sampleData: Data {
@@ -79,7 +84,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             return "ok".utf8Encoded
         case .update(_):
             return "ok".utf8Encoded
-        case .info(_):
+        case .info(_), .inviteSummary():
             return "{}".utf8Encoded
         }
     }
@@ -186,6 +191,30 @@ extension TMMUserService {
                             reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
                         } else {
                             resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getInviteSummary(provider: MoyaProvider<TMMUserService>) -> Promise<APIInviteSummary> {
+        return Promise<APIInviteSummary> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .inviteSummary()
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let summary = try response.mapObject(APIInviteSummary.self)
+                        if let errorCode = summary.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: summary.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(summary)
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))

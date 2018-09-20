@@ -10,6 +10,7 @@ import UIKit
 import SwiftyUserDefaults
 import Moya
 import Hydra
+import ZHRefresh
 import Kingfisher
 import Presentr
 
@@ -22,9 +23,9 @@ enum AccountTableSectionType {
 
 enum AccountTableCellType {
     case accountInfo
+    case inviteSummary
     case myInviteCode
     case inviteCode
-    case inviteRecords
     case telegramGroup
     case wechatGroup
     case feedback
@@ -64,15 +65,20 @@ class AccountTableViewController: UITableViewController {
         return presenter
     }()
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.myInviteCode, .inviteCode, .inviteRecords], [.telegramGroup, .wechatGroup, .feedback], [.signout]]
+    private var inviteSummary: APIInviteSummary?
+    
+    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.telegramGroup, .wechatGroup, .feedback], [.signout]]
     
     @IBOutlet private weak var avatarImageView : UIImageView!
     @IBOutlet private weak var mobileLabel: UILabel!
     
     @IBOutlet private weak var myInviteCodeLabel: UILabel!
+    @IBOutlet private weak var inviteUsersLabel: UILabel!
+    @IBOutlet private weak var inviteIncomeLabel: UILabel!
+    @IBOutlet private weak var inviteUsersTitleLabel: UILabel!
+    @IBOutlet private weak var inviteIncomeTitleLabel: UILabel!
     @IBOutlet private weak var inviteCodeLabel: UILabel!
     @IBOutlet private weak var inviteCodeTextField: UITextField!
-    @IBOutlet private weak var inviteRecordsLabel: UILabel!
     @IBOutlet private weak var telegramGroupLabel: UILabel!
     @IBOutlet private weak var wechatGroupLabel: UILabel!
     @IBOutlet private weak var feedbackLabel: UILabel!
@@ -80,6 +86,7 @@ class AccountTableViewController: UITableViewController {
     
     private var isUpdating: Bool = false
     private var loadingUserInfo: Bool = false
+    private var loadingInviteSummary: Bool = false
     
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
@@ -99,10 +106,11 @@ class AccountTableViewController: UITableViewController {
         avatarImageView.layer.cornerRadius = 20.0
         avatarImageView.layer.borderWidth = 0.0
         avatarImageView.clipsToBounds = true
+        inviteUsersTitleLabel.text = I18n.inviteUsers.description
+        inviteIncomeTitleLabel.text = I18n.inviteIncome.description
         myInviteCodeLabel.text = I18n.myInviteCode.description
         inviteCodeLabel.text = I18n.inviteCode.description
         inviteCodeTextField.attributedPlaceholder = NSAttributedString(string: I18n.inviteCodePlaceholder.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
-        inviteRecordsLabel.text = I18n.inviteRecords.description
         telegramGroupLabel.text = I18n.telegramGroup.description
         wechatGroupLabel.text = I18n.wechatGroup.description
         feedbackLabel.text = I18n.feedback.description
@@ -141,10 +149,15 @@ class AccountTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 55.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: CGFloat.leastNormalMagnitude))
+        
+        tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.refresh()
+        }
     }
     
     public func refresh() {
-        self.updateView()
+        self.getInviteSummary()
     }
     
     private func updateView() {
@@ -152,6 +165,14 @@ class AccountTableViewController: UITableViewController {
         mobileLabel.text = "+\(userInfo.countryCode!)\(userInfo.mobile!)"
         if let avatar = userInfo.avatar {
             avatarImageView.kf.setImage(with: URL(string: avatar))
+        }
+        if let summary = self.inviteSummary {
+            inviteUsersLabel.text = String(summary.invites)
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 4
+            formatter.groupingSeparator = "";
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            inviteIncomeLabel.text = formatter.string(from: summary.points)
         }
         let inviterCode = userInfo.inviterCode ?? ""
         inviteCodeTextField.text = inviterCode
@@ -215,7 +236,7 @@ extension AccountTableViewController {
             let _ = try ..weakSelf.getUserInfo()
         }).then(in: .main, {[weak self] _ in
             guard let weakSelf = self else { return }
-            weakSelf.refresh()
+            weakSelf.updateView()
         }).catch(in: .main, {[weak self] error in
             switch error as! TMMAPIError {
             case .ignore:
@@ -274,6 +295,29 @@ extension AccountTableViewController {
                     reject(error)
                 })
         })
+    }
+    
+    private func getInviteSummary() {
+        if self.loadingInviteSummary {
+            return
+        }
+        self.loadingInviteSummary = true
+        
+        TMMUserService.getInviteSummary(
+            provider: self.userServiceProvider)
+            .then(in: .main, {[weak self] summary in
+                guard let weakSelf = self else { return }
+                weakSelf.inviteSummary = summary
+                weakSelf.updateView()
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.loadingInviteSummary = false
+                weakSelf.tableView.header?.endRefreshing()
+            }
+        )
     }
 }
 

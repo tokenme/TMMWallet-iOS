@@ -125,6 +125,8 @@ enum I18n: CustomStringConvertible {
     case feedback
     case currentVersion
     case copyInviteCode
+    case inviteUsers
+    case inviteIncome
     
     var description : String {
         switch self {
@@ -360,6 +362,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("CurrentVersion", comment: "Current Version")
         case .copyInviteCode:
             return NSLocalizedString("CopyInviteCode", comment: "Copy Invite Code")
+        case .inviteUsers:
+            return NSLocalizedString("InviteUsers", comment: "Invite Users")
+        case .inviteIncome:
+            return NSLocalizedString("InviteIncome", comment: "Invite Income")
         }
     }
 }
