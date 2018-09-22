@@ -7,6 +7,9 @@
 */
 // API
 "Error" = "错误";
+"Success" = "成功";
+"Alert" = "提示";
+"Confirm" = "确认";
 "Close" = "关闭";
 "UnknownError" = "未知错误";
 "NotFoundError" = "请求不存在";
@@ -135,3 +138,17 @@
 "CopyInviteCode" = "复制邀请码";
 "InviteUsers" = "邀请人数";
 "InviteIncome" = "邀请收入";
+
+// Market
+"Buy" = "买入";
+"Sell" = "卖出";
+"Amount" = "数量";
+"Price" = "出价";
+"BuyOrder" = "买入下单";
+"SellOrder" = "卖出下单";
+"BuyOrders" = "买入订单";
+"SellOrders" = "卖出订单";
+"OrderAddSuccess" = "订单已提交！";
+"ConfirmOrder" = "确定下单吗？";
+"EmptyQuantity" = "缺少数量";
+"EmptyPrice" = "缺少出价";

@@ -123,7 +123,7 @@ class AccountTableViewController: UITableViewController {
         versionLabel.textColor = UIColor.lightGray
         versionLabel.font = MainFont.light.with(size: 12)
         tableView.tableFooterView = versionLabel
-        self.updateView()
+        self.refresh()
     }
 
     override func viewDidAppear(_ animated: Bool) {

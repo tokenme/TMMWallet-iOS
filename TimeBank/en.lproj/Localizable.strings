@@ -7,6 +7,9 @@
 */
 // API
 "Error" = "Error";
+"Success" = "Success";
+"Alert" = "Alert";
+"Confirm" = "Confirm";
 "Close" = "Close";
 "UnknownError" = "Unknown Error";
 "NotFoundError" = "Not Found Request";
@@ -135,3 +138,17 @@
 "CopyInviteCode" = "Copy Invite Code";
 "InviteUsers" = "Invite Users";
 "InviteIncome" = "Invite Income";
+
+// Market
+"Buy" = "Buy";
+"Sell" = "Sell";
+"Amount" = "Amount";
+"Price" = "Price";
+"BuyOrder" = "Buy Order";
+"SellOrder" = "Sell Order";
+"BuyOrders" = "Buy Orders";
+"SellOrders" = "Sell Orders";
+"OrderAddSuccess" = "Order request submitted!";
+"ConfirmOrder" = "Confirm this order?";
+"EmptyQuantity" = "Missing amount";
+"EmptyPrice" = "Missing price";

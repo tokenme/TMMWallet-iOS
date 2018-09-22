@@ -71,6 +71,10 @@
 		1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */; };
 		1D1D6FE9214D26C30001ED49 /* APIMinETH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */; };
 		1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FEB214EA3470001ED49 /* ExchangeRecordsViewController.swift */; };
+		1D28DE5A2155F98200FCF6F6 /* APIOrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28DE592155F98200FCF6F6 /* APIOrderBook.swift */; };
+		1D28DE5C2156214F00FCF6F6 /* TMMOrderBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28DE5B2156214F00FCF6F6 /* TMMOrderBookService.swift */; };
+		1D28DE6021563FBE00FCF6F6 /* MarketTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28DE5E21563FBE00FCF6F6 /* MarketTopTableViewCell.swift */; };
+		1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
@@ -109,6 +113,7 @@
 		1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A4213CED5E0002EDBF /* Main.storyboard */; };
 		1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A7213CED5E0002EDBF /* Assets.xcassets */; };
 		1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A9213CED5E0002EDBF /* LaunchScreen.storyboard */; };
+		1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB432932155048C0034B810 /* ExchangeViewController.swift */; };
 		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
 		1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */; };
 		1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC5440214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift */; };
@@ -203,6 +208,10 @@
 		1D1D6FE7214D139C0001ED49 /* TimeBank.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeBank.entitlements; sourceTree = "<group>"; };
 		1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMinETH.swift; sourceTree = "<group>"; };
 		1D1D6FEB214EA3470001ED49 /* ExchangeRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsViewController.swift; sourceTree = "<group>"; };
+		1D28DE592155F98200FCF6F6 /* APIOrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIOrderBook.swift; sourceTree = "<group>"; };
+		1D28DE5B2156214F00FCF6F6 /* TMMOrderBookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMOrderBookService.swift; sourceTree = "<group>"; };
+		1D28DE5E21563FBE00FCF6F6 /* MarketTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewCell.swift; sourceTree = "<group>"; };
+		1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewCell.xib; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
@@ -243,6 +252,7 @@
 		1D36D9A5213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D36D9A7213CED5E0002EDBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D36D9AA213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1DB432932155048C0034B810 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
 		1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsTableViewController.swift; sourceTree = "<group>"; };
 		1DEC5440214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordTableViewCell.swift; sourceTree = "<group>"; };
@@ -474,6 +484,15 @@
 			path = ExchangeRecordsViewController;
 			sourceTree = "<group>";
 		};
+		1D28DE5D21563FA000FCF6F6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D28DE5E21563FBE00FCF6F6 /* MarketTopTableViewCell.swift */,
+				1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,6 +522,7 @@
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1DEC546021512847007A46D5 /* AccountViewController */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
+				1DB432922155046F0034B810 /* ExchangeViewController */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
 			);
 			path = ViewControllers;
@@ -519,6 +539,7 @@
 				1D151E9D213E3C56007C87DD /* TMMAppService.swift */,
 				1D151EBA213E744D007C87DD /* TMMTaskService.swift */,
 				1D1D6FB421412A850001ED49 /* TMMExchangeService.swift */,
+				1D28DE5B2156214F00FCF6F6 /* TMMOrderBookService.swift */,
 				1D1D6FC021468A810001ED49 /* TMMTokenService.swift */,
 				1DEC544B2150F5A9007A46D5 /* TMMQiniuService.swift */,
 			);
@@ -543,6 +564,7 @@
 				1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */,
 				1DEC54492150F572007A46D5 /* APIQiniu.swift */,
 				1DF802F9215382A90002E054 /* APIInviteSummary.swift */,
+				1D28DE592155F98200FCF6F6 /* APIOrderBook.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -631,6 +653,15 @@
 				1D3441A7213CF17400B8E157 /* Dependencies */,
 			);
 			path = TimeBank;
+			sourceTree = "<group>";
+		};
+		1DB432922155046F0034B810 /* ExchangeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1DB432932155048C0034B810 /* ExchangeViewController.swift */,
+				1D28DE5D21563FA000FCF6F6 /* Cell */,
+			);
+			path = ExchangeViewController;
 			sourceTree = "<group>";
 		};
 		1DEC543F214F9EF3007A46D5 /* Cell */ = {
@@ -754,6 +785,7 @@
 				1DEC5456215121BF007A46D5 /* Localizable.strings in Resources */,
 				1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */,
 				1D1D6FD72148CB1B0001ED49 /* TransactionTableViewCell.xib in Resources */,
+				1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */,
 				1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
@@ -921,6 +953,7 @@
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
 				1DF802FA215382A90002E054 /* APIInviteSummary.swift in Sources */,
 				1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */,
+				1D28DE5C2156214F00FCF6F6 /* TMMOrderBookService.swift in Sources */,
 				1DEC544C2150F5A9007A46D5 /* TMMQiniuService.swift in Sources */,
 				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,
 				1D3441FC213CFBB500B8E157 /* SpinerLayer.swift in Sources */,
@@ -940,6 +973,7 @@
 				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
 				1D3441F3213CFBA300B8E157 /* FontAnimation.swift in Sources */,
 				1D3441F2213CFBA300B8E157 /* TweeActiveTextField.swift in Sources */,
+				1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */,
 				1D3441D8213CF94200B8E157 /* UITableView+Utils.swift in Sources */,
 				1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */,
 				1D3441D7213CF94200B8E157 /* DefaultKeys.swift in Sources */,
@@ -959,6 +993,7 @@
 				1D1D6FB3214129B00001ED49 /* APIExchangeRate.swift in Sources */,
 				1DEC5445214FA3AF007A46D5 /* UILabelPadding.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
+				1D28DE5A2155F98200FCF6F6 /* APIOrderBook.swift in Sources */,
 				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
 				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
@@ -972,6 +1007,7 @@
 				1DEC544F2150FF82007A46D5 /* UIImage+Utils.swift in Sources */,
 				1DEC544A2150F572007A46D5 /* APIQiniu.swift in Sources */,
 				1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */,
+				1D28DE6021563FBE00FCF6F6 /* MarketTopTableViewCell.swift in Sources */,
 				1D1D6FA92140F3F00001ED49 /* TaskRecordsTableViewController.swift in Sources */,
 				1D3441F0213CFBA300B8E157 /* TweeBorderedTextField.swift in Sources */,
 				1D151EB7213E6E73007C87DD /* ShareTasksTableViewController.swift in Sources */,

@@ -10,6 +10,9 @@ import Foundation
 
 enum I18n: CustomStringConvertible {
     case error
+    case success
+    case alert
+    case confirm
     case close
     case unknownError
     case notFoundError
@@ -127,6 +130,18 @@ enum I18n: CustomStringConvertible {
     case copyInviteCode
     case inviteUsers
     case inviteIncome
+    case buy
+    case sell
+    case amount
+    case price
+    case buyOrder
+    case sellOrder
+    case buyOrders
+    case sellOrders
+    case orderAddSuccess
+    case confirmOrder
+    case emptyQuantity
+    case emptyPrice
     
     var description : String {
         switch self {
@@ -134,6 +149,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Close", comment: "Close")
         case .error:
             return NSLocalizedString("Error", comment: "Error")
+        case .success:
+            return NSLocalizedString("Success", comment: "Success")
+        case .alert:
+            return NSLocalizedString("Alert", comment: "Alert")
+        case .confirm:
+            return NSLocalizedString("Confirm", comment: "Confirm")
         case .unknownError:
             return NSLocalizedString("UnknownError", comment: "Unknown Error")
         case .notFoundError:
@@ -366,6 +387,30 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InviteUsers", comment: "Invite Users")
         case .inviteIncome:
             return NSLocalizedString("InviteIncome", comment: "Invite Income")
+        case .buy:
+            return NSLocalizedString("Buy", comment: "Buy")
+        case .sell:
+            return NSLocalizedString("Sell", comment: "Sell")
+        case .amount:
+            return NSLocalizedString("Amount", comment: "Amount")
+        case .price:
+            return NSLocalizedString("Price", comment: "Price")
+        case .buyOrder:
+            return NSLocalizedString("BuyOrder", comment: "Buy Order")
+        case .sellOrder:
+            return NSLocalizedString("SellOrder", comment: "Sell Order")
+        case .buyOrders:
+            return NSLocalizedString("BuyOrders", comment: "Buy Orders")
+        case .sellOrders:
+            return NSLocalizedString("SellOrders", comment: "Sell Orders")
+        case .orderAddSuccess:
+            return NSLocalizedString("OrderAddSuccess", comment: "orderAddSuccess")
+        case .confirmOrder:
+            return NSLocalizedString("ConfirmOrder", comment: "Confirm the order?")
+        case .emptyQuantity:
+            return NSLocalizedString("EmptyQuantity", comment: "EmptyQuantity")
+        case .emptyPrice:
+            return NSLocalizedString("EmptyPrice", comment: "EmptyPrice")
         }
     }
 }
