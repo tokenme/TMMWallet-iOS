@@ -28,6 +28,7 @@
 "OtherBindDeviceError" = "该设备被其他人绑定了";
 
 "Refresh" = "刷新";
+"Copy" = "复制";
 
 // Login
 "Password" = "密码";

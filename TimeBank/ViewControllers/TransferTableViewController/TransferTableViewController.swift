@@ -48,6 +48,10 @@ class TransferTableViewController: UITableViewController {
     
     private var isTransfering: Bool = false
     
+    private var gettingInfo: Bool = false
+    
+    private var qrcodeResult: QRCodeResult?
+    
     private var token: APIToken?
     
     private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
@@ -67,26 +71,19 @@ class TransferTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
+            let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
+            navigationItem.rightBarButtonItem = scanBarItem
         }
         setupTableView()
-        guard let token = self.token else { return }
-        navigationItem.title = "\(token.symbol ?? "") \(I18n.send.description)"
-        if let icon = token.icon {
-            iconImageView.kf.setImage(with: URL(string: icon))
-        }
-        tokenNameLabel.text = token.name
-        tokenSymbolLabel.text = token.symbol
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 4
-        formatter.groupingSeparator = "";
-        formatter.numberStyle = NumberFormatter.Style.decimal
-        balanceLabel.text = formatter.string(from: token.balance)
-        balanceTitleLabel.text = I18n.balance.description
         
         transferAmountTextField.attributedPlaceholder = NSAttributedString(string: I18n.transferAmount.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         toLabel.text = I18n.to.description
         walletAddressTextField.attributedPlaceholder = NSAttributedString(string: I18n.walletAddress.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         
+        if let tokenAddress = qrcodeResult?.contractAddress {
+            getInfo(address: tokenAddress)
+        }
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +111,10 @@ class TransferTableViewController: UITableViewController {
         self.token = token
     }
     
+    public func setQrcodeResult(_ result: QRCodeResult) {
+        self.qrcodeResult = result
+    }
+    
     private func setupTableView() {
         self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -129,7 +130,36 @@ class TransferTableViewController: UITableViewController {
         transferButton.frame = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 40)
         
         transferButton.addTarget(self, action: #selector(self.transfer), for: .touchUpInside)
+        
+        transferButton.isEnabled = false
         tableView.tableFooterView = transferButton
+    }
+    
+    private func setupView() {
+        guard let token = self.token else { return }
+        navigationItem.title = "\(token.symbol ?? "") \(I18n.send.description)"
+        if let icon = token.icon {
+            iconImageView.kf.setImage(with: URL(string: icon))
+        }
+        tokenNameLabel.text = token.name
+        tokenSymbolLabel.text = token.symbol
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        balanceLabel.text = formatter.string(from: token.balance)
+        balanceTitleLabel.text = I18n.balance.description
+        transferButton.isEnabled = true
+        
+        if let walletAddress = qrcodeResult?.wallet {
+            walletAddressTextField.text = walletAddress
+        }
+    }
+    
+    @objc func showScanView() {
+        let vc = ScanViewController()
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -230,6 +260,56 @@ extension TransferTableViewController {
                 weakSelf.transferButton.stopAnimation(animationStyle: .normal, completion: nil)
             }
         )
+    }
+    
+    private func getInfo(address: String) {
+        if self.gettingInfo {
+            return
+        }
+        self.gettingInfo = true
+        TMMTokenService.getInfo(
+            address: address,
+            provider: self.tokenServiceProvider)
+            .then(in: .main, {[weak self] token in
+                guard let weakSelf = self else { return }
+                weakSelf.token = token
+                weakSelf.setupView()
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                weakSelf.navigationController?.popViewController(animated: true)
+            }).always(in: .background, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.gettingInfo = false
+            })
+    }
+}
+
+extension TransferTableViewController: ScanViewDelegate {
+    func collectHandler(_ qrcode: String) {
+        var walletAddress: String?
+        if qrcode.hasPrefix("ethereum:") {
+            let data: String = qrcode.replacingOccurrences(of: "ethereum:", with: "")
+            let components = data.split(separator: "?")
+            walletAddress = String(components[0])
+        } else {
+            walletAddress = qrcode
+        }
+        if walletAddress?.hasPrefix("0x") ?? false && walletAddress?.count == 42 {
+            walletAddressTextField.text = walletAddress
+            return
+        }
+        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: qrcode)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) { alert in
+            let paste = UIPasteboard.general
+            paste.string = qrcode
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        customPresentViewController(alertPresenter, viewController: alertController, animated: true)
     }
 }
 

@@ -15,6 +15,7 @@ enum TMMTokenService {
     case assets()
     case transactions(address: String, page: UInt, pageSize: UInt)
     case transfer(token: String, amount: NSDecimalNumber, to: String)
+    case info(address: String)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -36,11 +37,13 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
             return "/transactions/\(address)/\(page)/\(pageSize)"
         case .transfer(_, _, _):
             return "/transfer"
+        case let .info(address):
+            return "/info/\(address)"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .tmmBalance, .assets, .transactions:
+        case .tmmBalance, .assets, .transactions, .info:
             return .get
         case .transfer:
             return .post
@@ -56,13 +59,15 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case let .transfer(token, amount, to):
             return .requestParameters(parameters: ["token": token, "amount": amount, "to": to], encoding: JSONEncoding.default)
+        case .info(_):
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
     }
     var sampleData: Data {
         switch self {
-        case .tmmBalance(), .transfer(_, _, _):
+        case .tmmBalance(), .transfer(_, _, _), .info(_):
             return "{}".utf8Encoded
-        case .assets(), .transactions(_, _, _):
+        case .assets(), .transactions(_, _, _), .info(_):
             return "[]".utf8Encoded
         }
     }
@@ -191,6 +196,30 @@ extension TMMTokenService {
                             reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
                         } else {
                             resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getInfo(address: String, provider: MoyaProvider<TMMTokenService>) -> Promise<APIToken> {
+        return Promise<APIToken> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .info(address: address)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let token = try response.mapObject(APIToken.self)
+                        if let errorCode = token.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: token.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(token)
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))

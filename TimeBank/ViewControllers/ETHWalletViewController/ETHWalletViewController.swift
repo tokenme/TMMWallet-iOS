@@ -90,6 +90,9 @@ class ETHWalletViewController: UIViewController {
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
             navigationItem.title = I18n.ethWallet.description
+            
+            let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
+            navigationItem.rightBarButtonItem = scanBarItem
         }
         
         setupSummaryView()
@@ -180,6 +183,12 @@ class ETHWalletViewController: UIViewController {
         let vc = WalletQRCodeViewController.instantiate()
         vc.address = userInfo?.wallet
         customPresentViewController(walletQRCodePresenter, viewController: vc, animated: true)
+    }
+    
+    @objc func showScanView() {
+        let vc = ScanViewController()
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -327,6 +336,56 @@ extension ETHWalletViewController {
                 UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
             }
         )
+    }
+}
+
+extension ETHWalletViewController: ScanViewDelegate {
+    func collectHandler(_ qrcode: String) {
+        if qrcode.hasPrefix("ethereum:") {
+            let data: String = qrcode.replacingOccurrences(of: "ethereum:", with: "")
+            let components = data.split(separator: "?")
+            let wallet = components[0]
+            var result = QRCodeResult(String(wallet))
+            if components.count == 2 {
+                let args = components[1].split(separator: "&")
+                for arg in args {
+                    let splitted = arg.split(separator: "=")
+                    if splitted.count != 2 {
+                        continue
+                    }
+                    let key = splitted[0]
+                    let val = splitted[1]
+                    switch key {
+                    case "contractAddress":
+                        result.setContractAddress(String(val))
+                    case "decimals":
+                        if let decimals = Int8(val) {
+                            result.setDecimals(decimals)
+                        }
+                    default:
+                        continue
+                    }
+                }
+            }
+            if result.contractAddress == nil || result.contractAddress == "" {
+                result.setContractAddress("0x")
+            }
+            let vc = TransferTableViewController.instantiate()
+            vc.setQrcodeResult(result)
+            self.navigationController?.pushViewController(vc, animated: true)
+            return
+        }
+        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: qrcode)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) { alert in
+            let paste = UIPasteboard.general
+            paste.string = qrcode
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        customPresentViewController(alertPresenter, viewController: alertController, animated: true)
     }
 }
 

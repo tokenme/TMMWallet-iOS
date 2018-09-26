@@ -121,6 +121,9 @@
 		1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF682215B560F001E69CD /* OrderbookTableViewCell.swift */; };
 		1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF683215B560F001E69CD /* OrderbookTableViewCell.xib */; };
 		1D5FF687215B6514001E69CD /* MyOrderbooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */; };
+		1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF689215B7867001E69CD /* ScanViewController.swift */; };
+		1D5FF68C215B7B36001E69CD /* CodeScan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF68B215B7B36001E69CD /* CodeScan.bundle */; };
+		1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */; };
 		1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB432932155048C0034B810 /* ExchangeViewController.swift */; };
 		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
 		1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */; };
@@ -268,6 +271,9 @@
 		1D5FF682215B560F001E69CD /* OrderbookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderbookTableViewCell.swift; sourceTree = "<group>"; };
 		1D5FF683215B560F001E69CD /* OrderbookTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderbookTableViewCell.xib; sourceTree = "<group>"; };
 		1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderbooksViewController.swift; sourceTree = "<group>"; };
+		1D5FF689215B7867001E69CD /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		1D5FF68B215B7B36001E69CD /* CodeScan.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CodeScan.bundle; path = TimeBank/CodeScan.bundle; sourceTree = "<group>"; };
+		1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeResult.swift; sourceTree = "<group>"; };
 		1DB432932155048C0034B810 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
 		1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsTableViewController.swift; sourceTree = "<group>"; };
@@ -483,6 +489,7 @@
 			children = (
 				1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */,
 				1DEC544D2150FCC1007A46D5 /* Objc-Bridging-Header.h */,
+				1D5FF68B215B7B36001E69CD /* CodeScan.bundle */,
 				1DEC5458215121F5007A46D5 /* InfoPlist.strings */,
 				1DEC5454215121BF007A46D5 /* Localizable.strings */,
 			);
@@ -541,10 +548,11 @@
 				1D1D6FD02148C59A0001ED49 /* TransactionsTableViewController */,
 				1D1D6FDE214A7C540001ED49 /* TransferTableViewController */,
 				1D1D6FEA214EA3240001ED49 /* ExchangeRecordsViewController */,
-				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1DEC546021512847007A46D5 /* AccountViewController */,
-				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1DB432922155046F0034B810 /* ExchangeViewController */,
+				1D5FF688215B7852001E69CD /* ScanViewController */,
+				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
+				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
 			);
 			path = ViewControllers;
@@ -571,6 +579,7 @@
 		1D3441C9213CF74F00B8E157 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */,
 				1D3441CB213CF78000B8E157 /* APIAccessToken.swift */,
 				1D3441CC213CF78000B8E157 /* APIResponse.swift */,
 				1D3441CA213CF78000B8E157 /* APIUser.swift */,
@@ -675,6 +684,14 @@
 				1D3441A7213CF17400B8E157 /* Dependencies */,
 			);
 			path = TimeBank;
+			sourceTree = "<group>";
+		};
+		1D5FF688215B7852001E69CD /* ScanViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D5FF689215B7867001E69CD /* ScanViewController.swift */,
+			);
+			path = ScanViewController;
 			sourceTree = "<group>";
 		};
 		1DB432922155046F0034B810 /* ExchangeViewController */ = {
@@ -823,6 +840,7 @@
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
+				1D5FF68C215B7B36001E69CD /* CodeScan.bundle in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
 				1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */,
 				1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */,
@@ -976,6 +994,7 @@
 			files = (
 				1D3441E4213CFA1C00B8E157 /* CGRect+Utils.swift in Sources */,
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
+				1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
 				1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */,
@@ -1066,6 +1085,7 @@
 				1D3441E2213CFA0600B8E157 /* UIColor+Utils.swift in Sources */,
 				1D3441FE213CFBB500B8E157 /* FadeTransition.swift in Sources */,
 				1D151E7B213D5DBA007C87DD /* APIApp.swift in Sources */,
+				1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */,
 				1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
 				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,

@@ -28,6 +28,7 @@
 "OtherBindDeviceError" = "This device has been binded by some others";
 
 "Refresh" = "Refresh";
+"Copy" = "Copy";
 
 // Login
 "Password" = "Password";
