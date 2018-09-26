@@ -66,6 +66,7 @@
 "Bind" = "Bind";
 "UnbindDeviceExplain" = "Find unbind device, win points by binding the device";
 "Unbind" = "Unbind";
+"ConfirmUnbind" = "Do you want to unbind this device?";
 
 // Apps
 "SDKApps" = "Minable Apps";
@@ -160,3 +161,4 @@
 "OrderbookCompleted" = "Completed";
 "OrderbookCanceled" = "Canceled";
 "Cancel" = "Cancel";
+"ConfirmCancelOrder" = "Do you want to cancel this order?";

@@ -66,6 +66,7 @@
 "Bind" = "绑定";
 "UnbindDeviceExplain" = "该设备未绑定，绑定该设备获取积分。";
 "Unbind" = "解绑";
+"ConfirmUnbind" = "确定解绑该设备？";
 
 // Apps
 "SDKApps" = "可挖矿应用";
@@ -160,3 +161,4 @@
 "OrderbookCompleted" = "已完成";
 "OrderbookCanceled" = "已取消";
 "Cancel" = "取消";
+"ConfirmCancelOrder" = "确定取消该订单？";

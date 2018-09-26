@@ -220,7 +220,18 @@ extension WalletViewController: SwipeTableViewCellDelegate {
             let sendAction = SwipeAction(style: .default, title: I18n.unbind.description) {[weak self] action, indexPath in
                 guard let weakSelf = self else { return }
                 guard let deviceId = weakSelf.devices[indexPath.row].id else { return }
-                weakSelf.runUnbindDevice(deviceId)
+                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmUnbind.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                    //
+                }
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.runUnbindDevice(deviceId)
+                }
+                alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+                
             }
             sendAction.backgroundColor = UIColor.red
             sendAction.textColor = UIColor.white
@@ -316,7 +327,7 @@ extension WalletViewController {
             default: break
             }
             guard let weakSelf = self else { return  }
-            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.unbindingDevice = false

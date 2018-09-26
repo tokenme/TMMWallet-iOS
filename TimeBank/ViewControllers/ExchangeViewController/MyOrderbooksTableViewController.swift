@@ -213,7 +213,17 @@ extension MyOrderbooksTableViewController: SwipeTableViewCellDelegate {
             let sendAction = SwipeAction(style: .default, title: I18n.cancel.description) {[weak self] action, indexPath in
                 guard let weakSelf = self else { return }
                 guard let tradeId = weakSelf.orders[indexPath.row].id else { return }
-                weakSelf.runCancelOrder(tradeId)
+                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmCancelOrder.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                    //
+                }
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.runCancelOrder(tradeId)
+                }
+                alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
             }
             sendAction.backgroundColor = UIColor.red
             sendAction.textColor = UIColor.white
@@ -244,7 +254,7 @@ extension MyOrderbooksTableViewController {
             default: break
             }
             guard let weakSelf = self else { return  }
-            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.cancellingOrder = false

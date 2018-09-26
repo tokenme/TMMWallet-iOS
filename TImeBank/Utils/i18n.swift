@@ -78,6 +78,7 @@ enum I18n: CustomStringConvertible {
     case bind
     case unbindDeviceExplain
     case unbind
+    case confirmUnbind
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -150,6 +151,7 @@ enum I18n: CustomStringConvertible {
     case orderbookCompleted
     case orderbookCanceled
     case cancel
+    case confirmCancelOrder
     
     var description : String {
         switch self {
@@ -309,6 +311,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("UnbindDeviceExplain", comment: "UnbindDeviceExplain")
         case .unbind:
             return NSLocalizedString("Unbind", comment: "Unbind")
+        case .confirmUnbind:
+            return NSLocalizedString("ConfirmUnbind", comment: "ConfirmUnbind")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .appTasks:
@@ -435,6 +439,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("OrderbookCanceled", comment: "Canceled")
         case .cancel:
             return NSLocalizedString("Cancel", comment: "Cancel")
+        case .confirmCancelOrder:
+            return NSLocalizedString("ConfirmCancelOrder", comment: "confirmCancelOrder")
         }
     }
 }
