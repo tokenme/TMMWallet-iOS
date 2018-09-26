@@ -1,9 +1,9 @@
 //
-//  TransactionsTableViewController.swift
+//  MyOrderbooksTableViewController.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/9/12.
-//  Copyright © 2018年 Tokenmama.io. All rights reserved.
+//  Created by Syd Xu on 2018/9/26.
+//  Copyright © 2018 Tokenmama.io. All rights reserved.
 //
 
 import UIKit
@@ -13,14 +13,13 @@ import Hydra
 import ZHRefresh
 import SkeletonView
 import ViewAnimator
-import Kingfisher
 import EmptyDataSet_Swift
-import SwiftWebVC
 import Presentr
+import SwipeCellKit
 
 fileprivate let DefaultPageSize: UInt = 10
 
-class TransactionsTableViewController: UITableViewController {
+class MyOrderbooksTableViewController: UITableViewController {
     
     private var userInfo: APIUser? {
         get {
@@ -41,15 +40,17 @@ class TransactionsTableViewController: UITableViewController {
         return presenter
     }()
     
+    public var side: APIOrderBookSide = .ask
+    
     private var currentPage: UInt = 1
     
-    private var token: APIToken?
+    private var orders: [APIOrderBook] = []
     
-    private var txs: [APITransaction] = []
+    private var loadingOrders = false
     
-    private var loadingTransactions = false
+    private var cancellingOrder = false
     
-    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var orderbookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -66,9 +67,7 @@ class TransactionsTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
-            if let tokenName = self.token?.name {
-                navigationItem.title = tokenName
-            }
+            navigationItem.title = I18n.myOrderbooks.description
         }
         setupTableView()
         if userInfo != nil {
@@ -92,21 +91,17 @@ class TransactionsTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
     
-    static func instantiate() -> TransactionsTableViewController
+    static func instantiate() -> MyOrderbooksTableViewController
     {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TransactionsTableViewController") as! TransactionsTableViewController
-    }
-    
-    public func setToken(token: APIToken) {
-        self.token = token
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyOrderbooksTableViewController") as! MyOrderbooksTableViewController
     }
     
     private func setupTableView() {
-        tableView.register(cellType: TransactionTableViewCell.self)
+        tableView.register(cellType: OrderbookTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.estimatedRowHeight = 55.0
+        tableView.estimatedRowHeight = 66.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -120,7 +115,7 @@ class TransactionsTableViewController: UITableViewController {
         
         tableView.footer = ZHRefreshAutoNormalFooter.footerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.getTransactions(false)
+            weakSelf.getOrders(false)
         }
         tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
@@ -129,11 +124,12 @@ class TransactionsTableViewController: UITableViewController {
     }
     
     func refresh() {
-        getTransactions(true)
+        getOrders(true)
     }
+    
 }
 
-extension TransactionsTableViewController: UIViewControllerTransitioningDelegate {
+extension MyOrderbooksTableViewController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
@@ -146,43 +142,31 @@ extension TransactionsTableViewController: UIViewControllerTransitioningDelegate
 }
 
 // MARK: - Table view data source
-extension TransactionsTableViewController {
+extension MyOrderbooksTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return txs.count
+        return orders.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tx = self.txs[indexPath.row]
-        let cell = tableView.dequeueReusableCell(for: indexPath) as TransactionTableViewCell
-        if let wallet = self.userInfo?.wallet {
-            cell.fill(tx, wallet: wallet)
-        }
+        let order = self.orders[indexPath.row]
+        let cell = tableView.dequeueReusableCell(for: indexPath) as OrderbookTableViewCell
+        cell.delegate = self
+        cell.fill(order)
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.isSelected = false
-        if self.txs.count < indexPath.row + 1 { return }
-        let tx = self.txs[indexPath.row]
-        guard let receipt = tx.receipt else { return }
-        let urlString = "https://etherscan.io/tx/\(receipt)"
-        let webVC = SwiftWebVC(urlString: urlString, shareItem: nil, sharingEnabled: true)
-        self.navigationController?.pushViewController(webVC, animated: true)
-    }
-    
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !self.loadingTransactions
+        return false
     }
 }
 
-extension TransactionsTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+extension MyOrderbooksTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
-        return self.txs.count == 0
+        return self.orders.count == 0
     }
     
     func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
@@ -206,7 +190,7 @@ extension TransactionsTableViewController: EmptyDataSetSource, EmptyDataSetDeleg
     }
 }
 
-extension TransactionsTableViewController: SkeletonTableViewDataSource {
+extension MyOrderbooksTableViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
         return 1
@@ -219,36 +203,80 @@ extension TransactionsTableViewController: SkeletonTableViewDataSource {
     }
 }
 
-extension TransactionsTableViewController {
+extension MyOrderbooksTableViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        let order = self.orders[indexPath.row]
+        if order.onlineStatus != .pending {
+            return nil
+        }
+        if orientation == .right {
+            let sendAction = SwipeAction(style: .default, title: I18n.cancel.description) {[weak self] action, indexPath in
+                guard let weakSelf = self else { return }
+                guard let tradeId = weakSelf.orders[indexPath.row].id else { return }
+                weakSelf.runCancelOrder(tradeId)
+            }
+            sendAction.backgroundColor = UIColor.red
+            sendAction.textColor = UIColor.white
+            
+            return [sendAction]
+        }
+        return nil
+    }
     
-    private func getTransactions(_ refresh: Bool) {
-        if self.loadingTransactions {
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .selection
+        options.transitionStyle = .border
+        return options
+    }
+}
+
+extension MyOrderbooksTableViewController {
+    
+    private func runCancelOrder(_ tradeId: UInt64) {
+        self.cancelOrder(id: tradeId).then(in: .main, {[weak self] _ in
+            guard let weakSelf = self else { return }
+            weakSelf.refresh()
+        }).catch(in: .main, {[weak self] error in
+            switch error as! TMMAPIError {
+            case .ignore:
+                return
+            default: break
+            }
+            guard let weakSelf = self else { return  }
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.cancellingOrder = false
+        })
+    }
+    
+    private func getOrders(_ refresh: Bool) {
+        if self.loadingOrders {
             return
         }
-        self.loadingTransactions = true
-        
-        guard let tokenAddress = self.token?.address else { return }
+        self.loadingOrders = true
         
         if refresh {
             currentPage = 1
         }
         
-        TMMTokenService.getTransactions(
-            address: tokenAddress,
+        TMMOrderBookService.getOrders(
             page: currentPage,
             pageSize: DefaultPageSize,
-            provider: self.tokenServiceProvider)
-            .then(in: .main, {[weak self] txs in
+            side: side,
+            provider: self.orderbookServiceProvider)
+            .then(in: .main, {[weak self] orders in
                 guard let weakSelf = self else {
                     return
                 }
                 if refresh {
-                    weakSelf.txs = txs
+                    weakSelf.orders = orders
                 } else {
-                    weakSelf.txs.append(contentsOf: txs)
+                    weakSelf.orders.append(contentsOf: orders)
                 }
-                if txs.count < DefaultPageSize {
-                    if weakSelf.txs.count <= DefaultPageSize {
+                if orders.count < DefaultPageSize {
+                    if weakSelf.orders.count <= DefaultPageSize {
                         weakSelf.tableView.footer?.isHidden = true
                     } else {
                         weakSelf.tableView.footer?.isHidden = false
@@ -266,7 +294,7 @@ extension TransactionsTableViewController {
                 weakSelf.tableView.footer?.endRefreshing()
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
-                weakSelf.loadingTransactions = false
+                weakSelf.loadingOrders = false
                 weakSelf.tableView.header?.isHidden = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
@@ -275,7 +303,29 @@ extension TransactionsTableViewController {
                     let zoomAnimation = AnimationType.zoom(scale: 0.2)
                     UIView.animate(views: weakSelf.tableView.visibleCells, animations: [zoomAnimation], completion:nil)
                 }
-            }
+                }
         )
+    }
+    
+    private func cancelOrder(id: UInt64) -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.cancellingOrder {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.cancellingOrder = true
+            TMMOrderBookService.cancelOrder(
+                id: id,
+                provider: weakSelf.orderbookServiceProvider)
+                .then(in: .background, {_ in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
     }
 }

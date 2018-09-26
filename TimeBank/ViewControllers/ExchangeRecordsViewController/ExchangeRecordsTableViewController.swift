@@ -120,6 +120,17 @@ extension ExchangeRecordsTableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.isSelected = false
+        if self.records.count < indexPath.row + 1 { return }
+        let record = self.records[indexPath.row]
+        guard let receipt = record.tx else { return }
+        let urlString = "https://etherscan.io/tx/\(receipt)"
+        let webVC = SwiftWebVC(urlString: urlString, shareItem: nil, sharingEnabled: true)
+        self.navigationController?.pushViewController(webVC, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return !self.loadingRecords
     }

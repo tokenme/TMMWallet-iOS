@@ -59,6 +59,7 @@ class ExchangeViewController: UIViewController {
         }
     }
     
+    private var exchangeRate: APIOrderBookRate?
     private var topAsks: [APIOrderBook] = []
     private var topBids: [APIOrderBook] = []
     
@@ -74,9 +75,13 @@ class ExchangeViewController: UIViewController {
     @IBOutlet private weak var sellSelectButton: UIButton!
     @IBOutlet private weak var sellOrdersLabel: UILabel!
     
+    @IBOutlet private weak var totalEtherLabel: UILabel!
+    
     @IBOutlet private weak var submitButton: TransitionButton!
     
     @IBOutlet private weak var tableView: UITableView!
+    
+    private let navHeaderView: MarketNavHeaderView = MarketNavHeaderView()
     
     private var gettingMarketTopAsks: Bool = false
     private var gettingMarketTopBids: Bool = false
@@ -99,8 +104,12 @@ class ExchangeViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
-            navigationItem.title = "TBC/ETH"
+            navigationItem.titleView = navHeaderView
+            
+            let myOrdersBarItem = UIBarButtonItem(title: I18n.myOrderbooks.description, style: .plain, target: self, action: #selector(self.showMyOrdersView))
+            navigationItem.rightBarButtonItem = myOrdersBarItem
         }
+        
         amountInputWrapper.layer.borderColor = UIColor.lightGray.cgColor
         amountInputWrapper.layer.borderWidth = 0.5
         amountInputWrapper.layer.cornerRadius = 5
@@ -162,7 +171,12 @@ class ExchangeViewController: UIViewController {
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 32.0
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        //tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.refresh()
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -179,7 +193,13 @@ class ExchangeViewController: UIViewController {
         }
     }
     
+    @objc func showMyOrdersView() {
+        let vc = MyOrderbooksViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     public func refresh() {
+        getRate()
         getMarketTop(side: .ask)
         getMarketTop(side: .bid)
     }
@@ -198,6 +218,15 @@ extension ExchangeViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension ExchangeViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return MarketTopTableViewHeader.height
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return MarketTopTableViewHeader()
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -209,10 +238,10 @@ extension ExchangeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var askOrder: APIOrderBook?
         var bidOrder: APIOrderBook?
-        if topAsks.count < indexPath.row {
+        if indexPath.row < topAsks.count {
             askOrder = topAsks[indexPath.row]
         }
-        if topBids.count < indexPath.row {
+        if indexPath.row < topBids.count {
             bidOrder = topBids[indexPath.row]
         }
         let cell = tableView.dequeueReusableCell(for: indexPath) as MarketTopTableViewCell
@@ -226,6 +255,11 @@ extension ExchangeViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension ExchangeViewController {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func submit() {
         let amount = NSDecimalNumber.init(string: amountTextField.text)
         if amount.isNaN() || amount <= 0 {
@@ -272,6 +306,7 @@ extension ExchangeViewController {
             provider: self.orderBookServiceProvider)
             .then(in: .main, {[weak self] resp in
                 guard let weakSelf = self else { return }
+                weakSelf.refresh()
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: I18n.orderAddSuccess.description, closeBtn: I18n.close.description, viewController: weakSelf)
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
@@ -282,6 +317,19 @@ extension ExchangeViewController {
                 weakSelf.submitButton.stopAnimation(animationStyle: .normal, completion: nil)
             }
         )
+    }
+    
+    private func getRate() {
+        TMMOrderBookService.getRate(
+            provider: self.orderBookServiceProvider)
+            .then(in: .main, {[weak self] rate in
+                guard let weakSelf = self else { return }
+                weakSelf.exchangeRate = rate
+                weakSelf.navHeaderView.fill(rate)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf)
+            })
     }
     
     private func getMarketTop(side: APIOrderBookSide) {
@@ -310,10 +358,46 @@ extension ExchangeViewController {
                 case .bid: weakSelf.gettingMarketTopBids = false
                 }
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+                weakSelf.tableView.header?.endRefreshing()
             }
         )
     }
     
+}
+
+extension ExchangeViewController: UITextFieldDelegate {
+    
+    @IBAction func textFieldDidChange(_ textField:UITextField) {
+        var amount: NSDecimalNumber = 0
+        var price: NSDecimalNumber = 0
+        
+        if textField == self.amountTextField {
+            amount = NSDecimalNumber.init(string: textField.text)
+            price = NSDecimalNumber.init(string: priceTextField.text)
+        } else {
+            amount = NSDecimalNumber.init(string: amountTextField.text)
+            price = NSDecimalNumber.init(string: textField.text)
+        }
+        if amount.isNaN() {
+            amount = 0
+        }
+        if price.isNaN() {
+            price = 0
+        }
+        let totalEther = amount * price
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 6
+        formatter.minimumFractionDigits = 2
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let totalEtherStr = formatter.string(from: totalEther)!
+        totalEtherLabel.text = "Total Ether: \(totalEtherStr)"
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 extension ExchangeViewController: LoginViewDelegate {

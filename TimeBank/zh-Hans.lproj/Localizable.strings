@@ -152,3 +152,10 @@
 "ConfirmOrder" = "确定下单吗？";
 "EmptyQuantity" = "缺少数量";
 "EmptyPrice" = "缺少出价";
+"MyOrderbooks" = "我的订单";
+"DealAmount" = "成交TBC";
+"DealETH" = "成交ETH";
+"OrderbookPending" = "配对中";
+"OrderbookCompleted" = "已完成";
+"OrderbookCanceled" = "已取消";
+"Cancel" = "取消";

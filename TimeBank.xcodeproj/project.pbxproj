@@ -113,6 +113,14 @@
 		1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A4213CED5E0002EDBF /* Main.storyboard */; };
 		1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A7213CED5E0002EDBF /* Assets.xcassets */; };
 		1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A9213CED5E0002EDBF /* LaunchScreen.storyboard */; };
+		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
+		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
+		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
+		1D5FF67E215B4146001E69CD /* MarketNavHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF67D215B4146001E69CD /* MarketNavHeaderView.swift */; };
+		1D5FF681215B5322001E69CD /* MyOrderbooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF680215B5322001E69CD /* MyOrderbooksTableViewController.swift */; };
+		1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF682215B560F001E69CD /* OrderbookTableViewCell.swift */; };
+		1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF683215B560F001E69CD /* OrderbookTableViewCell.xib */; };
+		1D5FF687215B6514001E69CD /* MyOrderbooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */; };
 		1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB432932155048C0034B810 /* ExchangeViewController.swift */; };
 		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
 		1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */; };
@@ -252,6 +260,14 @@
 		1D36D9A5213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D36D9A7213CED5E0002EDBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D36D9AA213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
+		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
+		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
+		1D5FF67D215B4146001E69CD /* MarketNavHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketNavHeaderView.swift; sourceTree = "<group>"; };
+		1D5FF680215B5322001E69CD /* MyOrderbooksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderbooksTableViewController.swift; sourceTree = "<group>"; };
+		1D5FF682215B560F001E69CD /* OrderbookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderbookTableViewCell.swift; sourceTree = "<group>"; };
+		1D5FF683215B560F001E69CD /* OrderbookTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderbookTableViewCell.xib; sourceTree = "<group>"; };
+		1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderbooksViewController.swift; sourceTree = "<group>"; };
 		1DB432932155048C0034B810 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
 		1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsTableViewController.swift; sourceTree = "<group>"; };
@@ -487,8 +503,14 @@
 		1D28DE5D21563FA000FCF6F6 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				1D5FF67D215B4146001E69CD /* MarketNavHeaderView.swift */,
+				1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */,
 				1D28DE5E21563FBE00FCF6F6 /* MarketTopTableViewCell.swift */,
 				1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */,
+				1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */,
+				1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */,
+				1D5FF682215B560F001E69CD /* OrderbookTableViewCell.swift */,
+				1D5FF683215B560F001E69CD /* OrderbookTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -659,6 +681,8 @@
 			isa = PBXGroup;
 			children = (
 				1DB432932155048C0034B810 /* ExchangeViewController.swift */,
+				1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */,
+				1D5FF680215B5322001E69CD /* MyOrderbooksTableViewController.swift */,
 				1D28DE5D21563FA000FCF6F6 /* Cell */,
 			);
 			path = ExchangeViewController;
@@ -787,11 +811,14 @@
 				1D1D6FD72148CB1B0001ED49 /* TransactionTableViewCell.xib in Resources */,
 				1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */,
 				1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */,
+				1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */,
+				1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */,
 				1DEC5443214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib in Resources */,
+				1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */,
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
@@ -951,6 +978,7 @@
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
+				1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */,
 				1DF802FA215382A90002E054 /* APIInviteSummary.swift in Sources */,
 				1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */,
 				1D28DE5C2156214F00FCF6F6 /* TMMOrderBookService.swift in Sources */,
@@ -971,6 +999,7 @@
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
 				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
+				1D5FF681215B5322001E69CD /* MyOrderbooksTableViewController.swift in Sources */,
 				1D3441F3213CFBA300B8E157 /* FontAnimation.swift in Sources */,
 				1D3441F2213CFBA300B8E157 /* TweeActiveTextField.swift in Sources */,
 				1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */,
@@ -981,6 +1010,7 @@
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D1D6FC121468A810001ED49 /* TMMTokenService.swift in Sources */,
 				1D151E7E213D60FC007C87DD /* DeviceAppsViewController.swift in Sources */,
+				1D5FF687215B6514001E69CD /* MyOrderbooksViewController.swift in Sources */,
 				1D1D6FA52140F2270001ED49 /* APITaskRecord.swift in Sources */,
 				1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */,
 				1D151EC3213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift in Sources */,
@@ -999,6 +1029,7 @@
 				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
 				1D1D6FD921492D330001ED49 /* WalletQRCodeViewController.swift in Sources */,
+				1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
@@ -1040,6 +1071,7 @@
 				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,
 				1D1D6FB521412A850001ED49 /* TMMExchangeService.swift in Sources */,
 				1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */,
+				1D5FF67E215B4146001E69CD /* MarketNavHeaderView.swift in Sources */,
 				1DEC54622151285E007A46D5 /* AccountTableViewController.swift in Sources */,
 				1D151EA4213E4D9D007C87DD /* DetectApp.m in Sources */,
 				1D3441D6213CF94200B8E157 /* Alert.swift in Sources */,

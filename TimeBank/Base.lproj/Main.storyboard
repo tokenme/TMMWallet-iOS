@@ -1069,7 +1069,11 @@
                                                         <rect key="frame" x="56" y="8" width="83.5" height="21"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="Vg4-79-NZz" eventType="editingChanged" id="5km-pN-cfH"/>
+                                                            <outlet property="delegate" destination="Vg4-79-NZz" id="6Du-cN-Z6q"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.96999999999999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1121,7 +1125,11 @@
                                                         <rect key="frame" x="41" y="8" width="98.5" height="21"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                                                        <connections>
+                                                            <action selector="textFieldDidChange:" destination="Vg4-79-NZz" eventType="editingChanged" id="Ajc-xr-fpE"/>
+                                                            <outlet property="delegate" destination="Vg4-79-NZz" id="x1q-wD-MVf"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.96999999999999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1149,8 +1157,14 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Ether: 0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbV-DH-pKT">
+                                <rect key="frame" x="24" y="206" width="327" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ohw-gT-bhs" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
-                                <rect key="frame" x="32" y="230" width="311" height="40"/>
+                                <rect key="frame" x="32" y="256" width="311" height="40"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.50980392159999999" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="zgp-i3-k1B"/>
@@ -1176,7 +1190,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="cfA-vj-fet">
-                                <rect key="frame" x="16" y="300" width="343" height="20.5"/>
+                                <rect key="frame" x="16" y="326" width="343" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sell Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qF7-aa-lpp">
                                         <rect key="frame" x="0.0" y="0.0" width="155.5" height="20.5"/>
@@ -1193,7 +1207,7 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ltq-Rk-Rn1">
-                                <rect key="frame" x="0.0" y="329" width="375" height="290"/>
+                                <rect key="frame" x="0.0" y="355" width="375" height="264"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -1201,15 +1215,18 @@
                         <constraints>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="cfA-vj-fet" secondAttribute="trailing" constant="16" id="79P-7X-9pu"/>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="ltq-Rk-Rn1" secondAttribute="trailing" id="88y-uL-X9d"/>
+                            <constraint firstItem="rbV-DH-pKT" firstAttribute="top" secondItem="meA-Ac-WLU" secondAttribute="bottom" constant="16" id="9dL-pL-roC"/>
+                            <constraint firstItem="rbV-DH-pKT" firstAttribute="trailing" secondItem="meA-Ac-WLU" secondAttribute="trailing" constant="-8" id="EV7-gd-pvk"/>
+                            <constraint firstItem="rbV-DH-pKT" firstAttribute="leading" secondItem="meA-Ac-WLU" secondAttribute="leading" constant="8" id="FD0-5z-VhZ"/>
                             <constraint firstItem="ltq-Rk-Rn1" firstAttribute="bottom" secondItem="frt-jU-t9l" secondAttribute="bottom" constant="1" id="GLB-5u-ln4"/>
                             <constraint firstItem="ltq-Rk-Rn1" firstAttribute="top" secondItem="cfA-vj-fet" secondAttribute="bottom" constant="8.5" id="Hw5-t7-juc"/>
                             <constraint firstItem="ltq-Rk-Rn1" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" id="JWt-Uj-JOA"/>
                             <constraint firstItem="cfA-vj-fet" firstAttribute="top" secondItem="Ohw-gT-bhs" secondAttribute="bottom" constant="30" id="Jmt-3e-rrb"/>
                             <constraint firstItem="meA-Ac-WLU" firstAttribute="trailing" secondItem="frt-jU-t9l" secondAttribute="trailing" constant="-16" id="KBl-QS-ZqM"/>
                             <constraint firstItem="cfA-vj-fet" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="Kwz-Sc-4Me"/>
+                            <constraint firstItem="Ohw-gT-bhs" firstAttribute="top" secondItem="rbV-DH-pKT" secondAttribute="bottom" constant="32" id="Nop-A1-xMb"/>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="Ohw-gT-bhs" secondAttribute="trailing" constant="32" id="NpR-fh-4mU"/>
                             <constraint firstItem="meA-Ac-WLU" firstAttribute="top" secondItem="frt-jU-t9l" secondAttribute="top" constant="30" id="dkI-JV-Wbw"/>
-                            <constraint firstItem="Ohw-gT-bhs" firstAttribute="top" secondItem="meA-Ac-WLU" secondAttribute="bottom" constant="40" id="qi9-3i-LE0"/>
                             <constraint firstItem="meA-Ac-WLU" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="wKz-iC-v0V"/>
                             <constraint firstItem="Ohw-gT-bhs" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="32" id="xez-zg-KtY"/>
                         </constraints>
@@ -1229,11 +1246,55 @@
                         <outlet property="sellSelectButton" destination="OWN-km-nu6" id="7cc-9E-hqv"/>
                         <outlet property="submitButton" destination="Ohw-gT-bhs" id="Eqh-QN-86M"/>
                         <outlet property="tableView" destination="ltq-Rk-Rn1" id="iB7-Fo-hSx"/>
+                        <outlet property="totalEtherLabel" destination="rbV-DH-pKT" id="XVj-Lr-ImC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1hp-KM-YKC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1645.5999999999999" y="1122.1889055472266"/>
+        </scene>
+        <!--My Orderbooks View Controller-->
+        <scene sceneID="iKg-gG-49g">
+            <objects>
+                <viewController storyboardIdentifier="MyOrderbooksViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qAN-EG-Qv4" customClass="MyOrderbooksViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TxO-lo-5MO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Ma6-Fd-bFp"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A4r-D2-fUF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2301" y="1127"/>
+        </scene>
+        <!--My Orderbooks Table View Controller-->
+        <scene sceneID="Kf3-BE-Z0n">
+            <objects>
+                <tableViewController storyboardIdentifier="MyOrderbooksTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SYe-ZE-wJV" customClass="MyOrderbooksTableViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uhs-lR-xuz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Ba1-W3-rqV">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ba1-W3-rqV" id="oCe-V0-qnf">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="SYe-ZE-wJV" id="M2G-p3-llS"/>
+                            <outlet property="delegate" destination="SYe-ZE-wJV" id="XGd-MK-bT8"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9J5-gU-hdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2959" y="1121"/>
         </scene>
         <!--AccountTableViewController-->
         <scene sceneID="P49-IP-YdS">
@@ -1944,7 +2005,7 @@
         <image name="Reward" width="30" height="30"/>
         <image name="SelectCircle" width="18" height="18"/>
         <image name="SelectFill" width="18" height="18"/>
-        <image name="SelectImage" width="66" height="66"/>
+        <image name="SelectImage" width="66.5" height="66.5"/>
         <image name="Timer" width="30" height="30"/>
         <image name="Wallet" width="24" height="24"/>
     </resources>

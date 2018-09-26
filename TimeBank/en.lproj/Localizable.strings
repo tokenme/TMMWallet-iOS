@@ -152,3 +152,10 @@
 "ConfirmOrder" = "Confirm this order?";
 "EmptyQuantity" = "Missing amount";
 "EmptyPrice" = "Missing price";
+"MyOrderbooks" = "My Orders";
+"DealAmount" = "Deal TBC";
+"DealETH" = "Deal ETH";
+"OrderbookPending" = "Matching";
+"OrderbookCompleted" = "Completed";
+"OrderbookCanceled" = "Canceled";
+"Cancel" = "Cancel";

@@ -142,6 +142,13 @@ enum I18n: CustomStringConvertible {
     case confirmOrder
     case emptyQuantity
     case emptyPrice
+    case myOrderbooks
+    case dealAmount
+    case dealETH
+    case orderbookPending
+    case orderbookCompleted
+    case orderbookCanceled
+    case cancel
     
     var description : String {
         switch self {
@@ -411,6 +418,20 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("EmptyQuantity", comment: "EmptyQuantity")
         case .emptyPrice:
             return NSLocalizedString("EmptyPrice", comment: "EmptyPrice")
+        case .myOrderbooks:
+            return NSLocalizedString("MyOrderbooks", comment: "My Orders")
+        case .dealAmount:
+            return NSLocalizedString("DealAmount", comment: "Deal TBC")
+        case .dealETH:
+            return NSLocalizedString("DealETH", comment: "Deal ETH")
+        case .orderbookPending:
+            return NSLocalizedString("OrderbookPending", comment: "Matching")
+        case .orderbookCompleted:
+            return NSLocalizedString("OrderbookCompleted", comment: "Completed")
+        case .orderbookCanceled:
+            return NSLocalizedString("OrderbookCanceled", comment: "Canceled")
+        case .cancel:
+            return NSLocalizedString("Cancel", comment: "Cancel")
         }
     }
 }

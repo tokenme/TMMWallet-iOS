@@ -1,9 +1,9 @@
 //
-//  ExchangeRecordsViewController.swift
+//  MyOrderbooksViewController.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/9/16.
-//  Copyright © 2018年 Tokenmama.io. All rights reserved.
+//  Created by Syd Xu on 2018/9/26.
+//  Copyright © 2018 Tokenmama.io. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import Tabman
 import Pageboy
 
-class ExchangeRecordsViewController: TabmanViewController {
+class MyOrderbooksViewController: TabmanViewController {
     
     private var userInfo: APIUser? {
         get {
@@ -26,8 +26,8 @@ class ExchangeRecordsViewController: TabmanViewController {
     }
     
     private let viewControllers = [
-        ExchangeRecordsTableViewController.instantiate(),
-        ExchangeRecordsTableViewController.instantiate()
+        MyOrderbooksTableViewController.instantiate(),
+        MyOrderbooksTableViewController.instantiate()
     ]
     
     deinit {
@@ -42,13 +42,13 @@ class ExchangeRecordsViewController: TabmanViewController {
                 navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
-            navigationItem.title = I18n.exchangeRecords.description
+            navigationItem.title = I18n.myOrderbooks.description
         }
-        viewControllers[0].direction = .TMMIn
-        viewControllers[1].direction = .TMMOut
+        viewControllers[0].side = .bid
+        viewControllers[1].side = .ask
         // configure the bar
-        self.bar.items = [Item(title: "\(I18n.changeTo.description) TBC"),
-                          Item(title: "\(I18n.changeTo.description) \(I18n.points.description)")]
+        self.bar.items = [Item(title: I18n.buy.description),
+                          Item(title: I18n.sell.description)]
         self.bar.style = .buttonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self
@@ -75,9 +75,9 @@ class ExchangeRecordsViewController: TabmanViewController {
         }
     }
     
-    static func instantiate() -> ExchangeRecordsViewController
+    static func instantiate() -> MyOrderbooksViewController
     {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExchangeRecordsViewController") as! ExchangeRecordsViewController
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyOrderbooksViewController") as! MyOrderbooksViewController
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,7 +85,7 @@ class ExchangeRecordsViewController: TabmanViewController {
     }
 }
 
-extension ExchangeRecordsViewController: UIViewControllerTransitioningDelegate {
+extension MyOrderbooksViewController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
@@ -97,7 +97,7 @@ extension ExchangeRecordsViewController: UIViewControllerTransitioningDelegate {
     
 }
 
-extension ExchangeRecordsViewController: PageboyViewControllerDataSource {
+extension MyOrderbooksViewController: PageboyViewControllerDataSource {
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         return viewControllers.count
     }
@@ -112,11 +112,11 @@ extension ExchangeRecordsViewController: PageboyViewControllerDataSource {
     }
 }
 
-extension ExchangeRecordsViewController: LoginViewDelegate {
+extension MyOrderbooksViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
         if let vc = self.currentViewController {
-            if vc.isMember(of: ExchangeRecordsTableViewController.self) {
-                (vc as? ExchangeRecordsTableViewController)?.refresh()
+            if vc.isMember(of: MyOrderbooksTableViewController.self) {
+                (vc as? MyOrderbooksTableViewController)?.refresh()
             }
         }
     }

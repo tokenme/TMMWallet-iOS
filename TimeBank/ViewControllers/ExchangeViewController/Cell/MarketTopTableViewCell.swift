@@ -18,6 +18,11 @@ class MarketTopTableViewCell: UITableViewCell, NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        askPriceLabel.text = ""
+        askQuantityLabel.text = ""
+        bidPriceLabel.text = ""
+        bidQuantityLabel.text = ""
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
