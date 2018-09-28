@@ -5,7 +5,7 @@
   Created by Syd Xu on 2018/9/3.
   Copyright © 2018年 Tokenmama.io. All rights reserved.
 */
-CFBundleDisplayName = "时间银行";
+CFBundleDisplayName = "你好时间";
 NSAppleMusicUsageDescription = "是否允许此App访问你的媒体资料库？";
 NSBluetoothPeripheralUsageDescription = "是否允许此App访问你的蓝牙？";
 NSCalendarsUsageDescription = "是否允许此App访问你的日历？";

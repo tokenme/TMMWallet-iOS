@@ -7,6 +7,9 @@ blades:
   - source: images/icon.png # this image should be the only image, and the biggest image you can use (typically for icons, 1024x1024)
     mount: TimeBank/Assets.xcassets/AppIcon.appiconset
     contents: true  # use 'false' if you want to only update existing catalog, 'true' if you want to generate a full catalog every time
+  - source: images/logo.png
+    mount: TimeBank/Assets.xcassets/Logo.imageset
+    contents: true
   - source: images/account.png
     mount: TimeBank/Assets.xcassets/Account.imageset
     contents: true

@@ -24,7 +24,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxw-MT-14e">
                                         <rect key="frame" x="25" y="130.5" width="325" height="386"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tair" translatesAutoresizingMaskIntoConstraints="NO" id="Bls-9c-aeX">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Bls-9c-aeX">
                                                 <rect key="frame" x="122.5" y="0.0" width="80" height="80"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="2VL-Xv-ddb"/>
@@ -257,7 +257,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAj-QV-MOC">
                                         <rect key="frame" x="25" y="93.5" width="325" height="460"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tair" translatesAutoresizingMaskIntoConstraints="NO" id="DfY-zS-DRN">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="DfY-zS-DRN">
                                                 <rect key="frame" x="122.5" y="0.0" width="80" height="80"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="DfY-zS-DRN" secondAttribute="height" multiplier="1:1" id="Z2P-ob-3JW"/>
@@ -593,7 +593,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36g-OZ-l79">
                                         <rect key="frame" x="25" y="93.5" width="325" height="460"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tair" translatesAutoresizingMaskIntoConstraints="NO" id="psq-Zx-TIi">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="psq-Zx-TIi">
                                                 <rect key="frame" x="122.5" y="0.0" width="80" height="80"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="psq-Zx-TIi" secondAttribute="height" multiplier="1:1" id="KrC-ny-kXb"/>
@@ -910,6 +910,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Tair" width="16" height="16"/>
+        <image name="Logo" width="80" height="80"/>
     </resources>
 </document>

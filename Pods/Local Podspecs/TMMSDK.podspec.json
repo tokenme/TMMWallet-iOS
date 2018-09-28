@@ -1,6 +1,6 @@
 {
   "name": "TMMSDK",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "summary": "TMM SDK for iOS",
   "description": "© Tokenmama移动广告平台",
   "homepage": "http://www.tokenmama.io",
@@ -16,7 +16,7 @@
   },
   "source": {
     "git": "https://github.com/tokenmama/TMMSDK.git",
-    "tag": "0.2.2"
+    "tag": "0.2.5"
   },
   "resources": "TMMSDK.framework/TMMSDKBundle.bundle",
   "frameworks": [
