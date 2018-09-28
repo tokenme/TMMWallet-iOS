@@ -8,6 +8,7 @@
 
 import UIKit
 import TMMSDK
+import Moya
 import SwiftyUserDefaults
 import TACCore
 import TACMessaging
@@ -16,8 +17,9 @@ import TACMessaging
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
+    private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin])
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let notificationCenter = UNUserNotificationCenter.current()
@@ -35,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initTACAnalytics()
         
         AppTaskChecker.sharedInstance.start()
+        
+        refreshToken()
         
         return true
     }
@@ -82,6 +86,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let properties = TACAnalyticsProperties(dictionary: dict)
         TACAnalyticsService.setUserProperties(properties)
+    }
+    
+    private func refreshToken() {
+        if let accessToken: DefaultsAccessToken = Defaults[.accessToken] {
+            if accessToken.expire.compare(Date().addingTimeInterval(-1 * 60 * 24)) == .orderedDescending {
+                TMMAuthService.refreshToken(provider: authServiceProvider).then(in: .background, {token in
+                    print("AccessToken refreshed!")
+                }).catch(in: .background, { error in
+                    print(error)
+                })
+            }
+        }
     }
 }
 

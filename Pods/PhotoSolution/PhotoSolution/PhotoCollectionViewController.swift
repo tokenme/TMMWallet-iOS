@@ -20,7 +20,7 @@ class PhotoCollectionViewController: UIViewController {
     private var maxAmount = 9
     private var currentPhotoList = [Photo]()
     private var currentSelectedPhotoList = [Photo]()
-    private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle:.gray)
+    private let activityIndicator = UIActivityIndicatorView(style:.gray)
     private var cellSize: CGFloat!
     private let photoCellReuseIdentifier = "PhotoCell"
     private let space = CGFloat(2.5)
@@ -28,7 +28,7 @@ class PhotoCollectionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        photoNavigationController = self.navigationController as! PhotoNavigationController
+        photoNavigationController = self.navigationController as? PhotoNavigationController
         maxAmount = photoNavigationController.maxPhotos
         bottomNavigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         bottomNavigationBar.shadowImage = UIImage()
@@ -43,7 +43,7 @@ class PhotoCollectionViewController: UIViewController {
         }else{
             getPhotos()
         }
-        NotificationCenter.default.addObserver(self, selector:#selector(orientation), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(orientation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     @objc func orientation() {
@@ -57,7 +57,11 @@ class PhotoCollectionViewController: UIViewController {
     }
     
     private func setupCollectionView(){
-        cellSize = (self.view.frame.width-5*space)/4
+        if UIDevice.current.userInterfaceIdiom == .pad{
+            cellSize = (self.view.frame.width-7*space)/6
+        }else{
+            cellSize = (self.view.frame.width-5*space)/4
+        }
         let dataCellNib = UINib(nibName: photoCellReuseIdentifier, bundle: photoNavigationController.podBundle)
         photoCollectionView.register(dataCellNib, forCellWithReuseIdentifier: photoCellReuseIdentifier)
         activityIndicator.center = photoCollectionView.center
@@ -99,7 +103,7 @@ class PhotoCollectionViewController: UIViewController {
     func goToPhotoAccessSetting(){
         let alert = UIAlertController(title: nil, message: photoNavigationController.customization.alertTextForPhotoAccess, preferredStyle: .alert)
         alert.addAction( UIAlertAction(title: photoNavigationController.customization.settingButtonTextForPhotoAccess, style: .cancel, handler: { action in
-            UIApplication.shared.openURL(NSURL(string:UIApplicationOpenSettingsURLString)! as URL)
+            UIApplication.shared.openURL(NSURL(string:UIApplication.openSettingsURLString)! as URL)
         }))
         alert.addAction( UIAlertAction(title: photoNavigationController.customization.cancelButtonTextForPhotoAccess, style: .default, handler: { action in
             self.photoNavigationController.solutionDelegate?.pickerCancel()

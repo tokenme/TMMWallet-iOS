@@ -67,7 +67,7 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmBalance(), .transfer(_, _, _), .info(_):
             return "{}".utf8Encoded
-        case .assets(), .transactions(_, _, _), .info(_):
+        case .assets(), .transactions(_, _, _):
             return "[]".utf8Encoded
         }
     }

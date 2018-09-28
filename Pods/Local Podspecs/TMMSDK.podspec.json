@@ -1,0 +1,34 @@
+{
+  "name": "TMMSDK",
+  "version": "0.2.2",
+  "summary": "TMM SDK for iOS",
+  "description": "© Tokenmama移动广告平台",
+  "homepage": "http://www.tokenmama.io",
+  "license": {
+    "type": "Copyright",
+    "text": "© Tokenmama移动广告平台"
+  },
+  "authors": {
+    "Syd": "prof.syd.xu@gmail.com"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source": {
+    "git": "https://github.com/tokenmama/TMMSDK.git",
+    "tag": "0.2.2"
+  },
+  "resources": "TMMSDK.framework/TMMSDKBundle.bundle",
+  "frameworks": [
+    "Foundation",
+    "UIKit",
+    "CoreTelephony",
+    "Security",
+    "AdSupport"
+  ],
+  "vendored_frameworks": "TMMSDK.framework",
+  "xcconfig": {
+    "OTHER_LDFLAGS": "-ObjC"
+  },
+  "requires_arc": true
+}

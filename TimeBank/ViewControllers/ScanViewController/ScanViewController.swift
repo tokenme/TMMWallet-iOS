@@ -12,7 +12,7 @@ import Moya
 import SwiftyUserDefaults
 
 class ScanViewController: LBXScanViewController {
-    weak public var delegate: ScanViewDelegate?
+    weak public var scanDelegate: ScanViewDelegate?
     
     private var userInfo: APIUser? {
         get {
@@ -28,6 +28,14 @@ class ScanViewController: LBXScanViewController {
     
     private var isParsingCode: Bool = false
     
+    private var bundle: Bundle? {
+        get {
+            if let bundlePath = Bundle.init(for: LBXScanViewController.self).path(forResource: "CodeScan", ofType: "bundle") {
+                return Bundle.init(path: bundlePath)
+            }
+            return nil
+        }
+    }
     /**
      @brief  扫码区域上方提示文字
      */
@@ -60,7 +68,7 @@ class ScanViewController: LBXScanViewController {
         //框向上移动10个像素
         scanStyle?.centerUpOffset += 10
         scanStyle?.anmiationStyle = LBXScanViewAnimationStyle.NetGrid
-        scanStyle?.animationImage = UIImage(named: "CodeScan.bundle/qrcode_scan_part_net")
+        scanStyle?.animationImage = UIImage(named: "qrcode_scan_part_net", in: self.bundle, compatibleWith: nil)
         // Do any additional setup after loading the view.
     }
     
@@ -118,15 +126,15 @@ class ScanViewController: LBXScanViewController {
         self.btnFlash = UIButton()
         btnFlash.bounds = btnClose.bounds
         btnFlash.center = CGPoint(x: bottomItemsView!.frame.width / 4, y: bottomItemsView!.frame.height/2)
-        btnFlash.setImage(UIImage(named: "CodeScan.bundle/qrcode_scan_btn_flash_nor"), for:UIControl.State.normal)
+        btnFlash.setImage(UIImage(named: "qrcode_scan_btn_flash_nor", in: self.bundle, compatibleWith: nil), for:UIControl.State.normal)
         btnFlash.addTarget(self, action: #selector(ScanViewController.openOrCloseFlash), for: UIControl.Event.touchUpInside)
         
         
         self.btnPhoto = UIButton()
         btnPhoto.bounds = btnClose.bounds
         btnPhoto.center = CGPoint(x: bottomItemsView!.frame.width * 3/4, y: bottomItemsView!.frame.height/2)
-        btnPhoto.setImage(UIImage(named: "CodeScan.bundle/qrcode_scan_btn_photo_nor"), for: UIControl.State.normal)
-        btnPhoto.setImage(UIImage(named: "CodeScan.bundle/qrcode_scan_btn_photo_down"), for: UIControl.State.highlighted)
+        btnPhoto.setImage(UIImage(named: "qrcode_scan_btn_photo_nor", in: self.bundle, compatibleWith: nil), for: UIControl.State.normal)
+        btnPhoto.setImage(UIImage(named: "qrcode_scan_btn_photo_down", in: self.bundle, compatibleWith: nil), for: UIControl.State.highlighted)
         btnPhoto.addTarget(self, action: #selector(ScanViewController.showPhotoAlbum), for: UIControl.Event.touchUpInside)
         
         bottomItemsView?.addSubview(btnFlash)
@@ -147,11 +155,11 @@ class ScanViewController: LBXScanViewController {
         
         if isOpenedFlash
         {
-            btnFlash.setImage(UIImage(named: "CodeScan.bundle/qrcode_scan_btn_flash_down"), for:UIControl.State.normal)
+            btnFlash.setImage(UIImage(named: "qrcode_scan_btn_flash_down", in: self.bundle, compatibleWith: nil), for:UIControl.State.normal)
         }
         else
         {
-            btnFlash.setImage(UIImage(named: "CodeScan.bundle/qrcode_scan_btn_flash_nor"), for:UIControl.State.normal)
+            btnFlash.setImage(UIImage(named: "qrcode_scan_btn_flash_nor", in: self.bundle, compatibleWith: nil), for:UIControl.State.normal)
         }
     }
     
@@ -166,7 +174,7 @@ class ScanViewController: LBXScanViewController {
 
 extension ScanViewController {
     private func parseCode(_ result: String) {
-        guard let delegate = self.delegate else { return }
+        guard let delegate = self.scanDelegate else { return }
         self.dismiss(animated: true, completion: {
             delegate.collectHandler(result)
         })

@@ -158,7 +158,7 @@ class TransferTableViewController: UITableViewController {
     
     @objc func showScanView() {
         let vc = ScanViewController()
-        vc.delegate = self
+        vc.scanDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
 }

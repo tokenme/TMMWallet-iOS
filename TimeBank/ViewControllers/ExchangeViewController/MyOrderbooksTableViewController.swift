@@ -178,11 +178,11 @@ extension MyOrderbooksTableViewController: EmptyDataSetSource, EmptyDataSetDeleg
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyTransactionsTitle.description)
+        return NSAttributedString(string: I18n.emptyOrderbookTitle.description)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: I18n.emptyTransactionsDesc.description)
+        return NSAttributedString(string: I18n.emptyOrderbookDesc.description)
     }
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {

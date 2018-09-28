@@ -96,6 +96,7 @@ enum I18n: CustomStringConvertible {
     case pointsPerViewer
     case maxBonus
     case points
+    case shareTaskRewardDesc
     case view
     case times
     case pointsPerInstall
@@ -152,6 +153,8 @@ enum I18n: CustomStringConvertible {
     case orderbookCanceled
     case cancel
     case confirmCancelOrder
+    case emptyOrderbookTitle
+    case emptyOrderbookDesc
     
     var description : String {
         switch self {
@@ -329,6 +332,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("MaxBonus", comment: "Max bonus")
         case .points:
             return NSLocalizedString("Points", comment: "Points")
+        case .shareTaskRewardDesc:
+            return NSLocalizedString("ShareTaskRewardDesc", comment: "ShareTaskRewardDesc")
         case .view:
             return NSLocalizedString("View", comment: "View")
         case .times:
@@ -441,6 +446,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Cancel", comment: "Cancel")
         case .confirmCancelOrder:
             return NSLocalizedString("ConfirmCancelOrder", comment: "confirmCancelOrder")
+        case .emptyOrderbookTitle:
+            return NSLocalizedString("EmptyOrderbookTitle", comment: "emptyOrderbookTitle")
+        case .emptyOrderbookDesc:
+            return NSLocalizedString("EmptyOrderbookDesc", comment: "emptyOrderbookDesc")
         }
     }
 }

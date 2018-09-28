@@ -6,3 +6,20 @@
   Copyright © 2018年 Tokenmama.io. All rights reserved.
 */
 CFBundleDisplayName = "时间银行";
+NSAppleMusicUsageDescription = "是否允许此App访问你的媒体资料库？";
+NSBluetoothPeripheralUsageDescription = "是否允许此App访问你的蓝牙？";
+NSCalendarsUsageDescription = "是否允许此App访问你的日历？";
+NSCameraUsageDescription = "是否允许此App访问你的相机？";
+NSContactsUsageDescription = "是否允许此App访问你的通讯录？";
+NSFaceIDUsageDescription = "是否允许此APP使用你的Face ID?";
+NSHealthShareUsageDescription = "是否允许此App使用你的健康分享？";
+NSHealthUpdateUsageDescription = "是否允许此App访问你的健康更新？";
+NSLocationAlwaysAndWhenInUseUsageDescription = "App需要您的同意,才能在使用期间访问位置";
+NSLocationAlwaysUsageDescription = "App需要您的同意,才能始终访问位置";
+NSLocationUsageDescription = "App需要您的同意,才能访问位置";
+NSLocationWhenInUseUsageDescription = "App需要您的同意,才能在使用期间访问位置";
+NSMicrophoneUsageDescription = "是否允许此App访问你的麦克风？";
+NSMotionUsageDescription = "是否允许此App访问你的运动与健身？";
+NSPhotoLibraryAddUsageDescription = "是否允许此App访问并使用你的相册？";
+NSPhotoLibraryUsageDescription = "是否允许此App访问你的相册？";
+NSRemindersUsageDescription = "是否允许此App访问你的提醒事项？";

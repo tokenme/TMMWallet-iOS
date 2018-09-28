@@ -13,6 +13,7 @@ import Hydra
 enum TMMAuthService {
     case sendCode(country: UInt, mobile: String)
     case login(country: UInt, mobile: String, password: String)
+    case refresh()
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -30,12 +31,16 @@ extension TMMAuthService: TargetType, AccessTokenAuthorizable {
             return "/send"
         case .login(_, _, _):
             return "/login"
+        case .refresh():
+            return "/refresh_token"
         }
     }
     var method: Moya.Method {
         switch self {
         case .sendCode, .login:
             return .post
+        case .refresh:
+            return .get
         }
     }
     var task: Task {
@@ -44,13 +49,15 @@ extension TMMAuthService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: ["country": country, "mobile": mobile], encoding: JSONEncoding.default)
         case .login(let country, let mobile, let password):
             return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "password": password], encoding: JSONEncoding.default)
+        case .refresh():
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
         case .sendCode(_, _):
             return "ok".utf8Encoded
-        case .login(_, _, _):
+        case .login(_, _, _), .refresh():
             return "{'token':'xxx', 'expire': 'xxxxxx'}".utf8Encoded
         }
     }
@@ -66,6 +73,32 @@ extension TMMAuthService {
         return Promise<APIAccessToken> (in: .background, { resolve, reject, _ in
             provider.request(
                 .login(country: country, mobile: mobile, password: password)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let token = try response.mapObject(APIAccessToken.self)
+                        if let errorCode = token.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: token.message ?? I18n.unknownError.description))
+                        } else {
+                            Defaults[.accessToken] = DefaultsAccessToken.init(token: token.token!, expire: token.expire!)
+                            Defaults.synchronize()
+                            resolve(token)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func refreshToken(provider: MoyaProvider<TMMAuthService>) -> Promise<APIAccessToken> {
+        return Promise<APIAccessToken> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .refresh()
             ){ result in
                 switch result {
                 case let .success(response):

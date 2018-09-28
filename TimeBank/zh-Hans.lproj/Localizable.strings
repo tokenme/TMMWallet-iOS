@@ -102,6 +102,7 @@
 "PointsPerViewer" = "分享后每个新用户浏览获得 #points# 积分";
 "MaxBonus" = "最多奖励";
 "Points" = "积分";
+"ShareTaskRewardDesc" = "分享后每个新用户浏览获得 #points# 积分, 最多奖励 #points2# 积分";
 "View" = "浏览";
 "Times" = "次";
 "PointsPerInstall" = "积分/安装";
@@ -162,3 +163,5 @@
 "OrderbookCanceled" = "已取消";
 "Cancel" = "取消";
 "ConfirmCancelOrder" = "确定取消该订单？";
+"EmptyOrderbookTitle" = "没有订单";
+"EmptyOrderbookDesc" = "您还没有创建任何订单，现在下单试试？";

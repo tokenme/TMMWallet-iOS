@@ -102,6 +102,7 @@
 "PointsPerViewer" = "#points# Points/Viewer";
 "MaxBonus" = "Max bonus";
 "Points" = "Points";
+"ShareTaskRewardDesc" = "#points# Points/Viewer, Max bonus #points2# Points";
 "View" = "View";
 "Times" = "times";
 "PointsPerInstall" = "Points/Install";
@@ -162,3 +163,5 @@
 "OrderbookCanceled" = "Canceled";
 "Cancel" = "Cancel";
 "ConfirmCancelOrder" = "Do you want to cancel this order?";
+"EmptyOrderbookTitle" = "No orders";
+"EmptyOrderbookDesc" = "You have not submited any orders yet. Make new orders now?";

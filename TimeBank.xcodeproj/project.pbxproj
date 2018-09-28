@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0F47A7215DE58000385423 /* ShareTaskNoImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F47A5215DE58000385423 /* ShareTaskNoImageTableViewCell.swift */; };
+		1D0F47A8215DE58000385423 /* ShareTaskNoImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D0F47A6215DE58000385423 /* ShareTaskNoImageTableViewCell.xib */; };
 		1D151E64213D03FC007C87DD /* i18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E63213D03FC007C87DD /* i18n.swift */; };
 		1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E65213D0775007C87DD /* TMMDeviceService.swift */; };
 		1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */; };
@@ -76,9 +78,7 @@
 		1D28DE6021563FBE00FCF6F6 /* MarketTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28DE5E21563FBE00FCF6F6 /* MarketTopTableViewCell.swift */; };
 		1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
-		1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B4213CF61300B8E157 /* LoaderModal.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
-		1D3441BC213CF61400B8E157 /* TMMSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3441B7213CF61400B8E157 /* TMMSDK.framework */; };
 		1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441BE213CF68500B8E157 /* LoginViewController.swift */; };
 		1D3441C5213CF74800B8E157 /* TMMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441C1213CF74700B8E157 /* TMMError.swift */; };
 		1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441C2213CF74800B8E157 /* TMMUserService.swift */; };
@@ -122,7 +122,6 @@
 		1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF683215B560F001E69CD /* OrderbookTableViewCell.xib */; };
 		1D5FF687215B6514001E69CD /* MyOrderbooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */; };
 		1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF689215B7867001E69CD /* ScanViewController.swift */; };
-		1D5FF68C215B7B36001E69CD /* CodeScan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF68B215B7B36001E69CD /* CodeScan.bundle */; };
 		1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */; };
 		1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB432932155048C0034B810 /* ExchangeViewController.swift */; };
 		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
@@ -148,6 +147,8 @@
 
 /* Begin PBXFileReference section */
 		07E98AACD8560ACEB6EAD77A /* Pods-TimeBank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBank.debug.xcconfig"; path = "Target Support Files/Pods-TimeBank/Pods-TimeBank.debug.xcconfig"; sourceTree = "<group>"; };
+		1D0F47A5215DE58000385423 /* ShareTaskNoImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskNoImageTableViewCell.swift; sourceTree = "<group>"; };
+		1D0F47A6215DE58000385423 /* ShareTaskNoImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskNoImageTableViewCell.xib; sourceTree = "<group>"; };
 		1D151E55213D000C007C87DD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TimeBank/Info.plist; sourceTree = "<group>"; };
 		1D151E63213D03FC007C87DD /* i18n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = i18n.swift; sourceTree = "<group>"; };
 		1D151E65213D0775007C87DD /* TMMDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMDeviceService.swift; sourceTree = "<group>"; };
@@ -225,9 +226,7 @@
 		1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewCell.xib; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		1D3441B4213CF61300B8E157 /* LoaderModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderModal.swift; sourceTree = "<group>"; };
 		1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCountDownButton.swift; sourceTree = "<group>"; };
-		1D3441B7213CF61400B8E157 /* TMMSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TMMSDK.framework; sourceTree = "<group>"; };
 		1D3441BE213CF68500B8E157 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1D3441C1213CF74700B8E157 /* TMMError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMMError.swift; sourceTree = "<group>"; };
 		1D3441C2213CF74800B8E157 /* TMMUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMMUserService.swift; sourceTree = "<group>"; };
@@ -272,7 +271,6 @@
 		1D5FF683215B560F001E69CD /* OrderbookTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderbookTableViewCell.xib; sourceTree = "<group>"; };
 		1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderbooksViewController.swift; sourceTree = "<group>"; };
 		1D5FF689215B7867001E69CD /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
-		1D5FF68B215B7B36001E69CD /* CodeScan.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CodeScan.bundle; path = TimeBank/CodeScan.bundle; sourceTree = "<group>"; };
 		1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeResult.swift; sourceTree = "<group>"; };
 		1DB432932155048C0034B810 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
@@ -308,7 +306,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D151EA0213E453A007C87DD /* StoreKit.framework in Frameworks */,
-				1D3441BC213CF61400B8E157 /* TMMSDK.framework in Frameworks */,
 				F658EBA45F30103182A90E1D /* Pods_TimeBank.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +417,8 @@
 				1D1D6FAF2140F5620001ED49 /* ShareTaskRecordTableViewCell.xib */,
 				1D151EC1213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift */,
 				1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */,
+				1D0F47A5215DE58000385423 /* ShareTaskNoImageTableViewCell.swift */,
+				1D0F47A6215DE58000385423 /* ShareTaskNoImageTableViewCell.xib */,
 				1D151EBD213E759C007C87DD /* ShareTaskTableViewCell.swift */,
 				1D151EBE213E759C007C87DD /* ShareTaskTableViewCell.xib */,
 				1D151ECA213F8F14007C87DD /* AppTaskTableViewCell.swift */,
@@ -489,7 +488,6 @@
 			children = (
 				1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */,
 				1DEC544D2150FCC1007A46D5 /* Objc-Bridging-Header.h */,
-				1D5FF68B215B7B36001E69CD /* CodeScan.bundle */,
 				1DEC5458215121F5007A46D5 /* InfoPlist.strings */,
 				1DEC5454215121BF007A46D5 /* Localizable.strings */,
 			);
@@ -525,14 +523,12 @@
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				1D3441B4213CF61300B8E157 /* LoaderModal.swift */,
 				1DEC54502150FFD0007A46D5 /* QiniuManager.swift */,
 				1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */,
 				1DEC5444214FA3AF007A46D5 /* UILabelPadding.swift */,
 				1D151EA1213E4D75007C87DD /* DetectApp */,
 				1D3441F4213CFBB500B8E157 /* TransitionButton */,
 				1D3441E9213CFBA200B8E157 /* TweeTextField */,
-				1D3441B7213CF61400B8E157 /* TMMSDK.framework */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -763,6 +759,7 @@
 				1D36D999213CED5D0002EDBF /* Resources */,
 				A7A9CE702B1E3B2A86202BAA /* [CP] Embed Pods Frameworks */,
 				2E30EBF1A630A3CA2EAFFA95 /* [TAC] Run After Script */,
+				2D13F116A3D6866E66CDC711 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -840,8 +837,8 @@
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
-				1D5FF68C215B7B36001E69CD /* CodeScan.bundle in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
+				1D0F47A8215DE58000385423 /* ShareTaskNoImageTableViewCell.xib in Resources */,
 				1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */,
 				1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */,
 				1D3441DA213CF94F00B8E157 /* Default-568h@2x.png in Resources */,
@@ -871,6 +868,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2D13F116A3D6866E66CDC711 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TimeBank/Pods-TimeBank-resources.sh",
+				"${PODS_ROOT}/TMMSDK/TMMSDK.framework/TMMSDKBundle.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TMMSDKBundle.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TimeBank/Pods-TimeBank-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2E30EBF1A630A3CA2EAFFA95 /* [TAC] Run After Script */ = {
@@ -933,7 +952,6 @@
 				"${BUILT_PRODUCTS_DIR}/Schedule/Schedule.framework",
 				"${BUILT_PRODUCTS_DIR}/ShadowView/ShadowView.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftWebVC/SwiftWebVC.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
@@ -970,7 +988,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Schedule.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ShadowView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftWebVC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
@@ -993,6 +1010,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D3441E4213CFA1C00B8E157 /* CGRect+Utils.swift in Sources */,
+				1D0F47A7215DE58000385423 /* ShareTaskNoImageTableViewCell.swift in Sources */,
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
@@ -1090,7 +1108,6 @@
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
 				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,
 				1D1D6FB521412A850001ED49 /* TMMExchangeService.swift in Sources */,
-				1D3441B9213CF61400B8E157 /* LoaderModal.swift in Sources */,
 				1D5FF67E215B4146001E69CD /* MarketNavHeaderView.swift in Sources */,
 				1DEC54622151285E007A46D5 /* AccountTableViewController.swift in Sources */,
 				1D151EA4213E4D9D007C87DD /* DetectApp.m in Sources */,
@@ -1336,8 +1353,6 @@
 					"-framework",
 					"\"ShadowView\"",
 					"-framework",
-					"\"SnapKit\"",
-					"-framework",
 					"\"SwiftyUserDefaults\"",
 					"-framework",
 					"\"UIKit\"",
@@ -1422,8 +1437,6 @@
 					"\"Schedule\"",
 					"-framework",
 					"\"ShadowView\"",
-					"-framework",
-					"\"SnapKit\"",
 					"-framework",
 					"\"SwiftyUserDefaults\"",
 					"-framework",

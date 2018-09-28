@@ -44,12 +44,12 @@ class AppTaskChecker: NSObject, AppTaskFetcherDelegate {
         self.fetcher = AppTaskFetcher()
         self.fetcher?.delegate = self
         
-        self.getTasksSchedule = Schedule.every(1.hour).do(queue: self.queue) {[weak self] in
+        self.getTasksSchedule = Plan.every(1.hour).do(queue: self.queue) {[weak self] in
             guard let weakSelf = self else { return }
             weakSelf.fetchTasks()
         }
         
-        self.checkTasksSchedule = Schedule.every(30.seconds).do(queue: self.queue) {[weak self] in
+        self.checkTasksSchedule = Plan.every(30.seconds).do(queue: self.queue) {[weak self] in
             guard let weakSelf = self else { return }
             weakSelf.checkTasks()
         }

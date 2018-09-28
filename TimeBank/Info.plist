@@ -47,21 +47,21 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>App需要您的同意,才能访问媒体资料库</string>
+	<string>是否允许此App访问你的媒体资料库？</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>App需要您的同意,才能访问蓝牙</string>
+	<string>是否允许此App访问你的访问蓝牙？</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>App需要您的同意,才能访问日历</string>
+	<string>是否允许此App访问你的日历？</string>
 	<key>NSCameraUsageDescription</key>
-	<string>App需要您的同意,才能访问相机</string>
+	<string>是否允许此App访问你的相机？</string>
 	<key>NSContactsUsageDescription</key>
 	<string>是否允许此App访问你的通讯录？</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>是否允许此APP访问你的Face ID?</string>
+	<string>是否允许此APP使用你的Face ID?</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>App需要您的同意,才能访问健康分享</string>
+	<string>是否允许此App访问你的健康分享？</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>App需要您的同意,才能访问健康更新</string>
+	<string>是否允许此App访问你的健康更新？</string>
 	<key>NSHomeKitUsageDescription</key>
 	<string>是否允许此APP访问你的HomeKit?</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -73,15 +73,15 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App需要您的同意,才能在使用期间访问位置</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>App需要您的同意,才能访问麦克风</string>
+	<string>是否允许此App访问你的麦克风？</string>
 	<key>NSMotionUsageDescription</key>
-	<string>App需要您的同意,才能访问运动与健身</string>
+	<string>是否允许此App访问你的运动与健身？</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>App需要您的同意,才能访问相册</string>
+	<string>是否允许此App访问并使用你的相册？</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App需要您的同意,才能访问相册</string>
+	<string>是否允许此App访问你的相册？</string>
 	<key>NSRemindersUsageDescription</key>
-	<string>App需要您的同意,才能访问提醒事项</string>
+	<string>是否允许此App访问你的提醒事项？</string>
 	<key>TMMMaxSchemeQuery</key>
 	<integer>18</integer>
 	<key>UIBackgroundModes</key>
