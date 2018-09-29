@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func refreshToken() {
         if let accessToken: DefaultsAccessToken = Defaults[.accessToken] {
-            if accessToken.expire.compare(Date().addingTimeInterval(-1 * 60 * 24)) == .orderedDescending {
+            if accessToken.expire.compare(Date().addingTimeInterval(60 * 24)) == .orderedAscending {
                 TMMAuthService.refreshToken(provider: authServiceProvider).then(in: .background, {token in
                     print("AccessToken refreshed!")
                 }).catch(in: .background, { error in

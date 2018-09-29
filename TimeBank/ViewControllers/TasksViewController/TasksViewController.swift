@@ -46,9 +46,9 @@ class TasksViewController: TabmanViewController {
             }
             navigationController.navigationBar.isTranslucent = true
             navigationItem.title = I18n.earnPointsTasks.description
-            let recordButtonItem = UIBarButtonItem(title: I18n.taskRecords.description, style: .plain, target: self, action: #selector(showTaskRecords))
+            let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showTaskRecords))
             navigationItem.leftBarButtonItem = recordButtonItem
-            let submitTaskButtonItem = UIBarButtonItem(title: I18n.submitTask.description, style: .plain, target: self, action: #selector(addTaskAction))
+            let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
             navigationItem.rightBarButtonItem = submitTaskButtonItem
             
             let menuItems = [I18n.earnPointsTasks.description, I18n.publishedByMe.description]
@@ -63,11 +63,12 @@ class TasksViewController: TabmanViewController {
             navigationItem.titleView = menuView
             menuView.didSelectItemAtIndexHandler = {[weak self] (indexPath: Int) -> () in
                 guard let weakSelf = self else { return }
+                let mineOnly = indexPath == 1
                 for vc in weakSelf.viewControllers {
                     if vc.isMember(of: AppTasksTableViewController.self) {
-                        (vc as? AppTasksTableViewController)?.mineOnly = indexPath == 1
-                    } else if vc.isMember(of: ShareTaskTableViewCell.self) {
-                        (vc as? ShareTasksTableViewController)?.mineOnly = indexPath == 1
+                        (vc as? AppTasksTableViewController)?.mineOnly = mineOnly
+                    } else if vc.isMember(of: ShareTasksTableViewController.self) {
+                        (vc as? ShareTasksTableViewController)?.mineOnly = mineOnly
                     }
                 }
             }
