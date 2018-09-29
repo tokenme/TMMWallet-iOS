@@ -17,7 +17,7 @@ target 'TimeBank' do
   pod 'IQKeyboardManagerSwift'
   pod 'ObjectMapper'
   pod 'moa', '~> 10.0'
-  pod 'NVActivityIndicatorView'
+  pod 'BTNavigationDropdownMenu'
   pod 'Reusable'
   pod 'ShadowView', '~> 1.3'
   pod 'Kingfisher', '~> 4.10'

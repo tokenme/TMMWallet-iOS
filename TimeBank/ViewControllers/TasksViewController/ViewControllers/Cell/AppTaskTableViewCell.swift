@@ -9,8 +9,9 @@
 import UIKit
 import Kingfisher
 import Reusable
+import SwipeCellKit
 
-class AppTaskTableViewCell: UITableViewCell, NibReusable {
+class AppTaskTableViewCell: SwipeTableViewCell, NibReusable {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!

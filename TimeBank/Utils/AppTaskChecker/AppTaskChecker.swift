@@ -97,9 +97,9 @@ class AppTaskChecker: NSObject, AppTaskFetcherDelegate {
                 continue
             }
             let isInstalled = DetectApp.isInstalled(task.bundleId, schemeId: task.schemeId)
-            if isInstalled && task.status != 1 {
+            if isInstalled && task.installStatus != 1 {
                 updateTask(task, 1)
-            } else if !isInstalled && task.status == 1 {
+            } else if !isInstalled && task.installStatus == 1 {
                 updateTask(task, -1)
             }
         }
@@ -114,7 +114,7 @@ class AppTaskChecker: NSObject, AppTaskFetcherDelegate {
         for t in self.tasks {
             if t.bundleId == task.bundleId {
                 t.bonus = task.bonus
-                t.status = task.status
+                t.installStatus = task.installStatus
             }
         }
     }

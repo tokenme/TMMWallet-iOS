@@ -18,6 +18,7 @@ import SwiftWebVC
 import Kingfisher
 import EmptyDataSet_Swift
 import Presentr
+import SwipeCellKit
 
 fileprivate let DefaultPageSize: UInt = 10
 
@@ -41,6 +42,12 @@ class ShareTasksTableViewController: UITableViewController {
         presenter.dismissOnSwipe = true
         return presenter
     }()
+    
+    public var mineOnly: Bool = false {
+        didSet {
+            self.refresh()
+        }
+    }
     
     private var currentPage: UInt = 1
     
@@ -74,11 +81,13 @@ class ShareTasksTableViewController: UITableViewController {
     
     private func setupTableView() {
         tableView.register(cellType: ShareTaskTableViewCell.self)
+        tableView.register(cellType: ShareTaskStatsTableViewCell.self)
         tableView.register(cellType: ShareTaskNoImageTableViewCell.self)
+        tableView.register(cellType: ShareTaskNoImageStatsTableViewCell.self)
         tableView.register(cellType: LoadingShareTaskTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.estimatedRowHeight = 125.0
+        tableView.estimatedRowHeight = 88.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -116,11 +125,29 @@ extension ShareTasksTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = self.tasks[indexPath.row]
         if task.image != nil {
+            if let creator = task.creator {
+                if creator > 0 && creator == userInfo?.id {
+                    let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskStatsTableViewCell
+                    cell.delegate = self
+                    cell.fill(task)
+                    return cell
+                }
+            }
             let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskTableViewCell
+            cell.delegate = self
             cell.fill(task)
             return cell
         }
+        if let creator = task.creator {
+            if creator > 0 && creator == userInfo?.id {
+                let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskNoImageStatsTableViewCell
+                cell.delegate = self
+                cell.fill(task)
+                return cell
+            }
+        }
         let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskNoImageTableViewCell
+        cell.delegate = self
         cell.fill(task)
         return cell
     }
@@ -155,6 +182,94 @@ extension ShareTasksTableViewController {
     private func presentWebVC(_ urlString: String, _ shareItem: SwiftWebVCShareItem?) {
         let webVC = SwiftModalWebVC(urlString: urlString, shareItem: shareItem)
         self.present(webVC, animated: true, completion: nil)
+    }
+}
+
+extension ShareTasksTableViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        let task = self.tasks[indexPath.row]
+        guard let taskId = task.id else { return nil }
+        guard let creator = task.creator else { return nil }
+        guard let userId = self.userInfo?.id else { return nil }
+        if userId != creator {
+            return nil
+        }
+        if task.onlineStatus == .canceled {
+            return nil
+        }
+        
+        if orientation == .right {
+            let editAction = SwipeAction(style: .default, title: I18n.edit.description) {[weak self] action, indexPath in
+                guard let weakSelf = self else { return }
+                let vc = SubmitShareTaskTableViewController.instantiate()
+                vc.task = task
+                vc.delegate = weakSelf
+                weakSelf.navigationController?.pushViewController(vc, animated: true)
+            }
+            editAction.backgroundColor = UIColor.primaryBlue
+            
+            return [editAction]
+        }
+        
+        let cancelAction = SwipeAction(style: .default, title: I18n.cancel.description) {[weak self] action, indexPath in
+            guard let weakSelf = self else { return }
+            let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmCancelTask.description)
+            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                //
+            }
+            let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                guard let weakSelf2 = weakSelf else { return }
+                weakSelf2.runUpdateTaskStatus(taskId, .canceled)
+            }
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+        }
+        cancelAction.backgroundColor = UIColor.red
+        var actions: [SwipeAction] = [cancelAction]
+        if task.onlineStatus == .running {
+            let stopAction = SwipeAction(style: .default, title: I18n.stop.description) {[weak self] action, indexPath in
+                guard let weakSelf = self else { return }
+                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmStopTask.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                    //
+                }
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.runUpdateTaskStatus(taskId, .stopped)
+                }
+                alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+            }
+            stopAction.backgroundColor = UIColor.orange
+            actions.append(stopAction)
+        } else {
+            let startAction = SwipeAction(style: .default, title: I18n.start.description) {[weak self] action, indexPath in
+                guard let weakSelf = self else { return }
+                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmStartTask.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                    //
+                }
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.runUpdateTaskStatus(taskId, .running)
+                }
+                alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+            }
+            startAction.backgroundColor = UIColor.greenGrass
+            actions.append(startAction)
+        }
+        return actions
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .selection
+        options.transitionStyle = .border
+        return options
     }
 }
 
@@ -199,6 +314,33 @@ extension ShareTasksTableViewController: EmptyDataSetSource, EmptyDataSetDelegat
 
 extension ShareTasksTableViewController {
     
+    private func runUpdateTaskStatus(_ taskId: UInt64, _ onlineStatus: APITaskOnlineStatus) {
+        TMMTaskService.updateShareTask(
+            id: taskId,
+            link: "",
+            title: "",
+            summary: "",
+            image: "",
+            points: 0,
+            bonus: 0,
+            maxViewers: 0,
+            onlineStatus: onlineStatus,
+            provider: self.taskServiceProvider)
+        .then(in: .main, {[weak self] task in
+            guard let weakSelf = self else { return }
+            for task in weakSelf.tasks {
+                if task.id == taskId {
+                    task.onlineStatus = onlineStatus
+                    break
+                }
+            }
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+        }).catch(in: .main, {[weak self] error in
+            guard let weakSelf = self else { return }
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf)
+        })
+    }
+    
     private func getTasks(_ refresh: Bool) {
         if self.loadingTasks {
             return
@@ -213,6 +355,7 @@ extension ShareTasksTableViewController {
             idfa: TMMBeacon.shareInstance().deviceId(),
             page: currentPage,
             pageSize: DefaultPageSize,
+            mineOnly: self.mineOnly,
             provider: self.taskServiceProvider)
             .then(in: .main, {[weak self] tasks in
                 guard let weakSelf = self else { return }
@@ -250,5 +393,11 @@ extension ShareTasksTableViewController {
                 }
             }
         )
+    }
+}
+
+extension ShareTasksTableViewController: ViewUpdateDelegate {
+    func shouldRefresh() {
+        self.refresh()
     }
 }

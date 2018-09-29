@@ -41,6 +41,8 @@ class SubmitShareTaskTableViewController: UITableViewController {
     
     private let photoSolution = PhotoSolution()
     
+    public var task: APIShareTask?
+    
     @IBOutlet private weak var urlLabel: UILabel!
     @IBOutlet private weak var urlTextField: UITextField!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -77,7 +79,11 @@ class SubmitShareTaskTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
-            navigationItem.title = I18n.submitNewShareTask.description
+            if self.task != nil {
+                navigationItem.title = I18n.editShareTask.description
+            } else {
+                navigationItem.title = I18n.submitNewShareTask.description
+            }
         }
         setupTableView()
         urlLabel.text = I18n.url.description
@@ -86,6 +92,23 @@ class SubmitShareTaskTableViewController: UITableViewController {
         rewardLabel.text = I18n.rewardPerView.description
         timesLabel.text = I18n.maxRewardTimes.description
         totalPointsLabel.text = I18n.totalReward.description
+        
+        if let task = self.task {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 6
+            formatter.groupingSeparator = "";
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            
+            urlTextField.text = task.link
+            titleTextField.text = task.title
+            descTextView.text = task.summary
+            rewardTextField.text = formatter.string(from: task.bonus)
+            timesTextField.text = "\(task.maxViewers)"
+            totalPointsTextField.text = formatter.string(from: task.pointsLeft)
+            if let image = task.image {
+                imageButton.kf.setImage(with: URL(string: image), for: .normal, placeholder: nil, options: [KingfisherOptionsInfoItem.processor(ResizingImageProcessor(referenceSize: CGSize(width: 63, height: 63), mode: ContentMode.none))], progressBlock: nil, completionHandler: nil)
+            }
+        }
         setupPhotoSolution()
     }
     
@@ -116,8 +139,7 @@ class SubmitShareTaskTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 55.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: CGFloat.leastNormalMagnitude))
-        
-        submitButton.setTitle(I18n.submitTask.description, for: .normal)
+        submitButton.setTitle(I18n.submit.description, for: .normal)
         submitButton.backgroundColor = UIColor.primaryBlue
         submitButton.disabledBackgroundColor = UIColor.lightGray
         submitButton.spinnerColor = UIColor.white
@@ -142,7 +164,6 @@ extension SubmitShareTaskTableViewController {
         if isSubmitting {
             return
         }
-        isSubmitting = true
         guard let link = urlTextField.text else {
             UCAlert.showAlert(alertPresenter, title: I18n.error.description, desc: "missing link", closeBtn: I18n.close.description)
             return
@@ -170,6 +191,11 @@ extension SubmitShareTaskTableViewController {
             UCAlert.showAlert(alertPresenter, title: I18n.error.description, desc: "missing max viewers", closeBtn: I18n.close.description)
             return
         }
+        if points < bonus * NSDecimalNumber(value: maxViewers) {
+            UCAlert.showAlert(alertPresenter, title: I18n.error.description, desc: "minium points required", closeBtn: I18n.close.description)
+            return
+        }
+        isSubmitting = true
         submitButton.startAnimation()
         if let image = self.selectedImage {
             async({[weak self] _ -> APIShareTask in
@@ -181,16 +207,31 @@ extension SubmitShareTaskTableViewController {
                     throw TMMAPIError.uploadImageError
                 }
                 upToken = try! ..weakSelf.uploadImage(upToken, image: image)
-                let task = try! ..TMMTaskService.addShareTask(
-                    link: link,
-                    title: title,
-                    summary: summary,
-                    image: imageLink,
-                    points: points,
-                    bonus: bonus,
-                    maxViewers: maxViewers,
-                    provider: weakSelf.taskServiceProvider)
-                return task
+                var task: APIShareTask?
+                if let taskId = weakSelf.task?.id {
+                    task = try! ..TMMTaskService.updateShareTask(
+                        id: taskId,
+                        link: link,
+                        title: title,
+                        summary: summary,
+                        image: imageLink,
+                        points: points,
+                        bonus: bonus,
+                        maxViewers: maxViewers,
+                        onlineStatus: .unknown,
+                        provider: weakSelf.taskServiceProvider)
+                } else {
+                    task = try! ..TMMTaskService.addShareTask(
+                        link: link,
+                        title: title,
+                        summary: summary,
+                        image: imageLink,
+                        points: points,
+                        bonus: bonus,
+                        maxViewers: maxViewers,
+                        provider: weakSelf.taskServiceProvider)
+                }
+                return task!
             }).then(in: .main, {[weak self] task in
                 guard let weakSelf = self else { return }
                 weakSelf.submitButton.stopAnimation(animationStyle: .expand, completion: {
@@ -207,30 +248,59 @@ extension SubmitShareTaskTableViewController {
                 weakSelf.isSubmitting = false
             })
         }else {
-            TMMTaskService.addShareTask(
-                link: link,
-                title: title,
-                summary: summary,
-                image: "",
-                points: points,
-                bonus: bonus,
-                maxViewers: maxViewers,
-                provider: self.taskServiceProvider)
-                .then(in: .main, {[weak self] task in
-                    guard let weakSelf = self else { return }
-                    weakSelf.submitButton.stopAnimation(animationStyle: .expand, completion: {
-                        weakSelf.delegate?.shouldRefresh()
-                        weakSelf.navigationController?.popViewController(animated: true)
+            if let taskId = self.task?.id {
+                TMMTaskService.updateShareTask(
+                    id: taskId,
+                    link: link,
+                    title: title,
+                    summary: summary,
+                    image: "",
+                    points: points,
+                    bonus: bonus,
+                    maxViewers: maxViewers,
+                    onlineStatus: .unknown,
+                    provider: self.taskServiceProvider)
+                    .then(in: .main, {[weak self] task in
+                        guard let weakSelf = self else { return }
+                        weakSelf.submitButton.stopAnimation(animationStyle: .expand, completion: {
+                            weakSelf.delegate?.shouldRefresh()
+                            weakSelf.navigationController?.popViewController(animated: true)
+                        })
+                    }).catch(in: .main, {[weak self] error in
+                        guard let weakSelf = self else { return }
+                        weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
+                            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                        })
+                    }).always(in: .main,  body: {[weak self] in
+                        guard let weakSelf = self else { return }
+                        weakSelf.isSubmitting = false
+                })
+            } else {
+                TMMTaskService.addShareTask(
+                    link: link,
+                    title: title,
+                    summary: summary,
+                    image: "",
+                    points: points,
+                    bonus: bonus,
+                    maxViewers: maxViewers,
+                    provider: self.taskServiceProvider)
+                    .then(in: .main, {[weak self] task in
+                        guard let weakSelf = self else { return }
+                        weakSelf.submitButton.stopAnimation(animationStyle: .expand, completion: {
+                            weakSelf.delegate?.shouldRefresh()
+                            weakSelf.navigationController?.popViewController(animated: true)
+                        })
+                    }).catch(in: .main, {[weak self] error in
+                        guard let weakSelf = self else { return }
+                        weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
+                            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                        })
+                    }).always(in: .main,  body: {[weak self] in
+                        guard let weakSelf = self else { return }
+                        weakSelf.isSubmitting = false
                     })
-                }).catch(in: .main, {[weak self] error in
-                    guard let weakSelf = self else { return }
-                    weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                        UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-                    })
-                }).always(in: .main,  body: {[weak self] in
-                    guard let weakSelf = self else { return }
-                    weakSelf.isSubmitting = false
-            })
+            }
         }
     }
     

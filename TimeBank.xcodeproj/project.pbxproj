@@ -138,6 +138,10 @@
 		1DEC5456215121BF007A46D5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DEC5454215121BF007A46D5 /* Localizable.strings */; };
 		1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DEC5458215121F5007A46D5 /* InfoPlist.strings */; };
 		1DEC54622151285E007A46D5 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC54612151285E007A46D5 /* AccountTableViewController.swift */; };
+		1DF019F0215F61F900FDD467 /* ShareTaskStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF019EE215F61F900FDD467 /* ShareTaskStatsTableViewCell.swift */; };
+		1DF019F1215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF019EF215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib */; };
+		1DF019F4215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF019F2215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift */; };
+		1DF019F5215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF019F3215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib */; };
 		1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */; };
 		1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */; };
 		1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */; };
@@ -292,6 +296,10 @@
 		1DEC545D21512235007A46D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		1DEC545F21512241007A46D5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		1DEC54612151285E007A46D5 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
+		1DF019EE215F61F900FDD467 /* ShareTaskStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskStatsTableViewCell.swift; sourceTree = "<group>"; };
+		1DF019EF215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskStatsTableViewCell.xib; sourceTree = "<group>"; };
+		1DF019F2215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskNoImageStatsTableViewCell.swift; sourceTree = "<group>"; };
+		1DF019F3215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskNoImageStatsTableViewCell.xib; sourceTree = "<group>"; };
 		1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInviteCodeViewController.swift; sourceTree = "<group>"; };
 		1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnbindDeviceHeaderView.swift; sourceTree = "<group>"; };
 		1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnbindDeviceHeaderView.xib; sourceTree = "<group>"; };
@@ -419,6 +427,10 @@
 				1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */,
 				1D0F47A5215DE58000385423 /* ShareTaskNoImageTableViewCell.swift */,
 				1D0F47A6215DE58000385423 /* ShareTaskNoImageTableViewCell.xib */,
+				1DF019F2215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift */,
+				1DF019F3215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib */,
+				1DF019EE215F61F900FDD467 /* ShareTaskStatsTableViewCell.swift */,
+				1DF019EF215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib */,
 				1D151EBD213E759C007C87DD /* ShareTaskTableViewCell.swift */,
 				1D151EBE213E759C007C87DD /* ShareTaskTableViewCell.xib */,
 				1D151ECA213F8F14007C87DD /* AppTaskTableViewCell.swift */,
@@ -827,6 +839,8 @@
 				1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */,
 				1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */,
 				1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */,
+				1DF019F5215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib in Resources */,
+				1DF019F1215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
@@ -929,6 +943,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-TimeBank/Pods-TimeBank-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
+				"${BUILT_PRODUCTS_DIR}/BTNavigationDropdownMenu/BTNavigationDropdownMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FTPopOverMenu_Swift/FTPopOverMenu_Swift.framework",
@@ -939,7 +954,6 @@
 				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
@@ -965,6 +979,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BTNavigationDropdownMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FTPopOverMenu_Swift.framework",
@@ -975,7 +990,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
@@ -1044,6 +1058,7 @@
 				1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */,
 				1D3441D7213CF94200B8E157 /* DefaultKeys.swift in Sources */,
 				1D1D6FBA214645B20001ED49 /* PointsTMMExchangeViewController.swift in Sources */,
+				1DF019F4215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift in Sources */,
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D1D6FC121468A810001ED49 /* TMMTokenService.swift in Sources */,
 				1D151E7E213D60FC007C87DD /* DeviceAppsViewController.swift in Sources */,
@@ -1070,6 +1085,7 @@
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
+				1DF019F0215F61F900FDD467 /* ShareTaskStatsTableViewCell.swift in Sources */,
 				1D3441EF213CFBA300B8E157 /* TweePlaceholderTextField.swift in Sources */,
 				1D3441DF213CF9BD00B8E157 /* Font.swift in Sources */,
 				1DEC544F2150FF82007A46D5 /* UIImage+Utils.swift in Sources */,
@@ -1335,8 +1351,6 @@
 					"-framework",
 					"\"Moya\"",
 					"-framework",
-					"\"NVActivityIndicatorView\"",
-					"-framework",
 					"\"ObjectMapper\"",
 					"-framework",
 					"\"Pastel\"",
@@ -1419,8 +1433,6 @@
 					"\"Kingfisher\"",
 					"-framework",
 					"\"Moya\"",
-					"-framework",
-					"\"NVActivityIndicatorView\"",
 					"-framework",
 					"\"ObjectMapper\"",
 					"-framework",

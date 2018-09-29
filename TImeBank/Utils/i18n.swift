@@ -59,6 +59,7 @@ enum I18n: CustomStringConvertible {
     case invalidWalletAddress
     case refresh
     case copy
+    case submit
     case sdkApps
     case miningApps
     case moreApps
@@ -89,6 +90,7 @@ enum I18n: CustomStringConvertible {
     case newTransactionTitle
     case newTransactionDesc
     case earnPointsTasks
+    case publishedByMe
     case appTasks
     case shareTasks
     case earn
@@ -112,6 +114,8 @@ enum I18n: CustomStringConvertible {
     case submitTask
     case submitNewAppTask
     case submitNewShareTask
+    case editAppTask
+    case editShareTask
     case url
     case title
     case description
@@ -120,6 +124,15 @@ enum I18n: CustomStringConvertible {
     case totalReward
     case appName
     case rewardPerInstall
+    case edit
+    case stop
+    case start
+    case confirmStartTask
+    case confirmStopTask
+    case confirmCancelTask
+    case viewers
+    case bonusPoint
+    case pointsLeft
     case account
     case signout
     case myInviteCode
@@ -204,6 +217,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Refresh", comment: "refresh")
         case .copy:
             return NSLocalizedString("Copy", comment: "Copy")
+        case .submit:
+            return NSLocalizedString("Submit", comment: "Submit")
         case .emptyPassword:
             return NSLocalizedString("EmptyPassword", comment: "Password must be input")
         case .emptyRepassword:
@@ -318,6 +333,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ConfirmUnbind", comment: "ConfirmUnbind")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
+        case .publishedByMe:
+            return NSLocalizedString("PublishedByMe", comment: "publishedByMe")
         case .appTasks:
             return NSLocalizedString("AppTasks", comment: "App Tasks")
         case .shareTasks:
@@ -364,6 +381,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("SubmitNewAppTask", comment: "SubmitNewAppTask")
         case .submitNewShareTask:
             return NSLocalizedString("SubmitNewShareTask", comment: "SubmitNewShareTask")
+        case .editAppTask:
+            return NSLocalizedString("EditAppTask", comment: "Edit App Task")
+        case .editShareTask:
+            return NSLocalizedString("EditShareTask", comment: "Edit Share Task")
         case .url:
             return NSLocalizedString("URL", comment: "Link")
         case .title:
@@ -380,6 +401,24 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("AppName", comment: "app name")
         case .rewardPerInstall:
             return NSLocalizedString("RewardPerInstall", comment: "RewardPerInstall")
+        case .edit:
+            return NSLocalizedString("Edit", comment: "Edit")
+        case .stop:
+            return NSLocalizedString("Stop", comment: "Stop")
+        case.start:
+            return NSLocalizedString("Start", comment: "Start")
+        case .confirmStartTask:
+            return NSLocalizedString("ConfirmStartTask", comment: "ConfirmStartTask")
+        case .confirmStopTask:
+            return NSLocalizedString("ConfirmStopTask", comment: "ConfirmStopTask")
+        case .confirmCancelTask:
+            return NSLocalizedString("ConfirmCancelTask", comment: "ConfirmCancelTask")
+        case .viewers:
+            return NSLocalizedString("Viewers", comment: "Viewers")
+        case .bonusPoint:
+            return NSLocalizedString("BonusPoint", comment: "BonusPoint")
+        case .pointsLeft:
+            return NSLocalizedString("PointsLeft", comment: "PointsLeft")
         case .account:
             return NSLocalizedString("Account", comment: "account")
         case .signout:

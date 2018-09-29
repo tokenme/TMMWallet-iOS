@@ -1,9 +1,9 @@
 //
-//  ShareTaskTableViewCell.swift
+//  ShareTaskStatsTableViewCell.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/9/4.
-//  Copyright © 2018年 Tokenmama.io. All rights reserved.
+//  Created by Syd Xu on 2018/9/29.
+//  Copyright © 2018 Tokenmama.io. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import Kingfisher
 import Reusable
 import SwipeCellKit
 
-class ShareTaskTableViewCell: SwipeTableViewCell, NibReusable {
+class ShareTaskStatsTableViewCell: SwipeTableViewCell, NibReusable {
     
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var imgView: UIImageView!
@@ -19,12 +19,23 @@ class ShareTaskTableViewCell: SwipeTableViewCell, NibReusable {
     @IBOutlet private weak var summaryLabel: UILabel!
     @IBOutlet private weak var rewardLabel: UILabelPadding!
     
+    @IBOutlet private weak var viewersTitleLabel: UILabel!
+    @IBOutlet private weak var bonusTitleLabel: UILabel!
+    @IBOutlet private weak var pointsLeftTitleLabel: UILabel!
+    
+    @IBOutlet private weak var viewersLabel: UILabel!
+    @IBOutlet private weak var bonusLabel: UILabel!
+    @IBOutlet private weak var pointsLeftLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         rewardLabel.layer.cornerRadius = 5
         rewardLabel.clipsToBounds = true
+        viewersTitleLabel.text = I18n.viewers.description
+        bonusTitleLabel.text = I18n.bonusPoint.description
+        pointsLeftTitleLabel.text = I18n.pointsLeft.description
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -46,5 +57,11 @@ class ShareTaskTableViewCell: SwipeTableViewCell, NibReusable {
         let formattedMaxBonus: String = formatter.string(from: maxBonus)!
         let rewardMsg = I18n.shareTaskRewardDesc.description.replacingOccurrences(of: "#points#", with: formattedBonus).replacingOccurrences(of: "#points2#", with: formattedMaxBonus)
         rewardLabel.text = rewardMsg
+        
+        formatter.maximumFractionDigits = 4
+        viewersLabel.text = "\(task.viewers)"
+        bonusLabel.text = formatter.string(from: task.points - task.pointsLeft)
+        pointsLeftLabel.text = formatter.string(from: task.pointsLeft)
     }
 }
+

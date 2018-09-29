@@ -22,7 +22,8 @@ public class APIAppTask: APIResponse {
     var pointsLeft: NSDecimalNumber = 0
     var bonus: NSDecimalNumber = 0
     var downloads: UInt = 0
-    var status: Int8 = 0
+    var installStatus: Int8 = 0
+    var onlineStatus: APITaskOnlineStatus = .running
     var insertedAt: Date?
     var updatedAt: Date?
     
@@ -50,7 +51,8 @@ public class APIAppTask: APIResponse {
         pointsLeft <- (map["points_left"], decimalTransform)
         bonus <- (map["bonus"], decimalTransform)
         downloads <- map["downloads"]
-        status <- map["status"]
+        installStatus <- map["installStatus"]
+        onlineStatus <- map["online_status"]
         insertedAt <- (map["inserted_at"], dateTimeTransform)
         updatedAt <- (map["updated_at"], dateTimeTransform)
     }

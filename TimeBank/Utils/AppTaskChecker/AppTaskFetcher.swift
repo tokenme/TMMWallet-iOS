@@ -63,7 +63,7 @@ class AppTaskFetcher {
                     formatter.groupingSeparator = "";
                     formatter.numberStyle = NumberFormatter.Style.decimal
                     let formattedBonus = formatter.string(from: task.bonus)!
-                    if task.status == -1 {
+                    if task.installStatus == -1 {
                         let title = "\(I18n.minusPoints.description) \(formattedBonus) \(I18n.points.description)"
                         UCAlert.showAlert(weakSelf.alertPresenter, title: title, desc: I18n.appTaskFailed.description, closeBtn: I18n.close.description)
                     } else {

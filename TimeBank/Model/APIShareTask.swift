@@ -9,6 +9,13 @@
 import Foundation
 import ObjectMapper
 
+enum APITaskOnlineStatus: Int8 {
+    case canceled = -2
+    case stopped = -1
+    case running = 1
+    case unknown = 0
+}
+
 public class APIShareTask: APIResponse {
     var id: UInt64?
     var creator: UInt64?
@@ -22,6 +29,7 @@ public class APIShareTask: APIResponse {
     var bonus: NSDecimalNumber = 0
     var maxViewers: UInt = 0
     var viewers: UInt = 0
+    var onlineStatus: APITaskOnlineStatus = .running
     var insertedAt: Date?
     var updatedAt: Date?
     
@@ -49,6 +57,7 @@ public class APIShareTask: APIResponse {
         bonus <- (map["bonus"], decimalTransform)
         maxViewers <- map["max_viewers"]
         viewers <- map["viewers"]
+        onlineStatus <- map["online_status"]
         insertedAt <- (map["inserted_at"], dateTimeTransform)
         updatedAt <- (map["updated_at"], dateTimeTransform)
     }

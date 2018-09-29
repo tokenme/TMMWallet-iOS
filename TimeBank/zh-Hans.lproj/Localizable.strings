@@ -29,6 +29,7 @@
 
 "Refresh" = "刷新";
 "Copy" = "复制";
+"Submit" = "提交";
 
 // Login
 "Password" = "密码";
@@ -95,6 +96,7 @@
 
 // Tasks
 "EarnPointsTasks" = "做任务赚积分";
+"PublishedByMe" = "我发布的任务";
 "AppTasks" = "安装应用";
 "ShareTasks" = "分享链接";
 "Earn" = "获得";
@@ -118,6 +120,8 @@
 "SubmitTask" = "发布任务";
 "SubmitNewAppTask" = "发布应用下载任务";
 "SubmitNewShareTask" = "发布分享链接任务";
+"EditAppTask" = "编辑应用下载任务";
+"EditShareTask" = "编辑分享链接任务";
 "URL" = "链接";
 "Title" = "标题";
 "Description" = "描述";
@@ -126,6 +130,15 @@
 "TotalReward" = "总奖励积分数";
 "AppName" = "应用名称";
 "RewardPerInstall" = "每次安装奖励分数";
+"Edit" = "编辑";
+"Stop" = "暂停";
+"Start" = "开始";
+"ConfirmStartTask" = "确定开始该任务？";
+"ConfirmStopTask" = "确定暂停该任务？";
+"ConfirmCancelTask" = "确定取消该任务？";
+"Viewers" = "浏览人数";
+"BonusPoint" = "已奖励积分";
+"PointsLeft" = "剩余积分";
 
 // Account
 "Account" = "账户";

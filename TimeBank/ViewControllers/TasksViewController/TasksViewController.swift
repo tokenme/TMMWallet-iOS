@@ -11,6 +11,7 @@ import SwiftyUserDefaults
 import Tabman
 import Pageboy
 import FTPopOverMenu_Swift
+import BTNavigationDropdownMenu
 
 class TasksViewController: TabmanViewController {
     
@@ -49,6 +50,27 @@ class TasksViewController: TabmanViewController {
             navigationItem.leftBarButtonItem = recordButtonItem
             let submitTaskButtonItem = UIBarButtonItem(title: I18n.submitTask.description, style: .plain, target: self, action: #selector(addTaskAction))
             navigationItem.rightBarButtonItem = submitTaskButtonItem
+            
+            let menuItems = [I18n.earnPointsTasks.description, I18n.publishedByMe.description]
+            let menuView = BTNavigationDropdownMenu(title: BTTitle.index(0), items: menuItems)
+            menuView.cellSelectionColor = UIColor(white: 0.91, alpha: 1)
+            menuView.cellTextLabelFont = MainFont.light.with(size: 15)
+            menuView.cellTextLabelColor = UIColor.darkText
+            menuView.navigationBarTitleFont = MainFont.medium.with(size: 17)
+            menuView.checkMarkImage = nil
+            menuView.arrowTintColor = UIColor.darkText
+            
+            navigationItem.titleView = menuView
+            menuView.didSelectItemAtIndexHandler = {[weak self] (indexPath: Int) -> () in
+                guard let weakSelf = self else { return }
+                for vc in weakSelf.viewControllers {
+                    if vc.isMember(of: AppTasksTableViewController.self) {
+                        (vc as? AppTasksTableViewController)?.mineOnly = indexPath == 1
+                    } else if vc.isMember(of: ShareTaskTableViewCell.self) {
+                        (vc as? ShareTasksTableViewController)?.mineOnly = indexPath == 1
+                    }
+                }
+            }
         }
         
         let configuration = FTConfiguration.shared

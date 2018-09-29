@@ -19,8 +19,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="124.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="752" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wOb-L0-1fA">
+                        <rect key="frame" x="16" y="8.5" width="288" height="2"/>
+                        <color key="trackTintColor" white="0.97999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </progressView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ewF-cB-FfW">
-                        <rect key="frame" x="16" y="8" width="288" height="80"/>
+                        <rect key="frame" x="16" y="14.5" width="288" height="80"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="odt-eo-wMD">
                                 <rect key="frame" x="0.0" y="0.0" width="199" height="44.5"/>
@@ -48,17 +52,22 @@
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="80" id="6eR-lL-3LB"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="odt-eo-wMD" secondAttribute="bottom" id="0dL-5y-UEd"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="6eR-lL-3LB"/>
                             <constraint firstItem="odt-eo-wMD" firstAttribute="leading" secondItem="ewF-cB-FfW" secondAttribute="leading" id="FVe-Xh-O0f"/>
                             <constraint firstItem="6OV-Ip-uAV" firstAttribute="top" secondItem="ewF-cB-FfW" secondAttribute="top" id="JRa-VZ-pPK"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6OV-Ip-uAV" secondAttribute="bottom" id="dHI-RT-SJO"/>
                             <constraint firstItem="6OV-Ip-uAV" firstAttribute="leading" secondItem="odt-eo-wMD" secondAttribute="trailing" constant="9" id="iB9-W7-Xhg"/>
                             <constraint firstItem="odt-eo-wMD" firstAttribute="top" secondItem="ewF-cB-FfW" secondAttribute="top" id="oYk-t5-1Yn"/>
                             <constraint firstAttribute="trailing" secondItem="6OV-Ip-uAV" secondAttribute="trailing" id="wzB-lf-9An"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bonus" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WBy-7K-N5Z" customClass="UILabelPadding" customModule="TimeBank" customModuleProvider="target">
-                        <rect key="frame" x="16" y="96" width="288" height="20.5"/>
+                        <rect key="frame" x="16" y="102.5" width="288" height="20"/>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="50M-a2-1mZ"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -79,18 +88,22 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="wOb-L0-1fA" secondAttribute="trailing" constant="16" id="8M2-wy-8yD"/>
                     <constraint firstItem="WBy-7K-N5Z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Al9-lO-Tfs"/>
+                    <constraint firstItem="wOb-L0-1fA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Bgl-o5-HTq"/>
                     <constraint firstItem="WBy-7K-N5Z" firstAttribute="top" secondItem="ewF-cB-FfW" secondAttribute="bottom" constant="8" id="OIX-RQ-vEu"/>
                     <constraint firstAttribute="trailing" secondItem="WBy-7K-N5Z" secondAttribute="trailing" constant="16" id="RpZ-Ph-hmm"/>
-                    <constraint firstItem="ewF-cB-FfW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="aeC-Ph-GLk"/>
+                    <constraint firstItem="wOb-L0-1fA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="WKG-6j-UJS"/>
                     <constraint firstAttribute="trailing" secondItem="ewF-cB-FfW" secondAttribute="trailing" constant="16" id="cTY-HI-ggN"/>
                     <constraint firstItem="ewF-cB-FfW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="gjw-Cs-Zcg"/>
                     <constraint firstAttribute="bottom" secondItem="WBy-7K-N5Z" secondAttribute="bottom" constant="8" id="jBW-bS-uao"/>
+                    <constraint firstItem="ewF-cB-FfW" firstAttribute="top" secondItem="wOb-L0-1fA" secondAttribute="bottom" constant="4" id="qo5-7b-LfE"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="imgView" destination="6OV-Ip-uAV" id="Ck9-IQ-FKd"/>
+                <outlet property="progressView" destination="wOb-L0-1fA" id="WIz-1e-Xmr"/>
                 <outlet property="rewardLabel" destination="WBy-7K-N5Z" id="Iud-c3-Ash"/>
                 <outlet property="summaryLabel" destination="GOt-XE-c7h" id="JM0-e6-e3x"/>
                 <outlet property="titleLabel" destination="bru-qQ-bf6" id="X1U-wU-s3x"/>

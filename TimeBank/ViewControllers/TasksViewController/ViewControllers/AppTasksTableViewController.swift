@@ -43,6 +43,12 @@ class AppTasksTableViewController: UITableViewController {
         return presenter
     }()
     
+    public var mineOnly: Bool = false {
+        didSet {
+            self.refresh()
+        }
+    }
+    
     private let maxSchemeQuery = MaxSchemeQuery()
     
     private var currentPage: UInt = 1
@@ -134,6 +140,9 @@ extension AppTasksTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if self.loadingTasks {
+            return false
+        }
         let task = self.tasks[indexPath.row]
         guard let _ = task.storeId else {return false}
         if DetectApp.isInstalled(task.bundleId, schemeId: task.schemeId) {
@@ -237,6 +246,7 @@ extension AppTasksTableViewController {
             idfa: TMMBeacon.shareInstance().deviceId(),
             page: currentPage,
             pageSize: DefaultPageSize,
+            mineOnly: self.mineOnly,
             provider: self.taskServiceProvider)
             .then(in: .main, {[weak self] tasks in
                 guard let weakSelf = self else {

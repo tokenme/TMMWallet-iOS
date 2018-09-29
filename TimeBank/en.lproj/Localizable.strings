@@ -29,6 +29,7 @@
 
 "Refresh" = "Refresh";
 "Copy" = "Copy";
+"Submit" = "Submit";
 
 // Login
 "Password" = "Password";
@@ -95,6 +96,7 @@
 
 // Tasks
 "EarnPointsTasks" = "Earn Points";
+"PublishedByMe" = "Published by Me";
 "AppTasks" = "Install Apps";
 "ShareTasks" = "Share Links";
 "Earn" = "Earn";
@@ -118,6 +120,8 @@
 "SubmitTask" = "Submit Task";
 "SubmitNewAppTask" = "Submit new App Task";
 "SubmitNewShareTask" = "Submit new Share Link Task";
+"EditAppTask" = "Edit App Task";
+"EditShareTask" = "Edit Share Link Task";
 "URL" = "Link";
 "Title" = "Title";
 "Description" = "Description";
@@ -126,6 +130,15 @@
 "TotalReward" = "Total reward points";
 "AppName" = "App Name";
 "RewardPerInstall" = "Reword points / install";
+"Edit" = "Edit";
+"Stop" = "Stop";
+"Start" = "Start";
+"ConfirmStartTask" = "Confirm start the task?";
+"ConfirmStopTask" = "Confirm stop the task?";
+"ConfirmCancelTask" = "Confirm cancel the task?";
+"Viewers" = "Viewers";
+"BonusPoint" = "Give Out";
+"PointsLeft" = "Points Left";
 
 // Account
 "Account" = "Account";

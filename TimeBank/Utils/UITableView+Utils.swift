@@ -10,6 +10,7 @@ import UIKit
 
 extension UITableView {
     func reloadDataWithAutoSizingCellWorkAround() {
+        self.rowHeight = UITableView.automaticDimension
         self.reloadData()
         self.setNeedsLayout()
         self.layoutIfNeeded()
