@@ -102,6 +102,7 @@ class ShareTasksTableViewController: UITableViewController {
             guard let weakSelf = self else { return }
             weakSelf.getTasks(false)
         }
+        tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
@@ -384,6 +385,7 @@ extension ShareTasksTableViewController {
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingTasks = false
+                weakSelf.tableView.header?.isHidden = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()

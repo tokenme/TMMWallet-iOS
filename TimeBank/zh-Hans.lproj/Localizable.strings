@@ -178,3 +178,10 @@
 "ConfirmCancelOrder" = "确定取消该订单？";
 "EmptyOrderbookTitle" = "没有订单";
 "EmptyOrderbookDesc" = "您还没有创建任何订单，现在下单试试？";
+"Volumn" = "交易量";
+"LowPrice" = "最低价";
+"HighPrice" = "最高价";
+"Day" = "24小时";
+"Week" = "1周";
+"Month" = "30天";
+"Year" = "365天";

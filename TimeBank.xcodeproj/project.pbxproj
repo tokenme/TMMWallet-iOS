@@ -142,6 +142,10 @@
 		1DF019F1215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF019EF215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib */; };
 		1DF019F4215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF019F2215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift */; };
 		1DF019F5215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF019F3215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib */; };
+		1DF019F72161E13A00FDD467 /* APIMarketGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF019F62161E13A00FDD467 /* APIMarketGraph.swift */; };
+		1DF019FC2161EF5B00FDD467 /* ChartTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF019FB2161EF5B00FDD467 /* ChartTimeFormatter.swift */; };
+		1DF019FE2161F07400FDD467 /* ChartBalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF019FD2161F07400FDD467 /* ChartBalloonMarker.swift */; };
+		1DF01A002161F09E00FDD467 /* ChartXYMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF019FF2161F09E00FDD467 /* ChartXYMarker.swift */; };
 		1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */; };
 		1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */; };
 		1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */; };
@@ -300,6 +304,10 @@
 		1DF019EF215F61F900FDD467 /* ShareTaskStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskStatsTableViewCell.xib; sourceTree = "<group>"; };
 		1DF019F2215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskNoImageStatsTableViewCell.swift; sourceTree = "<group>"; };
 		1DF019F3215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskNoImageStatsTableViewCell.xib; sourceTree = "<group>"; };
+		1DF019F62161E13A00FDD467 /* APIMarketGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMarketGraph.swift; sourceTree = "<group>"; };
+		1DF019FB2161EF5B00FDD467 /* ChartTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTimeFormatter.swift; sourceTree = "<group>"; };
+		1DF019FD2161F07400FDD467 /* ChartBalloonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartBalloonMarker.swift; sourceTree = "<group>"; };
+		1DF019FF2161F09E00FDD467 /* ChartXYMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartXYMarker.swift; sourceTree = "<group>"; };
 		1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInviteCodeViewController.swift; sourceTree = "<group>"; };
 		1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnbindDeviceHeaderView.swift; sourceTree = "<group>"; };
 		1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnbindDeviceHeaderView.xib; sourceTree = "<group>"; };
@@ -604,6 +612,7 @@
 				1DEC54492150F572007A46D5 /* APIQiniu.swift */,
 				1DF802F9215382A90002E054 /* APIInviteSummary.swift */,
 				1D28DE592155F98200FCF6F6 /* APIOrderBook.swift */,
+				1DF019F62161E13A00FDD467 /* APIMarketGraph.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -626,6 +635,7 @@
 				1D1D6FC52147B6030001ED49 /* UIButton+Utils.swift */,
 				1D1D6FDC214A65750001ED49 /* UIViewController+Utils.swift */,
 				1DEC544E2150FF82007A46D5 /* UIImage+Utils.swift */,
+				1DF019FA2161EF4400FDD467 /* ChartComponents */,
 				1D151ED0213FC1EE007C87DD /* AppTaskChecker */,
 			);
 			path = Utils;
@@ -729,6 +739,16 @@
 				1DF802EE215249200002E054 /* ViewControllers */,
 			);
 			path = AccountViewController;
+			sourceTree = "<group>";
+		};
+		1DF019FA2161EF4400FDD467 /* ChartComponents */ = {
+			isa = PBXGroup;
+			children = (
+				1DF019FB2161EF5B00FDD467 /* ChartTimeFormatter.swift */,
+				1DF019FD2161F07400FDD467 /* ChartBalloonMarker.swift */,
+				1DF019FF2161F09E00FDD467 /* ChartXYMarker.swift */,
+			);
+			path = ChartComponents;
 			sourceTree = "<group>";
 		};
 		1DF802EE215249200002E054 /* ViewControllers */ = {
@@ -944,6 +964,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/BTNavigationDropdownMenu/BTNavigationDropdownMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FTPopOverMenu_Swift/FTPopOverMenu_Swift.framework",
@@ -980,6 +1001,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BTNavigationDropdownMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FTPopOverMenu_Swift.framework",
@@ -1061,6 +1083,7 @@
 				1DF019F4215F722100FDD467 /* ShareTaskNoImageStatsTableViewCell.swift in Sources */,
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D1D6FC121468A810001ED49 /* TMMTokenService.swift in Sources */,
+				1DF019FC2161EF5B00FDD467 /* ChartTimeFormatter.swift in Sources */,
 				1D151E7E213D60FC007C87DD /* DeviceAppsViewController.swift in Sources */,
 				1D5FF687215B6514001E69CD /* MyOrderbooksViewController.swift in Sources */,
 				1D1D6FA52140F2270001ED49 /* APITaskRecord.swift in Sources */,
@@ -1071,7 +1094,9 @@
 				1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */,
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
 				1D151E93213E2FCA007C87DD /* LoadingTableViewCell.swift in Sources */,
+				1DF019F72161E13A00FDD467 /* APIMarketGraph.swift in Sources */,
 				1D151ECC213F8F14007C87DD /* AppTaskTableViewCell.swift in Sources */,
+				1DF01A002161F09E00FDD467 /* ChartXYMarker.swift in Sources */,
 				1D1D6FB3214129B00001ED49 /* APIExchangeRate.swift in Sources */,
 				1DEC5445214FA3AF007A46D5 /* UILabelPadding.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
@@ -1083,6 +1108,7 @@
 				1D1D6FD921492D330001ED49 /* WalletQRCodeViewController.swift in Sources */,
 				1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
+				1DF019FE2161F07400FDD467 /* ChartBalloonMarker.swift in Sources */,
 				1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
 				1DF019F0215F61F900FDD467 /* ShareTaskStatsTableViewCell.swift in Sources */,

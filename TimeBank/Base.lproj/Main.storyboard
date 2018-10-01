@@ -1040,8 +1040,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Market Graph" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxq-vw-aQY">
+                                <rect key="frame" x="16" y="72" width="343" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Try-h8-Bjf" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="100" width="343" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="bvk-FB-IKd"/>
+                                </constraints>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EKi-IX-AdD">
+                                <rect key="frame" x="16" y="220" width="343" height="29"/>
+                                <segments>
+                                    <segment title="Day"/>
+                                    <segment title="Week"/>
+                                    <segment title="Month"/>
+                                    <segment title="Year"/>
+                                </segments>
+                                <connections>
+                                    <action selector="switchMarketGraphRange:" destination="Vg4-79-NZz" eventType="valueChanged" id="5vW-dQ-40P"/>
+                                </connections>
+                            </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="meA-Ac-WLU">
-                                <rect key="frame" x="16" y="94" width="343" height="96"/>
+                                <rect key="frame" x="16" y="264" width="343" height="96"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sox-ea-kIo">
                                         <rect key="frame" x="0.0" y="0.0" width="163.5" height="96"/>
@@ -1158,13 +1183,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Ether: 0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbV-DH-pKT">
-                                <rect key="frame" x="24" y="206" width="327" height="18"/>
+                                <rect key="frame" x="24" y="376" width="327" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ohw-gT-bhs" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
-                                <rect key="frame" x="32" y="256" width="311" height="40"/>
+                                <rect key="frame" x="32" y="426" width="311" height="40"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.50980392159999999" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="zgp-i3-k1B"/>
@@ -1190,7 +1215,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="cfA-vj-fet">
-                                <rect key="frame" x="16" y="326" width="343" height="20.5"/>
+                                <rect key="frame" x="16" y="496" width="343" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sell Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qF7-aa-lpp">
                                         <rect key="frame" x="0.0" y="0.0" width="155.5" height="20.5"/>
@@ -1207,14 +1232,17 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ltq-Rk-Rn1">
-                                <rect key="frame" x="0.0" y="355" width="375" height="264"/>
+                                <rect key="frame" x="0.0" y="525" width="375" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="cfA-vj-fet" secondAttribute="trailing" constant="16" id="79P-7X-9pu"/>
+                            <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="Try-h8-Bjf" secondAttribute="trailing" constant="16" id="7Fg-hi-uJ7"/>
+                            <constraint firstItem="sxq-vw-aQY" firstAttribute="centerX" secondItem="frt-jU-t9l" secondAttribute="centerX" id="814-Nb-hrE"/>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="ltq-Rk-Rn1" secondAttribute="trailing" id="88y-uL-X9d"/>
+                            <constraint firstItem="Try-h8-Bjf" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="9Zx-vm-VVB"/>
                             <constraint firstItem="rbV-DH-pKT" firstAttribute="top" secondItem="meA-Ac-WLU" secondAttribute="bottom" constant="16" id="9dL-pL-roC"/>
                             <constraint firstItem="rbV-DH-pKT" firstAttribute="trailing" secondItem="meA-Ac-WLU" secondAttribute="trailing" constant="-8" id="EV7-gd-pvk"/>
                             <constraint firstItem="rbV-DH-pKT" firstAttribute="leading" secondItem="meA-Ac-WLU" secondAttribute="leading" constant="8" id="FD0-5z-VhZ"/>
@@ -1226,7 +1254,14 @@
                             <constraint firstItem="cfA-vj-fet" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="Kwz-Sc-4Me"/>
                             <constraint firstItem="Ohw-gT-bhs" firstAttribute="top" secondItem="rbV-DH-pKT" secondAttribute="bottom" constant="32" id="Nop-A1-xMb"/>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="Ohw-gT-bhs" secondAttribute="trailing" constant="32" id="NpR-fh-4mU"/>
-                            <constraint firstItem="meA-Ac-WLU" firstAttribute="top" secondItem="frt-jU-t9l" secondAttribute="top" constant="30" id="dkI-JV-Wbw"/>
+                            <constraint firstItem="meA-Ac-WLU" firstAttribute="top" secondItem="EKi-IX-AdD" secondAttribute="bottom" constant="16" id="OZa-gk-GFn"/>
+                            <constraint firstItem="Try-h8-Bjf" firstAttribute="bottom" secondItem="EKi-IX-AdD" secondAttribute="top" constant="8" id="VLN-Uu-0Qo"/>
+                            <constraint firstItem="Try-h8-Bjf" firstAttribute="top" secondItem="sxq-vw-aQY" secondAttribute="bottom" constant="16" id="Zqx-67-svL"/>
+                            <constraint firstItem="sxq-vw-aQY" firstAttribute="top" secondItem="frt-jU-t9l" secondAttribute="top" constant="8" id="bTm-m9-g0f"/>
+                            <constraint firstItem="sxq-vw-aQY" firstAttribute="leading" relation="lessThanOrEqual" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="hin-qZ-hpT"/>
+                            <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="sxq-vw-aQY" secondAttribute="trailing" constant="16" id="j8V-xh-dFt"/>
+                            <constraint firstItem="EKi-IX-AdD" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="lsx-Qt-qX6"/>
+                            <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="EKi-IX-AdD" secondAttribute="trailing" constant="16" id="syy-eQ-4f0"/>
                             <constraint firstItem="meA-Ac-WLU" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="wKz-iC-v0V"/>
                             <constraint firstItem="Ohw-gT-bhs" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="32" id="xez-zg-KtY"/>
                         </constraints>
@@ -1239,6 +1274,9 @@
                         <outlet property="amountTextField" destination="dvr-mn-bcG" id="2Qq-Bt-9c2"/>
                         <outlet property="buyOrdersLabel" destination="fQM-Vu-cBy" id="gI4-U9-Vhu"/>
                         <outlet property="buySelectButton" destination="EdZ-nv-xTr" id="Zrn-th-THy"/>
+                        <outlet property="chartRangeControl" destination="EKi-IX-AdD" id="rdS-kJ-154"/>
+                        <outlet property="chartTitleLabel" destination="sxq-vw-aQY" id="zfW-bu-ZMV"/>
+                        <outlet property="chartView" destination="Try-h8-Bjf" id="nvW-F8-sLt"/>
                         <outlet property="priceInputLabel" destination="O4U-Hx-me4" id="OgD-ba-AnC"/>
                         <outlet property="priceInputWrapper" destination="LFJ-Vt-H7C" id="M0S-1T-aB2"/>
                         <outlet property="priceTextField" destination="BGM-dG-eU3" id="U0t-H5-LrD"/>

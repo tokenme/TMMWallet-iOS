@@ -178,3 +178,10 @@
 "ConfirmCancelOrder" = "Do you want to cancel this order?";
 "EmptyOrderbookTitle" = "No orders";
 "EmptyOrderbookDesc" = "You have not submited any orders yet. Make new orders now?";
+"Volumn" = "Volumn";
+"LowPrice" = "Low";
+"HighPrice" = "High";
+"Day" = "Day";
+"Week" = "Week";
+"Month" = "Month";
+"Year" = "Year";

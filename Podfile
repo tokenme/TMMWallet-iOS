@@ -36,6 +36,7 @@ target 'TimeBank' do
   pod 'FTPopOverMenu_Swift', '~> 0.1.3'
   pod 'PhotoSolution', '~> 1.0.2'
   pod 'Qiniu'
+  pod 'Charts'
 end
 
 pre_install do |installer|

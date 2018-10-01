@@ -168,6 +168,13 @@ enum I18n: CustomStringConvertible {
     case confirmCancelOrder
     case emptyOrderbookTitle
     case emptyOrderbookDesc
+    case volumn
+    case lowPrice
+    case highPrice
+    case day
+    case month
+    case week
+    case year
     
     var description : String {
         switch self {
@@ -489,6 +496,20 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("EmptyOrderbookTitle", comment: "emptyOrderbookTitle")
         case .emptyOrderbookDesc:
             return NSLocalizedString("EmptyOrderbookDesc", comment: "emptyOrderbookDesc")
+        case .volumn:
+            return NSLocalizedString("Volumn", comment: "volumn")
+        case .lowPrice:
+            return NSLocalizedString("LowPrice", comment: "low price")
+        case .highPrice:
+            return NSLocalizedString("HighPrice", comment: "high price")
+        case .day:
+            return NSLocalizedString("Day", comment: "Day")
+        case .week:
+            return NSLocalizedString("Week", comment: "week")
+        case .month:
+            return NSLocalizedString("Month", comment: "month")
+        case .year:
+            return NSLocalizedString("Year", comment: "year")
         }
     }
 }

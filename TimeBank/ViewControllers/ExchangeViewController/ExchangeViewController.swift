@@ -15,6 +15,7 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import Presentr
+import Charts
 
 class ExchangeViewController: UIViewController {
     
@@ -60,9 +61,13 @@ class ExchangeViewController: UIViewController {
     }
     
     private var exchangeRate: APIOrderBookRate?
+    private var graph: [APIMarketGraph] = []
     private var topAsks: [APIOrderBook] = []
     private var topBids: [APIOrderBook] = []
     
+    @IBOutlet private weak var chartTitleLabel: UILabel!
+    @IBOutlet private weak var chartView: LineChartView!
+    @IBOutlet private weak var chartRangeControl: UISegmentedControl!
     @IBOutlet private weak var amountInputWrapper: UIView!
     @IBOutlet private weak var amountInputLabel: UILabel!
     @IBOutlet private weak var amountTextField: UITextField!
@@ -83,6 +88,7 @@ class ExchangeViewController: UIViewController {
     
     private let navHeaderView: MarketNavHeaderView = MarketNavHeaderView()
     
+    private var marketGraphHours: UInt = 24
     private var gettingMarketTopAsks: Bool = false
     private var gettingMarketTopBids: Bool = false
     private var isSubmitting: Bool = false
@@ -129,10 +135,8 @@ class ExchangeViewController: UIViewController {
         sellSelectButton.setImage(UIImage(named: "SelectCircle"), for: .normal)
         
         side = .bid
-        
+        setupChartView()
         setupTableView()
-        
-        refresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +149,7 @@ class ExchangeViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        refresh()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -165,6 +170,96 @@ class ExchangeViewController: UIViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExchangeViewController") as! ExchangeViewController
     }
     
+    private func setupChartView() {
+        
+        chartRangeControl.tintColor = UIColor.clear
+        let normalTextAttributes = [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize:14), NSAttributedString.Key.foregroundColor:UIColor.lightGray];
+        let selectedTextAttributes = [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize:14), NSAttributedString.Key.foregroundColor:UIColor.primaryBlue];
+        chartRangeControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        chartRangeControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+        chartRangeControl.setTitle(I18n.day.description, forSegmentAt: 0)
+        chartRangeControl.setTitle(I18n.week.description, forSegmentAt: 1)
+        chartRangeControl.setTitle(I18n.month.description, forSegmentAt: 2)
+        chartRangeControl.setTitle(I18n.year.description, forSegmentAt: 3)
+        
+        chartView.delegate = self
+        chartView.chartDescription?.enabled = false
+        chartView.dragEnabled = true
+        chartView.setScaleEnabled(true)
+        chartView.pinchZoomEnabled = true
+        chartView.autoScaleMinMaxEnabled = true
+        
+        //chartView.highlightFullBarEnabled = false
+        
+        chartView.legend.enabled = false
+        
+        //chartView.maxVisibleCount = 24
+        
+        let xAxis = chartView.xAxis
+        xAxis.labelPosition = .bottom
+        xAxis.drawGridLinesEnabled = false
+        xAxis.drawLabelsEnabled = false
+        xAxis.drawAxisLineEnabled = false
+        //xAxis.labelCount = 7
+        xAxis.valueFormatter = ChartTimeFormatter()
+        
+        let leftAxis = chartView.leftAxis
+        leftAxis.axisMinimum = 0
+        leftAxis.drawAxisLineEnabled = false
+        leftAxis.drawLabelsEnabled = false
+        leftAxis.drawGridLinesEnabled = false
+        
+        let rightAxis = chartView.rightAxis
+        rightAxis.axisMinimum = 0
+        rightAxis.drawAxisLineEnabled = false
+        rightAxis.drawLabelsEnabled = false
+        rightAxis.drawGridLinesEnabled = false
+        
+        chartView.animate(xAxisDuration: 2.5)
+    }
+    
+    private func setChartData() {
+        var quantities: [ChartDataEntry] = []
+        var prices: [ChartDataEntry] = []
+        for d in self.graph {
+            let x = Double(d.at?.timeIntervalSince1970 ?? 0)
+            quantities.append(BarChartDataEntry(x: x, y: d.quantity.doubleValue, data: d))
+            prices.append(ChartDataEntry(x: x, y: d.price.doubleValue, data: d))
+        }
+        let quantitySet = LineChartDataSet(values: quantities, label: "Price")
+        quantitySet.axisDependency = .right
+        quantitySet.setColor(UIColor(white: 0.8, alpha: 1))
+        quantitySet.lineWidth = 0.6
+        quantitySet.drawCirclesEnabled = false
+        quantitySet.drawValuesEnabled = false
+        quantitySet.fillAlpha = 0.2
+        let gradientColors1 = [UIColor(white: 1, alpha: 1).cgColor,
+                               UIColor(white: 0.9, alpha: 1).cgColor]
+        let gradient1 = CGGradient(colorsSpace: nil, colors: gradientColors1 as CFArray, locations: nil)!
+        quantitySet.fill = Fill(linearGradient: gradient1, angle: 90)
+        quantitySet.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
+        quantitySet.drawFilledEnabled = true
+        quantitySet.mode = .cubicBezier
+        
+        let priceSet = LineChartDataSet(values: prices, label: "Price")
+        priceSet.axisDependency = .left
+        priceSet.setColor(UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1))
+        priceSet.lineWidth = 1
+        priceSet.drawCirclesEnabled = false
+        priceSet.drawValuesEnabled = false
+        priceSet.fillAlpha = 0.2
+        let gradientColors = [UIColor(red: 1, green: 1, blue: 1, alpha: 1.0).cgColor,
+                              UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 1.0).cgColor]
+        let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+        priceSet.fill = Fill(linearGradient: gradient, angle: 90)
+        priceSet.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
+        priceSet.drawFilledEnabled = true
+        priceSet.mode = .stepped
+        
+        let data = LineChartData(dataSets: [priceSet, quantitySet])
+        chartView.data = data
+    }
+    
     private func setupTableView() {
         tableView.register(cellType: MarketTopTableViewCell.self)
         self.tableView.separatorStyle = .none
@@ -180,6 +275,22 @@ class ExchangeViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    @IBAction func switchMarketGraphRange(_ sender: UISegmentedControl) {
+        var range: UInt = 0
+        switch sender.selectedSegmentIndex {
+        case 0: range = 24
+        case 1: range = 24 * 7
+        case 2: range = 24 * 30
+        case 3: range = 24 * 365
+        default:
+            range = 24
+        }
+        if range != self.marketGraphHours {
+            self.marketGraphHours = range
+            self.getMarketGraph()
+        }
     }
     
     @IBAction func switchSide(_ sender:UIButton) {
@@ -202,6 +313,7 @@ class ExchangeViewController: UIViewController {
         getRate()
         getMarketTop(side: .ask)
         getMarketTop(side: .bid)
+        getMarketGraph()
     }
 }
 
@@ -363,6 +475,25 @@ extension ExchangeViewController {
         )
     }
     
+    private func getMarketGraph() {
+        TMMOrderBookService.getMarketGraph(
+            hours: self.marketGraphHours,
+            provider: self.orderBookServiceProvider)
+            .then(in: .main, {[weak self] graph in
+                guard let weakSelf = self else { return }
+                weakSelf.graph = graph
+                weakSelf.setChartData()
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+                weakSelf.tableView.header?.endRefreshing()
+                }
+        )
+    }
+    
 }
 
 extension ExchangeViewController: UITextFieldDelegate {
@@ -400,6 +531,34 @@ extension ExchangeViewController: UITextFieldDelegate {
     }
 }
 
+extension ExchangeViewController: ChartViewDelegate {
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        self.chartView.centerViewToAnimated(xValue: entry.x, yValue: entry.y,
+                                            axis: self.chartView.data!.getDataSetByIndex(highlight.dataSetIndex).axisDependency,
+                                            duration: 1)
+        guard let data = entry.data as? APIMarketGraph else { return }
+        var dateStr: String = ""
+        if let at = data.at {
+            let timeZone = NSTimeZone.local
+            let formatterDate = DateFormatter()
+            formatterDate.timeZone = timeZone
+            formatterDate.dateFormat = "yyyy-MM-dd HH:mm"
+            dateStr = formatterDate.string(from: at)
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let quantity = formatter.string(from: data.quantity)
+        let price = formatter.string(from: data.price)
+        let low = formatter.string(from: data.low)
+        let high = formatter.string(from: data.high)
+        self.chartTitleLabel.text = "\(dateStr) \(I18n.volumn.description): \(quantity ?? "0")\n\(I18n.price.description): \(price ?? "0") \(I18n.lowPrice.description): \(low ?? "0"), \(I18n.highPrice.description): \(high ?? "0")"
+        //[_chartView moveViewToAnimatedWithXValue:entry.x yValue:entry.y axis:[_chartView.data getDataSetByIndex:dataSetIndex].axisDependency duration:1.0];
+        //[_chartView zoomAndCenterViewAnimatedWithScaleX:1.8 scaleY:1.8 xValue:entry.x yValue:entry.y axis:[_chartView.data getDataSetByIndex:dataSetIndex].axisDependency duration:1.0];
+    }
+}
 extension ExchangeViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
         self.refresh()

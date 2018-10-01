@@ -16,6 +16,7 @@ enum TMMOrderBookService {
     case rate()
     case orders(page: UInt, pageSize: UInt, side: APIOrderBookSide)
     case orderCancel(id: UInt64)
+    case marketGraph(hours: UInt)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -39,13 +40,15 @@ extension TMMOrderBookService: TargetType, AccessTokenAuthorizable {
             return "/orders/\(page)/\(pageSize)/\(side.rawValue)"
         case .orderCancel(_):
             return "/order/cancel"
+        case let .marketGraph(hours):
+            return "/market/graph/\(hours)"
         }
     }
     var method: Moya.Method {
         switch self {
         case .orderAdd(_, _, _, _), .orderCancel(_):
             return .post
-        case .marketTop(_), .rate(), .orders(_, _, _):
+        case .marketTop(_), .rate(), .orders(_, _, _), .marketGraph(_):
             return .get
         }
     }
@@ -61,13 +64,15 @@ extension TMMOrderBookService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .orders(_, _, _):
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+        case .marketGraph(_):
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
     }
     var sampleData: Data {
         switch self {
         case .orderAdd(_, _, _, _), .rate(), .orderCancel(_):
             return "{}".utf8Encoded
-        case .marketTop(_), .orders(_, _, _):
+        case .marketTop(_), .orders(_, _, _), .marketGraph(_):
             return "[]".utf8Encoded
         }
     }
@@ -193,6 +198,39 @@ extension TMMOrderBookService {
                     do {
                         let orders: [APIOrderBook] = try response.mapArray(APIOrderBook.self)
                         resolve(orders)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getMarketGraph(hours: UInt, provider: MoyaProvider<TMMOrderBookService>) -> Promise<[APIMarketGraph]> {
+        return Promise<[APIMarketGraph]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .marketGraph(hours: hours)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let graph: [APIMarketGraph] = try response.mapArray(APIMarketGraph.self)
+                        resolve(graph)
                     } catch {
                         do {
                             let err = try response.mapObject(APIResponse.self)
