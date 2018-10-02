@@ -165,6 +165,15 @@ extension TMMUserService {
                                 canPay: userInfo.canPay ?? 0,
                                 inviteCode: userInfo.inviteCode ?? "",
                                 inviterCode: userInfo.inviterCode ?? "")
+                            if Defaults[.currency] == nil || Defaults[.currency]!.isEmpty {
+                                switch userInfo.countryCode {
+                                case 1: Defaults[.currency] = Currency.USD.rawValue
+                                case 86: Defaults[.currency] = Currency.CNY.rawValue
+                                case 81: Defaults[.currency] = Currency.JPY.rawValue
+                                case 82: Defaults[.currency] = Currency.KRW.rawValue
+                                default: Defaults[.currency] = Currency.EUR.rawValue
+                                }
+                            }
                             Defaults.synchronize()
                             resolve(userInfo)
                         }

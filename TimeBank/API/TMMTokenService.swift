@@ -12,7 +12,7 @@ import Hydra
 
 enum TMMTokenService {
     case tmmBalance()
-    case assets()
+    case assets(currency: String)
     case transactions(address: String, page: UInt, pageSize: UInt)
     case transfer(token: String, amount: NSDecimalNumber, to: String)
     case info(address: String)
@@ -31,7 +31,7 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmBalance():
             return "/tmm/balance"
-        case .assets():
+        case .assets(_):
             return "/assets"
         case let .transactions(address, page, pageSize):
             return "/transactions/\(address)/\(page)/\(pageSize)"
@@ -53,8 +53,8 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmBalance():
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
-        case .assets():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+        case let .assets(currency):
+            return .requestParameters(parameters: ["currency": currency], encoding: URLEncoding.queryString)
         case .transactions(_, _, _):
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case let .transfer(token, amount, to):
@@ -67,7 +67,7 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmBalance(), .transfer(_, _, _), .info(_):
             return "{}".utf8Encoded
-        case .assets(), .transactions(_, _, _):
+        case .assets(_), .transactions(_, _, _):
             return "[]".utf8Encoded
         }
     }
@@ -102,10 +102,10 @@ extension TMMTokenService {
         })
     }
     
-    static func getAssets(provider: MoyaProvider<TMMTokenService>) -> Promise<[APIToken]> {
+    static func getAssets(currency: String, provider: MoyaProvider<TMMTokenService>) -> Promise<[APIToken]> {
         return Promise<[APIToken]> (in: .background, { resolve, reject, _ in
             provider.request(
-                .assets()
+                .assets(currency: currency)
             ){ result in
                 switch result {
                 case let .success(response):

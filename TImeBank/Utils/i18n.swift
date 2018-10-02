@@ -140,6 +140,7 @@ enum I18n: CustomStringConvertible {
     case inviteCodePlaceholder
     case inviteRecords
     case telegramGroup
+    case currency
     case wechatGroup
     case feedback
     case currentVersion
@@ -440,6 +441,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InviteRecords", comment: "InviteRecords")
         case .telegramGroup:
             return NSLocalizedString("TelegramGroup", comment: "Telegram Group")
+        case .currency:
+            return NSLocalizedString("Currency", comment: "Currency")
         case .wechatGroup:
             return NSLocalizedString("WechatGroup", comment: "Wechat Group")
         case .feedback:

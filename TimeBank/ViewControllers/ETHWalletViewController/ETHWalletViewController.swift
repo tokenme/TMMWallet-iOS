@@ -32,6 +32,7 @@ class ETHWalletViewController: UIViewController {
     }
     
     @IBOutlet private weak var summaryView: PastelView!
+    @IBOutlet private weak var currencyLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var addressButton: UIButton!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -67,6 +68,7 @@ class ETHWalletViewController: UIViewController {
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
             balanceLabel.text = formatter.string(from: totalPrice)
+            currencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
         }
     }
     
@@ -94,7 +96,6 @@ class ETHWalletViewController: UIViewController {
             let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
             navigationItem.rightBarButtonItem = scanBarItem
         }
-        
         setupSummaryView()
         setupTableView()
         if userInfo != nil {
@@ -319,6 +320,7 @@ extension ETHWalletViewController {
         }
         self.loadingTokens = true
         TMMTokenService.getAssets(
+            currency: Defaults[.currency] ?? Currency.USD.rawValue,
             provider: self.tokenServiceProvider)
             .then(in: .main, {[weak self] tokens in
                 guard let weakSelf = self else { return }

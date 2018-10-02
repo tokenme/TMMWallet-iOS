@@ -8,9 +8,17 @@
 
 import SwiftyUserDefaults
 
+enum Currency: String {
+    case USD = "USD"
+    case CNY = "CNY"
+    case EUR = "EUR"
+    case JPY = "JPY"
+    case KRW = "KRW"
+}
 extension DefaultsKeys {
     static let accessToken = DefaultsKey<DefaultsAccessToken?>("accessToken")
     static let user = DefaultsKey<DefaultsUser?>("user")
+    static let currency = DefaultsKey<String?>("currency")
 }
 
 final class DefaultsAccessToken: Codable, DefaultsSerializable {

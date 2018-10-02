@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 import Kingfisher
 import Reusable
 import SwipeCellKit
@@ -40,9 +41,18 @@ class TokenTableViewCell: SwipeTableViewCell, NibReusable {
         formatter.numberStyle = NumberFormatter.Style.decimal
         balanceLabel.text = formatter.string(from: token.balance)
         if token.price > 0 {
+            let currency = Defaults[.currency] ?? Currency.USD.rawValue
             let totalPrice = token.balance * token.price
             let priceStr = "\(formatter.string(from: totalPrice)!)"
-            priceLabel.text = priceStr
+            
+            let priceAttributes = [NSAttributedString.Key.font:MainFont.light.with(size: 14), NSAttributedString.Key.foregroundColor:UIColor.lightGray]
+            let currencyAttributes = [NSAttributedString.Key.font:MainFont.light.with(size: 10), NSAttributedString.Key.foregroundColor:UIColor.lightGray]
+            
+            let attString = NSMutableAttributedString(string: "\(priceStr) \(currency)")
+            attString.addAttributes(priceAttributes, range:NSRange.init(location: 0, length: priceStr.count))
+            attString.addAttributes(currencyAttributes, range: NSRange.init(location: priceStr.count, length: currency.count + 1))
+            
+            priceLabel.attributedText = attString
         } else {
             priceLabel.text = "~"
         }

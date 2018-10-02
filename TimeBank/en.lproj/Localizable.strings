@@ -47,7 +47,7 @@
 "Sending" = "Sending";
 
 // Wallet
-"ETHWallet" = "ETH Wallet";
+"ETHWallet" = "Ethereum Wallet";
 "Assets" = "Assets";
 "CopyWalletAddress" = "Copy Wallet Address";
 "Receive" = "Receive";
@@ -147,6 +147,7 @@
 "InviteCode" = "Invite Code";
 "InviteCodePlaceholder" = "Earn points byinput invite code";
 "InviteRecords" = "Invite Records";
+"Currency" = "Currency";
 "TelegramGroup" = "Telegram Group";
 "WechatGroup" = "Wechat Group";
 "Feedback" = "Feedback";

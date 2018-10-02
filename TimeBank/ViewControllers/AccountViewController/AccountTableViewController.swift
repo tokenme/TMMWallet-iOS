@@ -26,6 +26,7 @@ enum AccountTableCellType {
     case inviteSummary
     case myInviteCode
     case inviteCode
+    case currency
     case telegramGroup
     case wechatGroup
     case feedback
@@ -67,7 +68,7 @@ class AccountTableViewController: UITableViewController {
     
     private var inviteSummary: APIInviteSummary?
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.telegramGroup, .wechatGroup, .feedback], [.signout]]
+    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
     
     @IBOutlet private weak var avatarImageView : UIImageView!
     @IBOutlet private weak var mobileLabel: UILabel!
@@ -79,6 +80,8 @@ class AccountTableViewController: UITableViewController {
     @IBOutlet private weak var inviteIncomeTitleLabel: UILabel!
     @IBOutlet private weak var inviteCodeLabel: UILabel!
     @IBOutlet private weak var inviteCodeTextField: UITextField!
+    @IBOutlet private weak var currencyTitleLabel: UILabel!
+    @IBOutlet private weak var currentCurrencyLabel: UILabel!
     @IBOutlet private weak var telegramGroupLabel: UILabel!
     @IBOutlet private weak var wechatGroupLabel: UILabel!
     @IBOutlet private weak var feedbackLabel: UILabel!
@@ -111,6 +114,8 @@ class AccountTableViewController: UITableViewController {
         myInviteCodeLabel.text = I18n.myInviteCode.description
         inviteCodeLabel.text = I18n.inviteCode.description
         inviteCodeTextField.attributedPlaceholder = NSAttributedString(string: I18n.inviteCodePlaceholder.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
+        currencyTitleLabel.text = I18n.currency.description
+        currentCurrencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
         telegramGroupLabel.text = I18n.telegramGroup.description
         wechatGroupLabel.text = I18n.wechatGroup.description
         feedbackLabel.text = I18n.feedback.description
@@ -188,6 +193,42 @@ class AccountTableViewController: UITableViewController {
         customPresentViewController(myInviteCodePresenter, viewController: vc, animated: true)
     }
     
+    private func showChooseCurrency() {
+        let sheet = UIAlertController(title: "Choose Currency", message: nil, preferredStyle: .actionSheet)
+        let usdAction = UIAlertAction(title: Currency.USD.rawValue, style: .default, handler: {[weak self](_) in
+            guard let weakSelf = self else { return }
+            Defaults[.currency] = Currency.USD.rawValue
+            weakSelf.currentCurrencyLabel.text = Currency.USD.rawValue
+        })
+        let cnyAction = UIAlertAction(title: Currency.CNY.rawValue, style: .default, handler: {[weak self](_) in
+            guard let weakSelf = self else { return }
+            Defaults[.currency] = Currency.CNY.rawValue
+            weakSelf.currentCurrencyLabel.text = Currency.CNY.rawValue
+        })
+        let eurAction = UIAlertAction(title: Currency.EUR.rawValue, style: .default, handler: {[weak self](_) in
+            guard let weakSelf = self else { return }
+            Defaults[.currency] = Currency.EUR.rawValue
+            weakSelf.currentCurrencyLabel.text = Currency.EUR.rawValue
+        })
+        let krwAction = UIAlertAction(title: Currency.KRW.rawValue, style: .default, handler: {[weak self](_) in
+            guard let weakSelf = self else { return }
+            Defaults[.currency] = Currency.KRW.rawValue
+            weakSelf.currentCurrencyLabel.text = Currency.KRW.rawValue
+        })
+        let jpyAction = UIAlertAction(title: Currency.JPY.rawValue, style: .default, handler: {[weak self](_) in
+            guard let weakSelf = self else { return }
+            Defaults[.currency] = Currency.JPY.rawValue
+            weakSelf.currentCurrencyLabel.text = Currency.JPY.rawValue
+        })
+        let cancelAction = UIAlertAction(title: I18n.cancel.description, style: UIAlertAction.Style.cancel, handler: nil)
+        sheet.addAction(usdAction)
+        sheet.addAction(cnyAction)
+        sheet.addAction(eurAction)
+        sheet.addAction(krwAction)
+        sheet.addAction(jpyAction)
+        sheet.addAction(cancelAction)
+        self.present(sheet, animated: true, completion: nil)
+    }
 }
 
 extension AccountTableViewController: UIViewControllerTransitioningDelegate {
@@ -212,6 +253,8 @@ extension AccountTableViewController {
         switch self.sections[indexPath.section][indexPath.row] {
         case .myInviteCode:
             self.showMyInviteCode()
+        case .currency:
+            self.showChooseCurrency()
         case .signout:
             Defaults.removeAll()
             Defaults.synchronize()

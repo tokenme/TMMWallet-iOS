@@ -47,7 +47,7 @@
 "Sending" = "发送中";
 
 // Wallet
-"ETHWallet" = "ETH钱包";
+"ETHWallet" = "以太坊钱包";
 "Assets" = "资产";
 "CopyWalletAddress" = "复制钱包地址";
 "Receive" = "接收";
@@ -147,6 +147,7 @@
 "InviteCode" = "邀请码";
 "InviteCodePlaceholder" = "输入邀请码赢积分";
 "InviteRecords" = "邀请记录";
+"Currency" = "货币单位";
 "TelegramGroup" = "电报群";
 "WechatGroup" = "微信群";
 "Feedback" = "问题反馈";
