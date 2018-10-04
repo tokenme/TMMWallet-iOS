@@ -22,6 +22,7 @@ enum TMMAPIResponseType: Int {
     case invalidInviteCodeError = 1000
     case maxBindDeviceError = 1100
     case otherBindDeviceError = 1101
+    case invalidCdpVendorError = 1200
 }
 
 enum TMMAPIError: Error, CustomStringConvertible {
@@ -40,6 +41,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case invalidInviteCodeError
     case maxBindDeviceError
     case otherBindDeviceError
+    case invalidCdpVendorError
     case unknown(msg: String)
     case ignore
     
@@ -61,6 +63,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .invalidInviteCodeError: return I18n.invalidInviteCodeError.description
         case .maxBindDeviceError: return I18n.maxBindDeviceError.description
         case .otherBindDeviceError: return I18n.otherBindDeviceError.description
+        case .invalidCdpVendorError: return I18n.invalidCdpVendorError.description
         case .unknown(let msg): return msg
         case .ignore: return "ignore"
         }
@@ -101,6 +104,8 @@ extension TMMAPIError {
                 return TMMAPIError.maxBindDeviceError
             case .otherBindDeviceError:
                 return TMMAPIError.otherBindDeviceError
+            case .invalidCdpVendorError:
+                return TMMAPIError.invalidCdpVendorError
             }
         }
         return TMMAPIError.unknown(msg: msg)

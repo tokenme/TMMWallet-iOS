@@ -26,6 +26,7 @@
 "InvalidInviteCodeError" = "邀请码错误";
 "MaxBindDeviceError" = "超出绑定设备数，请先解绑一个设备";
 "OtherBindDeviceError" = "该设备被其他人绑定了";
+"InvalidCdpVendorError" = "暂不支持您手机号码运营商充值，目前仅支持中国移动、中国联通、中国电信下的手机号码(不支持虚拟运营商)";
 
 "Refresh" = "刷新";
 "Copy" = "复制";
@@ -93,6 +94,9 @@
 "TxFailed" = "失败";
 "EmptyExchangeRecordsTitle" = "还没有兑换记录";
 "EmptyExchangeRecordsDesc" = "现在就兑换 TBC 吧！";
+"RedeemCdp" = "积分换流量";
+"ConfirmRedeemPointsCdp" = "确定使用 %@ 积分兑换 %@ 流量？";
+"MobileData" = "流量";
 
 // Tasks
 "EarnPointsTasks" = "做任务赚积分";

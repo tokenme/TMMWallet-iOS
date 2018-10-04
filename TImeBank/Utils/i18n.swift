@@ -29,6 +29,7 @@ enum I18n: CustomStringConvertible {
     case invalidInviteCodeError
     case maxBindDeviceError
     case otherBindDeviceError
+    case invalidCdpVendorError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -83,6 +84,9 @@ enum I18n: CustomStringConvertible {
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
+    case redeemCdp
+    case confirmRedeemPointsCdp
+    case mobileData
     case exceedChangePoints
     case pointsTMMChangeAmount
     case exchange
@@ -219,6 +223,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("MaxBindDeviceError", comment: "maxBindDeviceError")
         case .otherBindDeviceError:
             return NSLocalizedString("OtherBindDeviceError", comment: "otherBindDeviceError")
+        case .invalidCdpVendorError:
+            return NSLocalizedString("InvalidCdpVendorError", comment:"invalidCdpVendorError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .refresh:
@@ -303,6 +309,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("CurrentPointsTMMExchangeRate", comment: "CurrentPointsTMMExchangeRate")
         case .emptyChangePoints:
             return NSLocalizedString("EmptyChangePoints", comment: "Empty change points")
+        case .redeemCdp:
+            return NSLocalizedString("RedeemCdp", comment: "redeemCdp")
+        case .confirmRedeemPointsCdp:
+            return NSLocalizedString("ConfirmRedeemPointsCdp", comment: "ConfirmRedeemPointsCdp")
+        case .mobileData:
+            return NSLocalizedString("MobileData", comment: "MobileData")
         case .exceedChangePoints:
             return NSLocalizedString("ExceedChangePoints", comment: "Exceeded max change points")
         case .pointsTMMChangeAmount:

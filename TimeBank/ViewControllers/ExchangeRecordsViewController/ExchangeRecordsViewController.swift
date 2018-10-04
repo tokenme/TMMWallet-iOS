@@ -27,7 +27,8 @@ class ExchangeRecordsViewController: TabmanViewController {
     
     private let viewControllers = [
         ExchangeRecordsTableViewController.instantiate(),
-        ExchangeRecordsTableViewController.instantiate()
+        ExchangeRecordsTableViewController.instantiate(),
+        ExchangeRecordsTableViewController.instantiate(),
     ]
     
     deinit {
@@ -46,10 +47,13 @@ class ExchangeRecordsViewController: TabmanViewController {
         }
         viewControllers[0].direction = .TMMIn
         viewControllers[1].direction = .TMMOut
+        viewControllers[2].recordType = 1
+        
         // configure the bar
         self.bar.items = [Item(title: "\(I18n.changeTo.description) TBC"),
-                          Item(title: "\(I18n.changeTo.description) \(I18n.points.description)")]
-        self.bar.style = .buttonBar
+                          Item(title: "\(I18n.changeTo.description) \(I18n.points.description)"),
+                          Item(title: "\(I18n.changeTo.description) \(I18n.mobileData.description)")]
+        self.bar.style = .scrollingButtonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self
     }

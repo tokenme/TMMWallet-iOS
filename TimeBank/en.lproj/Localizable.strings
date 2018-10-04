@@ -26,6 +26,7 @@
 "InvalidInviteCodeError" = "Invalid invide code";
 "MaxBindDeviceError" = "Exceeded maximum binding devices limit, please unbind a device";
 "OtherBindDeviceError" = "This device has been binded by some others";
+"InvalidCdpVendorError" = "Your phone number is not supported. Currently we only support China Mobile, China UnionCom and China Telecom.";
 
 "Refresh" = "Refresh";
 "Copy" = "Copy";
@@ -93,6 +94,9 @@
 "TxFailed" = "Failed";
 "EmptyExchangeRecordsTitle" = "No Exchange Records";
 "EmptyExchangeRecordsDesc" = "Change TBC now!";
+"RedeemCdp" = "Redeem Points";
+"ConfirmRedeemPointsCdp" = "Please confirm to use %@ points change to %@ mobile data.";
+"MobileData" = "Mobile data";
 
 // Tasks
 "EarnPointsTasks" = "Earn Points";

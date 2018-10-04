@@ -13,6 +13,7 @@ enum TMMExchangeService {
     case tmmRate()
     case tmmChange(deviceId: String, points: NSDecimalNumber, direction: APIExchangeDirection)
     case records(page: UInt, pageSize: UInt, direction: APIExchangeDirection)
+    case redeemCdpRecords(page: UInt, pageSize: UInt)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -32,11 +33,13 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
             return "/tmm/change"
         case .records(_, _, _):
             return "/records"
+        case .redeemCdpRecords(_, _):
+            return "/records"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .tmmRate, .records(_, _, _):
+        case .tmmRate, .records(_, _, _), .redeemCdpRecords(_, _):
             return .get
         case .tmmChange(_, _, _):
             return .post
@@ -50,13 +53,15 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: ["device_id": deviceId, "points": points, "direction": direction.rawValue], encoding: JSONEncoding.default)
         case let .records(page, pageSize, direction):
             return .requestParameters(parameters: ["page": page, "page_size": pageSize, "direction": direction.rawValue], encoding: URLEncoding.default)
+        case let .redeemCdpRecords(page, pageSize):
+            return .requestParameters(parameters: ["page": page, "page_size": pageSize, "type": 1], encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
         case .tmmRate(), .tmmChange(_, _, _):
             return "{}".utf8Encoded
-        case .records(_, _, _):
+        case .records(_, _, _), .redeemCdpRecords(_, _):
             return "[]".utf8Encoded
         }
     }
@@ -140,6 +145,39 @@ extension TMMExchangeService {
                 case let .success(response):
                     do {
                         let records: [APIExchangeRecord] = try response.mapArray(APIExchangeRecord.self)
+                        resolve(records)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getRedeemCdpRecords(page: UInt, pageSize: UInt, provider: MoyaProvider<TMMExchangeService>) -> Promise<[APIRedeemCdpRecord]> {
+        return Promise<[APIRedeemCdpRecord]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .redeemCdpRecords(page: page, pageSize: pageSize)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let records: [APIRedeemCdpRecord] = try response.mapArray(APIRedeemCdpRecord.self)
                         resolve(records)
                     } catch {
                         do {
