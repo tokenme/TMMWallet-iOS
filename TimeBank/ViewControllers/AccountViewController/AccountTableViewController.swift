@@ -59,6 +59,18 @@ class AccountTableViewController: UITableViewController {
         return presenter
     }()
     
+    let wechatCodePresenter: Presentr = {
+        let presentationType = PresentationType.dynamic(center: .center)
+        let presenter = Presentr(presentationType: presentationType)
+        presenter.roundCorners = true
+        presenter.transitionType = nil
+        presenter.dismissTransitionType = .coverVerticalFromTop
+        presenter.dismissAnimated = true
+        presenter.dismissOnSwipe = true
+        presenter.dismissOnSwipeDirection = .top
+        return presenter
+    }()
+    
     private let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
         presenter.transitionType = TransitionType.coverVerticalFromTop
@@ -67,6 +79,8 @@ class AccountTableViewController: UITableViewController {
     }()
     
     private var inviteSummary: APIInviteSummary?
+    
+    private var contacts:[String:String] = [:]
     
     private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
     
@@ -86,12 +100,17 @@ class AccountTableViewController: UITableViewController {
     @IBOutlet private weak var wechatGroupLabel: UILabel!
     @IBOutlet private weak var feedbackLabel: UILabel!
     @IBOutlet private weak var signOutLabel: UILabel!
+    @IBOutlet private weak var contactActivityIndicatorTelegram: UIActivityIndicatorView!
+    @IBOutlet private weak var contactActivityIndicatorWechat: UIActivityIndicatorView!
     
     private var isUpdating: Bool = false
     private var loadingUserInfo: Bool = false
     private var loadingInviteSummary: Bool = false
+    private var gettingContacts: Bool = false
     
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    
+    private var contactServiceProvider = MoyaProvider<TMMContactService>(plugins: [networkActivityPlugin])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +149,12 @@ class AccountTableViewController: UITableViewController {
         tableView.tableFooterView = versionLabel
         self.refresh()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.getContacts()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if userInfo == nil {
@@ -191,6 +215,13 @@ class AccountTableViewController: UITableViewController {
     private func showMyInviteCode() {
         let vc = MyInviteCodeViewController.instantiate()
         customPresentViewController(myInviteCodePresenter, viewController: vc, animated: true)
+    }
+    
+    private func showWechatCode() {
+        guard let wechatGroup = self.contacts["wechat"] else { return }
+        let vc = WechatQRCodeViewController.instantiate()
+        vc.wechatGroup = wechatGroup
+        customPresentViewController(wechatCodePresenter, viewController: vc, animated: true)
     }
     
     private func showChooseCurrency() {
@@ -255,6 +286,15 @@ extension AccountTableViewController {
             self.showMyInviteCode()
         case .currency:
             self.showChooseCurrency()
+        case .telegramGroup:
+            guard let telegramGroup = self.contacts["telegram"] else { return }
+            guard let link = URL(string: telegramGroup) else { return }
+            UIApplication.shared.open(link, options: [:], completionHandler: nil)
+        case .wechatGroup:
+            self.showWechatCode()
+        case .feedback:
+            let vc = FeedbackTableViewController.instantiate()
+            self.navigationController?.pushViewController(vc, animated: true)
         case .signout:
             Defaults.removeAll()
             Defaults.synchronize()
@@ -360,6 +400,32 @@ extension AccountTableViewController {
                 weakSelf.loadingInviteSummary = false
                 weakSelf.tableView.header?.endRefreshing()
             }
+        )
+    }
+    
+    private func getContacts() {
+        if self.gettingContacts {
+            return
+        }
+        self.gettingContacts = true
+        
+        TMMContactService.getContacts(
+            provider: self.contactServiceProvider)
+            .then(in: .main, {[weak self] contacts in
+                guard let weakSelf = self else { return }
+                for contact in contacts {
+                    weakSelf.contacts[contact.name] = contact.value
+                }
+                weakSelf.contactActivityIndicatorTelegram.isHidden = true
+                weakSelf.contactActivityIndicatorWechat.isHidden = true
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.gettingContacts = false
+                weakSelf.tableView.header?.endRefreshing()
+                }
         )
     }
 }

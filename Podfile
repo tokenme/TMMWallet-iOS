@@ -37,6 +37,7 @@ target 'TimeBank' do
   pod 'PhotoSolution', '~> 1.0.2'
   pod 'Qiniu'
   pod 'Charts'
+  pod 'SKWebAPI'
 end
 
 pre_install do |installer|

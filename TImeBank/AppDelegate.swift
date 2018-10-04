@@ -40,6 +40,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         refreshToken()
         
+        _ = FeedbackSlack.setup("xoxp-340014960567-338241194720-339563622341-94fcb61ce9353b2b0f5a86d4e99580d8", slackChannel: "#timebank-feedback")
+        if let userInfo: DefaultsUser = Defaults[.user] {
+            FeedbackSlack.shared?.options = [
+                "UserID": "\(userInfo.id ?? 0)",
+                "CountryCode": "\(userInfo.countryCode ?? 0)"
+            ]
+        }
+        
         return true
     }
 

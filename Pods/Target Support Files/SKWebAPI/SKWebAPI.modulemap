@@ -1,0 +1,6 @@
+framework module SKWebAPI {
+  umbrella header "SKWebAPI-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -186,7 +186,7 @@ class ExchangeViewController: UIViewController {
         chartView.chartDescription?.enabled = false
         chartView.dragEnabled = true
         chartView.setScaleEnabled(true)
-        chartView.pinchZoomEnabled = true
+        chartView.pinchZoomEnabled = false
         chartView.autoScaleMinMaxEnabled = true
         
         //chartView.highlightFullBarEnabled = false
