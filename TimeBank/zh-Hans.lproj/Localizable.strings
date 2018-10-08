@@ -89,6 +89,9 @@
 "NewTransactionTitle" = "新交易";
 "NewTransactionDesc" = "交易回执: #receipt#";
 "ChangeTo" = "兑换";
+"ToTBC" = "兑换TBC";
+"ToPoints" = "兑换积分";
+"ToMobileData" = "兑换流量";
 "TxPending" = "转账中";
 "TxSuccess" = "成功";
 "TxFailed" = "失败";

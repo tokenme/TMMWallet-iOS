@@ -70,6 +70,9 @@ enum I18n: CustomStringConvertible {
     case exchangeTMM
     case exchangePoint
     case changeTo
+    case toTBC
+    case toPoints
+    case toMobileData
     case txPending
     case txSuccess
     case txFailed
@@ -329,6 +332,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NewTransactionDesc", comment: "Transaction Receipt")
         case .changeTo:
             return NSLocalizedString("ChangeTo", comment: "Change to")
+        case .toTBC:
+            return NSLocalizedString("ToTBC", comment: "To TBC")
+        case .toPoints:
+            return NSLocalizedString("ToPoints", comment: "To Points")
+        case .toMobileData:
+            return NSLocalizedString("ToMobileData", comment: "To Mobile Data")
         case .txPending:
             return NSLocalizedString("TxPending", comment: "Pending")
         case .txSuccess:

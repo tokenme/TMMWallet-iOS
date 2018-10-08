@@ -371,14 +371,10 @@ extension DeviceAppsViewController: UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(for: indexPath) as RedeemCdpCollectionViewCell
         cell.isSelected = false
         let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
-        formatter.groupingSeparator = "";
-        formatter.numberStyle = NumberFormatter.Style.decimal
-        let formatter2 = NumberFormatter()
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
-        let msg = String(format: I18n.confirmRedeemPointsCdp.description, arguments: [formatter2.string(from: cdp.points)!, formatter.string(from: cdp.price)!])
+        let msg = String(format: I18n.confirmRedeemPointsCdp.description, arguments: [formatter.string(from: cdp.points)!, cdp.grade!])
         let alertController = Presentr.alertViewController(title: I18n.alert.description, body: msg)
         let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
             //

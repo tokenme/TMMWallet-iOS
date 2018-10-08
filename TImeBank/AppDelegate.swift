@@ -12,6 +12,8 @@ import Moya
 import SwiftyUserDefaults
 import TACCore
 import TACMessaging
+import Siren
+import SwiftRater
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tmmBeacon = TMMBeacon.initWithKey("e515a8899e7a43944a68502969154e4cb87a03a3", secret: "47535bf74a8072c0b6246b4fb73508eeb12f5982")
         tmmBeacon?.start()
-        
         let options = TACApplicationOptions.default()
         options?.analyticsOptions.idfa = tmmBeacon?.deviceId()
         TACApplication.configurate(with: options);
@@ -48,6 +49,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ]
         }
         
+        Siren.shared.checkVersion(checkType: .immediately)
+        
+        SwiftRater.daysUntilPrompt = 7
+        SwiftRater.usesUntilPrompt = 10
+        SwiftRater.significantUsesUntilPrompt = 3
+        SwiftRater.daysBeforeReminding = 1
+        SwiftRater.showLaterButton = true
+        SwiftRater.debugMode = false
+        SwiftRater.appLaunched()
         return true
     }
 
@@ -62,11 +72,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        Siren.shared.checkVersion(checkType: .immediately)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Siren.shared.checkVersion(checkType: .daily)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

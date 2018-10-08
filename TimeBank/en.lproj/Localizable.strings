@@ -89,6 +89,9 @@
 "NewTransactionTitle" = "New Transaction";
 "NewTransactionDesc" = "Receipt: #receipt#";
 "ChangeTo" = "Change to";
+"ToTBC" = "To TBC";
+"ToPoints" = "To Points";
+"ToMobileData" = "To Mobile Data";
 "TxPending" = "Pending";
 "TxSuccess" = "Success";
 "TxFailed" = "Failed";

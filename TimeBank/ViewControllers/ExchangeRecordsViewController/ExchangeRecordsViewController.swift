@@ -50,10 +50,10 @@ class ExchangeRecordsViewController: TabmanViewController {
         viewControllers[2].recordType = 1
         
         // configure the bar
-        self.bar.items = [Item(title: "\(I18n.changeTo.description) TBC"),
-                          Item(title: "\(I18n.changeTo.description) \(I18n.points.description)"),
-                          Item(title: "\(I18n.changeTo.description) \(I18n.mobileData.description)")]
-        self.bar.style = .scrollingButtonBar
+        self.bar.items = [Item(title: I18n.toTBC.description),
+                          Item(title: I18n.toPoints.description),
+                          Item(title: I18n.toMobileData.description)]
+        self.bar.style = .buttonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self
     }

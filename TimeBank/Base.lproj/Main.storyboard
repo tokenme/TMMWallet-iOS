@@ -1789,6 +1789,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.50980392159999999" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="0ez-mV-gnN"/>
                                     <constraint firstItem="Y8a-NB-LLv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="C4g-8t-ams" secondAttribute="leading" constant="30" id="4LP-ol-jft"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Y8a-NB-LLv" secondAttribute="trailing" constant="30" id="EfK-tB-gO5"/>
                                     <constraint firstItem="Y8a-NB-LLv" firstAttribute="centerY" secondItem="C4g-8t-ams" secondAttribute="centerY" id="ZzD-2I-GUY"/>
@@ -1806,6 +1807,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="gBb-fg-ppD" firstAttribute="centerX" secondItem="Ksq-CS-vvE" secondAttribute="centerX" id="5s1-B8-Qtu"/>
+                            <constraint firstItem="gBb-fg-ppD" firstAttribute="leading" secondItem="Ksq-CS-vvE" secondAttribute="leading" constant="50" id="C8G-mM-lgb"/>
                             <constraint firstItem="gBb-fg-ppD" firstAttribute="top" secondItem="C4g-8t-ams" secondAttribute="bottom" constant="50" id="E0V-nV-817"/>
                             <constraint firstItem="Ksq-CS-vvE" firstAttribute="trailing" secondItem="C4g-8t-ams" secondAttribute="trailing" id="FFt-YS-zlJ"/>
                             <constraint firstItem="C4g-8t-ams" firstAttribute="leading" secondItem="Ksq-CS-vvE" secondAttribute="leading" id="YJg-IM-ZBd"/>

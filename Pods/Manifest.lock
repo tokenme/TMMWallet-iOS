@@ -43,10 +43,12 @@ PODS:
   - Reusable/View (4.0.3)
   - Schedule (1.0.0)
   - ShadowView (1.3)
+  - Siren (3.7.1)
   - SKCore (4.1.2)
   - SkeletonView (1.4.1)
   - SKWebAPI (4.1.3):
     - SKCore
+  - SwiftRater (1.3.0)
   - swiftScan (1.1.7)
   - SwiftWebVC (0.4.5)
   - SwiftyUserDefaults (4.0.0-alpha.1)
@@ -62,7 +64,7 @@ PODS:
   - TACMessaging (1.0.0):
     - AOPKit (= 1.0.1)
     - TACCore (= 1.0.0)
-  - TMMSDK (0.2.7)
+  - TMMSDK (0.2.9)
   - ViewAnimator (2.2.0)
   - ZHRefresh (0.2.1)
 
@@ -88,8 +90,10 @@ DEPENDENCIES:
   - Reusable
   - Schedule (~> 1.0)
   - ShadowView (~> 1.3)
+  - Siren
   - SkeletonView (from `https://github.com/tokenme/SkeletonView.git`, tag `1.4.1`)
   - SKWebAPI
+  - SwiftRater
   - swiftScan (from `https://github.com/tokenme/swiftScan.git`, tag `1.1.7`)
   - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`, tag `0.4.6`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
@@ -98,7 +102,7 @@ DEPENDENCIES:
   - TACCore
   - TACCrash
   - TACMessaging
-  - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.2.7`)
+  - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.2.9`)
   - ViewAnimator (~> 2.2)
   - ZHRefresh (from `https://github.com/tokenme/ZHRefresh.git`, tag `0.2.1`)
 
@@ -135,8 +139,10 @@ SPEC REPOS:
     - Reusable
     - Schedule
     - ShadowView
+    - Siren
     - SKCore
     - SKWebAPI
+    - SwiftRater
     - SwiftyUserDefaults
     - SwipeCellKit
     - Tabman
@@ -157,7 +163,7 @@ EXTERNAL SOURCES:
     :tag: 0.4.6
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
-    :tag: 0.2.7
+    :tag: 0.2.9
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
     :tag: 0.2.1
@@ -177,7 +183,7 @@ CHECKOUT OPTIONS:
     :tag: 0.4.6
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
-    :tag: 0.2.7
+    :tag: 0.2.9
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
     :tag: 0.2.1
@@ -211,9 +217,11 @@ SPEC CHECKSUMS:
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
   Schedule: 64f334e01daa6f80201ab147b59cb4f1e118ae74
   ShadowView: 80c923f88fe2e6602066aa535f46621f0f6471d1
+  Siren: ccfbb3e0556c5c49817214716a45be6910cacdb4
   SKCore: 8322401f4fe8418e5d3d34059b59d42faddab86d
   SkeletonView: 60d6ce7edb0cb4c7758db33c74add50392b3c475
   SKWebAPI: 1b604f4e4988defae5cc7aa8454c4967ad35f9b3
+  SwiftRater: 035512c0c454c83bd4d96b483d8854606aeecccf
   swiftScan: a36a3aa9c8deed9502cbd76d8da47a94f12fbf69
   SwiftWebVC: d3e2c4530b079e7647d5be1a457cf46cb65fb89a
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
@@ -222,10 +230,10 @@ SPEC CHECKSUMS:
   TACCore: a0d0286c860f02c4f364fcf74c7808b81740ef14
   TACCrash: 1d794f11ba159001aa9d37e7c8b2edc5c5766ae6
   TACMessaging: 7e9414193ee6d83b5e19202d7d2bbed8b5498963
-  TMMSDK: 01256de930b8e17a6ac3b3f6315dfcd3fbc88dea
+  TMMSDK: ca5c66ac1504491339c03af0eba97fbaa7dc9756
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 5ae1a5c9d01c1b988d193b18a5785a52099dfec9
+PODFILE CHECKSUM: 55d4e09c9247c93fab7380248ae9fc0e8c3dd9a0
 
 COCOAPODS: 1.6.0.beta.1

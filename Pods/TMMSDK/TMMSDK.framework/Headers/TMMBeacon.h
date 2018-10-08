@@ -24,8 +24,9 @@ extern const NSString * TMMToastPositionBottom;
 - (void) setToastBackgroundColor: (UIColor *) color;
 - (void) setToastTitleColor: (UIColor *) color;
 - (void) setToastMessageColor: (UIColor *) color;
-- (void) setToastFadeDuration:(NSTimeInterval)duration;
+- (void) setToastDuration:(NSTimeInterval)duration;
 - (void) setNotificationInterval:(NSTimeInterval)notificationInterval;
+- (void) debugToast;
 - (NSString *) deviceId;
 @end
 

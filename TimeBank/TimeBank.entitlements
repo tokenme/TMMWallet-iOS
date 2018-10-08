@@ -4,5 +4,11 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:tmm.tokenmama.io</string>
+		<string>webcredentials:tmm.tokenmama.io</string>
+		<string>activitycontinuation:tmm.tokenmama.io</string>
+	</array>
 </dict>
 </plist>

@@ -17,6 +17,7 @@ import ViewAnimator
 import Presentr
 import TMMSDK
 import SwipeCellKit
+import SwiftRater
 
 class WalletViewController: UIViewController {
     
@@ -138,6 +139,8 @@ class WalletViewController: UIViewController {
             vc.delegate = self
             self.present(vc, animated: true, completion: nil)
         }
+        SwiftRater.check()
+        TMMBeacon.shareInstance()?.debugToast()
     }
 
     override func didReceiveMemoryWarning() {
