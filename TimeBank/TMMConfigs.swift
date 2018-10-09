@@ -23,19 +23,19 @@ struct TMMConfigs {
         static let appID = "4113365511"
         static let appKey = "6e9c1c7dbb16c9725ff326db1eda289a"
         static let redirectURL = "https://tmm.tokenmama.io/callback/weibo"
-        static let schemes = ["sinaweibo", "sinaweibohd", "sinaweibosso", "sinaweibohdsso", "weibosdk", "weibosdk2.5"]
+        static let schemes = ["weibo"]
     }
     
     struct WeChat {
         static let appID = "wx4868b35061f87885"
         static let appKey = "64020361b8ec4c99936c0e3999a9f249"
-        static let schemes = ["wechat", "weixin"]
+        static let schemes = ["weixin"]
     }
     
     struct QQ {
-        static let appID = "1104881792"
-        static let appKey = ""
-        static let schemes = ["mqzoneopensdk", "mqzoneopensdkapi", "mqzoneopensdkapi19", "mqzoneopensdkapiV2", "mqqOpensdkSSoLogin", "mqqopensdkapiV2", "mqqopensdkapiV3", "wtloginmqq2", "mqqapi", "mqqwpa", "mqzone", "mqq", "mqqopensdkapiV4"]
+        static let appID = "1107817575"
+        static let appKey = "6ipbdomufCOYAz0a"
+        static let schemes = ["mqq"]
     }
     
     struct Twitter {
@@ -49,7 +49,7 @@ struct TMMConfigs {
         static let key = "469684170205512"
         static let secret = "0c36a8165843e2184f0b182b87f4ea07"
         static let displayName = "Hello Time"
-        static let schemes = ["fbapi20130214", "fb", "fbauth2", "fbauth"]
+        static let schemes = ["fb"]
     }
     
     struct Telegram {
@@ -61,6 +61,6 @@ struct TMMConfigs {
     struct Line {
         static let channelId = "1613264917"
         static let channelSecret = "ca196c328a296e454e80cec08411539a"
-        static let schemes = ["line", "lineauth", "line3rdp.io.tokenmama.TimeBank"]
+        static let schemes = ["line"]
     }
 }

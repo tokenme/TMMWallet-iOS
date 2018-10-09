@@ -70,9 +70,19 @@
 				<string>com.tokenmama.TimeBank</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>QQ</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>QQ4207F467</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>12</string>
+	<string>13</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -103,12 +113,16 @@
 		<string>mqzone</string>
 		<string>mqqopensdkapiV4</string>
 		<string>weibosdk</string>
+		<string>weibo</string>
 		<string>weibosdk2.5</string>
 		<string>sinaweibo</string>
 		<string>sinaweibohd</string>
 		<string>sinaweibosso</string>
 		<string>sinaweibohdsso</string>
 		<string>twitterauth</string>
+		<string>twitter</string>
+		<string>telegram</string>
+		<string>tg</string>
 		<string>tmb1</string>
 		<string>tmb2</string>
 		<string>tmb3</string>
