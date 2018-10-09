@@ -10,8 +10,8 @@ import UIKit
 import SwiftyUserDefaults
 import Tabman
 import Pageboy
-import FTPopOverMenu_Swift
 import BTNavigationDropdownMenu
+import DropDown
 
 class TasksViewController: TabmanViewController {
     
@@ -74,9 +74,6 @@ class TasksViewController: TabmanViewController {
             }
         }
         
-        let configuration = FTConfiguration.shared
-        configuration.menuWidth = 150.0
-        
         // configure the bar
         self.bar.items = [
             Item(title: I18n.shareTasks.description),
@@ -118,22 +115,24 @@ class TasksViewController: TabmanViewController {
     }
     
     @objc func addTaskAction(_ sender: UIBarButtonItem, event: UIEvent) {
-        FTPopOverMenu.showForEvent(event: event,
-                                   with: [I18n.submitNewShareTask.description, I18n.submitNewAppTask.description],
-                                   done: { [weak self] (selectedIndex) -> () in
-                                    guard let weakSelf = self else { return }
-                                    if selectedIndex == 0 {
-                                        let vc = SubmitShareTaskTableViewController.instantiate()
-                                        vc.delegate = weakSelf
-                                        weakSelf.navigationController?.pushViewController(vc, animated: true)
-                                    } else if selectedIndex == 1 {
-                                        let vc = SubmitAppTaskTableViewController.instantiate()
-                                        vc.delegate = weakSelf
-                                        weakSelf.navigationController?.pushViewController(vc, animated: true)
-                                    }
-        }) {
-            
+        let dropDown = DropDown()
+        dropDown.anchorView = sender
+        dropDown.bottomOffset = CGPoint(x: 0, y: sender.plainView.bounds.height)
+        dropDown.dataSource = [I18n.submitNewShareTask.description, I18n.submitNewAppTask.description]
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let weakSelf = self else { return }
+            if index == 0 {
+                let vc = SubmitShareTaskTableViewController.instantiate()
+                vc.delegate = weakSelf
+                weakSelf.navigationController?.pushViewController(vc, animated: true)
+            } else if index == 1 {
+                let vc = SubmitAppTaskTableViewController.instantiate()
+                vc.delegate = weakSelf
+                weakSelf.navigationController?.pushViewController(vc, animated: true)
+            }
         }
+        dropDown.show()
+        DropDown.startListeningToKeyboard()
     }
 }
 

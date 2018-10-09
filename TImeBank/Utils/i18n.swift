@@ -14,6 +14,8 @@ enum I18n: CustomStringConvertible {
     case alert
     case confirm
     case close
+    case shareSuccess
+    case more
     case unknownError
     case notFoundError
     case unauthorizedError
@@ -196,6 +198,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Alert", comment: "Alert")
         case .confirm:
             return NSLocalizedString("Confirm", comment: "Confirm")
+        case .shareSuccess:
+            return NSLocalizedString("ShareSuccess", comment: "Share Success")
+        case .more:
+            return NSLocalizedString("More", comment: "More")
         case .unknownError:
             return NSLocalizedString("UnknownError", comment: "Unknown Error")
         case .notFoundError:

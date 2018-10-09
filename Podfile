@@ -4,7 +4,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'TimeBank' do
-  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.2.9'
+  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.3.0'
   pod 'Pastel', :git=>'https://github.com/cruisediary/Pastel.git', :tag=>'0.5.1'
   pod 'Schedule', '~> 1.0'
   pod 'GrandTime'
@@ -25,7 +25,6 @@ target 'TimeBank' do
   pod 'SkeletonView', :git=>'https://github.com/tokenme/SkeletonView.git', :tag=>'1.4.1'
   pod 'ViewAnimator', '~> 2.2'
   pod 'Tabman', '~> 1.10'
-  pod 'SwiftWebVC', :git=>'https://github.com/tokenme/SwiftWebVC.git', :tag=>'0.4.6'
   pod 'EmptyDataSet-Swift', '~> 4.2'
   pod 'Presentr'
   pod 'swiftScan', :git=>'https://github.com/tokenme/swiftScan.git', :tag=>'1.1.7'
@@ -33,13 +32,24 @@ target 'TimeBank' do
   pod 'TACCore'
   pod 'TACMessaging'
   pod 'TACCrash'
-  pod 'FTPopOverMenu_Swift', '~> 0.1.3'
   pod 'PhotoSolution', '~> 1.0.2'
   pod 'Qiniu'
   pod 'Charts'
   pod 'SKWebAPI'
   pod 'Siren'
   pod 'SwiftRater'
+  pod 'DropDown'
+  pod 'mob_sharesdk'
+  pod 'mob_sharesdk/ShareSDKUI'
+  pod 'mob_sharesdk/ShareSDKPlatforms/QQ'
+  pod 'mob_sharesdk/ShareSDKPlatforms/SinaWeibo'
+  pod 'mob_sharesdk/ShareSDKPlatforms/WeChat'
+  pod 'mob_sharesdk/ShareSDKPlatforms/Facebook'
+  pod 'mob_sharesdk/ShareSDKPlatforms/Line'
+  pod 'mob_sharesdk/ShareSDKPlatforms/Twitter'
+  pod 'mob_sharesdk/ShareSDKPlatforms/Telegram'
+  pod 'mob_sharesdk/ShareSDKConfigFile'
+  pod 'mob_sharesdk/ShareSDKExtension'
 end
 
 pre_install do |installer|

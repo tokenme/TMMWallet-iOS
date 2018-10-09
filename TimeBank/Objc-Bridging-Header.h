@@ -11,6 +11,10 @@
 
 #import <Qiniu/QiniuSDK.h>
 #import <HappyDNS/HappyDNS.h>
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDKUI.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+#import <ShareSDKUI/SSUIShareSheetConfiguration.h>
 #import "DetectApp.h"
 
 #endif /* Objc_Bridging_Header_h */

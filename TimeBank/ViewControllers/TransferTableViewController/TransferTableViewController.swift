@@ -10,7 +10,6 @@ import UIKit
 import SwiftyUserDefaults
 import Moya
 import Hydra
-import SwiftWebVC
 import Presentr
 
 class TransferTableViewController: UITableViewController {
@@ -245,8 +244,10 @@ extension TransferTableViewController {
                 let okAction = AlertAction(title: I18n.viewTransaction.description, style: .destructive) {[weak self] alert in
                     guard let weakSelf = self else { return }
                     let urlString = "https://etherscan.io/tx/\(receipt)"
-                    let webVC = SwiftWebVC(urlString: urlString, shareItem: nil, sharingEnabled: true)
-                    weakSelf.navigationController?.pushViewController(webVC, animated: true)
+                    guard let url = URL(string: urlString) else { return }
+                    let vc = TMMWebViewController.instantiate()
+                    vc.request = URLRequest(url: url)
+                    weakSelf.navigationController?.pushViewController(vc, animated: true)
                 }
                 alertController.addAction(cancelAction)
                 alertController.addAction(okAction)

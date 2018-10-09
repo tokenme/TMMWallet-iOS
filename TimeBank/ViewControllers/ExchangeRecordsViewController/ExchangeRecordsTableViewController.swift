@@ -14,7 +14,6 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import TMMSDK
-import SwiftWebVC
 import EmptyDataSet_Swift
 import Presentr
 
@@ -144,8 +143,10 @@ extension ExchangeRecordsTableViewController {
         let record = self.records[indexPath.row]
         guard let receipt = record.tx else { return }
         let urlString = "https://etherscan.io/tx/\(receipt)"
-        let webVC = SwiftWebVC(urlString: urlString, shareItem: nil, sharingEnabled: true)
-        self.navigationController?.pushViewController(webVC, animated: true)
+        guard let url = URL(string: urlString) else { return }
+        let vc = TMMWebViewController.instantiate()
+        vc.request = URLRequest(url: url)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

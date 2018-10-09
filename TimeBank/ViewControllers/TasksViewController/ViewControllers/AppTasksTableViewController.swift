@@ -14,7 +14,6 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import TMMSDK
-import SwiftWebVC
 import Kingfisher
 import StoreKit
 import EmptyDataSet_Swift

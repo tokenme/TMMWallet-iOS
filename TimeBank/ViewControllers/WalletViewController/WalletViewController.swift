@@ -140,7 +140,6 @@ class WalletViewController: UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
         SwiftRater.check()
-        TMMBeacon.shareInstance()?.debugToast()
     }
 
     override func didReceiveMemoryWarning() {

@@ -18,12 +18,97 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>facebook</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb469684170205512</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>wechat</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb4113365511</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>twitter</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>twitterkit-LcZ3f9eBTDRrKJFwT90jvw</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>weibo</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb4113365511</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.tokenmama.TimeBank</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.tokenmama.TimeBank</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>11</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>wechat</string>
+		<string>iosamap</string>
+		<string>weixin</string>
+		<string>tg</string>
+		<string>fb</string>
+		<string>fbapi20130214</string>
+		<string>fbauth2</string>
+		<string>fbauth</string>
+		<string>line</string>
+		<string>lineauth</string>
+		<string>line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<string>mqq</string>
+		<string>mqqOpensdkSSoLogin</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqopensdkapiV3</string>
+		<string>wtloginmqq2</string>
+		<string>mmqapi</string>
+		<string>timapi</string>
+		<string>mqzoneopensdk</string>
+		<string>mqzoneopensdkapi</string>
+		<string>mqzoneopensdkapi19</string>
+		<string>mqzoneopensdkapiV2</string>
+		<string>mqqwpa</string>
+		<string>mqzone</string>
+		<string>mqqopensdkapiV4</string>
+		<string>weibosdk</string>
+		<string>weibosdk2.5</string>
+		<string>sinaweibo</string>
+		<string>sinaweibohd</string>
+		<string>sinaweibosso</string>
+		<string>sinaweibohdsso</string>
+		<string>twitterauth</string>
 		<string>tmb1</string>
 		<string>tmb2</string>
 		<string>tmb3</string>
@@ -46,6 +131,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MOBAppKey</key>
+	<string>27e400d9f7848</string>
+	<key>MOBAppSecret</key>
+	<string>a498dc06a1610ad671564fc575f38835</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>是否允许此App访问你的媒体资料库？</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationCenter.requestAuthorization(options:[.badge, .sound, .alert]) {_,_ in
         }
         
-        let tmmBeacon = TMMBeacon.initWithKey("e515a8899e7a43944a68502969154e4cb87a03a3", secret: "47535bf74a8072c0b6246b4fb73508eeb12f5982")
+        let tmmBeacon = TMMBeacon.initWithKey(TMMConfigs.TMMBeacon.key, secret: TMMConfigs.TMMBeacon.secret)
         tmmBeacon?.start()
         let options = TACApplicationOptions.default()
         options?.analyticsOptions.idfa = tmmBeacon?.deviceId()
@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         refreshToken()
         
-        _ = FeedbackSlack.setup("xoxp-340014960567-338241194720-339563622341-94fcb61ce9353b2b0f5a86d4e99580d8", slackChannel: "#timebank-feedback")
+        _ = FeedbackSlack.setup(TMMConfigs.Slack.key, slackChannel: TMMConfigs.Slack.feedbackChannel)
         if let userInfo: DefaultsUser = Defaults[.user] {
             FeedbackSlack.shared?.options = [
                 "UserID": "\(userInfo.id ?? 0)",
@@ -58,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SwiftRater.showLaterButton = true
         SwiftRater.debugMode = false
         SwiftRater.appLaunched()
+        
+        setupShareSDK()
+        
         return true
     }
 
@@ -85,6 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         initTACMessaging()
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return true
     }
     
     private func initTACMessaging() {
@@ -116,6 +127,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
         }
+    }
+    
+    private func setupShareSDK() {
+        ShareSDK.registPlatforms { (ssdkRegister: SSDKRegister?) in
+            guard let register = ssdkRegister else { return }
+            register.setupSinaWeibo(withAppkey: TMMConfigs.Weibo.appID, appSecret: TMMConfigs.Weibo.appKey, redirectUrl: TMMConfigs.Weibo.redirectURL)
+            register.setupQQ(withAppId: TMMConfigs.QQ.appID, appkey: TMMConfigs.QQ.appKey)
+            register.setupWeChat(withAppId: TMMConfigs.WeChat.appID, appSecret: TMMConfigs.WeChat.appKey)
+            register.setupTwitter(withKey: TMMConfigs.Twitter.key, secret: TMMConfigs.Twitter.secret, redirectUrl: TMMConfigs.Twitter.redirectURL)
+            register.setupFacebook(withAppkey: TMMConfigs.Facebook.key, appSecret: TMMConfigs.Facebook.secret, displayName: TMMConfigs.Facebook.displayName)
+            register.setupTelegram(byBotToken: TMMConfigs.Telegram.botToken, botDomain: TMMConfigs.Telegram.domain)
+            register.setupLineAuthType(SSDKAuthorizeType.SSO)
+            }
     }
 }
 

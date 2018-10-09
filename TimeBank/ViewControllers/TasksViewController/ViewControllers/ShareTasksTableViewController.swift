@@ -14,7 +14,6 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import TMMSDK
-import SwiftWebVC
 import Kingfisher
 import EmptyDataSet_Swift
 import Presentr
@@ -161,17 +160,17 @@ extension ShareTasksTableViewController {
         if let imageURL = task.image {
             KingfisherManager.shared.retrieveImage(with: URL(string: imageURL)!, options: nil, progressBlock: nil, completionHandler:{[weak self](_ image: UIImage?, _ error: NSError?, _ cacheType: CacheType?, _ url: URL?) in
                 guard let weakSelf = self else {return}
-                var shareItem: SwiftWebVCShareItem?
+                var shareItem: TMMShareItem?
                 if image != nil {
                     let img = image?.kf.resize(to: CGSize(width: 500, height: 500), for: .aspectFit)
-                    shareItem = SwiftWebVCShareItem(title: task.title, image: img, link: URL(string:task.shareLink))
+                    shareItem = TMMShareItem(title: task.title, description: task.summary, image: img, link: URL(string:task.shareLink))
                 } else {
-                    shareItem = SwiftWebVCShareItem(title: task.title, image: nil, link: URL(string:task.shareLink))
+                    shareItem = TMMShareItem(title: task.title, description: task.summary, image: nil, link: URL(string:task.shareLink))
                 }
                 weakSelf.presentWebVC(task.link, shareItem)
             })
         } else {
-            let shareItem = SwiftWebVCShareItem(title: task.title, image: nil, link: URL(string:task.shareLink))
+            let shareItem = TMMShareItem(title: task.title, description: task.summary, image: nil, link: URL(string:task.shareLink))
             presentWebVC(task.link, shareItem)
         }
     }
@@ -180,9 +179,12 @@ extension ShareTasksTableViewController {
         return !self.loadingTasks
     }
     
-    private func presentWebVC(_ urlString: String, _ shareItem: SwiftWebVCShareItem?) {
-        let webVC = SwiftModalWebVC(urlString: urlString, shareItem: shareItem)
-        self.present(webVC, animated: true, completion: nil)
+    private func presentWebVC(_ urlString: String, _ shareItem: TMMShareItem?) {
+        guard let url = URL(string: urlString) else { return }
+        let vc = TMMWebViewController.instantiate()
+        vc.request = URLRequest(url: url)
+        vc.shareItem = shareItem
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

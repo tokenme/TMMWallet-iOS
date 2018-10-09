@@ -15,7 +15,6 @@ import SkeletonView
 import ViewAnimator
 import Kingfisher
 import EmptyDataSet_Swift
-import SwiftWebVC
 import Presentr
 
 fileprivate let DefaultPageSize: UInt = 10
@@ -171,8 +170,10 @@ extension TransactionsTableViewController {
         let tx = self.txs[indexPath.row]
         guard let receipt = tx.receipt else { return }
         let urlString = "https://etherscan.io/tx/\(receipt)"
-        let webVC = SwiftWebVC(urlString: urlString, shareItem: nil, sharingEnabled: true)
-        self.navigationController?.pushViewController(webVC, animated: true)
+        guard let url = URL(string: urlString) else { return }
+        let vc = TMMWebViewController.instantiate()
+        vc.request = URLRequest(url: url)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

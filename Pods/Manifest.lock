@@ -7,8 +7,8 @@ PODS:
     - Charts/Core (= 3.2.0)
   - Charts/Core (3.2.0)
   - CountryPickerView (2.1.1)
+  - DropDown (2.3.6)
   - EmptyDataSet-Swift (4.2.0)
-  - FTPopOverMenu_Swift (0.1.3)
   - GrandTime (1.3.0)
   - HappyDNS (0.3.14)
   - HydraAsync (1.2.1)
@@ -16,6 +16,42 @@ PODS:
   - Kingfisher (4.10.0)
   - KMNavigationBarTransition (1.1.5)
   - moa (10.0.0)
+  - mob_sharesdk (4.2.0):
+    - mob_sharesdk/ShareSDK (= 4.2.0)
+    - MOBFoundation
+  - mob_sharesdk/ShareSDK (4.2.0):
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKConfigFile (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKExtension (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Facebook (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Line (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/QQ (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Telegram (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Twitter (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/WeChat (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKUI (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - MOBFoundation (3.1.9)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
   - Moya/Core (11.0.2):
@@ -50,7 +86,6 @@ PODS:
     - SKCore
   - SwiftRater (1.3.0)
   - swiftScan (1.1.7)
-  - SwiftWebVC (0.4.5)
   - SwiftyUserDefaults (4.0.0-alpha.1)
   - SwipeCellKit (2.5.0)
   - Tabman (1.10.0):
@@ -72,14 +107,25 @@ DEPENDENCIES:
   - BTNavigationDropdownMenu
   - Charts
   - CountryPickerView
+  - DropDown
   - EmptyDataSet-Swift (~> 4.2)
-  - FTPopOverMenu_Swift (~> 0.1.3)
   - GrandTime
   - HydraAsync
   - IQKeyboardManagerSwift
   - Kingfisher (~> 4.10)
   - KMNavigationBarTransition
   - moa (~> 10.0)
+  - mob_sharesdk
+  - mob_sharesdk/ShareSDKConfigFile
+  - mob_sharesdk/ShareSDKExtension
+  - mob_sharesdk/ShareSDKPlatforms/Facebook
+  - mob_sharesdk/ShareSDKPlatforms/Line
+  - mob_sharesdk/ShareSDKPlatforms/QQ
+  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo
+  - mob_sharesdk/ShareSDKPlatforms/Telegram
+  - mob_sharesdk/ShareSDKPlatforms/Twitter
+  - mob_sharesdk/ShareSDKPlatforms/WeChat
+  - mob_sharesdk/ShareSDKUI
   - Moya
   - ObjectMapper
   - Pastel (from `https://github.com/cruisediary/Pastel.git`, tag `0.5.1`)
@@ -95,7 +141,6 @@ DEPENDENCIES:
   - SKWebAPI
   - SwiftRater
   - swiftScan (from `https://github.com/tokenme/swiftScan.git`, tag `1.1.7`)
-  - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`, tag `0.4.6`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
   - SwipeCellKit
   - Tabman (~> 1.10)
@@ -119,8 +164,8 @@ SPEC REPOS:
     - BTNavigationDropdownMenu
     - Charts
     - CountryPickerView
+    - DropDown
     - EmptyDataSet-Swift
-    - FTPopOverMenu_Swift
     - GrandTime
     - HappyDNS
     - HydraAsync
@@ -128,6 +173,8 @@ SPEC REPOS:
     - Kingfisher
     - KMNavigationBarTransition
     - moa
+    - mob_sharesdk
+    - MOBFoundation
     - Moya
     - ObjectMapper
     - Pageboy
@@ -158,9 +205,6 @@ EXTERNAL SOURCES:
   swiftScan:
     :git: https://github.com/tokenme/swiftScan.git
     :tag: 1.1.7
-  SwiftWebVC:
-    :git: https://github.com/tokenme/SwiftWebVC.git
-    :tag: 0.4.6
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
     :tag: 0.2.9
@@ -178,9 +222,6 @@ CHECKOUT OPTIONS:
   swiftScan:
     :git: https://github.com/tokenme/swiftScan.git
     :tag: 1.1.7
-  SwiftWebVC:
-    :git: https://github.com/tokenme/SwiftWebVC.git
-    :tag: 0.4.6
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
     :tag: 0.2.9
@@ -195,8 +236,8 @@ SPEC CHECKSUMS:
   BTNavigationDropdownMenu: ba3a26fdb6a56c4721c31df8a0875106c259663a
   Charts: 680c8328bd5e90cb14f67e00d2176f3113d19141
   CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
+  DropDown: e8bfbce001b2e6b7e8abfdd42e12b565712d84f4
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
-  FTPopOverMenu_Swift: f67e0af3935485c1cbcc44b5c92ed530ee32d21d
   GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
   HappyDNS: dc6a164ee81979093123c241c6353bcf0218add6
   HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
@@ -204,6 +245,8 @@ SPEC CHECKSUMS:
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
   moa: 95c863fd1059e6b5c7f6be30627823bb07ebca25
+  mob_sharesdk: fc8a9aab921c08e5e88a5b1f36229c6d406a2ff8
+  MOBFoundation: 11500153c10d83e4ac341f6ad6301b3998ce6db2
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Pageboy: 1a5535f0d5a321045971cc2ddc6bcb53302392cb
@@ -223,7 +266,6 @@ SPEC CHECKSUMS:
   SKWebAPI: 1b604f4e4988defae5cc7aa8454c4967ad35f9b3
   SwiftRater: 035512c0c454c83bd4d96b483d8854606aeecccf
   swiftScan: a36a3aa9c8deed9502cbd76d8da47a94f12fbf69
-  SwiftWebVC: d3e2c4530b079e7647d5be1a457cf46cb65fb89a
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   SwipeCellKit: d8f2617538ce3021cb0a11d1b93856a06a2f2e20
   Tabman: 1d8fef96c8e12d0f7919c8b5a5e2ed2955ee3cf5
@@ -234,6 +276,6 @@ SPEC CHECKSUMS:
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 55d4e09c9247c93fab7380248ae9fc0e8c3dd9a0
+PODFILE CHECKSUM: fcc0c51fb3f8f23da8dd40bf6f33532c715c3c9a
 
 COCOAPODS: 1.6.0.beta.1

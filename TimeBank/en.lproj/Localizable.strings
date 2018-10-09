@@ -31,6 +31,8 @@
 "Refresh" = "Refresh";
 "Copy" = "Copy";
 "Submit" = "Submit";
+"ShareSuccess" = "Share Success";
+"More" = "More";
 
 // Login
 "Password" = "Password";

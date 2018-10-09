@@ -21,6 +21,9 @@
 		1D0370DB21665FF200E5E3CE /* APIRedeemCdpRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370DA21665FF200E5E3CE /* APIRedeemCdpRecord.swift */; };
 		1D0370DE2166638C00E5E3CE /* RedeemCdpRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370DC2166638B00E5E3CE /* RedeemCdpRecordTableViewCell.swift */; };
 		1D0370DF2166638C00E5E3CE /* RedeemCdpRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D0370DD2166638B00E5E3CE /* RedeemCdpRecordTableViewCell.xib */; };
+		1D0370E6216B59CF00E5E3CE /* TMMWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370E5216B59CF00E5E3CE /* TMMWebViewController.swift */; };
+		1D0370E8216B5C2F00E5E3CE /* TMMShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370E7216B5C2F00E5E3CE /* TMMShareItem.swift */; };
+		1D0370EA216B671D00E5E3CE /* TMMConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370E9216B671D00E5E3CE /* TMMConfigs.swift */; };
 		1D0F47A7215DE58000385423 /* ShareTaskNoImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F47A5215DE58000385423 /* ShareTaskNoImageTableViewCell.swift */; };
 		1D0F47A8215DE58000385423 /* ShareTaskNoImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D0F47A6215DE58000385423 /* ShareTaskNoImageTableViewCell.xib */; };
 		1D151E64213D03FC007C87DD /* i18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E63213D03FC007C87DD /* i18n.swift */; };
@@ -183,6 +186,9 @@
 		1D0370DA21665FF200E5E3CE /* APIRedeemCdpRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRedeemCdpRecord.swift; sourceTree = "<group>"; };
 		1D0370DC2166638B00E5E3CE /* RedeemCdpRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemCdpRecordTableViewCell.swift; sourceTree = "<group>"; };
 		1D0370DD2166638B00E5E3CE /* RedeemCdpRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RedeemCdpRecordTableViewCell.xib; sourceTree = "<group>"; };
+		1D0370E5216B59CF00E5E3CE /* TMMWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMWebViewController.swift; sourceTree = "<group>"; };
+		1D0370E7216B5C2F00E5E3CE /* TMMShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMShareItem.swift; sourceTree = "<group>"; };
+		1D0370E9216B671D00E5E3CE /* TMMConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMConfigs.swift; sourceTree = "<group>"; };
 		1D0F47A5215DE58000385423 /* ShareTaskNoImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskNoImageTableViewCell.swift; sourceTree = "<group>"; };
 		1D0F47A6215DE58000385423 /* ShareTaskNoImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareTaskNoImageTableViewCell.xib; sourceTree = "<group>"; };
 		1D151E55213D000C007C87DD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TimeBank/Info.plist; sourceTree = "<group>"; };
@@ -365,6 +371,15 @@
 				1D0370C021649AF400E5E3CE /* FeedbackTableViewController.swift */,
 			);
 			path = FeedbackViewController;
+			sourceTree = "<group>";
+		};
+		1D0370E4216B59AC00E5E3CE /* TMMWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D0370E5216B59CF00E5E3CE /* TMMWebViewController.swift */,
+				1D0370E7216B5C2F00E5E3CE /* TMMShareItem.swift */,
+			);
+			path = TMMWebViewController;
 			sourceTree = "<group>";
 		};
 		1D151E72213D460E007C87DD /* WalletViewController */ = {
@@ -609,6 +624,7 @@
 				1DB432922155046F0034B810 /* ExchangeViewController */,
 				1D5FF688215B7852001E69CD /* ScanViewController */,
 				1D0370BF21649ABB00E5E3CE /* FeedbackViewController */,
+				1D0370E4216B59AC00E5E3CE /* TMMWebViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
@@ -738,6 +754,7 @@
 				1D1D6FE2214CE6F40001ED49 /* Support Files */,
 				1D1D6FE7214D139C0001ED49 /* TimeBank.entitlements */,
 				1D36D99E213CED5E0002EDBF /* AppDelegate.swift */,
+				1D0370E9216B671D00E5E3CE /* TMMConfigs.swift */,
 				1D3441D2213CF90600B8E157 /* Utils */,
 				1D3441C9213CF74F00B8E157 /* Model */,
 				1D3441C0213CF71800B8E157 /* API */,
@@ -970,12 +987,20 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TimeBank/Pods-TimeBank-resources.sh",
 				"${PODS_ROOT}/TMMSDK/TMMSDK.framework/TMMSDKBundle.bundle",
+				"${PODS_ROOT}/mob_sharesdk/SDK/ShareSDK/Support/Required/ShareSDK.bundle",
+				"${PODS_ROOT}/mob_sharesdk/SDK/ShareSDK/Support/Optional/ShareSDKConfigFile.bundle",
+				"${PODS_ROOT}/mob_sharesdk/SDK/ShareSDK/Support/PlatformSDK/SinaWeiboSDK/WeiboSDK.bundle",
+				"${PODS_ROOT}/mob_sharesdk/SDK/ShareSDK/Support/Optional/ShareSDKUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TMMSDKBundle.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDK.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDKConfigFile.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WeiboSDK.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDKUI.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1022,8 +1047,8 @@
 				"${BUILT_PRODUCTS_DIR}/BTNavigationDropdownMenu/BTNavigationDropdownMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
+				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/FTPopOverMenu_Swift/FTPopOverMenu_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GrandTime/GrandTime.framework",
 				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
 				"${BUILT_PRODUCTS_DIR}/HydraAsync/Hydra.framework",
@@ -1047,7 +1072,6 @@
 				"${BUILT_PRODUCTS_DIR}/Siren/Siren.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftRater/SwiftRater.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftWebVC/SwiftWebVC.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
@@ -1063,8 +1087,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BTNavigationDropdownMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FTPopOverMenu_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrandTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hydra.framework",
@@ -1088,7 +1112,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siren.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRater.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftWebVC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
@@ -1120,6 +1143,7 @@
 				1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */,
 				1DF802FA215382A90002E054 /* APIInviteSummary.swift in Sources */,
 				1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */,
+				1D0370E8216B5C2F00E5E3CE /* TMMShareItem.swift in Sources */,
 				1D28DE5C2156214F00FCF6F6 /* TMMOrderBookService.swift in Sources */,
 				1DEC544C2150F5A9007A46D5 /* TMMQiniuService.swift in Sources */,
 				1D0370C121649AF400E5E3CE /* FeedbackTableViewController.swift in Sources */,
@@ -1133,6 +1157,7 @@
 				1D151ED2213FC206007C87DD /* AppTaskFetcher.swift in Sources */,
 				1D1D6FD62148CB1B0001ED49 /* TransactionTableViewCell.swift in Sources */,
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
+				1D0370E6216B59CF00E5E3CE /* TMMWebViewController.swift in Sources */,
 				1DEC545321510676007A46D5 /* SubmitAppTaskTableViewController.swift in Sources */,
 				1D3441C5213CF74800B8E157 /* TMMError.swift in Sources */,
 				1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */,
@@ -1167,6 +1192,7 @@
 				1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */,
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
 				1D151E93213E2FCA007C87DD /* LoadingTableViewCell.swift in Sources */,
+				1D0370EA216B671D00E5E3CE /* TMMConfigs.swift in Sources */,
 				1DF019F72161E13A00FDD467 /* APIMarketGraph.swift in Sources */,
 				1D151ECC213F8F14007C87DD /* AppTaskTableViewCell.swift in Sources */,
 				1DF01A002161F09E00FDD467 /* ChartXYMarker.swift in Sources */,
