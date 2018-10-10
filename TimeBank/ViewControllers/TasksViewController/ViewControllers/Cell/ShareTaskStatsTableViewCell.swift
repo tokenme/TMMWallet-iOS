@@ -31,6 +31,11 @@ class ShareTaskStatsTableViewCell: SwipeTableViewCell, NibReusable {
         super.awakeFromNib()
         rewardLabel.layer.cornerRadius = 5
         rewardLabel.clipsToBounds = true
+        rewardLabel.paddingBottom = 4
+        rewardLabel.paddingTop = 4
+        rewardLabel.paddingLeft = 16
+        rewardLabel.paddingRight = 16
+        
         viewersTitleLabel.text = I18n.viewers.description
         bonusTitleLabel.text = I18n.bonusPoint.description
         pointsLeftTitleLabel.text = I18n.pointsLeft.description

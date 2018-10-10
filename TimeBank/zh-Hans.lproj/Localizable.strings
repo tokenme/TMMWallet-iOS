@@ -17,6 +17,7 @@
 "InvalidPasswordError" = "密码错误";
 "DuplicateUserError" = "用户已经注册";
 "InactivatedUserError" = "用户未激活";
+"InvalidCaptchaError" = "验证码错误";
 "NotEnoughTokenError" = "没有足够的代币";
 "NotEnoughPointsError" = "没有足够的积分";
 "InvalidMinPointsError" = "至少需要 #points# 积分";
@@ -27,6 +28,7 @@
 "MaxBindDeviceError" = "超出绑定设备数，请先解绑一个设备";
 "OtherBindDeviceError" = "该设备被其他人绑定了";
 "InvalidCdpVendorError" = "暂不支持您手机号码运营商充值，目前仅支持中国移动、中国联通、中国电信下的手机号码(不支持虚拟运营商)";
+"ExchangeNotAvailableInYourCountryError" = "在您的国家暂时无法提供购买或销售数字货币功能。我们正努力将该功能带入更多国家。";
 
 "Refresh" = "刷新";
 "Copy" = "复制";

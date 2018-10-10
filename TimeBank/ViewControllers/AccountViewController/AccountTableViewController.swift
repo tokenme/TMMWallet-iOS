@@ -186,6 +186,19 @@ class AccountTableViewController: UITableViewController {
     }
     
     public func refresh() {
+        self.getUserInfo().catch(in: .main, {[weak self] error in
+            switch error as! TMMAPIError {
+            case .ignore:
+                return
+            default: break
+            }
+            guard let weakSelf = self else { return  }
+            weakSelf.inviteCodeTextField.text = ""
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+        }).always(in: .background, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.loadingUserInfo = false
+        })
         self.getInviteSummary()
     }
     

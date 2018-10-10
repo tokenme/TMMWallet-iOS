@@ -22,6 +22,7 @@ enum I18n: CustomStringConvertible {
     case invalidPasswordError
     case duplicateUserError
     case inactivatedUserError
+    case invalidCaptchaError
     case notEnoughTokenError
     case notEnoughPointsError
     case invalidMinPointsError
@@ -32,6 +33,7 @@ enum I18n: CustomStringConvertible {
     case maxBindDeviceError
     case otherBindDeviceError
     case invalidCdpVendorError
+    case exchangeNotAvailableInYourCountryError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -214,6 +216,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("DuplicateUserError", comment: "User already exists!")
         case .inactivatedUserError:
             return NSLocalizedString("InactivatedUserError", comment: "User not activated")
+        case .invalidCaptchaError:
+            return NSLocalizedString("InvalidCaptchaError", comment: "invalidCaptchaError")
         case .notEnoughTokenError:
             return NSLocalizedString("NotEnoughTokenError", comment: "notEnoughTokenError")
         case .notEnoughPointsError:
@@ -234,6 +238,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("OtherBindDeviceError", comment: "otherBindDeviceError")
         case .invalidCdpVendorError:
             return NSLocalizedString("InvalidCdpVendorError", comment:"invalidCdpVendorError")
+        case .exchangeNotAvailableInYourCountryError:
+            return NSLocalizedString("ExchangeNotAvailableInYourCountryError", comment: "ExchangeNotAvailableInYourCountryError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .refresh:

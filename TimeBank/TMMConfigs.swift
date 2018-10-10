@@ -14,6 +14,11 @@ struct TMMConfigs {
         static let secret = "47535bf74a8072c0b6246b4fb73508eeb12f5982"
     }
     
+    struct ReCaptcha {
+        static let siteKey = "6LdyLnQUAAAAAL9runxAoDhsDm3pEGe0KFVYeFQ7"
+        static let domain = "https://tmm.tokenmama.io"
+    }
+    
     struct Slack {
         static let key = "xoxp-340014960567-338241194720-339563622341-94fcb61ce9353b2b0f5a86d4e99580d8"
         static let feedbackChannel = "#timebank-feedback"
@@ -29,7 +34,7 @@ struct TMMConfigs {
     struct WeChat {
         static let appID = "wx4868b35061f87885"
         static let appKey = "64020361b8ec4c99936c0e3999a9f249"
-        static let schemes = ["weixin"]
+        static let schemes = ["weixin", "wechat"]
     }
     
     struct QQ {

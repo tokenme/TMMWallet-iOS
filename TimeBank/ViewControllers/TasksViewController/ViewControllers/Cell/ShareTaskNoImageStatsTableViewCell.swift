@@ -30,6 +30,10 @@ class ShareTaskNoImageStatsTableViewCell: SwipeTableViewCell, NibReusable {
         super.awakeFromNib()
         rewardLabel.layer.cornerRadius = 5
         rewardLabel.clipsToBounds = true
+        rewardLabel.paddingBottom = 4
+        rewardLabel.paddingTop = 4
+        rewardLabel.paddingLeft = 16
+        rewardLabel.paddingRight = 16
         summaryTextView.textContainer.lineFragmentPadding = 0;
         summaryTextView.textContainerInset = UIEdgeInsets.zero;
         

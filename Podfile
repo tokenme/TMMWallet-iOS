@@ -39,6 +39,7 @@ target 'TimeBank' do
   pod 'Siren'
   pod 'SwiftRater'
   pod 'DropDown'
+  pod 'DynamicBlurView'
   pod 'mob_sharesdk'
   pod 'mob_sharesdk/ShareSDKUI'
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'

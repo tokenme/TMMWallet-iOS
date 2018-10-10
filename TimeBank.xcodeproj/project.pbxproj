@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D022EA0216DC8CA0030E4CC /* ReCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D022E9F216DC8CA0030E4CC /* ReCaptchaViewController.swift */; };
 		1D0370A92163CE4200E5E3CE /* FeedbackSlack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370A82163CE4200E5E3CE /* FeedbackSlack.swift */; };
 		1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370AA2163CE8900E5E3CE /* Reachability.swift */; };
 		1D0370C121649AF400E5E3CE /* FeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370C021649AF400E5E3CE /* FeedbackTableViewController.swift */; };
@@ -172,6 +173,7 @@
 
 /* Begin PBXFileReference section */
 		07E98AACD8560ACEB6EAD77A /* Pods-TimeBank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBank.debug.xcconfig"; path = "Target Support Files/Pods-TimeBank/Pods-TimeBank.debug.xcconfig"; sourceTree = "<group>"; };
+		1D022E9F216DC8CA0030E4CC /* ReCaptchaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCaptchaViewController.swift; sourceTree = "<group>"; };
 		1D0370A82163CE4200E5E3CE /* FeedbackSlack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSlack.swift; sourceTree = "<group>"; };
 		1D0370AA2163CE8900E5E3CE /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		1D0370C021649AF400E5E3CE /* FeedbackTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewController.swift; sourceTree = "<group>"; };
@@ -364,6 +366,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D022E9E216DC8B10030E4CC /* RecaptchaViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D022E9F216DC8CA0030E4CC /* ReCaptchaViewController.swift */,
+			);
+			path = RecaptchaViewController;
+			sourceTree = "<group>";
+		};
 		1D0370BF21649ABB00E5E3CE /* FeedbackViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -625,6 +635,7 @@
 				1D5FF688215B7852001E69CD /* ScanViewController */,
 				1D0370BF21649ABB00E5E3CE /* FeedbackViewController */,
 				1D0370E4216B59AC00E5E3CE /* TMMWebViewController */,
+				1D022E9E216DC8B10030E4CC /* RecaptchaViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
@@ -1048,6 +1059,7 @@
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/CountryPickerView/CountryPickerView.framework",
 				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
+				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GrandTime/GrandTime.framework",
 				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
@@ -1088,6 +1100,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryPickerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrandTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
@@ -1138,6 +1151,7 @@
 				1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */,
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */,
+				1D022EA0216DC8CA0030E4CC /* ReCaptchaViewController.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
 				1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */,

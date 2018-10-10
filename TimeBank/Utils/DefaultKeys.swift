@@ -52,6 +52,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
     var canPay: UInt8!
     var inviteCode: String = ""
     var inviterCode: String = ""
+    var exchangeEnabled: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -63,9 +64,10 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         case canPay
         case inviteCode
         case inviterCode
+        case exchangeEnabled
     }
     
-    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String) {
+    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String, exchangeEnabled: Bool) {
         self.id = id
         self.countryCode = countryCode
         self.mobile = mobile
@@ -75,6 +77,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.canPay = canPay
         self.inviteCode = inviteCode
         self.inviterCode = inviterCode
+        self.exchangeEnabled = exchangeEnabled
     }
     
     required init(from decoder: Decoder) throws {
@@ -88,6 +91,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.canPay = try container.decode(UInt8.self, forKey: .canPay)
         self.inviteCode = try container.decode(String.self, forKey: .inviteCode)
         self.inviterCode = try container.decode(String.self, forKey: .inviterCode)
+        self.exchangeEnabled = try container.decode(Bool.self, forKey: .exchangeEnabled)
     }
     
 }

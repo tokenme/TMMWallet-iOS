@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import Hydra
 
 enum TMMUserService {
-    case create(country: UInt, mobile: String, verifyCode: String, password: String, repassword: String)
+    case create(country: UInt, mobile: String, verifyCode: String, password: String, repassword: String, captcha: String)
     case resetPassword(country: UInt, mobile: String, verifyCode: String, password: String, repassword: String)
     case update(user: APIUser)
     case info(refresh: Bool)
@@ -29,7 +29,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
     var baseURL: URL { return URL(string: kAPIBaseURL + "/user")! }
     var path: String {
         switch self {
-        case .create(_, _, _, _, _):
+        case .create(_, _, _, _, _, _):
             return "/create"
         case .resetPassword(_, _, _, _, _):
             return "/reset-password"
@@ -51,8 +51,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
     }
     var task: Task {
         switch self {
-        case let .create(country, mobile, verifyCode, password, repassword):
-            return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "verify_code": verifyCode, "passwd": password, "repasswd": repassword], encoding: JSONEncoding.default)
+        case let .create(country, mobile, verifyCode, password, repassword, captcha):
+            return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "verify_code": verifyCode, "passwd": password, "repasswd": repassword, "captcha": captcha], encoding: JSONEncoding.default)
         case let .resetPassword(country, mobile, verifyCode, password, repassword):
             return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "verify_code": verifyCode, "passwd": password, "repasswd": repassword], encoding: JSONEncoding.default)
         case let .update(user):
@@ -78,7 +78,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
     }
     var sampleData: Data {
         switch self {
-        case .create(_, _, _, _, _):
+        case .create(_, _, _, _, _, _):
             return "ok".utf8Encoded
         case .resetPassword(_, _, _, _, _):
             return "ok".utf8Encoded
@@ -95,10 +95,10 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
 
 extension TMMUserService {
     
-    static func createUser(country: UInt, mobile: String, verifyCode: String, password: String, repassword: String, provider: MoyaProvider<TMMUserService>) -> Promise<APIResponse> {
+    static func createUser(country: UInt, mobile: String, verifyCode: String, password: String, repassword: String, captcha: String, provider: MoyaProvider<TMMUserService>) -> Promise<APIResponse> {
         return Promise<APIResponse> (in: .background, { resolve, reject, _ in
             provider.request(
-                .create(country: country, mobile: mobile, verifyCode: verifyCode, password: password, repassword: repassword)
+                .create(country: country, mobile: mobile, verifyCode: verifyCode, password: password, repassword: repassword, captcha: captcha)
             ){ result in
                 switch result {
                 case let .success(response):
@@ -164,7 +164,8 @@ extension TMMUserService {
                                 wallet: userInfo.wallet ?? "",
                                 canPay: userInfo.canPay ?? 0,
                                 inviteCode: userInfo.inviteCode ?? "",
-                                inviterCode: userInfo.inviterCode ?? "")
+                                inviterCode: userInfo.inviterCode ?? "",
+                                exchangeEnabled: userInfo.exchangeEnabled)
                             if Defaults[.currency] == nil || Defaults[.currency]!.isEmpty {
                                 switch userInfo.countryCode {
                                 case 1: Defaults[.currency] = Currency.USD.rawValue

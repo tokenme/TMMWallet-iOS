@@ -133,6 +133,15 @@ class RegisterViewController: UIViewController {
         if self.isRegistering {
             return
         }
+        let vc = ReCaptchaViewController()
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func doRegister(recaptcha: String) {
+        if self.isRegistering {
+            return
+        }
         self.isRegistering = true
         
         let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
@@ -152,6 +161,7 @@ class RegisterViewController: UIViewController {
                 verifyCode: verifyCode,
                 password: passwd,
                 repassword: repasswd,
+                captcha: recaptcha,
                 provider: weakSelf.userServiceProvider)
         }).then(in: .main, {[weak self] user in
             guard let weakSelf = self else {
@@ -168,18 +178,24 @@ class RegisterViewController: UIViewController {
             default: break
             }
             guard let weakSelf = self else { return }
-            weakSelf.registerButton.stopAnimation(animationStyle: .shake, completion: {})
-            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            weakSelf.registerButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
+                guard let weakSelf2 = weakSelf else { return }
+                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            })
         }).always(in: .main, body: {[weak self]  in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             weakSelf.isRegistering = false
         })
     }
     
     @IBAction private func close() {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension RegisterViewController: ReCaptchaDelegate {
+    func didSolve(response: String) {
+        self.doRegister(recaptcha: response)
     }
 }
 

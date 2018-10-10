@@ -81,6 +81,16 @@ class LoginViewController: UIViewController {
         if !valid {
             return
         }
+        let vc = ReCaptchaViewController()
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func doLogin(recaptcha: String) {
+        if isLogining {
+            return
+        }
+        
         let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
         let mobile = self.telephoneTextField.text!
         let passwd = self.passwordTextfield.text!
@@ -93,6 +103,7 @@ class LoginViewController: UIViewController {
                 country: country!,
                 mobile: mobile,
                 password: passwd,
+                captcha: recaptcha,
                 provider: weakSelf.authServiceProvider)
             let _ = try ..weakSelf.getUserInfoAndBindDevice()
         }).then(in: .main, {[weak self] _ in
@@ -100,7 +111,6 @@ class LoginViewController: UIViewController {
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.delegate?.loginSucceeded(token: nil)
                 weakSelf.dismiss(animated: true, completion: nil)
-                //weakSelf.navigationController?.popViewController(animated: true)
             })
         }).catch(in: .main, {[weak self] error in
             switch error as! TMMAPIError {
@@ -109,8 +119,10 @@ class LoginViewController: UIViewController {
             default: break
             }
             guard let weakSelf = self else { return  }
-            weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: {})
-            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
+                guard let weakSelf2 = weakSelf else { return }
+                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            })
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.bindingDevice = false
@@ -170,6 +182,12 @@ class LoginViewController: UIViewController {
         })
     }
 
+}
+
+extension LoginViewController: ReCaptchaDelegate {
+    func didSolve(response: String) {
+        self.doLogin(recaptcha: response)
+    }
 }
 
 extension LoginViewController {

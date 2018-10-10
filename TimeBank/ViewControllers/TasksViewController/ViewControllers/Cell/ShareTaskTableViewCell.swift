@@ -23,6 +23,10 @@ class ShareTaskTableViewCell: SwipeTableViewCell, NibReusable {
         super.awakeFromNib()
         rewardLabel.layer.cornerRadius = 5
         rewardLabel.clipsToBounds = true
+        rewardLabel.paddingBottom = 4
+        rewardLabel.paddingTop = 4
+        rewardLabel.paddingLeft = 16
+        rewardLabel.paddingRight = 16
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

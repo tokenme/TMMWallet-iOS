@@ -1209,6 +1209,25 @@
                                 <rect key="frame" x="0.0" y="525" width="375" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t5q-Iw-Lks" customClass="DynamicBlurView" customModule="DynamicBlurView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqt-bE-JlG">
+                                        <rect key="frame" x="30" y="236.5" width="315" height="81.5"/>
+                                        <string key="text">Buying digital currencies like bitcoin and ethereum is not enabled in your country yet. We're working hard to bring this feature to as many countries as possible.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="fqt-bE-JlG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="t5q-Iw-Lks" secondAttribute="leading" constant="30" id="0CX-mz-dD8"/>
+                                    <constraint firstItem="fqt-bE-JlG" firstAttribute="centerY" secondItem="t5q-Iw-Lks" secondAttribute="centerY" id="QKk-Mp-MXA"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fqt-bE-JlG" secondAttribute="trailing" constant="30" id="dmV-1M-L5P"/>
+                                    <constraint firstItem="fqt-bE-JlG" firstAttribute="centerX" secondItem="t5q-Iw-Lks" secondAttribute="centerX" id="g8T-on-0cP"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1218,6 +1237,7 @@
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="ltq-Rk-Rn1" secondAttribute="trailing" id="88y-uL-X9d"/>
                             <constraint firstItem="Try-h8-Bjf" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="9Zx-vm-VVB"/>
                             <constraint firstItem="rbV-DH-pKT" firstAttribute="top" secondItem="meA-Ac-WLU" secondAttribute="bottom" constant="16" id="9dL-pL-roC"/>
+                            <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="t5q-Iw-Lks" secondAttribute="trailing" id="APt-TC-R1n"/>
                             <constraint firstItem="rbV-DH-pKT" firstAttribute="trailing" secondItem="meA-Ac-WLU" secondAttribute="trailing" constant="-8" id="EV7-gd-pvk"/>
                             <constraint firstItem="rbV-DH-pKT" firstAttribute="leading" secondItem="meA-Ac-WLU" secondAttribute="leading" constant="8" id="FD0-5z-VhZ"/>
                             <constraint firstItem="ltq-Rk-Rn1" firstAttribute="bottom" secondItem="frt-jU-t9l" secondAttribute="bottom" constant="1" id="GLB-5u-ln4"/>
@@ -1230,10 +1250,13 @@
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="Ohw-gT-bhs" secondAttribute="trailing" constant="32" id="NpR-fh-4mU"/>
                             <constraint firstItem="meA-Ac-WLU" firstAttribute="top" secondItem="EKi-IX-AdD" secondAttribute="bottom" constant="16" id="OZa-gk-GFn"/>
                             <constraint firstItem="Try-h8-Bjf" firstAttribute="bottom" secondItem="EKi-IX-AdD" secondAttribute="top" constant="8" id="VLN-Uu-0Qo"/>
+                            <constraint firstItem="frt-jU-t9l" firstAttribute="bottom" secondItem="t5q-Iw-Lks" secondAttribute="bottom" id="VsJ-zS-1O4"/>
                             <constraint firstItem="Try-h8-Bjf" firstAttribute="top" secondItem="sxq-vw-aQY" secondAttribute="bottom" constant="16" id="Zqx-67-svL"/>
                             <constraint firstItem="sxq-vw-aQY" firstAttribute="top" secondItem="frt-jU-t9l" secondAttribute="top" constant="8" id="bTm-m9-g0f"/>
+                            <constraint firstItem="t5q-Iw-Lks" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" id="dSk-a4-Pdh"/>
                             <constraint firstItem="sxq-vw-aQY" firstAttribute="leading" relation="lessThanOrEqual" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="hin-qZ-hpT"/>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="sxq-vw-aQY" secondAttribute="trailing" constant="16" id="j8V-xh-dFt"/>
+                            <constraint firstItem="frt-jU-t9l" firstAttribute="top" secondItem="t5q-Iw-Lks" secondAttribute="top" id="lBt-Tw-gRa"/>
                             <constraint firstItem="EKi-IX-AdD" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="lsx-Qt-qX6"/>
                             <constraint firstItem="frt-jU-t9l" firstAttribute="trailing" secondItem="EKi-IX-AdD" secondAttribute="trailing" constant="16" id="syy-eQ-4f0"/>
                             <constraint firstItem="meA-Ac-WLU" firstAttribute="leading" secondItem="frt-jU-t9l" secondAttribute="leading" constant="16" id="wKz-iC-v0V"/>
@@ -1246,11 +1269,13 @@
                         <outlet property="amountInputLabel" destination="mbD-Or-dOy" id="4DC-kR-eSP"/>
                         <outlet property="amountInputWrapper" destination="gqk-Jz-zSn" id="OXV-9U-csa"/>
                         <outlet property="amountTextField" destination="dvr-mn-bcG" id="2Qq-Bt-9c2"/>
+                        <outlet property="blurOverlay" destination="t5q-Iw-Lks" id="59t-Tr-asv"/>
                         <outlet property="buyOrdersLabel" destination="fQM-Vu-cBy" id="gI4-U9-Vhu"/>
                         <outlet property="buySelectButton" destination="EdZ-nv-xTr" id="Zrn-th-THy"/>
                         <outlet property="chartRangeControl" destination="EKi-IX-AdD" id="rdS-kJ-154"/>
                         <outlet property="chartTitleLabel" destination="sxq-vw-aQY" id="zfW-bu-ZMV"/>
                         <outlet property="chartView" destination="Try-h8-Bjf" id="nvW-F8-sLt"/>
+                        <outlet property="featureNotAvailableLabel" destination="fqt-bE-JlG" id="X4u-OB-wkl"/>
                         <outlet property="priceInputLabel" destination="O4U-Hx-me4" id="OgD-ba-AnC"/>
                         <outlet property="priceInputWrapper" destination="LFJ-Vt-H7C" id="M0S-1T-aB2"/>
                         <outlet property="priceTextField" destination="BGM-dG-eU3" id="U0t-H5-LrD"/>

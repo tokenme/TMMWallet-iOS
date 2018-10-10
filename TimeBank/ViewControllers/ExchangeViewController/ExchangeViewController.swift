@@ -16,6 +16,7 @@ import SkeletonView
 import ViewAnimator
 import Presentr
 import Charts
+import DynamicBlurView
 
 class ExchangeViewController: UIViewController {
     
@@ -65,6 +66,8 @@ class ExchangeViewController: UIViewController {
     private var topAsks: [APIOrderBook] = []
     private var topBids: [APIOrderBook] = []
     
+    @IBOutlet private weak var blurOverlay: DynamicBlurView!
+    @IBOutlet private weak var featureNotAvailableLabel: UILabel!
     @IBOutlet private weak var chartTitleLabel: UILabel!
     @IBOutlet private weak var chartView: LineChartView!
     @IBOutlet private weak var chartRangeControl: UISegmentedControl!
@@ -115,6 +118,14 @@ class ExchangeViewController: UIViewController {
             let myOrdersBarItem = UIBarButtonItem(title: I18n.myOrderbooks.description, style: .plain, target: self, action: #selector(self.showMyOrdersView))
             navigationItem.rightBarButtonItem = myOrdersBarItem
         }
+        blurOverlay.blurRatio = 0.5
+        blurOverlay.trackingMode = .common
+        UIView.animate(withDuration: 0.5) {[weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.blurOverlay.blurRadius = 20
+            weakSelf.featureNotAvailableLabel.alpha = 1
+        }
+        featureNotAvailableLabel.text = I18n.exchangeNotAvailableInYourCountryError.description
         
         amountInputWrapper.layer.borderColor = UIColor.lightGray.cgColor
         amountInputWrapper.layer.borderWidth = 0.5
@@ -149,6 +160,7 @@ class ExchangeViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        blurOverlay.isHidden = userInfo?.exchangeEnabled ?? false
         refresh()
     }
     

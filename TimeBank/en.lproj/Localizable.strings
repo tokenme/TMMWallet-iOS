@@ -17,6 +17,7 @@
 "InvalidPasswordError" = "Invalid Password";
 "DuplicateUserError" = "User Already Exists";
 "InactivatedUserError" = "User not activated";
+"InvalidCaptchaError" = "Invalid Captcha";
 "NotEnoughTokenError" = "Don't have enough token";
 "NotEnoughPointsError" = "Don't have enough points";
 "InvalidMinPointsError" = "Need at least #points# points";
@@ -27,6 +28,7 @@
 "MaxBindDeviceError" = "Exceeded maximum binding devices limit, please unbind a device";
 "OtherBindDeviceError" = "This device has been binded by some others";
 "InvalidCdpVendorError" = "Your phone number is not supported. Currently we only support China Mobile, China UnionCom and China Telecom.";
+"ExchangeNotAvailableInYourCountryError" = "Buying digital currencies like bitcoin and ethereum is not enabled in your country yet. We're working hard to bring this feature to as many countries as possible.";
 
 "Refresh" = "Refresh";
 "Copy" = "Copy";
