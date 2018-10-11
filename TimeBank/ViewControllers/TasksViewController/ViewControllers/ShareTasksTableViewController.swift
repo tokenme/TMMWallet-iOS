@@ -154,7 +154,7 @@ extension ShareTasksTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.tasks.count < indexPath.row + 1 { return }
-        let cell = tableView.cellForRow(at: indexPath) as? ShareTaskTableViewCell
+        let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
         let task = tasks[indexPath.row]
         if let imageURL = task.image {

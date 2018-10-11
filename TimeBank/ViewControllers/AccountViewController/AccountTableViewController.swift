@@ -26,6 +26,7 @@ enum AccountTableCellType {
     case inviteSummary
     case myInviteCode
     case inviteCode
+    case bindWechatAccount
     case currency
     case telegramGroup
     case wechatGroup
@@ -82,7 +83,7 @@ class AccountTableViewController: UITableViewController {
     
     private var contacts:[String:String] = [:]
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
+    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
     
     @IBOutlet private weak var avatarImageView : UIImageView!
     @IBOutlet private weak var mobileLabel: UILabel!
@@ -94,6 +95,8 @@ class AccountTableViewController: UITableViewController {
     @IBOutlet private weak var inviteIncomeTitleLabel: UILabel!
     @IBOutlet private weak var inviteCodeLabel: UILabel!
     @IBOutlet private weak var inviteCodeTextField: UITextField!
+    @IBOutlet private weak var bindWechatAccountLabel: UILabel!
+    @IBOutlet private weak var bindWechatStatusLabel: UILabelPadding!
     @IBOutlet private weak var currencyTitleLabel: UILabel!
     @IBOutlet private weak var currentCurrencyLabel: UILabel!
     @IBOutlet private weak var telegramGroupLabel: UILabel!
@@ -107,6 +110,7 @@ class AccountTableViewController: UITableViewController {
     private var loadingUserInfo: Bool = false
     private var loadingInviteSummary: Bool = false
     private var gettingContacts: Bool = false
+    private var bindingWechat: Bool = false
     
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
@@ -133,6 +137,14 @@ class AccountTableViewController: UITableViewController {
         myInviteCodeLabel.text = I18n.myInviteCode.description
         inviteCodeLabel.text = I18n.inviteCode.description
         inviteCodeTextField.attributedPlaceholder = NSAttributedString(string: I18n.inviteCodePlaceholder.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
+        bindWechatAccountLabel.text = I18n.bindWechatAccount.description
+        bindWechatStatusLabel.layer.cornerRadius = 5;
+        bindWechatStatusLabel.clipsToBounds = true
+        bindWechatStatusLabel.paddingTop = 2
+        bindWechatStatusLabel.paddingBottom = 2
+        bindWechatStatusLabel.paddingLeft = 4
+        bindWechatStatusLabel.paddingRight = 4
+        
         currencyTitleLabel.text = I18n.currency.description
         currentCurrencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
         telegramGroupLabel.text = I18n.telegramGroup.description
@@ -193,7 +205,6 @@ class AccountTableViewController: UITableViewController {
             default: break
             }
             guard let weakSelf = self else { return  }
-            weakSelf.inviteCodeTextField.text = ""
             UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
         }).always(in: .background, body: {[weak self]  in
             guard let weakSelf = self else { return }
@@ -204,7 +215,11 @@ class AccountTableViewController: UITableViewController {
     
     private func updateView() {
         guard let userInfo = self.userInfo else { return }
-        mobileLabel.text = "+\(userInfo.countryCode!)\(userInfo.mobile!)"
+        if let showName = userInfo.showName {
+            mobileLabel.text = showName
+        } else {
+            mobileLabel.text = "+\(userInfo.countryCode!)\(userInfo.mobile!)"
+        }
         if let avatar = userInfo.avatar {
             avatarImageView.kf.setImage(with: URL(string: avatar))
         }
@@ -222,6 +237,16 @@ class AccountTableViewController: UITableViewController {
             inviteCodeTextField.isEnabled = false
         } else {
             inviteCodeTextField.isEnabled = true
+        }
+        
+        if ShareSDK.hasAuthorized(.typeWechat) {
+            bindWechatStatusLabel.backgroundColor = UIColor.greenGrass
+            bindWechatStatusLabel.text = I18n.binded.description
+            bindWechatStatusLabel.textColor = .white
+        } else {
+            bindWechatStatusLabel.backgroundColor = UIColor(white: 0.9, alpha: 1)
+            bindWechatStatusLabel.text = I18n.notbinded.description
+            bindWechatStatusLabel.textColor = .darkGray
         }
     }
     
@@ -290,13 +315,19 @@ extension AccountTableViewController: UIViewControllerTransitioningDelegate {
 // MARK: - Table view data source
 extension AccountTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.sections.count < indexPath.section + 1 { return }
-        if self.sections[indexPath.section].count < indexPath.row + 1 { return }
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
+        if self.sections.count < indexPath.section + 1 { return }
+        if self.sections[indexPath.section].count < indexPath.row + 1 { return }
         switch self.sections[indexPath.section][indexPath.row] {
         case .myInviteCode:
             self.showMyInviteCode()
+        case .bindWechatAccount:
+            if ShareSDK.hasAuthorized(.typeWechat) {
+                self.getWechatInfo()
+                return
+            }
+            self.bindWechat()
         case .currency:
             self.showChooseCurrency()
         case .telegramGroup:
@@ -440,6 +471,74 @@ extension AccountTableViewController {
                 weakSelf.tableView.header?.endRefreshing()
                 }
         )
+    }
+    
+    private func doBindWechat(unionId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval) {
+        if self.bindingWechat {
+            return
+        }
+        self.bindingWechat = true
+        
+        TMMUserService.bindWechatInfo(
+            unionId: unionId,
+            nick: nick,
+            avatar: avatar,
+            gender: gender,
+            accessToken: accessToken,
+            expires: expires,
+            provider: self.userServiceProvider)
+            .then(in: .main, {[weak self] _ in
+                guard let weakSelf = self else { return }
+                weakSelf.getUserInfo().catch(in: .main, {[weak weakSelf] error in
+                    switch error as! TMMAPIError {
+                    case .ignore:
+                        return
+                    default: break
+                    }
+                    guard let weakSelf2 = weakSelf else { return  }
+                    UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                }).always(in: .background, body: {[weak weakSelf]  in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.loadingUserInfo = false
+                })
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.bindingWechat = false
+                }
+        )
+    }
+    
+    private func bindWechat() {
+        ShareSDK.authorize(.typeWechat, settings: nil) { [weak self] (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+            guard let weakSelf = self else { return }
+            switch state {
+            case .success:
+                guard let userInfo = user else { return }
+                weakSelf.doBindWechat(unionId: userInfo.uid, nick: userInfo.nickname, avatar: userInfo.icon, gender: userInfo.gender, accessToken: userInfo.credential.token, expires: userInfo.credential.expired)
+            case .fail:
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error?.localizedDescription ?? "failed", closeBtn: I18n.close.description)
+            default:
+                print("not catched auth state")
+            }
+        }
+    }
+    
+    private func getWechatInfo() {
+        ShareSDK.getUserInfo(SSDKPlatformType.typeWechat) {[weak self] (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+            guard let weakSelf = self else { return }
+            switch state {
+            case .success:
+                guard let userInfo = user else { return }
+                weakSelf.doBindWechat(unionId: userInfo.uid, nick: userInfo.nickname, avatar: userInfo.icon, gender: userInfo.gender, accessToken: userInfo.credential.token, expires: userInfo.credential.expired)
+            case .fail:
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error?.localizedDescription ?? "failed", closeBtn: I18n.close.description)
+            default:
+                print("not catched auth state")
+            }
+        }
     }
 }
 

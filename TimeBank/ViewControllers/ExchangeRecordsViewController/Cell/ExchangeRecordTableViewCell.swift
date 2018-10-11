@@ -35,7 +35,7 @@ class ExchangeRecordTableViewCell: UITableViewCell, NibReusable {
         formatter.numberStyle = NumberFormatter.Style.decimal
         let formattedTmm = formatter.string(from: record.tmm)!
         let formattedPoints = formatter.string(from: record.points)!
-        let tmmTxt = "\(formattedTmm) TBC"
+        let tmmTxt = "\(formattedTmm) UC"
         let pointsTxt = "\(formattedPoints) \(I18n.points.description)"
         if record.direction == APIExchangeDirection.TMMIn {
             fromLabel.text = pointsTxt

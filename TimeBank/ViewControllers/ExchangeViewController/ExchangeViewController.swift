@@ -158,7 +158,7 @@ class ExchangeViewController: UIViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = false
-            navigationController.setNavigationBarHidden(false, animated: animated)
+            navigationController.setNavigationBarHidden(!(userInfo?.exchangeEnabled ?? false), animated: animated)
         }
         blurOverlay.isHidden = userInfo?.exchangeEnabled ?? false
         refresh()

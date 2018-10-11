@@ -136,9 +136,9 @@ extension ExchangeRecordsTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if recordType == 1 { return }
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
+        if recordType == 1 { return }
         if self.records.count < indexPath.row + 1 { return }
         let record = self.records[indexPath.row]
         guard let receipt = record.tx else { return }

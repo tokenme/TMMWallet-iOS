@@ -51,9 +51,9 @@ class PointsTMMExchangeViewController: UIViewController {
         guard let rate = changeRate?.rate else { return }
         guard let direction = self.direction else { return }
         if direction == .TMMIn {
-            titleLabel.text = "\(I18n.points.description) \(I18n.changeTo.description) TBC"
+            titleLabel.text = "\(I18n.points.description) \(I18n.changeTo.description) UC"
         } else {
-            titleLabel.text = "TBC \(I18n.changeTo.description) \(I18n.points.description)"
+            titleLabel.text = "UC \(I18n.changeTo.description) \(I18n.points.description)"
         }
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 4

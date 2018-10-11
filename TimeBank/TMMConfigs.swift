@@ -32,8 +32,8 @@ struct TMMConfigs {
     }
     
     struct WeChat {
-        static let appID = "wx4868b35061f87885"
-        static let appKey = "64020361b8ec4c99936c0e3999a9f249"
+        static let appID = "wx0a039e7ca8ba313d"
+        static let appKey = "93ec8a485c885fa3d69510ef9fb1c8a9"
         static let schemes = ["weixin", "wechat"]
     }
     

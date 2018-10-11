@@ -158,6 +158,9 @@ enum I18n: CustomStringConvertible {
     case copyInviteCode
     case inviteUsers
     case inviteIncome
+    case bindWechatAccount
+    case binded
+    case notbinded
     case buy
     case sell
     case amount
@@ -345,7 +348,7 @@ enum I18n: CustomStringConvertible {
         case .changeTo:
             return NSLocalizedString("ChangeTo", comment: "Change to")
         case .toTBC:
-            return NSLocalizedString("ToTBC", comment: "To TBC")
+            return NSLocalizedString("ToTBC", comment: "To UC")
         case .toPoints:
             return NSLocalizedString("ToPoints", comment: "To Points")
         case .toMobileData:
@@ -488,6 +491,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InviteUsers", comment: "Invite Users")
         case .inviteIncome:
             return NSLocalizedString("InviteIncome", comment: "Invite Income")
+        case .bindWechatAccount:
+            return NSLocalizedString("BindWechatAccount", comment: "Bind Wechat Account")
+        case .binded:
+            return NSLocalizedString("Binded", comment: "BINDED")
+        case .notbinded:
+            return NSLocalizedString("NotBinded", comment: "NOT BINDED")
         case .buy:
             return NSLocalizedString("Buy", comment: "Buy")
         case .sell:
@@ -515,7 +524,7 @@ enum I18n: CustomStringConvertible {
         case .myOrderbooks:
             return NSLocalizedString("MyOrderbooks", comment: "My Orders")
         case .dealAmount:
-            return NSLocalizedString("DealAmount", comment: "Deal TBC")
+            return NSLocalizedString("DealAmount", comment: "Deal UC")
         case .dealETH:
             return NSLocalizedString("DealETH", comment: "Deal ETH")
         case .orderbookPending:

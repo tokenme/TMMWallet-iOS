@@ -10,8 +10,8 @@
 /* Class = "UITabBarItem"; title = "Rewards"; ObjectID = "yvo-pS-BZM"; */
 "yvo-pS-BZM.title" = "Rewards";
 
-/* Class = "UILabel"; text = "TBC"; ObjectID = "BhT-mn-xAa"; */
+/* Class = "UILabel"; text = "Points"; ObjectID = "BhT-mn-xAa"; */
 "BhT-mn-xAa.text" = "Points";
 
-/* Class = "UILabel"; text = "TBC"; ObjectID = "RAP-xT-Qzn"; */
+/* Class = "UILabel"; text = "Points"; ObjectID = "RAP-xT-Qzn"; */
 "RAP-xT-Qzn.text" = "Points";

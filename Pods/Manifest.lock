@@ -100,7 +100,7 @@ PODS:
   - TACMessaging (1.0.0):
     - AOPKit (= 1.0.1)
     - TACCore (= 1.0.0)
-  - TMMSDK (0.3.0)
+  - TMMSDK (0.3.8)
   - ViewAnimator (2.2.0)
   - ZHRefresh (0.2.1)
 
@@ -149,7 +149,7 @@ DEPENDENCIES:
   - TACCore
   - TACCrash
   - TACMessaging
-  - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.3.0`)
+  - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.3.8`)
   - ViewAnimator (~> 2.2)
   - ZHRefresh (from `https://github.com/tokenme/ZHRefresh.git`, tag `0.2.1`)
 
@@ -210,7 +210,7 @@ EXTERNAL SOURCES:
     :tag: 1.1.7
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
-    :tag: 0.3.0
+    :tag: 0.3.8
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
     :tag: 0.2.1
@@ -227,7 +227,7 @@ CHECKOUT OPTIONS:
     :tag: 1.1.7
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
-    :tag: 0.3.0
+    :tag: 0.3.8
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
     :tag: 0.2.1
@@ -276,10 +276,10 @@ SPEC CHECKSUMS:
   TACCore: a0d0286c860f02c4f364fcf74c7808b81740ef14
   TACCrash: 1d794f11ba159001aa9d37e7c8b2edc5c5766ae6
   TACMessaging: 7e9414193ee6d83b5e19202d7d2bbed8b5498963
-  TMMSDK: da6b6afdf4d8af5debd1f4c2a8c571efeecb4d8a
+  TMMSDK: 881e9c6a903fb0c4aa97bf16b13a5b350d0ba41a
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 1ce2b2db4eda9a664f6dcd031216895c0abc68e2
+PODFILE CHECKSUM: 4767e09e94a151a35368925017a9e73e7676abf9
 
 COCOAPODS: 1.6.0.beta.1

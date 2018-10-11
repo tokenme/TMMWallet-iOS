@@ -289,6 +289,8 @@ extension ETHWalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.isSelected = false
         let token = self.tokens[indexPath.row]
         let vc = TransactionsTableViewController.instantiate()
         vc.setToken(token: token)
