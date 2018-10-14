@@ -41,14 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         refreshToken()
         
-        _ = FeedbackSlack.setup(TMMConfigs.Slack.key, slackChannel: TMMConfigs.Slack.feedbackChannel)
-        if let userInfo: DefaultsUser = Defaults[.user] {
-            FeedbackSlack.shared?.options = [
-                "UserID": "\(userInfo.id ?? 0)",
-                "CountryCode": "\(userInfo.countryCode ?? 0)"
-            ]
-        }
-        
         Siren.shared.checkVersion(checkType: .immediately)
         
         SwiftRater.daysUntilPrompt = 7

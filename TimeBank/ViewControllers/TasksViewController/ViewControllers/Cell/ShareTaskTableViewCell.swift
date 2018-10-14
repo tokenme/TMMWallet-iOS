@@ -48,7 +48,7 @@ class ShareTaskTableViewCell: SwipeTableViewCell, NibReusable {
         let formattedBonus: String = formatter.string(from: task.bonus)!
         let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
         let formattedMaxBonus: String = formatter.string(from: maxBonus)!
-        let rewardMsg = I18n.shareTaskRewardDesc.description.replacingOccurrences(of: "#points#", with: formattedBonus).replacingOccurrences(of: "#points2#", with: formattedMaxBonus)
+        let rewardMsg = String(format: I18n.shareTaskRewardDesc.description, formattedBonus, formattedMaxBonus)
         rewardLabel.text = rewardMsg
     }
 }

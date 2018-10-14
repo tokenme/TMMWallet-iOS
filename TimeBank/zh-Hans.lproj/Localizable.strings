@@ -20,8 +20,9 @@
 "InvalidCaptchaError" = "人机验证失败";
 "NotEnoughTokenError" = "没有足够的代币";
 "NotEnoughPointsError" = "没有足够的积分";
-"InvalidMinPointsError" = "至少需要 #points# 积分";
-"NotEnoughETHError" = "至少需要 #eth# ETH";
+"InvalidMinPointsError" = "至少需要 %@ 积分";
+"InvalidMinTMMError" = "至少需要 %@ UC";
+"NotEnoughETHError" = "至少需要 %@ ETH";
 "UploadImageError" = "上传图片失败";
 "MaxQuerySchemeError" = "请更新App至最新版本，否则部分应用安装任务无法验证是否成功！";
 "InvalidInviteCodeError" = "邀请码错误";
@@ -29,6 +30,7 @@
 "OtherBindDeviceError" = "该设备被其他人绑定了";
 "InvalidCdpVendorError" = "暂不支持您手机号码运营商充值，目前仅支持中国移动、中国联通、中国电信下的手机号码(不支持虚拟运营商)";
 "ExchangeNotAvailableInYourCountryError" = "在您的国家暂时无法提供购买或销售数字货币功能。我们正努力将该功能带入更多国家。";
+"FeatureNotAvailableError" = "该功能暂不开放，请稍后访问。";
 
 "Refresh" = "刷新";
 "Copy" = "复制";
@@ -58,7 +60,7 @@
 "Receive" = "接收";
 "Send" = "转出";
 "ReceiveQRCode" = "收币码";
-"NeedMinGasError" = "钱包内至少需要 #gas# Ether";
+"NeedMinGasError" = "钱包内至少需要 %@ Ether";
 "Balance" = "余额";
 "TransferAmount" = "转账数量";
 "To" = "至";
@@ -73,6 +75,12 @@
 "UnbindDeviceExplain" = "该设备未绑定，绑定该设备获取积分。";
 "Unbind" = "解绑";
 "ConfirmUnbind" = "确定解绑该设备？";
+"Withdraw" = "提现";
+"CurrentTMMRedeemRate" = "当前兑换率: 1 UC = %@ %@";
+"TMMAmount" = "UC 数量";
+"TMMWithdrawAmount" = "≈ %@ %@";
+"EmptyWithdrawTMM" = "请输入 UC 数量";
+"WithdrawSuccessMsg" = "您已成功兑换 %@UC 为 %@%@";
 
 // Apps
 "SDKApps" = "可挖矿应用";
@@ -84,14 +92,14 @@
 "ExchangeTMM" = "积分兑换UC";
 "ExchangePoint" = "UC兑换积分";
 "PointsAmount" = "积分数量";
-"CurrentPointsTMMExchangeRate" = "当前兑换率：1 积分 ≈ #rate# UC";
+"CurrentPointsTMMExchangeRate" = "当前兑换率：1 积分 ≈ %@ UC";
 "EmptyChangePoints" = "请输入积分数量";
 "ExceedChangePoints" = "超出最大积分数";
-"PointsTMMChangeAmount" = "≈ #amount# UC";
+"PointsTMMChangeAmount" = "≈ %@ UC";
 "Exchange" = "兑换";
 "ViewTransaction" = "查看交易";
 "NewTransactionTitle" = "新交易";
-"NewTransactionDesc" = "交易回执: #receipt#";
+"NewTransactionDesc" = "交易回执: %@";
 "ChangeTo" = "兑换";
 "ToTBC" = "兑换UC";
 "ToPoints" = "兑换积分";
@@ -112,10 +120,9 @@
 "ShareTasks" = "分享链接";
 "Earn" = "获得";
 "MinusPoints" = "扣除";
-"PointsPerViewer" = "分享后每个新用户浏览获得 #points# 积分";
 "MaxBonus" = "最多奖励";
 "Points" = "积分";
-"ShareTaskRewardDesc" = "分享后每个新用户浏览获得 #points# 积分, 最多奖励 #points2# 积分";
+"ShareTaskRewardDesc" = "分享后每个新用户浏览获得 %@ 积分, 最多奖励 %@ 积分";
 "View" = "浏览";
 "Times" = "次";
 "PointsPerInstall" = "积分/安装";
@@ -131,6 +138,7 @@
 "SubmitTask" = "发布任务";
 "SubmitNewAppTask" = "发布应用下载任务";
 "SubmitNewShareTask" = "发布分享链接任务";
+"SubmitAppTaskNotAvailable" = "iOS平台发布应用下载任务暂时不支持直接发布，请将需求反馈给客服，我们会安排专人与您联系。";
 "EditAppTask" = "编辑应用下载任务";
 "EditShareTask" = "编辑分享链接任务";
 "URL" = "链接";

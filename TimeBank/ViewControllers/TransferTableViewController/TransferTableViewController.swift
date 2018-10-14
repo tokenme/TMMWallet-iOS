@@ -236,7 +236,7 @@ extension TransferTableViewController {
             .then(in: .main, {[weak self] tx in
                 guard let weakSelf = self else { return }
                 guard let receipt = tx.receipt else { return }
-                let message = I18n.newTransactionDesc.description.replacingOccurrences(of: "#receipt#", with: receipt)
+                let message = String(format: I18n.newTransactionDesc.description, receipt)
                 let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
                 let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
                     //

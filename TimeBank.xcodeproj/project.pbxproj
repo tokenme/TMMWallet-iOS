@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1D022EA0216DC8CA0030E4CC /* ReCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D022E9F216DC8CA0030E4CC /* ReCaptchaViewController.swift */; };
-		1D0370A92163CE4200E5E3CE /* FeedbackSlack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370A82163CE4200E5E3CE /* FeedbackSlack.swift */; };
 		1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370AA2163CE8900E5E3CE /* Reachability.swift */; };
 		1D0370C121649AF400E5E3CE /* FeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370C021649AF400E5E3CE /* FeedbackTableViewController.swift */; };
 		1D0370C321649FA500E5E3CE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0370C221649FA500E5E3CE /* CoreTelephony.framework */; };
@@ -141,6 +140,11 @@
 		1D5FF687215B6514001E69CD /* MyOrderbooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */; };
 		1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF689215B7867001E69CD /* ScanViewController.swift */; };
 		1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */; };
+		1DA38EC72170753F0073DB8A /* TMMRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */; };
+		1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */; };
+		1DA38ECA217084380073DB8A /* APITMMWithdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */; };
+		1DA38ECC21735BE60073DB8A /* TMMFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38ECB21735BE60073DB8A /* TMMFeedbackService.swift */; };
+		1DA38ECE21738EB70073DB8A /* APIFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38ECD21738EB70073DB8A /* APIFeedback.swift */; };
 		1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB432932155048C0034B810 /* ExchangeViewController.swift */; };
 		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
 		1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */; };
@@ -174,7 +178,6 @@
 /* Begin PBXFileReference section */
 		07E98AACD8560ACEB6EAD77A /* Pods-TimeBank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBank.debug.xcconfig"; path = "Target Support Files/Pods-TimeBank/Pods-TimeBank.debug.xcconfig"; sourceTree = "<group>"; };
 		1D022E9F216DC8CA0030E4CC /* ReCaptchaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCaptchaViewController.swift; sourceTree = "<group>"; };
-		1D0370A82163CE4200E5E3CE /* FeedbackSlack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSlack.swift; sourceTree = "<group>"; };
 		1D0370AA2163CE8900E5E3CE /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		1D0370C021649AF400E5E3CE /* FeedbackTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewController.swift; sourceTree = "<group>"; };
 		1D0370C221649FA500E5E3CE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -316,6 +319,11 @@
 		1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderbooksViewController.swift; sourceTree = "<group>"; };
 		1D5FF689215B7867001E69CD /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeResult.swift; sourceTree = "<group>"; };
+		1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMRedeemViewController.swift; sourceTree = "<group>"; };
+		1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TMMRedeemViewController.xib; sourceTree = "<group>"; };
+		1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITMMWithdraw.swift; sourceTree = "<group>"; };
+		1DA38ECB21735BE60073DB8A /* TMMFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMFeedbackService.swift; sourceTree = "<group>"; };
+		1DA38ECD21738EB70073DB8A /* APIFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFeedback.swift; sourceTree = "<group>"; };
 		1DB432932155048C0034B810 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
 		1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsTableViewController.swift; sourceTree = "<group>"; };
@@ -377,7 +385,6 @@
 		1D0370BF21649ABB00E5E3CE /* FeedbackViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1D0370A82163CE4200E5E3CE /* FeedbackSlack.swift */,
 				1D0370C021649AF400E5E3CE /* FeedbackTableViewController.swift */,
 			);
 			path = FeedbackViewController;
@@ -526,6 +533,8 @@
 			children = (
 				1D1D6FC32147A5680001ED49 /* ETHWalletViewController.swift */,
 				1D1D6FD821492D330001ED49 /* WalletQRCodeViewController.swift */,
+				1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */,
+				1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */,
 				1D1D6FC72147B8FA0001ED49 /* Cell */,
 			);
 			path = ETHWalletViewController;
@@ -659,6 +668,7 @@
 				1DEC544B2150F5A9007A46D5 /* TMMQiniuService.swift */,
 				1D0370C62165E2E900E5E3CE /* TMMContactService.swift */,
 				1D0370CC21660FD100E5E3CE /* TMMRedeemService.swift */,
+				1DA38ECB21735BE60073DB8A /* TMMFeedbackService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -687,6 +697,8 @@
 				1D0370C42165E2A400E5E3CE /* APIContact.swift */,
 				1D0370CA21660F8200E5E3CE /* APIRedeemCdp.swift */,
 				1D0370DA21665FF200E5E3CE /* APIRedeemCdpRecord.swift */,
+				1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */,
+				1DA38ECD21738EB70073DB8A /* APIFeedback.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -950,6 +962,7 @@
 				1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */,
 				1DEC5443214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib in Resources */,
 				1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */,
+				1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */,
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
@@ -1077,8 +1090,6 @@
 				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
-				"${BUILT_PRODUCTS_DIR}/SKCore/SKCore.framework",
-				"${BUILT_PRODUCTS_DIR}/SKWebAPI/SKWebAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/Schedule/Schedule.framework",
 				"${BUILT_PRODUCTS_DIR}/ShadowView/ShadowView.framework",
 				"${BUILT_PRODUCTS_DIR}/Siren/Siren.framework",
@@ -1118,8 +1129,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKWebAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Schedule.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ShadowView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siren.framework",
@@ -1176,7 +1185,6 @@
 				1D3441C5213CF74800B8E157 /* TMMError.swift in Sources */,
 				1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */,
 				1D1D6FCE2147BCF30001ED49 /* TokenTableViewCell.swift in Sources */,
-				1D0370A92163CE4200E5E3CE /* FeedbackSlack.swift in Sources */,
 				1D1D6FC62147B6030001ED49 /* UIButton+Utils.swift in Sources */,
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
@@ -1222,6 +1230,7 @@
 				1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1DF019FE2161F07400FDD467 /* ChartBalloonMarker.swift in Sources */,
+				1DA38ECC21735BE60073DB8A /* TMMFeedbackService.swift in Sources */,
 				1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,
 				1DF019F0215F61F900FDD467 /* ShareTaskStatsTableViewCell.swift in Sources */,
@@ -1229,6 +1238,7 @@
 				1D3441DF213CF9BD00B8E157 /* Font.swift in Sources */,
 				1DEC544F2150FF82007A46D5 /* UIImage+Utils.swift in Sources */,
 				1DEC544A2150F572007A46D5 /* APIQiniu.swift in Sources */,
+				1DA38ECE21738EB70073DB8A /* APIFeedback.swift in Sources */,
 				1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */,
 				1D28DE6021563FBE00FCF6F6 /* MarketTopTableViewCell.swift in Sources */,
 				1D1D6FA92140F3F00001ED49 /* TaskRecordsTableViewController.swift in Sources */,
@@ -1258,12 +1268,14 @@
 				1D151E71213D3995007C87DD /* NSDecimalNumber+Utils.swift in Sources */,
 				1D3441FB213CFBB500B8E157 /* CustomTransitionViewController.swift in Sources */,
 				1D3441E2213CFA0600B8E157 /* UIColor+Utils.swift in Sources */,
+				1DA38ECA217084380073DB8A /* APITMMWithdraw.swift in Sources */,
 				1D3441FE213CFBB500B8E157 /* FadeTransition.swift in Sources */,
 				1D151E7B213D5DBA007C87DD /* APIApp.swift in Sources */,
 				1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */,
 				1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
 				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,
+				1DA38EC72170753F0073DB8A /* TMMRedeemViewController.swift in Sources */,
 				1D1D6FB521412A850001ED49 /* TMMExchangeService.swift in Sources */,
 				1D5FF67E215B4146001E69CD /* MarketNavHeaderView.swift in Sources */,
 				1DEC54622151285E007A46D5 /* AccountTableViewController.swift in Sources */,

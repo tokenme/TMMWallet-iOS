@@ -152,15 +152,19 @@ class ExchangeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let exchangeEnabled = userInfo?.exchangeEnabled ?? false
         if let navigationController = self.navigationController {
             if #available(iOS 11.0, *) {
                 navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = false
-            navigationController.setNavigationBarHidden(!(userInfo?.exchangeEnabled ?? false), animated: animated)
+            navigationController.setNavigationBarHidden(!exchangeEnabled, animated: animated)
         }
-        blurOverlay.isHidden = userInfo?.exchangeEnabled ?? false
+        blurOverlay.isHidden = exchangeEnabled
+        buySelectButton.isEnabled = exchangeEnabled
+        sellSelectButton.isEnabled = exchangeEnabled
+        submitButton.isEnabled = exchangeEnabled
         refresh()
     }
     

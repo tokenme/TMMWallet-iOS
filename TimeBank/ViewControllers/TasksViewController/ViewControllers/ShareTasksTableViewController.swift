@@ -90,8 +90,8 @@ class ShareTasksTableViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
-        tableView.emptyDataSetSource = self
-        tableView.emptyDataSetDelegate = self
+        //tableView.emptyDataSetSource = self
+        //tableView.emptyDataSetDelegate = self
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
@@ -103,8 +103,8 @@ class ShareTasksTableViewController: UITableViewController {
         }
         tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
-        SkeletonAppearance.default.multilineHeight = 10
-        tableView.showAnimatedSkeleton()
+        //SkeletonAppearance.default.multilineHeight = 10
+        //tableView.showAnimatedSkeleton()
     }
     
     public func refresh() {
@@ -125,7 +125,7 @@ extension ShareTasksTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = self.tasks[indexPath.row]
         if task.image != nil {
-            if let creator = task.creator {
+            if mineOnly, let creator = task.creator {
                 if creator > 0 && creator == userInfo?.id {
                     let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskStatsTableViewCell
                     cell.delegate = self
@@ -138,7 +138,7 @@ extension ShareTasksTableViewController {
             cell.fill(task)
             return cell
         }
-        if let creator = task.creator {
+        if mineOnly, let creator = task.creator  {
             if creator > 0 && creator == userInfo?.id {
                 let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskNoImageStatsTableViewCell
                 cell.delegate = self

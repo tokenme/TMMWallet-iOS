@@ -11,6 +11,7 @@ enum TMMAPIResponseType: Int {
     case internalError = 500
     case notFound = 404
     case unauthorized = 401
+    case featureNotAvailable = 402
     case invalidPassword = 409
     case invalidCaptchaError = 408
     case duplicateUser = 202
@@ -18,6 +19,7 @@ enum TMMAPIResponseType: Int {
     case notEnoughToken = 600
     case notEnoughPoints = 700
     case invalidMinPoints = 701
+    case invalidMinToken = 702
     case notEnoughEth = 800
     case uploadImageError = 900
     case invalidInviteCodeError = 1000
@@ -31,6 +33,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case internalError(msg: String)
     case notFound
     case unauthorized
+    case featureNotAvailable
     case invalidPassword
     case invalidCaptchaError
     case duplicateUser
@@ -38,6 +41,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case notEnoughToken
     case notEnoughPoints
     case invalidMinPoints
+    case invalidMinToken
     case notEnoughEth
     case uploadImageError
     case invalidInviteCodeError
@@ -54,6 +58,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .internalError(let msg): return msg
         case .notFound: return I18n.notFoundError.description
         case .unauthorized: return I18n.unauthorizedError.description
+        case .featureNotAvailable: return I18n.featureNotAvailableError.description
         case .invalidPassword: return I18n.invalidPasswordError.description
         case .duplicateUser: return I18n.duplicateUserError.description
         case .unactivatedUser: return I18n.inactivatedUserError.description
@@ -61,6 +66,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .notEnoughToken: return I18n.notEnoughTokenError.description
         case .notEnoughPoints: return I18n.notEnoughPointsError.description
         case .invalidMinPoints: return I18n.invalidMinPointsError.description
+        case .invalidMinToken: return I18n.invalidMinTMMError.description
         case .notEnoughEth: return I18n.notEnoughETHError.description
         case .uploadImageError: return I18n.uploadImageError.description
         case .invalidInviteCodeError: return I18n.invalidInviteCodeError.description
@@ -70,6 +76,10 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .unknown(let msg): return msg
         case .ignore: return "ignore"
         }
+    }
+    
+    public var localizedDescription: String {
+        return self.description
     }
 }
 
@@ -85,6 +95,8 @@ extension TMMAPIError {
                 return TMMAPIError.notFound
             case .unauthorized:
                 return TMMAPIError.unauthorized
+            case .featureNotAvailable:
+                return TMMAPIError.featureNotAvailable
             case .invalidPassword:
                 return TMMAPIError.invalidPassword
             case .duplicateUser:
@@ -99,6 +111,8 @@ extension TMMAPIError {
                 return TMMAPIError.notEnoughPoints
             case .invalidMinPoints:
                 return TMMAPIError.invalidMinPoints
+            case .invalidMinToken:
+                return TMMAPIError.invalidMinToken
             case .uploadImageError:
                 return TMMAPIError.uploadImageError
             case .notEnoughEth:

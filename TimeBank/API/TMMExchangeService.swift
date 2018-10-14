@@ -115,7 +115,7 @@ extension TMMExchangeService {
                                     formatter.groupingSeparator = "";
                                     formatter.numberStyle = NumberFormatter.Style.decimal
                                     let minPointsStr = formatter.string(from: exchangeRate.minPoints)!
-                                    let message = I18n.invalidMinPointsError.description.replacingOccurrences(of: "#points#", with: minPointsStr)
+                                    let message = String(format: I18n.invalidMinPointsError.description, minPointsStr)
                                     reject(TMMAPIError.error(code: errorCode, msg: message))
                                     return
                                 } catch {

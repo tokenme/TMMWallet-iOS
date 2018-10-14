@@ -186,7 +186,7 @@ extension TMMTokenService {
                                     formatter.groupingSeparator = "";
                                     formatter.numberStyle = NumberFormatter.Style.decimal
                                     let minETHStr = formatter.string(from: minETH.minETH)!
-                                    let message = I18n.invalidMinPointsError.description.replacingOccurrences(of: "#points#", with: minETHStr)
+                                    let message = String(format: I18n.notEnoughETHError.description, minETHStr)
                                     reject(TMMAPIError.error(code: errorCode, msg: message))
                                     return
                                 } catch {

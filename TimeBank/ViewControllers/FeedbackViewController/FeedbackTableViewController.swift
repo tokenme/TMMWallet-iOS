@@ -15,7 +15,6 @@ import Kingfisher
 import Presentr
 import TMMSDK
 import PhotoSolution
-import SKWebAPI
 
 class FeedbackTableViewController: UITableViewController {
     
@@ -47,6 +46,10 @@ class FeedbackTableViewController: UITableViewController {
     
     private var selectedImage: UIImage?
     private var isSubmitting: Bool = false
+    
+    private var feedbackServiceProvider = MoyaProvider<TMMFeedbackService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    
+    private var qiniuServiceProvider = MoyaProvider<TMMQiniuService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -80,6 +83,7 @@ class FeedbackTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        getFeedbacks()
     }
     
     static func instantiate() -> FeedbackTableViewController
@@ -137,9 +141,7 @@ extension FeedbackTableViewController {
         let country: String = NSLocale.current.regionCode ?? ""
         
         let comment: String = self.descTextView.text ?? ""
-        let border: String = "------------------------"
-        var post: String = ""
-        var attachements: [String: String] = [
+        let attachements: [String: String] = [
             "APP": appName,
             "VERSION": version,
             "BUILD": build,
@@ -151,97 +153,120 @@ extension FeedbackTableViewController {
             "COUNTRY": country,
             "CARRIER": carrier,
             ]
-        if let options = FeedbackSlack.shared?.options {
-            attachements.merge(options, uniquingKeysWith: {key1,key2  in
-                return key1
-            })
-        }
-        if let _ = self.selectedImage {
-            var posts: [[String]] = [
-                ["New feedback from userID: \(userInfo?.id ?? 0)"],
-                [comment],
-                [border]
-            ]
-            for (key, val) in attachements {
-                posts += [[key, val]]
-            }
-            
-            post = posts.map { (post: [String]) -> String in
-                post.joined(separator: ": ")
-                }.joined(separator: "\n")
-        } else {
-            post = comment
-        }
         
-        self.postSlack(post, attachements)
+        self.postSlack(comment, attachements)
     }
     
     fileprivate func postSlack(_ comment: String, _ attachements: [String: String]) {
-        guard let slack: FeedbackSlack = FeedbackSlack.shared,
-            let appName: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
-            else {
-                return
-        }
-        
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.timeZone = NSTimeZone.local
-        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        let date: String = dateFormatter.string(from: Date())
-        
         isSubmitting = true
         submitButton.startAnimation()
-        guard let image: UIImage = self.selectedImage,
-            let data: Data = image.pngData() else {
-                var fields: [AttachmentField] = []
-                for (key, val) in attachements {
-                    let field = AttachmentField(title: key, value: val, short: true)
-                    fields.append(field)
-                }
-                let attachement: Attachment = Attachment(fallback: "New feedback from userID: \(userInfo?.id ?? 0)", title: "New feedback from userID: \(userInfo?.id ?? 0)", callbackID: nil, type: nil, colorHex: nil, pretext: nil, authorName: "+\(userInfo?.countryCode ?? 0)-\(userInfo?.mobile ?? "")", authorLink: nil, authorIcon: "\(userInfo?.avatar ?? "")", titleLink: nil, text: comment, fields: fields, actions: nil, imageURL: nil, thumbURL: nil, footer: nil, footerIcon: nil, ts: nil, markdownFields: nil)
-                slack.bot.sendMessage(channel: slack.slackChannel, text: comment, username: nil, asUser: false, parse: nil, linkNames: nil, attachments: [attachement], unfurlLinks: nil, unfurlMedia: nil, iconURL: nil, iconEmoji: nil, success: {[weak self] (ts: String?, channel: String?) in
-                    guard let weakSelf = self else { return }
-                    DispatchQueue.main.async {
-                        weakSelf.submitButton.stopAnimation(animationStyle: .normal, completion: {
-                            weakSelf.isSubmitting = false
-                            weakSelf.navigationController?.popViewController(animated: true)
-                        })
-                    }
-                }) {[weak self] (error: SlackError) in
-                    guard let weakSelf = self else { return }
-                    DispatchQueue.main.async {
-                        UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
-                        weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                            weakSelf.isSubmitting = false
-                        })
-                    }
-                }
+        guard let image: UIImage = self.selectedImage else {
+            self.doFeedback(
+                message: comment,
+                image: nil,
+                attachements: attachements
+            ).then(in: .main, {[weak self] task in
+                guard let weakSelf = self else { return }
+                weakSelf.submitButton.stopAnimation(animationStyle: .expand, completion: {
+                    weakSelf.navigationController?.popViewController(animated: true)
+                })
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+                })
+            }).always(in: .main, body: { [weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.submitButton.stopAnimation(animationStyle: .normal, completion: {
+                    weakSelf.isSubmitting = false
+                    weakSelf.navigationController?.popViewController(animated: true)
+                })
+            })
             return
         }
-        slack.bot.uploadFile(
-            file: data,
-            filename: "\(Date().timeIntervalSince1970).png",
-            filetype: "image/png",
-            title: "\(appName) feedback \(date)",
-            initialComment: comment,
-            channels: [slack.slackChannel],
-            success: { [weak self] _ in
+            
+        async({[weak self] _ in
+            guard let weakSelf = self else {
+                throw TMMAPIError.ignore
+            }
+            var upToken = try ..TMMQiniuService.getUpToken(provider: weakSelf.qiniuServiceProvider)
+            guard let imageLink = upToken.link else {
+                throw TMMAPIError.uploadImageError
+            }
+            upToken = try ..weakSelf.uploadImage(upToken, image: image)
+            let _ = try ..weakSelf.doFeedback(
+                    message: comment,
+                    image: imageLink,
+                    attachements: attachements)
+        }).then(in: .main, {[weak self] task in
+            guard let weakSelf = self else { return }
+            weakSelf.submitButton.stopAnimation(animationStyle: .expand, completion: {
+                weakSelf.navigationController?.popViewController(animated: true)
+            })
+        }).catch(in: .main, {[weak self] error in
+            guard let weakSelf = self else { return }
+            weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            })
+        }).always(in: .main, body: { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.submitButton.stopAnimation(animationStyle: .normal, completion: {
+                weakSelf.isSubmitting = false
+                weakSelf.navigationController?.popViewController(animated: true)
+            })
+        })
+    }
+}
+
+extension FeedbackTableViewController {
+    
+    private func getFeedbacks(){
+        TMMFeedbackService.getList(
+            provider: self.feedbackServiceProvider
+            ).then(in: .background, { resp in
+                print(resp.toJSONString())
+            }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
-                DispatchQueue.main.async {
-                    weakSelf.submitButton.stopAnimation(animationStyle: .normal, completion: {
-                        weakSelf.isSubmitting = false
-                        weakSelf.navigationController?.popViewController(animated: true)
-                    })
-                }
-            }) { [weak self] (error: SlackError) in
-                guard let weakSelf = self else { return }
-                DispatchQueue.main.async {
-                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
-                    weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                        weakSelf.isSubmitting = false
-                    })
-                }
-        }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            })
+    }
+    
+    private func doFeedback(message: String, image: String?, attachements:[String: String]) -> Promise<APIResponse> {
+        return Promise<APIResponse>(in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            TMMFeedbackService.add(
+                message: message,
+                image: image,
+                attachements: attachements,
+                provider: weakSelf.feedbackServiceProvider
+            ).then(in: .background, { resp in
+                resolve(resp)
+            }).catch(in: .background, { error in
+                reject(error)
+            })
+        })
+    }
+    
+    private func uploadImage(_ upToken: APIQiniu, image: UIImage) -> Promise<APIQiniu> {
+        return Promise<APIQiniu>(in: .background, { resolve, reject, _ in
+            let imgData = image.kf.jpegRepresentation(compressionQuality: 0.6)
+            let magager = QiniuManager.sharedInstance
+            magager.uploader.put(
+                imgData,
+                key: upToken.key,
+                token: upToken.upToken,
+                complete: { (info: QNResponseInfo?, key: String?, resp: [AnyHashable : Any]?) -> Void in
+                    if let resp = info, resp.isOK {
+                        upToken.uploaded = true
+                        resolve(upToken)
+                        return
+                    }
+                    reject(TMMAPIError.uploadImageError)
+            }, option: nil)
+        })
     }
 }
 

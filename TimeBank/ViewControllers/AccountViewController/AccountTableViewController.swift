@@ -380,8 +380,8 @@ extension AccountTableViewController {
         })
     }
     
-    private func getUserInfo() -> Promise<Void> {
-        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+    private func getUserInfo() -> Promise<APIUser> {
+        return Promise<APIUser> (in: .background, {[weak self] resolve, reject, _ in
             guard let weakSelf = self else {
                 reject(TMMAPIError.ignore)
                 return
@@ -395,7 +395,7 @@ extension AccountTableViewController {
                 true,
                 provider: weakSelf.userServiceProvider)
                 .then(in: .background, {user in
-                    resolve(())
+                    resolve(user)
                 }).catch(in: .background, { error in
                     reject(error)
                 })
@@ -416,7 +416,7 @@ extension AccountTableViewController {
             TMMUserService.updateUserInfo(
                 user,
                 provider: weakSelf.userServiceProvider)
-                .then(in: .background, {user in
+                .then(in: .background, {_ in
                     resolve(())
                 }).catch(in: .background, { error in
                     reject(error)
@@ -473,72 +473,124 @@ extension AccountTableViewController {
         )
     }
     
-    private func doBindWechat(unionId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval) {
-        if self.bindingWechat {
-            return
-        }
-        self.bindingWechat = true
-        
-        TMMUserService.bindWechatInfo(
-            unionId: unionId,
-            nick: nick,
-            avatar: avatar,
-            gender: gender,
-            accessToken: accessToken,
-            expires: expires,
-            provider: self.userServiceProvider)
-            .then(in: .main, {[weak self] _ in
-                guard let weakSelf = self else { return }
-                weakSelf.getUserInfo().catch(in: .main, {[weak weakSelf] error in
-                    switch error as! TMMAPIError {
-                    case .ignore:
-                        return
-                    default: break
-                    }
-                    guard let weakSelf2 = weakSelf else { return  }
-                    UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-                }).always(in: .background, body: {[weak weakSelf]  in
-                    guard let weakSelf2 = weakSelf else { return }
-                    weakSelf2.loadingUserInfo = false
-                })
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.bindingWechat = false
+    private func bindWechat() {
+        async({[weak self] _ in
+            guard let weakSelf = self else { return }
+            let user = try ..weakSelf.authWechat()
+            let _ = try ..weakSelf.doBindWechat(user: user)
+            let _ = try ..weakSelf.getUserInfo()
+        }).catch(in: .main, {[weak self] error in
+            if let err = error as? TMMAPIError {
+                switch err {
+                case .ignore:
+                    return
+                default: break
                 }
-        )
+            }
+            guard let weakSelf = self else { return  }
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.loadingUserInfo = false
+            weakSelf.bindingWechat = false
+        })
     }
     
-    private func bindWechat() {
-        ShareSDK.authorize(.typeWechat, settings: nil) { [weak self] (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
-            guard let weakSelf = self else { return }
-            switch state {
-            case .success:
-                guard let userInfo = user else { return }
-                weakSelf.doBindWechat(unionId: userInfo.uid, nick: userInfo.nickname, avatar: userInfo.icon, gender: userInfo.gender, accessToken: userInfo.credential.token, expires: userInfo.credential.expired)
-            case .fail:
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error?.localizedDescription ?? "failed", closeBtn: I18n.close.description)
-            default:
-                print("not catched auth state")
+    private func doBindWechat(user: SSDKUser) -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
             }
-        }
+            if weakSelf.bindingWechat {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.bindingWechat = true
+            
+            TMMUserService.bindWechatInfo(
+                unionId: user.uid,
+                nick: user.nickname,
+                avatar: user.icon,
+                gender: user.gender,
+                accessToken: user.credential.token,
+                expires: user.credential.expired,
+                provider: weakSelf.userServiceProvider)
+                .then(in: .background, { _ in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
+    
+    private func authWechat() -> Promise<SSDKUser> {
+        return Promise<SSDKUser> (in: .background, { resolve, reject, _ in
+            ShareSDK.authorize(.typeWechat, settings: nil) { (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+                switch state {
+                case .success:
+                    guard let userInfo = user else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    resolve(userInfo)
+                case .fail:
+                    guard let err = error else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    reject(err)
+                default:
+                    reject(TMMAPIError.ignore)
+                }
+            }
+        })
     }
     
     private func getWechatInfo() {
-        ShareSDK.getUserInfo(SSDKPlatformType.typeWechat) {[weak self] (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+        async({[weak self] _ in
             guard let weakSelf = self else { return }
-            switch state {
-            case .success:
-                guard let userInfo = user else { return }
-                weakSelf.doBindWechat(unionId: userInfo.uid, nick: userInfo.nickname, avatar: userInfo.icon, gender: userInfo.gender, accessToken: userInfo.credential.token, expires: userInfo.credential.expired)
-            case .fail:
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error?.localizedDescription ?? "failed", closeBtn: I18n.close.description)
-            default:
-                print("not catched auth state")
+            let user = try ..weakSelf.getWechatUser()
+            let _ = try ..weakSelf.doBindWechat(user: user)
+            let _ = try ..weakSelf.getUserInfo()
+        }).catch(in: .main, {[weak self] error in
+            if let err = error as? TMMAPIError {
+                switch err {
+                case .ignore:
+                    return
+                default: break
+                }
             }
-        }
+            guard let weakSelf = self else { return  }
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.loadingUserInfo = false
+            weakSelf.bindingWechat = false
+        })
+    }
+    
+    private func getWechatUser() -> Promise<SSDKUser> {
+        return Promise<SSDKUser> (in: .background, { resolve, reject, _ in
+            ShareSDK.getUserInfo(SSDKPlatformType.typeWechat) {(state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+                switch state {
+                case .success:
+                    guard let userInfo = user else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    resolve(userInfo)
+                case .fail:
+                    guard let err = error else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    reject(err)
+                default:
+                    reject(TMMAPIError.ignore)
+                }
+            }
+        })
     }
 }
 

@@ -202,14 +202,14 @@ extension SubmitShareTaskTableViewController {
                 guard let weakSelf = self else {
                     throw TMMAPIError.ignore
                 }
-                var upToken = try! ..TMMQiniuService.getUpToken(provider: weakSelf.qiniuServiceProvider)
+                var upToken = try ..TMMQiniuService.getUpToken(provider: weakSelf.qiniuServiceProvider)
                 guard let imageLink = upToken.link else {
                     throw TMMAPIError.uploadImageError
                 }
-                upToken = try! ..weakSelf.uploadImage(upToken, image: image)
+                upToken = try ..weakSelf.uploadImage(upToken, image: image)
                 var task: APIShareTask?
                 if let taskId = weakSelf.task?.id {
-                    task = try! ..TMMTaskService.updateShareTask(
+                    task = try ..TMMTaskService.updateShareTask(
                         id: taskId,
                         link: link,
                         title: title,
@@ -221,7 +221,7 @@ extension SubmitShareTaskTableViewController {
                         onlineStatus: .unknown,
                         provider: weakSelf.taskServiceProvider)
                 } else {
-                    task = try! ..TMMTaskService.addShareTask(
+                    task = try ..TMMTaskService.addShareTask(
                         link: link,
                         title: title,
                         summary: summary,

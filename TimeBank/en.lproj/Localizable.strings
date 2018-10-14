@@ -20,8 +20,9 @@
 "InvalidCaptchaError" = "Invalid Captcha";
 "NotEnoughTokenError" = "Don't have enough token";
 "NotEnoughPointsError" = "Don't have enough points";
-"InvalidMinPointsError" = "Need at least #points# points";
-"NotEnoughETHError" = "Need at least #eth# ETH";
+"InvalidMinPointsError" = "Need at least %@ points";
+"InvalidMinTMMError" = "Need at least %@ UC";
+"NotEnoughETHError" = "Need at least %@ ETH";
 "UploadImageError" = "Upload image failed";
 "MaxQuerySchemeError" = "Please upgrade to the latest version otherwise some of the app installation tasks could not be verified!";
 "InvalidInviteCodeError" = "Invalid invide code";
@@ -29,6 +30,7 @@
 "OtherBindDeviceError" = "This device has been binded by some others";
 "InvalidCdpVendorError" = "Your phone number is not supported. Currently we only support China Mobile, China UnionCom and China Telecom.";
 "ExchangeNotAvailableInYourCountryError" = "Buying digital currencies like bitcoin and ethereum is not enabled in your country yet. We're working hard to bring this feature to as many countries as possible.";
+"FeatureNotAvailableError" = "This feature not available currently, please check later.";
 
 "Refresh" = "Refresh";
 "Copy" = "Copy";
@@ -58,7 +60,7 @@
 "Receive" = "Receive";
 "Send" = "Send";
 "ReceiveQRCode" = "Receive QRCode";
-"NeedMinGasError" = "Need miniumum #gas# Ether in your wallet";
+"NeedMinGasError" = "Need miniumum %@ Ether in your wallet";
 "Balance" = "Balance";
 "TransferAmount" = "Transfer Amount";
 "To" = "To";
@@ -73,6 +75,12 @@
 "UnbindDeviceExplain" = "Find unbind device, win points by binding the device";
 "Unbind" = "Unbind";
 "ConfirmUnbind" = "Do you want to unbind this device?";
+"Withdraw" = "Withdraw";
+"CurrentTMMRedeemRate" = "当前兑换率: 1 UC = %@ %@";
+"TMMAmount" = "UC Amount";
+"TMMWithdrawAmount" = "≈ %@ %@";
+"EmptyWithdrawTMM" = "UC amount must be input";
+"WithdrawSuccessMsg" = "You have successfully withdraw %@UC to %@%@";
 
 // Apps
 "SDKApps" = "Minable Apps";
@@ -84,14 +92,14 @@
 "ExchangeTMM" = "Points to UC";
 "ExchangePoint" = "UC to Points";
 "PointsAmount" = "Points Amount";
-"CurrentPointsTMMExchangeRate" = "Current Exchange Rate: 1 Points ≈ #rate# UC";
+"CurrentPointsTMMExchangeRate" = "Current Exchange Rate: 1 Points ≈ %@ UC";
 "EmptyChangePoints" = "Points amount must be input";
 "ExceedChangePoints" = "Exceeded max points";
-"PointsTMMChangeAmount" = "≈ #amount# UC";
+"PointsTMMChangeAmount" = "≈ %@ UC";
 "Exchange" = "Change";
 "ViewTransaction" = "View Transaction";
 "NewTransactionTitle" = "New Transaction";
-"NewTransactionDesc" = "Receipt: #receipt#";
+"NewTransactionDesc" = "Receipt: %@";
 "ChangeTo" = "Change to";
 "ToTBC" = "To UC";
 "ToPoints" = "To Points";
@@ -112,10 +120,9 @@
 "ShareTasks" = "Share Links";
 "Earn" = "Earn";
 "MinusPoints" = "Punish";
-"PointsPerViewer" = "#points# Points/Viewer";
 "MaxBonus" = "Max bonus";
 "Points" = "Points";
-"ShareTaskRewardDesc" = "#points# Points/Viewer, Max bonus #points2# Points";
+"ShareTaskRewardDesc" = "%@ Points/Viewer, Max bonus %@ Points";
 "View" = "View";
 "Times" = "times";
 "PointsPerInstall" = "Points/Install";
@@ -131,6 +138,7 @@
 "SubmitTask" = "Submit Task";
 "SubmitNewAppTask" = "Submit new App Task";
 "SubmitNewShareTask" = "Submit new Share Link Task";
+"SubmitAppTaskNotAvailable" = "We are not support submit new app tasks for iOS platform directly, please submit your requirement to our customer service, we'll arrange specialist to contact you later.";
 "EditAppTask" = "Edit App Task";
 "EditShareTask" = "Edit Share Link Task";
 "URL" = "Link";

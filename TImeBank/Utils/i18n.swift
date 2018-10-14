@@ -26,6 +26,7 @@ enum I18n: CustomStringConvertible {
     case notEnoughTokenError
     case notEnoughPointsError
     case invalidMinPointsError
+    case invalidMinTMMError
     case notEnoughETHError
     case uploadImageError
     case maxQuerySchemeError
@@ -34,6 +35,7 @@ enum I18n: CustomStringConvertible {
     case otherBindDeviceError
     case invalidCdpVendorError
     case exchangeNotAvailableInYourCountryError
+    case featureNotAvailableError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -88,6 +90,12 @@ enum I18n: CustomStringConvertible {
     case unbindDeviceExplain
     case unbind
     case confirmUnbind
+    case withdraw
+    case currentTMMRedeemRate
+    case TMMAmount
+    case TMMWithdrawAmount
+    case emptyWithdrawTMM
+    case withdrawSuccessMsg
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -106,7 +114,6 @@ enum I18n: CustomStringConvertible {
     case shareTasks
     case earn
     case minusPoints
-    case pointsPerViewer
     case maxBonus
     case points
     case shareTaskRewardDesc
@@ -125,6 +132,7 @@ enum I18n: CustomStringConvertible {
     case submitTask
     case submitNewAppTask
     case submitNewShareTask
+    case submitAppTaskNotAvailable
     case editAppTask
     case editShareTask
     case url
@@ -227,6 +235,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NotEnoughPointsError", comment: "notEnoughPointsError")
         case .invalidMinPointsError:
             return NSLocalizedString("InvalidMinPointsError", comment: "invalidMinPoints")
+        case .invalidMinTMMError:
+            return NSLocalizedString("InvalidMinTMMError", comment: "InvalidMinTMMError")
         case .notEnoughETHError:
             return NSLocalizedString("NotEnoughETHError", comment: "notEnoughETHError")
         case .uploadImageError:
@@ -243,6 +253,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InvalidCdpVendorError", comment:"invalidCdpVendorError")
         case .exchangeNotAvailableInYourCountryError:
             return NSLocalizedString("ExchangeNotAvailableInYourCountryError", comment: "ExchangeNotAvailableInYourCountryError")
+        case .featureNotAvailableError:
+            return NSLocalizedString("FeatureNotAvailableError", comment: "featureNotAvailableError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .refresh:
@@ -375,6 +387,18 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Unbind", comment: "Unbind")
         case .confirmUnbind:
             return NSLocalizedString("ConfirmUnbind", comment: "ConfirmUnbind")
+        case .withdraw:
+            return NSLocalizedString("Withdraw", comment: "Withdraw")
+        case .currentTMMRedeemRate:
+            return NSLocalizedString("CurrentTMMRedeemRate", comment: "CurrentTMMRedeemRate")
+        case .TMMAmount:
+            return NSLocalizedString("TMMAmount", comment: "TMMAmount")
+        case .TMMWithdrawAmount:
+            return NSLocalizedString("TMMWithdrawAmount", comment: "TMMWithdrawAmount")
+        case .emptyWithdrawTMM:
+            return NSLocalizedString("EmptyWithdrawTMM", comment: "emptyWithdrawTMM")
+        case .withdrawSuccessMsg:
+            return NSLocalizedString("WithdrawSuccessMsg", comment: "WithdrawSuccessMsg")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .publishedByMe:
@@ -387,8 +411,6 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Earn", comment: "Earn")
         case .minusPoints:
             return NSLocalizedString("MinusPoints", comment: "Minus Points")
-        case .pointsPerViewer:
-            return NSLocalizedString("PointsPerViewer", comment: "Points/Viewer")
         case .maxBonus:
             return NSLocalizedString("MaxBonus", comment: "Max bonus")
         case .points:
@@ -425,6 +447,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("SubmitNewAppTask", comment: "SubmitNewAppTask")
         case .submitNewShareTask:
             return NSLocalizedString("SubmitNewShareTask", comment: "SubmitNewShareTask")
+        case .submitAppTaskNotAvailable:
+            return NSLocalizedString("SubmitAppTaskNotAvailable", comment: "SubmitAppTaskNotAvailable")
         case .editAppTask:
             return NSLocalizedString("EditAppTask", comment: "Edit App Task")
         case .editShareTask:

@@ -60,7 +60,7 @@ class PointsTMMExchangeViewController: UIViewController {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let rateStr = formatter.string(from: rate)!
-        exchangeRateLabel.text = I18n.currentPointsTMMExchangeRate.description.replacingOccurrences(of: "#rate#", with: rateStr)
+        exchangeRateLabel.text = String(format: I18n.currentPointsTMMExchangeRate.description, rateStr)
         amountTextField.tweePlaceholder = I18n.pointsAmount.description
         changeButton.setTitle(I18n.exchange.description, for: .normal)
         amountTextField.becomeFirstResponder()
@@ -92,7 +92,7 @@ extension PointsTMMExchangeViewController {
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
             let minPointsStr = formatter.string(from: minPoints)!
-            let message = I18n.invalidMinPointsError.description.replacingOccurrences(of: "#points#", with: minPointsStr)
+            let message = String(format: I18n.invalidMinPointsError.description, minPointsStr)
             self.amountTextField.showInfo(message)
             return false
         }
@@ -151,7 +151,7 @@ extension PointsTMMExchangeViewController: UITextFieldDelegate {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let tmmAmountStr = formatter.string(from: tmmAmount)
-        let msg = I18n.pointsTMMChangeAmount.description.replacingOccurrences(of: "#amount#", with: tmmAmountStr ?? "-")
+        let msg = String(format: I18n.pointsTMMChangeAmount.description, tmmAmountStr ?? "-")
         self.amountTextField.showInfo(msg)
     }
     
@@ -165,7 +165,7 @@ extension PointsTMMExchangeViewController: UITextFieldDelegate {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let tmmAmountStr = formatter.string(from: tmmAmount)!
-        let msg = I18n.pointsTMMChangeAmount.description.replacingOccurrences(of: "#amount#", with: tmmAmountStr)
+        let msg = String(format: I18n.pointsTMMChangeAmount.description, tmmAmountStr)
         self.amountTextField.showInfo(msg)
     }
     

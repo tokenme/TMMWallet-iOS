@@ -4,7 +4,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'TimeBank' do
-  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.3.8'
+  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.3.9'
   pod 'Pastel', :git=>'https://github.com/cruisediary/Pastel.git', :tag=>'0.5.1'
   pod 'Schedule', '~> 1.0'
   pod 'GrandTime'
@@ -35,7 +35,6 @@ target 'TimeBank' do
   pod 'PhotoSolution', '~> 1.0.2'
   pod 'Qiniu'
   pod 'Charts'
-  pod 'SKWebAPI'
   pod 'Siren'
   pod 'SwiftRater'
   pod 'DropDown'

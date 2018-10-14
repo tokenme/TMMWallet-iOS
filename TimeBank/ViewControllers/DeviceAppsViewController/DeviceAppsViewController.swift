@@ -54,7 +54,7 @@ class DeviceAppsViewController: UIViewController {
     
     let exchangePresenter: Presentr = {
         let width = ModalSize.full
-        let height = ModalSize.fluid(percentage: 0.70)
+        let height = ModalSize.fluid(percentage: 0.80)
         let center = ModalCenterPosition.bottomCenter
         let customType = PresentationType.custom(width: width, height: height, center: center)
         
@@ -567,7 +567,7 @@ extension DeviceAppsViewController: TransactionDelegate {
     func newTransaction(tx: APITransaction) {
         guard let receipt = tx.receipt else { return }
         self.delegate?.shouldRefresh()
-        let message = I18n.newTransactionDesc.description.replacingOccurrences(of: "#receipt#", with: receipt)
+        let message = String(format: I18n.newTransactionDesc.description, receipt)
         let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
         let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
             //

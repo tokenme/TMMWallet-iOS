@@ -33,6 +33,7 @@ class ETHWalletViewController: UIViewController {
     
     @IBOutlet private weak var summaryView: PastelView!
     @IBOutlet private weak var currencyLabel: UILabel!
+    @IBOutlet private weak var withdrawButton: TransitionButton!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var addressButton: UIButton!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -48,6 +49,26 @@ class ETHWalletViewController: UIViewController {
         presenter.dismissOnSwipe = true
         presenter.dismissOnSwipeDirection = .top
         return presenter
+    }()
+    
+    let exchangePresenter: Presentr = {
+        let width = ModalSize.full
+        let height = ModalSize.fluid(percentage: 0.8)
+        let center = ModalCenterPosition.bottomCenter
+        let customType = PresentationType.custom(width: width, height: height, center: center)
+        
+        let customPresenter = Presentr(presentationType: customType)
+        customPresenter.transitionType = .coverVertical
+        customPresenter.dismissTransitionType = .crossDissolve
+        customPresenter.roundCorners = false
+        //customPresenter.blurBackground = true
+        customPresenter.blurStyle = UIBlurEffect.Style.light
+        //customPresenter.keyboardTranslationType = .moveUp
+        //customPresenter.backgroundColor = .green
+        customPresenter.backgroundOpacity = 0.5
+        customPresenter.dismissOnSwipe = true
+        customPresenter.dismissOnSwipeDirection = .bottom
+        return customPresenter
     }()
     
     private let alertPresenter: Presentr = {
@@ -73,8 +94,12 @@ class ETHWalletViewController: UIViewController {
     }
     
     private var loadingTokens = false
+    private var bindingWechat = false
+    private var gettingTMMRate = false
     
     private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -155,6 +180,7 @@ class ETHWalletViewController: UIViewController {
                                UIColor(red: 90/255, green: 120/255, blue: 127/255, alpha: 1.0),
                                UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
         
+        withdrawButton.setTitle(I18n.withdraw.description, for: .normal)
         summaryView.startAnimation()
     }
     
@@ -236,7 +262,7 @@ extension ETHWalletViewController: SwipeTableViewCellDelegate {
                     formatter.maximumFractionDigits = 4
                     formatter.groupingSeparator = "";
                     formatter.numberStyle = NumberFormatter.Style.decimal
-                    let message = I18n.needMinGasError.description.replacingOccurrences(of: "#gas#", with: formatter.string(from: token.minGas)!)
+                    let message = String(format: I18n.needMinGasError.description, formatter.string(from: token.minGas)!)
                     UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: message, closeBtn: I18n.close.description)
                     return
                 }
@@ -341,6 +367,118 @@ extension ETHWalletViewController {
             }
         )
     }
+    
+    @IBAction private func tryRedeem() {
+        withdrawButton.startAnimation()
+        async({ _ -> APIExchangeRate in
+            if !ShareSDK.hasAuthorized(.typeWechat) {
+                let user = try ..self.authWechat()
+                let _ = try ..self.doBindWechat(user: user)
+            }
+            let exchangeRate = try ..self.getTMMRate()
+            return exchangeRate
+        }).then(in: .main, {[weak self] exchangeRate in
+            guard let weakSelf = self else { return }
+            weakSelf.withdrawButton.stopAnimation(animationStyle: .normal, completion: {[weak weakSelf] in
+                guard let weakSelf2 = weakSelf else { return }
+                let vc = TMMRedeemViewController(changeRate: exchangeRate)
+                vc.delegate = weakSelf2
+                weakSelf2.customPresentViewController(weakSelf2.exchangePresenter, viewController: vc, animated: true, completion: nil)
+            })
+        }).catch(in: .main, {[weak self] error in
+            guard let weakSelf = self else { return }
+            if let err = error as? TMMAPIError {
+                switch err {
+                case .ignore:
+                    weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
+                    return
+                default: break
+                }
+            }
+            weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
+                guard let weakSelf2 = weakSelf else { return }
+                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            })
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.bindingWechat = false
+            weakSelf.gettingTMMRate = false
+        })
+    }
+    
+    private func doBindWechat(user: SSDKUser) -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.bindingWechat {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.bindingWechat = true
+            
+            TMMUserService.bindWechatInfo(
+                unionId: user.uid,
+                nick: user.nickname,
+                avatar: user.icon,
+                gender: user.gender,
+                accessToken: user.credential.token,
+                expires: user.credential.expired,
+                provider: weakSelf.userServiceProvider)
+                .then(in: .background, { _ in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
+    
+    private func authWechat() -> Promise<SSDKUser> {
+        return Promise<SSDKUser> (in: .background, { resolve, reject, _ in
+            ShareSDK.authorize(.typeWechat, settings: nil) { (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+                switch state {
+                case .success:
+                    guard let userInfo = user else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    resolve(userInfo)
+                case .fail:
+                    guard let err = error else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    reject(err)
+                default:
+                    reject(TMMAPIError.ignore)
+                }
+            }
+        })
+    }
+    
+    private func getTMMRate() -> Promise<APIExchangeRate> {
+        return Promise<APIExchangeRate> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.gettingTMMRate {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.gettingTMMRate = true
+            
+            TMMRedeemService.getTmmRate(
+                currency: Defaults[.currency] ?? Currency.USD.rawValue,
+                provider: weakSelf.redeemServiceProvider)
+                .then(in: .background, { rate  in
+                    resolve(rate)
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
 }
 
 extension ETHWalletViewController: ScanViewDelegate {
@@ -389,6 +527,22 @@ extension ETHWalletViewController: ScanViewDelegate {
         }
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
+        customPresentViewController(alertPresenter, viewController: alertController, animated: true)
+    }
+}
+
+extension ETHWalletViewController: RedeemDelegate {
+    func redeemSuccess(resp: APITMMWithdraw) {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let message = String(format: I18n.withdrawSuccessMsg.description, formatter.string(from: resp.tmm)!, formatter.string(from: resp.cash)!, resp.currency)
+        let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        alertController.addAction(cancelAction)
         customPresentViewController(alertPresenter, viewController: alertController, animated: true)
     }
 }

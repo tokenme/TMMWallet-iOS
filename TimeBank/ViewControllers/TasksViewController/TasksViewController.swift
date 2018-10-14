@@ -12,6 +12,7 @@ import Tabman
 import Pageboy
 import BTNavigationDropdownMenu
 import DropDown
+import Presentr
 
 class TasksViewController: TabmanViewController {
     
@@ -26,6 +27,13 @@ class TasksViewController: TabmanViewController {
             return nil
         }
     }
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private let viewControllers = [
         ShareTasksTableViewController.instantiate(),
@@ -126,9 +134,23 @@ class TasksViewController: TabmanViewController {
                 vc.delegate = weakSelf
                 weakSelf.navigationController?.pushViewController(vc, animated: true)
             } else if index == 1 {
+                /*
                 let vc = SubmitAppTaskTableViewController.instantiate()
                 vc.delegate = weakSelf
                 weakSelf.navigationController?.pushViewController(vc, animated: true)
+                */
+                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.submitAppTaskNotAvailable.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                    //
+                }
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                    guard let weakSelf2 = weakSelf else { return }
+                    let vc = FeedbackTableViewController.instantiate()
+                    weakSelf2.navigationController?.pushViewController(vc, animated: true)
+                }
+                alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
             }
         }
         dropDown.show()
