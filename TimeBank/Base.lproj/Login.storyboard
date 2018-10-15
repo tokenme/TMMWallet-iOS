@@ -317,6 +317,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
+                                                            <action selector="textFieldDidChange:" destination="xF8-d6-1r0" eventType="editingChanged" id="rg3-ml-FQg"/>
                                                             <outlet property="delegate" destination="xF8-d6-1r0" id="lKc-ta-dJm"/>
                                                         </connections>
                                                     </textField>
@@ -653,6 +654,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
+                                                            <action selector="textFieldDidChange:" destination="BNP-UW-1ao" eventType="editingChanged" id="vdz-Wh-hzx"/>
                                                             <outlet property="delegate" destination="BNP-UW-1ao" id="ETH-Rv-FST"/>
                                                         </connections>
                                                     </textField>

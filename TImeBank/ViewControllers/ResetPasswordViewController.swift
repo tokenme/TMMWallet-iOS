@@ -171,7 +171,7 @@ class ResetPasswordViewController: UIViewController {
             guard let weakSelf = self else { return }
             weakSelf.resetButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
                 guard let weakSelf2 = weakSelf else { return }
-                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf2)
             })
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
@@ -189,6 +189,7 @@ extension ResetPasswordViewController {
                 self.countdownButton.isEnabled = true
             }
             self.verifyCodeTextField.isEnabled = true
+            self.telephoneTextField.hideInfo()
             return true
         }
         catch {
@@ -241,6 +242,12 @@ extension ResetPasswordViewController: UITextFieldDelegate {
             self.passwordTextfield.hideInfo()
         } else if textField.tag == 3 {
             self.repasswordTextfield.hideInfo()
+        }
+    }
+    
+    @IBAction func textFieldDidChange(_ textField:UITextField) {
+        if textField.tag == 0 {
+            let _ = self.verifyTelephone()
         }
     }
     
