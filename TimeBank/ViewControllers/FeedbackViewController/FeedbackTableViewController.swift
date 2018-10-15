@@ -83,7 +83,6 @@ class FeedbackTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
-        getFeedbacks()
     }
     
     static func instantiate() -> FeedbackTableViewController
@@ -219,17 +218,6 @@ extension FeedbackTableViewController {
 }
 
 extension FeedbackTableViewController {
-    
-    private func getFeedbacks(){
-        TMMFeedbackService.getList(
-            provider: self.feedbackServiceProvider
-            ).then(in: .background, { resp in
-                print(resp.toJSONString())
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
-            })
-    }
     
     private func doFeedback(message: String, image: String?, attachements:[String: String]) -> Promise<APIResponse> {
         return Promise<APIResponse>(in: .background, {[weak self] resolve, reject, _ in
