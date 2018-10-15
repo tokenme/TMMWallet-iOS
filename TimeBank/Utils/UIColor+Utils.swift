@@ -45,4 +45,3 @@ extension UIColor {
     static let greenGrass = UIColor(rgb: 0x4CAF50)
     static let darkChatMessage = UIColor(red: 48, green: 47, blue: 48)
 }
-

@@ -8,8 +8,9 @@
 
 import UIKit
 import Reusable
+import SwipeCellKit
 
-class DeviceTableViewCell: UITableViewCell, NibReusable {
+class DeviceTableViewCell: SwipeTableViewCell, NibReusable {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
@@ -21,8 +22,8 @@ class DeviceTableViewCell: UITableViewCell, NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let pointsImage = UIImage(named: "Points")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let pointsImage = UIImage(named: "Points")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         pointsImageView.image = pointsImage
         growthFactorImageView.image = flashImage
     }

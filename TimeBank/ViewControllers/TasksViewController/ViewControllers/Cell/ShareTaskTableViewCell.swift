@@ -9,17 +9,24 @@
 import UIKit
 import Kingfisher
 import Reusable
+import SwipeCellKit
 
-class ShareTaskTableViewCell: UITableViewCell, NibReusable {
+class ShareTaskTableViewCell: SwipeTableViewCell, NibReusable {
     
+    @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var imgView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var summaryLabel: UILabel!
-    @IBOutlet private weak var bonusLabel: UILabel!
-    @IBOutlet private weak var maxViewersLabel: UILabel!
+    @IBOutlet private weak var rewardLabel: UILabelPadding!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        rewardLabel.layer.cornerRadius = 5
+        rewardLabel.clipsToBounds = true
+        rewardLabel.paddingBottom = 4
+        rewardLabel.paddingTop = 4
+        rewardLabel.paddingLeft = 16
+        rewardLabel.paddingRight = 16
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -27,6 +34,8 @@ class ShareTaskTableViewCell: UITableViewCell, NibReusable {
     }
     
     func fill(_ task: APIShareTask) {
+        let progress = (task.points - task.pointsLeft) / task.points
+        progressView.setProgress(progress.floatValue, animated: true)
         if let image = task.image {
             imgView.kf.setImage(with: URL(string: image))
         }
@@ -37,9 +46,9 @@ class ShareTaskTableViewCell: UITableViewCell, NibReusable {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let formattedBonus: String = formatter.string(from: task.bonus)!
-        bonusLabel.text = "\(I18n.earn.description) \(formattedBonus) \(I18n.pointsPerViewer.description)"
         let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
         let formattedMaxBonus: String = formatter.string(from: maxBonus)!
-        maxViewersLabel.text = "\(I18n.maxBonus.description) \(formattedMaxBonus) \(I18n.points.description)"
+        let rewardMsg = String(format: I18n.shareTaskRewardDesc.description, formattedBonus, formattedMaxBonus)
+        rewardLabel.text = rewardMsg
     }
 }

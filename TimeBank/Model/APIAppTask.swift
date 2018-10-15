@@ -1,0 +1,59 @@
+//
+//  APIAppTask.swift
+//  TimeBank
+//
+//  Created by Syd Xu on 2018/9/5.
+//  Copyright © 2018年 Tokenmama.io. All rights reserved.
+//
+
+import Foundation
+import ObjectMapper
+
+public class APIAppTask: APIResponse {
+    var id: UInt64?
+    var creator: UInt64?
+    var name: String = ""
+    var platform: APIPlatform = APIPlatform.iOS
+    var schemeId: UInt64 = 0
+    var bundleId: String = ""
+    var storeId: UInt64?
+    var icon: String?
+    var points: NSDecimalNumber = 0
+    var pointsLeft: NSDecimalNumber = 0
+    var bonus: NSDecimalNumber = 0
+    var downloads: UInt = 0
+    var installStatus: Int8 = 0
+    var onlineStatus: APITaskOnlineStatus = .running
+    var insertedAt: Date?
+    var updatedAt: Date?
+    
+    // MARK: JSON
+    required public init?(map: Map) {
+        super.init(map: map)
+    }
+    
+    convenience init?() {
+        self.init(map: Map.init(mappingType: MappingType.fromJSON, JSON: [:]))
+    }
+    
+    // Mappable
+    override public func mapping(map: Map) {
+        super.mapping(map: map)
+        id <- map["id"]
+        creator <- map["creator"]
+        name <- map["name"]
+        platform <- map["platform"]
+        schemeId <- map["scheme_id"]
+        bundleId <- map["bundle_id"]
+        storeId <- map["store_id"]
+        icon <- map["icon"]
+        points <- (map["points"], decimalTransform)
+        pointsLeft <- (map["points_left"], decimalTransform)
+        bonus <- (map["bonus"], decimalTransform)
+        downloads <- map["downloads"]
+        installStatus <- map["installStatus"]
+        onlineStatus <- map["online_status"]
+        insertedAt <- (map["inserted_at"], dateTimeTransform)
+        updatedAt <- (map["updated_at"], dateTimeTransform)
+    }
+}

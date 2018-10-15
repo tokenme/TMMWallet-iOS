@@ -10,6 +10,9 @@ import UIKit
 import SwiftyUserDefaults
 import Tabman
 import Pageboy
+import BTNavigationDropdownMenu
+import DropDown
+import Presentr
 
 class TasksViewController: TabmanViewController {
     
@@ -25,9 +28,16 @@ class TasksViewController: TabmanViewController {
         }
     }
     
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
+    
     private let viewControllers = [
-        AppTasksTableViewController.instantiate(),
-        ShareTasksTableViewController.instantiate()
+        ShareTasksTableViewController.instantiate(),
+        AppTasksTableViewController.instantiate()
     ]
     
     deinit {
@@ -43,13 +53,40 @@ class TasksViewController: TabmanViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = true
-            navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationController.navigationBar.shadowImage = UIImage()
+            navigationItem.title = I18n.earnPointsTasks.description
+            let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showTaskRecords))
+            navigationItem.leftBarButtonItem = recordButtonItem
+            let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
+            navigationItem.rightBarButtonItem = submitTaskButtonItem
+            
+            let menuItems = [I18n.earnPointsTasks.description, I18n.publishedByMe.description]
+            let menuView = BTNavigationDropdownMenu(title: BTTitle.index(0), items: menuItems)
+            menuView.cellSelectionColor = UIColor(white: 0.91, alpha: 1)
+            menuView.cellTextLabelFont = MainFont.light.with(size: 15)
+            menuView.cellTextLabelColor = UIColor.darkText
+            menuView.navigationBarTitleFont = MainFont.medium.with(size: 17)
+            menuView.checkMarkImage = nil
+            menuView.arrowTintColor = UIColor.darkText
+            
+            navigationItem.titleView = menuView
+            menuView.didSelectItemAtIndexHandler = {[weak self] (indexPath: Int) -> () in
+                guard let weakSelf = self else { return }
+                let mineOnly = indexPath == 1
+                for vc in weakSelf.viewControllers {
+                    if vc.isMember(of: AppTasksTableViewController.self) {
+                        (vc as? AppTasksTableViewController)?.mineOnly = mineOnly
+                    } else if vc.isMember(of: ShareTasksTableViewController.self) {
+                        (vc as? ShareTasksTableViewController)?.mineOnly = mineOnly
+                    }
+                }
+            }
         }
         
         // configure the bar
-        self.bar.items = [Item(title: I18n.appTasks.description),
-                          Item(title: I18n.shareTasks.description)]
+        self.bar.items = [
+            Item(title: I18n.shareTasks.description),
+            Item(title: I18n.appTasks.description)
+        ]
         self.bar.style = .buttonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self
@@ -63,16 +100,62 @@ class TasksViewController: TabmanViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = true
-            navigationController.setNavigationBarHidden(true, animated: animated)
+            navigationController.setNavigationBarHidden(false, animated: animated)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if userInfo == nil {
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
+    @objc func showTaskRecords() {
+        let vc = TaskRecordsTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func addTaskAction(_ sender: UIBarButtonItem, event: UIEvent) {
+        let dropDown = DropDown()
+        dropDown.anchorView = sender
+        dropDown.bottomOffset = CGPoint(x: 0, y: sender.plainView.bounds.height)
+        dropDown.dataSource = [I18n.submitNewShareTask.description, I18n.submitNewAppTask.description]
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let weakSelf = self else { return }
+            if index == 0 {
+                let vc = SubmitShareTaskTableViewController.instantiate()
+                vc.delegate = weakSelf
+                weakSelf.navigationController?.pushViewController(vc, animated: true)
+            } else if index == 1 {
+                /*
+                let vc = SubmitAppTaskTableViewController.instantiate()
+                vc.delegate = weakSelf
+                weakSelf.navigationController?.pushViewController(vc, animated: true)
+                */
+                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.submitAppTaskNotAvailable.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                    //
+                }
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                    guard let weakSelf2 = weakSelf else { return }
+                    let vc = FeedbackTableViewController.instantiate()
+                    weakSelf2.navigationController?.pushViewController(vc, animated: true)
+                }
+                alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+            }
+        }
+        dropDown.show()
+        DropDown.startListeningToKeyboard()
+    }
 }
 
 extension TasksViewController: UIViewControllerTransitioningDelegate {
@@ -99,5 +182,29 @@ extension TasksViewController: PageboyViewControllerDataSource {
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
+    }
+}
+
+extension TasksViewController: LoginViewDelegate {
+    func loginSucceeded(token: APIAccessToken?) {
+        if let vc = self.currentViewController {
+            if vc.isMember(of: AppTasksTableViewController.self) {
+                (vc as? AppTasksTableViewController)?.refresh()
+            } else if vc.isMember(of: ShareTaskTableViewCell.self) {
+                (vc as? ShareTasksTableViewController)?.refresh()
+            }
+        }
+    }
+}
+
+extension TasksViewController: ViewUpdateDelegate {
+    func shouldRefresh() {
+        if let vc = self.currentViewController {
+            if vc.isMember(of: AppTasksTableViewController.self) {
+                (vc as? AppTasksTableViewController)?.refresh()
+            } else if vc.isMember(of: ShareTaskTableViewCell.self) {
+                (vc as? ShareTasksTableViewController)?.refresh()
+            }
+        }
     }
 }

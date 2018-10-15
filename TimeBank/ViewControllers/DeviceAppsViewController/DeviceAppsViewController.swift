@@ -14,8 +14,11 @@ import Hydra
 import ZHRefresh
 import SkeletonView
 import ViewAnimator
+import Presentr
 
 class DeviceAppsViewController: UIViewController {
+    
+    weak public var delegate: ViewUpdateDelegate?
     
     private var userInfo: APIUser? {
         get {
@@ -31,7 +34,16 @@ class DeviceAppsViewController: UIViewController {
     
     private var device: APIDevice?
     
+    private var tmm: APIToken?
+    
     @IBOutlet private weak var summaryView: PastelView!
+    @IBOutlet private weak var exchangeTMMButton: TransitionButton!
+    @IBOutlet private weak var exchangePointButton: TransitionButton!
+    @IBOutlet private weak var miningAppsLabel: UILabel!
+    @IBOutlet private weak var moreAppsButton: UIButton!
+    @IBOutlet private weak var redeemTitleLabel: UILabel!
+    @IBOutlet private weak var redeemLoader: UIActivityIndicatorView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var pointsLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -40,11 +52,48 @@ class DeviceAppsViewController: UIViewController {
     @IBOutlet private weak var tsImageView: UIImageView!
     @IBOutlet private weak var growthFactorImageView: UIImageView!
     
+    let exchangePresenter: Presentr = {
+        let width = ModalSize.full
+        let height = ModalSize.fluid(percentage: 0.80)
+        let center = ModalCenterPosition.bottomCenter
+        let customType = PresentationType.custom(width: width, height: height, center: center)
+        
+        let customPresenter = Presentr(presentationType: customType)
+        customPresenter.transitionType = .coverVertical
+        customPresenter.dismissTransitionType = .crossDissolve
+        customPresenter.roundCorners = false
+        //customPresenter.blurBackground = true
+        customPresenter.blurStyle = UIBlurEffect.Style.light
+        //customPresenter.keyboardTranslationType = .moveUp
+        //customPresenter.backgroundColor = .green
+        customPresenter.backgroundOpacity = 0.5
+        customPresenter.dismissOnSwipe = true
+        customPresenter.dismissOnSwipeDirection = .bottom
+        return customPresenter
+    }()
+    
+    let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
+    
     private var apps: [APIApp] = []
     
+    private var cdps: [APIRedeemCdp] = []
+    
     private var loadingApps = false
+    private var gettingTmmExchangeRate = false
+    private var loadingBalance = false
+    private var loadingDevice = false
+    private var loadingRedeemCdps = false
+    private var makingCdpOfferId: UInt64 = 0
     
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -61,11 +110,23 @@ class DeviceAppsViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
+            let exchangeRecordsBarItem = UIBarButtonItem(title: I18n.exchangeRecords.description, style: .plain, target: self, action: #selector(self.showExchangeRecordsView))
+            navigationItem.rightBarButtonItem = exchangeRecordsBarItem
         }
+        exchangeTMMButton.setTitle(I18n.exchangeTMM.description, for: .normal)
+        exchangePointButton.setTitle(I18n.exchangePoint.description, for: .normal)
+        miningAppsLabel.text = I18n.miningApps.description
+        moreAppsButton.setTitle(I18n.moreApps.description, for: .normal)
+        redeemTitleLabel.text = I18n.redeemCdp.description
         guard let _ = self.device else { return }
         setupSummaryView()
+        SkeletonAppearance.default.multilineHeight = 10
+        
+        setupCollectionView()
         setupTableView()
-        refresh()
+        if userInfo != nil {
+            refresh(false)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +138,18 @@ class DeviceAppsViewController: UIViewController {
             }
             navigationController.navigationBar.isTranslucent = true
             navigationController.setNavigationBarHidden(false, animated: animated)
+        }
+        if userInfo != nil {
+            getRedeemCdps()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if userInfo == nil {
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
@@ -92,6 +165,10 @@ class DeviceAppsViewController: UIViewController {
     
     public func setDevice(_ device: APIDevice) {
         self.device = device
+    }
+    
+    public func setTMM(_ token: APIToken?) {
+        self.tmm = token
     }
     
     private func setupSummaryView() {
@@ -114,12 +191,16 @@ class DeviceAppsViewController: UIViewController {
         
         summaryView.startAnimation()
         
-        let tsImage = UIImage(named:"Timer")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let tsImage = UIImage(named:"Timer")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         tsImageView.image = tsImage
         
-        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         growthFactorImageView.image = flashImage
         
+        updateSummaryView()
+    }
+    
+    private func updateSummaryView() {
         guard let device = self.device else { return }
         
         let formatter = NumberFormatter()
@@ -127,7 +208,7 @@ class DeviceAppsViewController: UIViewController {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         pointsLabel.text = formatter.string(from: device.points)
-        balanceLabel.text = formatter.string(from: device.balance)
+        balanceLabel.text = formatter.string(from: tmm?.balance ?? 0)
         tsLabel.text = device.totalTs.timeSpan()
         
         let formatterGs = NumberFormatter()
@@ -141,24 +222,64 @@ class DeviceAppsViewController: UIViewController {
         tableView.register(cellType: DeviceAppTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 66.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.refresh()
+            weakSelf.refresh(true)
         }
-        
-        SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }
     
-    private func refresh() {
-        getApps()
+    private func setupCollectionView() {
+        collectionView.register(cellType: RedeemCdpCollectionViewCell.self)
+        collectionView.backgroundColor = UIColor.white
     }
-
+    
+    private func refresh(_ refresh: Bool=false) {
+        getApps()
+        if refresh {
+            refreshSummary()
+        }
+    }
+    
+    private func refreshSummary() {
+        all(getBalance(), getDevice()).catch(in: .main, {[weak self] error in
+            switch error as! TMMAPIError {
+            case .ignore:
+                return
+            default: break
+            }
+            guard let weakSelf = self else { return }
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.updateSummaryView()
+        })
+    }
+    
+    @IBAction func showExchangeTMM() {
+        exchangeTMMButton.startAnimation()
+        getTmmExchangeRate(direction: .TMMIn)
+    }
+    
+    @IBAction func showExchangePoint() {
+        exchangePointButton.startAnimation()
+        getTmmExchangeRate(direction: .TMMOut)
+    }
+    
+    @IBAction func showSDKApps() {
+        let vc = SDKAppsTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func showExchangeRecordsView() {
+        let vc = ExchangeRecordsViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension DeviceAppsViewController: UIViewControllerTransitioningDelegate {
@@ -204,7 +325,7 @@ extension DeviceAppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+        return !self.loadingApps
     }
 }
 
@@ -221,7 +342,56 @@ extension DeviceAppsViewController: SkeletonTableViewDataSource {
     }
 }
 
+extension DeviceAppsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.cdps.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(for: indexPath) as RedeemCdpCollectionViewCell
+        let cdp = self.cdps[indexPath.row]
+        cell.fill(cdp)
+        return cell
+    }
+    
+    // MARK: UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cdp = self.cdps[indexPath.row]
+        guard let offerId = cdp.offerId else { return }
+        let cell = collectionView.dequeueReusableCell(for: indexPath) as RedeemCdpCollectionViewCell
+        cell.isSelected = false
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let msg = String(format: I18n.confirmRedeemPointsCdp.description, arguments: [formatter.string(from: cdp.points)!, cdp.grade!])
+        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: msg)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] alert in
+            guard let weakSelf = self else { return }
+            weakSelf.cdpOrderAdd(offerId: offerId)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.customPresentViewController(self.alertPresenter, viewController: alertController, animated: true)
+    }
+    
+}
+
+
 extension DeviceAppsViewController {
+    
     private func getApps() {
         if self.loadingApps {
             return
@@ -234,16 +404,13 @@ extension DeviceAppsViewController {
             deviceId: deviceId,
             provider: self.deviceServiceProvider)
             .then(in: .main, {[weak self] apps in
-                guard let weakSelf = self else {
-                    return
-                }
+                guard let weakSelf = self else { return }
                 weakSelf.apps = apps
-            }).catch(in: .main, { error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else {
-                    return
-                }
+                guard let weakSelf = self else { return }
                 weakSelf.loadingApps = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
@@ -252,5 +419,177 @@ extension DeviceAppsViewController {
                 UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
             }
         )
+    }
+    
+    private func getTmmExchangeRate(direction: APIExchangeDirection) {
+        if self.gettingTmmExchangeRate {
+            return
+        }
+        self.gettingTmmExchangeRate = true
+        TMMExchangeService.getTMMRate(
+            provider: self.exchangeServiceProvider)
+            .then(in: .main, {[weak self] rate in
+                guard let weakSelf = self else { return }
+                guard let points = weakSelf.device?.points else { return }
+                weakSelf.showExchangeForm(rate, points, direction)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.gettingTmmExchangeRate = false
+                if direction == .TMMIn {
+                    weakSelf.exchangeTMMButton.stopAnimation(animationStyle: .normal, completion: nil)
+                } else {
+                    weakSelf.exchangePointButton.stopAnimation(animationStyle: .normal, completion: nil)
+                }
+            }
+        )
+    }
+    
+    private func showExchangeForm(_ rate: APIExchangeRate, _ points: NSDecimalNumber, _ direction: APIExchangeDirection) {
+        guard let device = self.device else { return }
+        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device, direction: direction)
+        vc.delegate = self
+        customPresentViewController(exchangePresenter, viewController: vc, animated: true, completion: nil)
+    }
+    
+    private func getBalance() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.loadingBalance {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.loadingBalance = true
+            TMMTokenService.getTMMBalance(
+                provider: weakSelf.tokenServiceProvider)
+                .then(in: .main, {[weak weakSelf] token in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.tmm = token
+                    resolve(())
+                }).catch(in: .main, { error in
+                    reject(error)
+                }).always(in: .background, body: {[weak weakSelf] in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.loadingBalance = false
+                }
+            )
+        })
+    }
+    
+    private func getDevice() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.loadingDevice {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.loadingDevice = true
+            guard let deviceId = weakSelf.device?.id else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            TMMDeviceService.getInfo(
+                deviceId: deviceId,
+                provider: weakSelf.deviceServiceProvider)
+                .then(in: .background, {[weak weakSelf] device in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.device = device
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                }).always(in: .background, body: {[weak weakSelf] in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.loadingDevice = false
+                }
+            )
+        })
+    }
+    
+    private func getRedeemCdps() {
+        if self.loadingRedeemCdps {
+            return
+        }
+        self.loadingRedeemCdps = true
+        
+        TMMRedeemService.getCdps(
+            provider: self.redeemServiceProvider)
+            .then(in: .main, {[weak self] cdps in
+                guard let weakSelf = self else { return }
+                weakSelf.cdps = cdps
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.loadingRedeemCdps = false
+                weakSelf.redeemLoader.isHidden = true
+                weakSelf.collectionView.reloadData()
+                weakSelf.collectionView.header?.endRefreshing()
+                let fromAnimation = AnimationType.from(direction: .bottom, offset: 30.0)
+                UIView.animate(views: weakSelf.collectionView.visibleCells, animations: [fromAnimation], completion:nil)
+            }
+        )
+    }
+    
+    private func cdpOrderAdd(offerId: UInt64) {
+        guard let deviceId = self.device?.id else { return }
+        if self.makingCdpOfferId > 0 {
+            return
+        }
+        self.makingCdpOfferId = offerId
+        TMMRedeemService.addCdpOrder(
+            offerId: offerId,
+            deviceId: deviceId,
+            provider: self.redeemServiceProvider)
+            .then(in: .main, {[weak self] resp in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: "Redeem Success", closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .background, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.makingCdpOfferId = 0
+            }
+        )
+    }
+}
+
+extension DeviceAppsViewController: TransactionDelegate {
+    func newTransaction(tx: APITransaction) {
+        guard let receipt = tx.receipt else { return }
+        self.delegate?.shouldRefresh()
+        let message = String(format: I18n.newTransactionDesc.description, receipt)
+        let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        let okAction = AlertAction(title: I18n.viewTransaction.description, style: .destructive) {[weak self] alert in
+            guard let weakSelf = self else { return }
+            let urlString = "https://etherscan.io/tx/\(receipt)"
+            guard let url = URL(string: urlString) else { return }
+            let vc = TMMWebViewController.instantiate()
+            vc.request = URLRequest(url: url)
+            weakSelf.navigationController?.pushViewController(vc, animated: true)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        customPresentViewController(alertPresenter, viewController: alertController, animated: true)
+        self.refreshSummary()
+    }
+}
+
+extension DeviceAppsViewController: LoginViewDelegate {
+    func loginSucceeded(token: APIAccessToken?) {
+        self.refresh(true)
+        self.getRedeemCdps()
     }
 }

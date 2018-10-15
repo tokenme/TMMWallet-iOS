@@ -1,0 +1,6 @@
+framework module TACCrash {
+  umbrella header "TACCrash.h"
+
+  export *
+  module * { export * }
+}

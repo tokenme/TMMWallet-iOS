@@ -14,6 +14,7 @@ public class APIApp: APIResponse {
     var name: String = ""
     var version: String = ""
     var platform: APIPlatform = APIPlatform.iOS
+    var schemeId: UInt64 = 0
     var bundleId: String = ""
     var storeId: UInt64?
     var icon: String?
@@ -40,6 +41,7 @@ public class APIApp: APIResponse {
         name <- map["name"]
         version <- map["version"]
         platform <- map["platform"]
+        schemeId <- map["scheme_id"]
         bundleId <- map["bundle_id"]
         storeId <- map["store_id"]
         icon <- map["icon"]

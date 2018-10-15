@@ -1,0 +1,210 @@
+/* 
+  Localizable.strings
+  TimeBank
+
+  Created by Syd Xu on 2018/9/3.
+  Copyright © 2018年 Tokenmama.io. All rights reserved.
+*/
+// API
+"Error" = "错误";
+"Success" = "成功";
+"Alert" = "提示";
+"Confirm" = "确认";
+"Close" = "关闭";
+"UnknownError" = "未知错误";
+"NotFoundError" = "请求不存在";
+"UnauthorizedError" = "用户未授权";
+"InvalidPasswordError" = "密码错误";
+"DuplicateUserError" = "用户已经注册";
+"InactivatedUserError" = "用户未激活";
+"InvalidCaptchaError" = "人机验证失败";
+"NotEnoughTokenError" = "没有足够的代币";
+"NotEnoughPointsError" = "没有足够的积分";
+"InvalidMinPointsError" = "至少需要 %@ 积分";
+"InvalidMinTMMError" = "至少需要 %@ UC";
+"NotEnoughETHError" = "至少需要 %@ ETH";
+"UploadImageError" = "上传图片失败";
+"MaxQuerySchemeError" = "请更新App至最新版本，否则部分应用安装任务无法验证是否成功！";
+"InvalidInviteCodeError" = "邀请码错误";
+"MaxBindDeviceError" = "超出绑定设备数，请先解绑一个设备";
+"OtherBindDeviceError" = "该设备被其他人绑定了";
+"InvalidCdpVendorError" = "暂不支持您手机号码运营商充值，目前仅支持中国移动、中国联通、中国电信下的手机号码(不支持虚拟运营商)";
+"ExchangeNotAvailableInYourCountryError" = "在您的国家暂时无法提供购买或销售数字货币功能。我们正努力将该功能带入更多国家。";
+"FeatureNotAvailableError" = "该功能暂不开放，请稍后访问。";
+
+"Refresh" = "刷新";
+"Copy" = "复制";
+"Submit" = "提交";
+"ShareSuccess" = "分享成功";
+"More" = "更多";
+
+// Login
+"Password" = "密码";
+"Repassword" = "重复密码";
+"VerifyCode" = "验证码";
+"InvalidPhoneNumber" = "电话号码不正确";
+"EmptyPassword" = "密码不能为空";
+"EmptyRepassword" = "重复密码不能为空";
+"EmptyVerifyCode" = "验证码不能为空";
+"PasswordNotMatch" = "重复密码不一致";
+"SuggestOptions" = "建议选项";
+"ChooseCountry" = "选择国家";
+"Resend" = "重新发送";
+"Sent" = "已发送";
+"Sending" = "发送中";
+
+// Wallet
+"ETHWallet" = "以太坊钱包";
+"Assets" = "资产";
+"CopyWalletAddress" = "复制钱包地址";
+"Receive" = "接收";
+"Send" = "转出";
+"ReceiveQRCode" = "收币码";
+"NeedMinGasError" = "钱包内至少需要 %@ Ether";
+"Balance" = "余额";
+"TransferAmount" = "转账数量";
+"To" = "至";
+"WalletAddress" = "钱包地址";
+"EmptyTokenAmount" = "请输入转账数量";
+"ExceedTokenAmount" = "超出钱包代币余额";
+"EmptyWalletAddress" = "请输入接收钱包地址";
+"InvalidWalletAddress" = "钱包地址错误";
+"EmptyTransactionsTitle" = "没有转账记录";
+"EmptyTransactionsDesc" = "转点儿代币试试？";
+"Bind" = "绑定";
+"UnbindDeviceExplain" = "该设备未绑定，绑定该设备获取积分。";
+"Unbind" = "解绑";
+"ConfirmUnbind" = "确定解绑该设备？";
+"Withdraw" = "提现";
+"CurrentTMMRedeemRate" = "当前兑换率: 1 UC = %@ %@";
+"TMMAmount" = "UC 数量";
+"TMMWithdrawAmount" = "≈ %@ %@";
+"EmptyWithdrawTMM" = "请输入 UC 数量";
+"WithdrawSuccessMsg" = "您已成功兑换 %@UC 为 %@%@";
+
+// Apps
+"SDKApps" = "可挖矿应用";
+"MiningApps" = "挖矿应用";
+"MoreApps" = "更多应用";
+"ExchangeRecords" = "兑换记录";
+"Install" = "安装";
+"Installed" = "已安装";
+"ExchangeTMM" = "积分兑换UC";
+"ExchangePoint" = "UC兑换积分";
+"PointsAmount" = "积分数量";
+"CurrentPointsTMMExchangeRate" = "当前兑换率：1 积分 ≈ %@ UC";
+"EmptyChangePoints" = "请输入积分数量";
+"ExceedChangePoints" = "超出最大积分数";
+"PointsTMMChangeAmount" = "≈ %@ UC";
+"Exchange" = "兑换";
+"ViewTransaction" = "查看交易";
+"NewTransactionTitle" = "新交易";
+"NewTransactionDesc" = "交易回执: %@";
+"ChangeTo" = "兑换";
+"ToTBC" = "兑换UC";
+"ToPoints" = "兑换积分";
+"ToMobileData" = "兑换流量";
+"TxPending" = "转账中";
+"TxSuccess" = "成功";
+"TxFailed" = "失败";
+"EmptyExchangeRecordsTitle" = "还没有兑换记录";
+"EmptyExchangeRecordsDesc" = "现在就兑换 UC 吧！";
+"RedeemCdp" = "积分换流量";
+"ConfirmRedeemPointsCdp" = "确定使用 %@ 积分兑换 %@ 流量？";
+"MobileData" = "流量";
+
+// Tasks
+"EarnPointsTasks" = "做任务赚积分";
+"PublishedByMe" = "我发布的任务";
+"AppTasks" = "安装应用";
+"ShareTasks" = "分享链接";
+"Earn" = "获得";
+"MinusPoints" = "扣除";
+"MaxBonus" = "最多奖励";
+"Points" = "积分";
+"ShareTaskRewardDesc" = "分享后每个新用户浏览获得 %@ 积分, 最多奖励 %@ 积分";
+"View" = "浏览";
+"Times" = "次";
+"PointsPerInstall" = "积分/安装";
+"AppTaskSuccess" = "安装应用任务成功";
+"AppTaskFailed" = "安装应用任务被卸载";
+"TaskRecords" = "任务记录";
+"EmptyTaskRecordsTitle" = "还没有任务记录";
+"EmptyTaskRecordsDesc" = "马上做任务赢积分吧!";
+"EmptyAppTasksTitle" = "暂时还没有应用安装任务";
+"EmptyAppTasksDesc" = "请稍后回来查看任务列表。";
+"EmptyShareTasksTitle" = "暂时还没有分享任务";
+"EmptyShareTasksDesc" = "请稍后回来查看任务列表。";
+"SubmitTask" = "发布任务";
+"SubmitNewAppTask" = "发布应用下载任务";
+"SubmitNewShareTask" = "发布分享链接任务";
+"SubmitAppTaskNotAvailable" = "iOS平台发布应用下载任务暂时不支持直接发布，请将需求反馈给客服，我们会安排专人与您联系。";
+"EditAppTask" = "编辑应用下载任务";
+"EditShareTask" = "编辑分享链接任务";
+"URL" = "链接";
+"Title" = "标题";
+"Description" = "描述";
+"RewardPerView" = "每次浏览奖励积分数";
+"MaxRewardTimes" = "每用户最多奖励次数";
+"TotalReward" = "总奖励积分数";
+"AppName" = "应用名称";
+"RewardPerInstall" = "每次安装奖励分数";
+"Edit" = "编辑";
+"Stop" = "暂停";
+"Start" = "开始";
+"ConfirmStartTask" = "确定开始该任务？";
+"ConfirmStopTask" = "确定暂停该任务？";
+"ConfirmCancelTask" = "确定取消该任务？";
+"Viewers" = "浏览人数";
+"BonusPoint" = "已奖励积分";
+"PointsLeft" = "剩余积分";
+
+// Account
+"Account" = "账户";
+"Signout" = "退出";
+"MyInviteCode" = "我的邀请码";
+"InviteCode" = "邀请码";
+"InviteCodePlaceholder" = "输入邀请码赢积分";
+"InviteRecords" = "邀请记录";
+"BindWechatAccount" = "绑定微信账户";
+"Binded" = "已绑定";
+"NotBinded" = "未绑定";
+"Currency" = "货币单位";
+"TelegramGroup" = "电报群";
+"WechatGroup" = "微信群";
+"Feedback" = "问题反馈";
+"CurrentVersion" = "当前版本";
+"CopyInviteCode" = "复制邀请码";
+"InviteUsers" = "邀请人数";
+"InviteIncome" = "邀请收入";
+
+// Market
+"Buy" = "买入";
+"Sell" = "卖出";
+"Amount" = "数量";
+"Price" = "出价";
+"BuyOrder" = "买入下单";
+"SellOrder" = "卖出下单";
+"BuyOrders" = "买入订单";
+"SellOrders" = "卖出订单";
+"OrderAddSuccess" = "订单已提交！";
+"ConfirmOrder" = "确定下单吗？";
+"EmptyQuantity" = "缺少数量";
+"EmptyPrice" = "缺少出价";
+"MyOrderbooks" = "我的订单";
+"DealAmount" = "成交UC";
+"DealETH" = "成交ETH";
+"OrderbookPending" = "配对中";
+"OrderbookCompleted" = "已完成";
+"OrderbookCanceled" = "已取消";
+"Cancel" = "取消";
+"ConfirmCancelOrder" = "确定取消该订单？";
+"EmptyOrderbookTitle" = "没有订单";
+"EmptyOrderbookDesc" = "您还没有创建任何订单，现在下单试试？";
+"Volumn" = "交易量";
+"LowPrice" = "最低价";
+"HighPrice" = "最高价";
+"Day" = "24小时";
+"Week" = "1周";
+"Month" = "30天";
+"Year" = "365天";

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8g4-Iy-z2J">
-                        <rect key="frame" x="16" y="8" width="200" height="79.5"/>
+                        <rect key="frame" x="16" y="8" width="199.5" height="79.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -31,9 +30,10 @@
                         </userDefinedRuntimeAttributes>
                     </textView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wql-O9-bUj">
-                        <rect key="frame" x="224" y="8.5" width="80" height="79.5"/>
+                        <rect key="frame" x="223.5" y="7.5" width="80.5" height="80.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="wql-O9-bUj" secondAttribute="height" multiplier="80:79" id="goR-j1-ZCt"/>
+                            <constraint firstAttribute="width" constant="80.5" id="5eg-IL-d8J"/>
+                            <constraint firstAttribute="width" secondItem="wql-O9-bUj" secondAttribute="height" multiplier="1:1" id="goR-j1-ZCt"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -47,7 +47,6 @@
                     <constraint firstItem="wql-O9-bUj" firstAttribute="leading" secondItem="8g4-Iy-z2J" secondAttribute="trailing" constant="8" id="jPD-R4-Vuj"/>
                     <constraint firstItem="8g4-Iy-z2J" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="nu8-Yi-jIw"/>
                     <constraint firstItem="wql-O9-bUj" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pjG-wY-sTz"/>
-                    <constraint firstItem="8g4-Iy-z2J" firstAttribute="height" secondItem="wql-O9-bUj" secondAttribute="height" id="xPi-Le-HQk"/>
                 </constraints>
                 <userDefinedRuntimeAttributes>
                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>

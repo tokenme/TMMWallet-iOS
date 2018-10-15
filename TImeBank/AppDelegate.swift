@@ -8,16 +8,51 @@
 
 import UIKit
 import TMMSDK
+import Moya
+import SwiftyUserDefaults
+import TACCore
+import TACMessaging
+import Siren
+import SwiftRater
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let tmmBeacon = TMMBeacon.initWithKey("e515a8899e7a43944a68502969154e4cb87a03a3", secret: "47535bf74a8072c0b6246b4fb73508eeb12f5982")
+    
+    private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin])
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        notificationCenter.requestAuthorization(options:[.badge, .sound, .alert]) {_,_ in
+        }
+        
+        let tmmBeacon = TMMBeacon.initWithKey(TMMConfigs.TMMBeacon.key, secret: TMMConfigs.TMMBeacon.secret)
         tmmBeacon?.start()
+        let options = TACApplicationOptions.default()
+        options?.analyticsOptions.idfa = tmmBeacon?.deviceId()
+        TACApplication.configurate(with: options);
+        
+        initTACAnalytics()
+        
+        AppTaskChecker.sharedInstance.start()
+        
+        refreshToken()
+        
+        Siren.shared.checkVersion(checkType: .immediately)
+        
+        SwiftRater.daysUntilPrompt = 7
+        SwiftRater.usesUntilPrompt = 10
+        SwiftRater.significantUsesUntilPrompt = 3
+        SwiftRater.daysBeforeReminding = 1
+        SwiftRater.showLaterButton = true
+        SwiftRater.debugMode = false
+        SwiftRater.appLaunched()
+        
+        setupShareSDK()
+        
         return true
     }
 
@@ -32,17 +67,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        Siren.shared.checkVersion(checkType: .immediately)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Siren.shared.checkVersion(checkType: .daily)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        initTACMessaging()
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return true
+    }
+    
+    private func initTACMessaging() {
+        TACMessagingService.default().token.bindTag("IDFA:\(TMMBeacon.shareInstance().deviceId()!)")
+        TACMessagingService.default().token.bindTag("PLATFORM:ios")
+        if let userInfo: DefaultsUser = Defaults[.user] {
+            TACMessagingService.default().token.bindTag("USERID:\(userInfo.id ?? 0)")
+            TACMessagingService.default().token.bindTag("COUNTRYCODE:\(userInfo.countryCode ?? 0)")
+        }
+    }
+    
+    private func initTACAnalytics() {
+        var dict: [AnyHashable: Any] = ["platform":"ios"]
+        if let userInfo: DefaultsUser = Defaults[.user] {
+            dict["userId"] = userInfo.id
+            dict["countryCode"] = userInfo.countryCode
+        }
+        let properties = TACAnalyticsProperties(dictionary: dict)
+        TACAnalyticsService.setUserProperties(properties)
+    }
+    
+    private func refreshToken() {
+        if let accessToken: DefaultsAccessToken = Defaults[.accessToken] {
+            if accessToken.expire.compare(Date().addingTimeInterval(60 * 24)) == .orderedAscending {
+                TMMAuthService.refreshToken(provider: authServiceProvider).then(in: .background, {token in
+                    print("AccessToken refreshed!")
+                }).catch(in: .background, { error in
+                    print(error)
+                })
+            }
+        }
+    }
+    
+    private func setupShareSDK() {
+        ShareSDK.registPlatforms { (ssdkRegister: SSDKRegister?) in
+            guard let register = ssdkRegister else { return }
+            register.setupSinaWeibo(withAppkey: TMMConfigs.Weibo.appID, appSecret: TMMConfigs.Weibo.appKey, redirectUrl: TMMConfigs.Weibo.redirectURL)
+            register.setupQQ(withAppId: TMMConfigs.QQ.appID, appkey: TMMConfigs.QQ.appKey)
+            register.setupWeChat(withAppId: TMMConfigs.WeChat.appID, appSecret: TMMConfigs.WeChat.appKey)
+            register.setupTwitter(withKey: TMMConfigs.Twitter.key, secret: TMMConfigs.Twitter.secret, redirectUrl: TMMConfigs.Twitter.redirectURL)
+            register.setupFacebook(withAppkey: TMMConfigs.Facebook.key, appSecret: TMMConfigs.Facebook.secret, displayName: TMMConfigs.Facebook.displayName)
+            register.setupTelegram(byBotToken: TMMConfigs.Telegram.botToken, botDomain: TMMConfigs.Telegram.domain)
+            register.setupLineAuthType(SSDKAuthorizeType.SSO)
+            }
+    }
 }
 

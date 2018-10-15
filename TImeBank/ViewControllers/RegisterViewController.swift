@@ -10,8 +10,8 @@ import UIKit
 import PhoneNumberKit
 import CountryPickerView
 import Moya
-import SwiftEntryKit
 import Hydra
+import Presentr
 
 class RegisterViewController: UIViewController {
     
@@ -21,6 +21,13 @@ class RegisterViewController: UIViewController {
     @IBOutlet private weak var repasswordTextfield: TweeAttributedTextField!
     @IBOutlet private weak var countdownButton: RNCountdownButton!
     @IBOutlet private weak var registerButton: TransitionButton!
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin])
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin])
@@ -78,27 +85,25 @@ class RegisterViewController: UIViewController {
                 mobile: self.telephoneTextField.text!
             )
         ){[weak self] result in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             switch result {
             case let .success(response):
                 do {
                     let resp = try response.mapObject(APIResponse.self)
                     if resp.code ?? 0 > 0 {
                         DispatchQueue.main.async {
-                            UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: resp.message ?? I18n.unknownError.description, closeBtn: I18n.close.description)
+                            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: resp.message ?? I18n.unknownError.description, closeBtn: I18n.close.description)
                         }
                         return
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: I18n.unknownError.description, closeBtn: I18n.close.description)
+                        UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: I18n.unknownError.description, closeBtn: I18n.close.description)
                     }
                 }
             case let .failure(error):
                 DispatchQueue.main.async {
-                    UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: error.errorDescription!, closeBtn: I18n.close.description)
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.errorDescription!, closeBtn: I18n.close.description)
                     weakSelf.countdownButton.stop()
                     weakSelf.countdownButton.showFetchAgain()
                     weakSelf.countdownButton.isEnabled = true
@@ -128,6 +133,15 @@ class RegisterViewController: UIViewController {
         if self.isRegistering {
             return
         }
+        let vc = ReCaptchaViewController()
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func doRegister(recaptcha: String) {
+        if self.isRegistering {
+            return
+        }
         self.isRegistering = true
         
         let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
@@ -147,6 +161,7 @@ class RegisterViewController: UIViewController {
                 verifyCode: verifyCode,
                 password: passwd,
                 repassword: repasswd,
+                captcha: recaptcha,
                 provider: weakSelf.userServiceProvider)
         }).then(in: .main, {[weak self] user in
             guard let weakSelf = self else {
@@ -162,21 +177,25 @@ class RegisterViewController: UIViewController {
                 return
             default: break
             }
-            guard let weakSelf = self else {
-                return
-            }
-            weakSelf.registerButton.stopAnimation(animationStyle: .shake, completion: {})
-            UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            guard let weakSelf = self else { return }
+            weakSelf.registerButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
+                guard let weakSelf2 = weakSelf else { return }
+                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            })
         }).always(in: .main, body: {[weak self]  in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             weakSelf.isRegistering = false
         })
     }
     
     @IBAction private func close() {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension RegisterViewController: ReCaptchaDelegate {
+    func didSolve(response: String) {
+        self.doRegister(recaptcha: response)
     }
 }
 

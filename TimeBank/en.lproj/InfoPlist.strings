@@ -1,0 +1,25 @@
+/* 
+  InfoPlist.strings
+  TimeBank
+
+  Created by Syd Xu on 2018/9/3.
+  Copyright © 2018年 Tokenmama.io. All rights reserved.
+*/
+CFBundleDisplayName = "UCoin";
+NSAppleMusicUsageDescription = "Allow this App to access your Music Library?";
+NSBluetoothPeripheralUsageDescription = "Allow this App to access your Bluetooth?";
+NSCalendarsUsageDescription = "Allow this App to access your Calendar?";
+NSCameraUsageDescription = "Allow the App to use your Camera?";
+NSContactsUsageDescription = "Allow this App to access your Contracts?";
+NSFaceIDUsageDescription = "Allow this App to use your Face ID?";
+NSHealthShareUsageDescription = "Allow this App to use your Health Share?";
+NSHealthUpdateUsageDescription = "Allow this App to use your Health Update?";
+NSLocationAlwaysAndWhenInUseUsageDescription = "App need your permission to access Location when in use";
+NSLocationAlwaysUsageDescription = "App need your permission to always access your Location";
+NSLocationUsageDescription = "App need your permission to access your Location";
+NSLocationWhenInUseUsageDescription = "App need your permission to access Location when in use";
+NSMicrophoneUsageDescription = "Allow this App to use your Microphone?";
+NSMotionUsageDescription = "Allow this App to access your Motion？";
+NSPhotoLibraryAddUsageDescription = "Allow this App to access and use your Photo Library?";
+NSPhotoLibraryUsageDescription = "Allow this App to access your Photo Library?";
+NSRemindersUsageDescription = "Allow this App to access your Reminder?";

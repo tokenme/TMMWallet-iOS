@@ -12,8 +12,10 @@ import Hydra
 
 enum TMMDeviceService {
     case bind(idfa: String)
+    case unbind(id: String)
     case list()
     case apps(deviceId: String)
+    case info(deviceId: String)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -29,17 +31,21 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .bind(_):
             return "/bind"
+        case .unbind(_):
+            return "/unbind"
         case .list():
             return "/list"
         case let .apps(deviceId):
             return "/apps/\(deviceId)"
+        case let .info(deviceId):
+            return "/get/\(deviceId)"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .bind:
+        case .bind, .unbind:
             return .post
-        case .list, .apps:
+        case .list, .apps, .info:
             return .get
         }
     }
@@ -47,17 +53,21 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
         switch self {
         case let .bind(idfa):
             return .requestParameters(parameters: ["idfa": idfa], encoding: JSONEncoding.default)
+        case let .unbind(id):
+            return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
         case .list():
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .apps(_):
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .info(_):
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
-        case .bind(_):
+        case .bind(_), .unbind(_):
             return "ok".utf8Encoded
-        case .list(), .apps(_):
+        case .list(), .apps(_), .info(_):
             return "[]".utf8Encoded
         }
     }
@@ -73,6 +83,30 @@ extension TMMDeviceService {
         return Promise<APIResponse> (in: .background, { resolve, reject, _ in
             provider.request(
                 .bind(idfa: idfa)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APIResponse.self)
+                        if let errorCode = resp.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func unbindUser(id: String, provider: MoyaProvider<TMMDeviceService>) -> Promise<APIResponse> {
+        return Promise<APIResponse> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .unbind(id: id)
             ){ result in
                 switch result {
                 case let .success(response):
@@ -151,6 +185,30 @@ extension TMMDeviceService {
                                 reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
                             }
                         }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getInfo(deviceId: String, provider: MoyaProvider<TMMDeviceService>) -> Promise<APIDevice> {
+        return Promise<APIDevice> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .info(deviceId: deviceId)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let device = try response.mapObject(APIDevice.self)
+                        if let errorCode = device.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: device.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(device)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
                     }
                 case let .failure(error):
                     reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))

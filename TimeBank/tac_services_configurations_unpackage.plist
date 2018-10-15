@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>services</key>
+    <dict>
+      <key>crash</key>
+      <dict>
+        <key>appKey</key>
+        <string>ff015716-aca0-42a4-8afd-65a53d14eb01</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

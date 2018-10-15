@@ -1,153 +1,277 @@
 PODS:
   - Alamofire (4.7.3)
-  - AutoInsetter (1.2.6)
+  - AOPKit (1.0.1)
+  - AutoInsetter (1.3.0)
+  - BTNavigationDropdownMenu (0.5)
+  - Charts (3.2.0):
+    - Charts/Core (= 3.2.0)
+  - Charts/Core (3.2.0)
   - CountryPickerView (2.1.1)
+  - DropDown (2.3.6)
+  - DynamicBlurView (3.0.1)
+  - EmptyDataSet-Swift (4.2.0)
   - GrandTime (1.3.0)
+  - HappyDNS (0.3.14)
   - HydraAsync (1.2.1)
   - IQKeyboardManagerSwift (6.1.1)
-  - Kingfisher (4.9.0)
+  - Kingfisher (4.10.0)
   - KMNavigationBarTransition (1.1.5)
-  - moa (9.0.2)
+  - moa (10.0.0)
+  - mob_sharesdk (4.2.0):
+    - mob_sharesdk/ShareSDK (= 4.2.0)
+    - MOBFoundation
+  - mob_sharesdk/ShareSDK (4.2.0):
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKConfigFile (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKExtension (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Facebook (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Line (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/QQ (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Telegram (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/Twitter (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKPlatforms/WeChat (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - mob_sharesdk/ShareSDKUI (4.2.0):
+    - mob_sharesdk/ShareSDK
+    - MOBFoundation
+  - MOBFoundation (3.1.9)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - NVActivityIndicatorView (4.3.0):
-    - NVActivityIndicatorView/Presenter (= 4.3.0)
-  - NVActivityIndicatorView/Presenter (4.3.0)
   - ObjectMapper (3.3.0)
-  - Pageboy (2.5.4)
-  - Pastel (0.4.0)
+  - Pageboy (2.6.0)
+  - Pastel (0.5.1)
   - PhoneNumberKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.1.0)
     - PhoneNumberKit/UIKit (= 2.1.0)
   - PhoneNumberKit/PhoneNumberKitCore (2.1.0)
   - PhoneNumberKit/UIKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore
-  - QuickLayout (2.0.2)
+  - PhotoSolution (1.0.2)
+  - Presentr (1.3.2)
+  - QCloudCore (5.4.5)
+  - Qiniu (7.2.5):
+    - HappyDNS (~> 0.3)
   - Result (3.2.4)
   - Reusable (4.0.3):
     - Reusable/Storyboard (= 4.0.3)
     - Reusable/View (= 4.0.3)
   - Reusable/Storyboard (4.0.3)
   - Reusable/View (4.0.3)
-  - Schedule (0.1.0)
-  - ShadowView (1.2)
-  - SkeletonView (1.4)
-  - SnapKit (4.0.0)
-  - StatusAlert (0.10.1)
-  - SwiftEntryKit (0.6.0):
-    - QuickLayout (= 2.0.2)
-  - SwiftWebVC (0.4.5)
+  - Schedule (1.0.0)
+  - ShadowView (1.3)
+  - Siren (3.7.1)
+  - SkeletonView (1.4.1)
+  - SwiftRater (1.3.0)
+  - swiftScan (1.1.7)
   - SwiftyUserDefaults (4.0.0-alpha.1)
-  - Tabman (1.9.2):
-    - AutoInsetter (~> 1.2.0)
-    - Pageboy (~> 2.5.0)
-  - Toucan (1.0.0)
-  - ViewAnimator (2.1.2)
-  - ZHRefresh (0.1.9)
+  - SwipeCellKit (2.5.0)
+  - Tabman (1.10.0):
+    - AutoInsetter (~> 1.3.0)
+    - Pageboy (~> 2.6.0)
+  - TACCore (1.0.0):
+    - AOPKit (= 1.0.1)
+    - QCloudCore (= 5.4.5)
+  - TACCrash (1.0.0):
+    - TACCore (= 1.0.0)
+  - TACMessaging (1.0.0):
+    - AOPKit (= 1.0.1)
+    - TACCore (= 1.0.0)
+  - TMMSDK (0.4.1)
+  - ViewAnimator (2.2.0)
+  - ZHRefresh (0.2.1)
 
 DEPENDENCIES:
-  - CountryPickerView (~> 2.1.0)
+  - BTNavigationDropdownMenu
+  - Charts
+  - CountryPickerView
+  - DropDown
+  - DynamicBlurView
+  - EmptyDataSet-Swift (~> 4.2)
   - GrandTime
   - HydraAsync
-  - IQKeyboardManagerSwift (~> 6.0)
-  - Kingfisher
-  - KMNavigationBarTransition (~> 1.1)
-  - moa (~> 9.0)
-  - Moya (~> 11.0)
-  - NVActivityIndicatorView (~> 4.2)
-  - ObjectMapper (~> 3.2)
-  - Pastel
-  - PhoneNumberKit (~> 2.1)
-  - Reusable (~> 4.0.2)
-  - Schedule (~> 0.1)
-  - ShadowView
-  - SkeletonView
-  - SnapKit (~> 4.0.0)
-  - StatusAlert (~> 0.10.1)
-  - SwiftEntryKit (~> 0.2)
-  - SwiftWebVC (from `https://github.com/tokenme/SwiftWebVC.git`)
+  - IQKeyboardManagerSwift
+  - Kingfisher (~> 4.10)
+  - KMNavigationBarTransition
+  - moa (~> 10.0)
+  - mob_sharesdk
+  - mob_sharesdk/ShareSDKConfigFile
+  - mob_sharesdk/ShareSDKExtension
+  - mob_sharesdk/ShareSDKPlatforms/Facebook
+  - mob_sharesdk/ShareSDKPlatforms/Line
+  - mob_sharesdk/ShareSDKPlatforms/QQ
+  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo
+  - mob_sharesdk/ShareSDKPlatforms/Telegram
+  - mob_sharesdk/ShareSDKPlatforms/Twitter
+  - mob_sharesdk/ShareSDKPlatforms/WeChat
+  - mob_sharesdk/ShareSDKUI
+  - Moya
+  - ObjectMapper
+  - Pastel (from `https://github.com/cruisediary/Pastel.git`, tag `0.5.1`)
+  - PhoneNumberKit
+  - PhotoSolution (~> 1.0.2)
+  - Presentr
+  - Qiniu
+  - Reusable
+  - Schedule (~> 1.0)
+  - ShadowView (~> 1.3)
+  - Siren
+  - SkeletonView (from `https://github.com/tokenme/SkeletonView.git`, tag `1.4.1`)
+  - SwiftRater
+  - swiftScan (from `https://github.com/tokenme/swiftScan.git`, tag `1.1.7`)
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
-  - Tabman
-  - Toucan (~> 1.0)
-  - ViewAnimator
-  - ZHRefresh
+  - SwipeCellKit
+  - Tabman (~> 1.10)
+  - TACCore
+  - TACCrash
+  - TACMessaging
+  - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.4.1`)
+  - ViewAnimator (~> 2.2)
+  - ZHRefresh (from `https://github.com/tokenme/ZHRefresh.git`, tag `0.2.1`)
 
 SPEC REPOS:
+  https://git.cloud.tencent.com/qcloud_u/cocopoads-repo:
+    - AOPKit
+    - QCloudCore
+    - TACCore
+    - TACCrash
+    - TACMessaging
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AutoInsetter
+    - BTNavigationDropdownMenu
+    - Charts
     - CountryPickerView
+    - DropDown
+    - DynamicBlurView
+    - EmptyDataSet-Swift
     - GrandTime
+    - HappyDNS
     - HydraAsync
     - IQKeyboardManagerSwift
     - Kingfisher
     - KMNavigationBarTransition
     - moa
+    - mob_sharesdk
+    - MOBFoundation
     - Moya
-    - NVActivityIndicatorView
     - ObjectMapper
     - Pageboy
-    - Pastel
     - PhoneNumberKit
-    - QuickLayout
+    - PhotoSolution
+    - Presentr
+    - Qiniu
     - Result
     - Reusable
     - Schedule
     - ShadowView
-    - SkeletonView
-    - SnapKit
-    - StatusAlert
-    - SwiftEntryKit
+    - Siren
+    - SwiftRater
     - SwiftyUserDefaults
+    - SwipeCellKit
     - Tabman
-    - Toucan
     - ViewAnimator
-    - ZHRefresh
 
 EXTERNAL SOURCES:
-  SwiftWebVC:
-    :git: https://github.com/tokenme/SwiftWebVC.git
+  Pastel:
+    :git: https://github.com/cruisediary/Pastel.git
+    :tag: 0.5.1
+  SkeletonView:
+    :git: https://github.com/tokenme/SkeletonView.git
+    :tag: 1.4.1
+  swiftScan:
+    :git: https://github.com/tokenme/swiftScan.git
+    :tag: 1.1.7
+  TMMSDK:
+    :git: https://github.com/tokenme/TMMSDK.git
+    :tag: 0.4.1
+  ZHRefresh:
+    :git: https://github.com/tokenme/ZHRefresh.git
+    :tag: 0.2.1
 
 CHECKOUT OPTIONS:
-  SwiftWebVC:
-    :commit: 5078679c019578121e7495861410c1c471ad6d3d
-    :git: https://github.com/tokenme/SwiftWebVC.git
+  Pastel:
+    :git: https://github.com/cruisediary/Pastel.git
+    :tag: 0.5.1
+  SkeletonView:
+    :git: https://github.com/tokenme/SkeletonView.git
+    :tag: 1.4.1
+  swiftScan:
+    :git: https://github.com/tokenme/swiftScan.git
+    :tag: 1.1.7
+  TMMSDK:
+    :git: https://github.com/tokenme/TMMSDK.git
+    :tag: 0.4.1
+  ZHRefresh:
+    :git: https://github.com/tokenme/ZHRefresh.git
+    :tag: 0.2.1
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AutoInsetter: 3713c857f3c0cc4b6265fe55ecf0c14bfe8622ee
+  AOPKit: be229d578279d42607214f07cb3f68c563c4e3cd
+  AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
+  BTNavigationDropdownMenu: ba3a26fdb6a56c4721c31df8a0875106c259663a
+  Charts: 680c8328bd5e90cb14f67e00d2176f3113d19141
   CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
+  DropDown: e8bfbce001b2e6b7e8abfdd42e12b565712d84f4
+  DynamicBlurView: b1df5415f9bd31897549e5d7077e5ec120a4d636
+  EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
+  HappyDNS: dc6a164ee81979093123c241c6353bcf0218add6
   HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
   IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
-  Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
+  Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
-  moa: b73dc5e0efa1fad00711c4608e41b197f4d15b12
+  moa: 95c863fd1059e6b5c7f6be30627823bb07ebca25
+  mob_sharesdk: fc8a9aab921c08e5e88a5b1f36229c6d406a2ff8
+  MOBFoundation: 11500153c10d83e4ac341f6ad6301b3998ce6db2
   Moya: a725035953bc1c0eb1be505ab903984501d82440
-  NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  Pageboy: 46d743783414a18f8b27a988485e0ed2ea219ff7
-  Pastel: 7fa5e26123b3dbe11f7ed255654bf37100b199a5
+  Pageboy: 1a5535f0d5a321045971cc2ddc6bcb53302392cb
+  Pastel: b3dd5b8d612dac06ae7c63c97c45c900829bc139
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
-  QuickLayout: a730730b646b231fd4ef7cffaeb1e81fe0e1ca92
+  PhotoSolution: 699897aa33a6ef56c6a5b9758ade9b941f2663ba
+  Presentr: 797ae6ec8904eaba4ec58a4c2065bd66e31569ea
+  QCloudCore: fdba2fdacb45f3e3f867487136ce804053e09414
+  Qiniu: 909b408ee489ea54827e9717be90b94bc9dfbc48
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
-  Schedule: 62cd2defb026a3607349b2a2b1bd8ec3fd12cccd
-  ShadowView: e686f2e27fc281c0118419b1fb314b6e534a4682
-  SkeletonView: 50f7a9b04e3a62bd0ae964859c19317fabaea367
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  StatusAlert: 123d79043ee371f0a57102b35e79e2c8c8684388
-  SwiftEntryKit: ba070426598304c5773d84b54ed8b0763b5f2060
-  SwiftWebVC: d3e2c4530b079e7647d5be1a457cf46cb65fb89a
+  Schedule: 64f334e01daa6f80201ab147b59cb4f1e118ae74
+  ShadowView: 80c923f88fe2e6602066aa535f46621f0f6471d1
+  Siren: ccfbb3e0556c5c49817214716a45be6910cacdb4
+  SkeletonView: 60d6ce7edb0cb4c7758db33c74add50392b3c475
+  SwiftRater: 035512c0c454c83bd4d96b483d8854606aeecccf
+  swiftScan: a36a3aa9c8deed9502cbd76d8da47a94f12fbf69
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
-  Tabman: a09f7d7aa62b231ec475ca9eb9171f7cc973a3d7
-  Toucan: 61867fb10948c02e9804280a95eb183e98eac97a
-  ViewAnimator: 20df9a24a076c6ee78b77a4dbf1943808c94954e
-  ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
+  SwipeCellKit: d8f2617538ce3021cb0a11d1b93856a06a2f2e20
+  Tabman: 1d8fef96c8e12d0f7919c8b5a5e2ed2955ee3cf5
+  TACCore: a0d0286c860f02c4f364fcf74c7808b81740ef14
+  TACCrash: 1d794f11ba159001aa9d37e7c8b2edc5c5766ae6
+  TACMessaging: 7e9414193ee6d83b5e19202d7d2bbed8b5498963
+  TMMSDK: f7b921d54dbcd8be51a3cd81423ace4052be7140
+  ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
+  ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 195bd58273bf4756b5deb939aa5f9f5b0b8faf37
+PODFILE CHECKSUM: 16c023733d6978854714a6d6fa41b58715c5000c
 
 COCOAPODS: 1.6.0.beta.1

@@ -12,7 +12,7 @@
 #import <Foundation/Foundation.h>
 
 @interface DetectApp: NSObject
-+ (BOOL)isInstalled:(NSString *)bundleId;
++ (BOOL)isInstalled:(NSString *)bundleId schemeId: (UInt64)schemeId;
 @end
 
 #endif /* DetectApp_h */

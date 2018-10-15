@@ -41,7 +41,7 @@ public prefix func ++ ( value: inout NSDecimalNumber) -> NSDecimalNumber {
 
 public postfix func ++ ( value: inout NSDecimalNumber) -> NSDecimalNumber {
     let result = value
-    ++value
+    _ = ++value
     return result
 }
 
@@ -71,7 +71,7 @@ public prefix func -- ( value: inout NSDecimalNumber) -> NSDecimalNumber {
 
 public postfix func -- ( value: inout NSDecimalNumber) -> NSDecimalNumber {
     let result = value
-    --value
+    _ = --value
     return result
 }
 

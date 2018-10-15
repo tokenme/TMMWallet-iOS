@@ -61,3 +61,12 @@ let CheckValidAccessToken: () -> Bool = {
     }
     return false
 }
+
+let MaxSchemeQuery: () -> UInt64 = {
+    if let dict = Bundle.main.infoDictionary {
+        if let maxQuery = dict["TMMMaxSchemeQuery"] as? UInt64 {
+            return maxQuery
+        }
+    }
+    return 0
+}

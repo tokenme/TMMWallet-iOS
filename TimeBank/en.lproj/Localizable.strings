@@ -1,0 +1,210 @@
+/* 
+  Localizable.strings
+  TimeBank
+
+  Created by Syd Xu on 2018/9/3.
+  Copyright © 2018年 Tokenmama.io. All rights reserved.
+*/
+// API
+"Error" = "Error";
+"Success" = "Success";
+"Alert" = "Alert";
+"Confirm" = "Confirm";
+"Close" = "Close";
+"UnknownError" = "Unknown Error";
+"NotFoundError" = "Not Found Request";
+"UnauthorizedError" = "Unauthorized";
+"InvalidPasswordError" = "Invalid Password";
+"DuplicateUserError" = "User Already Exists";
+"InactivatedUserError" = "User not activated";
+"InvalidCaptchaError" = "Invalid Captcha";
+"NotEnoughTokenError" = "Don't have enough token";
+"NotEnoughPointsError" = "Don't have enough points";
+"InvalidMinPointsError" = "Need at least %@ points";
+"InvalidMinTMMError" = "Need at least %@ UC";
+"NotEnoughETHError" = "Need at least %@ ETH";
+"UploadImageError" = "Upload image failed";
+"MaxQuerySchemeError" = "Please upgrade to the latest version otherwise some of the app installation tasks could not be verified!";
+"InvalidInviteCodeError" = "Invalid invide code";
+"MaxBindDeviceError" = "Exceeded maximum binding devices limit, please unbind a device";
+"OtherBindDeviceError" = "This device has been binded by some others";
+"InvalidCdpVendorError" = "Your phone number is not supported. Currently we only support China Mobile, China UnionCom and China Telecom.";
+"ExchangeNotAvailableInYourCountryError" = "Buying digital currencies like bitcoin and ethereum is not enabled in your country yet. We're working hard to bring this feature to as many countries as possible.";
+"FeatureNotAvailableError" = "This feature not available currently, please check later.";
+
+"Refresh" = "Refresh";
+"Copy" = "Copy";
+"Submit" = "Submit";
+"ShareSuccess" = "Share Success";
+"More" = "More";
+
+// Login
+"Password" = "Password";
+"Repassword" = "Repassword";
+"VerifyCode" = "Verify code";
+"InvalidPhoneNumber" = "Invalid Phone Number";
+"EmptyPassword" = "Password must be input";
+"EmptyRepassword" = "Repassword must be input";
+"EmptyVerifyCode" = "Verify code must be input";
+"PasswordNotMatch" = "Password doesn't match";
+"SuggestOptions" = "Suggested Options";
+"ChooseCountry" = "Choose Country";
+"Resend" = "Resend";
+"Sent" = "Sent";
+"Sending" = "Sending";
+
+// Wallet
+"ETHWallet" = "Ethereum Wallet";
+"Assets" = "Assets";
+"CopyWalletAddress" = "Copy Wallet Address";
+"Receive" = "Receive";
+"Send" = "Send";
+"ReceiveQRCode" = "Receive QRCode";
+"NeedMinGasError" = "Need miniumum %@ Ether in your wallet";
+"Balance" = "Balance";
+"TransferAmount" = "Transfer Amount";
+"To" = "To";
+"WalletAddress" = "Wallet Address";
+"EmptyTokenAmount" = "Please input token transfer amount";
+"ExceedTokenAmount" = "Exceeded token amount in your wallet";
+"EmptyWalletAddress" = "Please input receiver wallet address";
+"InvalidWalletAddress" = "Invalid wallet address";
+"EmptyTransactionsTitle" = "No Transactions";
+"EmptyTransactionsDesc" = "Try to transfer some token now?";
+"Bind" = "Bind";
+"UnbindDeviceExplain" = "Find unbind device, win points by binding the device";
+"Unbind" = "Unbind";
+"ConfirmUnbind" = "Do you want to unbind this device?";
+"Withdraw" = "Withdraw";
+"CurrentTMMRedeemRate" = "当前兑换率: 1 UC = %@ %@";
+"TMMAmount" = "UC Amount";
+"TMMWithdrawAmount" = "≈ %@ %@";
+"EmptyWithdrawTMM" = "UC amount must be input";
+"WithdrawSuccessMsg" = "You have successfully withdraw %@UC to %@%@";
+
+// Apps
+"SDKApps" = "Minable Apps";
+"MiningApps" = "Mining Apps";
+"MoreApps" = "More Apps";
+"ExchangeRecords" = "Change Records";
+"Install" = "Install";
+"Installed" = "Installed";
+"ExchangeTMM" = "Points to UC";
+"ExchangePoint" = "UC to Points";
+"PointsAmount" = "Points Amount";
+"CurrentPointsTMMExchangeRate" = "Current Exchange Rate: 1 Points ≈ %@ UC";
+"EmptyChangePoints" = "Points amount must be input";
+"ExceedChangePoints" = "Exceeded max points";
+"PointsTMMChangeAmount" = "≈ %@ UC";
+"Exchange" = "Change";
+"ViewTransaction" = "View Transaction";
+"NewTransactionTitle" = "New Transaction";
+"NewTransactionDesc" = "Receipt: %@";
+"ChangeTo" = "Change to";
+"ToTBC" = "To UC";
+"ToPoints" = "To Points";
+"ToMobileData" = "To Mobile Data";
+"TxPending" = "Pending";
+"TxSuccess" = "Success";
+"TxFailed" = "Failed";
+"EmptyExchangeRecordsTitle" = "No Exchange Records";
+"EmptyExchangeRecordsDesc" = "Change UC now!";
+"RedeemCdp" = "Redeem Points";
+"ConfirmRedeemPointsCdp" = "Please confirm to use %@ points change to %@ mobile data.";
+"MobileData" = "Mobile data";
+
+// Tasks
+"EarnPointsTasks" = "Earn Points";
+"PublishedByMe" = "Published by Me";
+"AppTasks" = "Install Apps";
+"ShareTasks" = "Share Links";
+"Earn" = "Earn";
+"MinusPoints" = "Punish";
+"MaxBonus" = "Max bonus";
+"Points" = "Points";
+"ShareTaskRewardDesc" = "%@ Points/Viewer, Max bonus %@ Points";
+"View" = "View";
+"Times" = "times";
+"PointsPerInstall" = "Points/Install";
+"AppTaskSuccess" = "App Task Success";
+"AppTaskFailed" = "App Task Failed";
+"TaskRecords" = "Task Records";
+"EmptyTaskRecordsTitle" = "No Task Records";
+"EmptyTaskRecordsDesc" = "Win points with complete tasks now!";
+"EmptyAppTasksTitle" = "No Available APP Install Tasks";
+"EmptyAppTasksDesc" = "Please come back and check later.";
+"EmptyShareTasksTitle" = "No Available Share Link Tasks";
+"EmptyShareTasksDesc" = "Please come back and check later.";
+"SubmitTask" = "Submit Task";
+"SubmitNewAppTask" = "Submit new App Task";
+"SubmitNewShareTask" = "Submit new Share Link Task";
+"SubmitAppTaskNotAvailable" = "We are not support submit new app tasks for iOS platform directly, please submit your requirement to our customer service, we'll arrange specialist to contact you later.";
+"EditAppTask" = "Edit App Task";
+"EditShareTask" = "Edit Share Link Task";
+"URL" = "Link";
+"Title" = "Title";
+"Description" = "Description";
+"RewardPerView" = "Reward points / viewer";
+"MaxRewardTimes" = "Max reward times / user";
+"TotalReward" = "Total reward points";
+"AppName" = "App Name";
+"RewardPerInstall" = "Reword points / install";
+"Edit" = "Edit";
+"Stop" = "Stop";
+"Start" = "Start";
+"ConfirmStartTask" = "Confirm start the task?";
+"ConfirmStopTask" = "Confirm stop the task?";
+"ConfirmCancelTask" = "Confirm cancel the task?";
+"Viewers" = "Viewers";
+"BonusPoint" = "Give Out";
+"PointsLeft" = "Points Left";
+
+// Account
+"Account" = "Account";
+"Signout" = "Sign Out";
+"MyInviteCode" = "My Invite Code";
+"InviteCode" = "Invite Code";
+"InviteCodePlaceholder" = "Earn points byinput invite code";
+"InviteRecords" = "Invite Records";
+"BindWechatAccount" = "Bind Wechat Account";
+"Binded" = "BINDED";
+"NotBinded" = "NOT BINDED";
+"Currency" = "Currency";
+"TelegramGroup" = "Telegram Group";
+"WechatGroup" = "Wechat Group";
+"Feedback" = "Feedback";
+"CurrentVersion" = "Current Version";
+"CopyInviteCode" = "Copy Invite Code";
+"InviteUsers" = "Invite Users";
+"InviteIncome" = "Invite Income";
+
+// Market
+"Buy" = "Buy";
+"Sell" = "Sell";
+"Amount" = "Amount";
+"Price" = "Price";
+"BuyOrder" = "Buy Order";
+"SellOrder" = "Sell Order";
+"BuyOrders" = "Buy Orders";
+"SellOrders" = "Sell Orders";
+"OrderAddSuccess" = "Order request submitted!";
+"ConfirmOrder" = "Confirm this order?";
+"EmptyQuantity" = "Missing amount";
+"EmptyPrice" = "Missing price";
+"MyOrderbooks" = "My Orders";
+"DealAmount" = "Deal UC";
+"DealETH" = "Deal ETH";
+"OrderbookPending" = "Matching";
+"OrderbookCompleted" = "Completed";
+"OrderbookCanceled" = "Canceled";
+"Cancel" = "Cancel";
+"ConfirmCancelOrder" = "Do you want to cancel this order?";
+"EmptyOrderbookTitle" = "No orders";
+"EmptyOrderbookDesc" = "You have not submited any orders yet. Make new orders now?";
+"Volumn" = "Volumn";
+"LowPrice" = "Low";
+"HighPrice" = "High";
+"Day" = "Day";
+"Week" = "Week";
+"Month" = "Month";
+"Year" = "Year";

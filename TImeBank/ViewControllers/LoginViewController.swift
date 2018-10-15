@@ -13,6 +13,7 @@ import Moya
 import SwiftyUserDefaults
 import Hydra
 import TMMSDK
+import Presentr
 
 class LoginViewController: UIViewController {
     
@@ -28,6 +29,13 @@ class LoginViewController: UIViewController {
     private var isLogining = false
     private var loadingUserInfo = false
     private var bindingDevice = false
+    
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
     
     private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin])
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
@@ -73,6 +81,16 @@ class LoginViewController: UIViewController {
         if !valid {
             return
         }
+        let vc = ReCaptchaViewController()
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func doLogin(recaptcha: String) {
+        if isLogining {
+            return
+        }
+        
         let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
         let mobile = self.telephoneTextField.text!
         let passwd = self.passwordTextfield.text!
@@ -80,24 +98,19 @@ class LoginViewController: UIViewController {
         
         self.loginButton.startAnimation()
         async({[weak self] _ in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             let _ = try ..TMMAuthService.doLogin(
                 country: country!,
                 mobile: mobile,
                 password: passwd,
+                captcha: recaptcha,
                 provider: weakSelf.authServiceProvider)
-            let _ = try ..weakSelf.getUserInfo()
-            let _ = try ..weakSelf.bindDevice()
-        }).then(in: .main, {[weak self] user in
-            guard let weakSelf = self else {
-                return
-            }
+            let _ = try ..weakSelf.getUserInfoAndBindDevice()
+        }).then(in: .main, {[weak self] _ in
+            guard let weakSelf = self else { return }
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.delegate?.loginSucceeded(token: nil)
                 weakSelf.dismiss(animated: true, completion: nil)
-                //weakSelf.navigationController?.popViewController(animated: true)
             })
         }).catch(in: .main, {[weak self] error in
             switch error as! TMMAPIError {
@@ -105,62 +118,76 @@ class LoginViewController: UIViewController {
                 return
             default: break
             }
-            guard let weakSelf = self else {
-                return
-            }
-            weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: {})
-            UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            guard let weakSelf = self else { return  }
+            weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
+                guard let weakSelf2 = weakSelf else { return }
+                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            })
         }).always(in: .main, body: {[weak self]  in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             weakSelf.bindingDevice = false
             weakSelf.isLogining = false
         })
     }
     
-    private func getUserInfo() -> Promise<APIUser> {
-        return Promise<APIUser> (in: .background, {[weak self] resolve, reject, _ in
+    private func getUserInfoAndBindDevice() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            all(weakSelf.getUserInfo(), weakSelf.bindDevice()).then(in: .background,  {_ in resolve(())}).catch(in: .background, { error in reject(error) })
+        })
+    }
+    
+    private func getUserInfo() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
             guard let weakSelf = self else {
                 reject(TMMAPIError.ignore)
                 return
             }
             if weakSelf.loadingUserInfo {
                 reject(TMMAPIError.ignore)
+                return
             }
             weakSelf.loadingUserInfo = true
             TMMUserService.getUserInfo(
                 false,
                 provider: weakSelf.userServiceProvider)
                 .then(in: .background, {user in
-                    resolve(user)
+                    resolve(())
                 }).catch(in: .background, { error in
                     reject(error)
                 })
         })
     }
     
-    private func bindDevice() -> Promise<APIResponse> {
-        return Promise<APIResponse> (in: .background, {[weak self] resolve, reject, _ in
+    private func bindDevice() -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
             guard let weakSelf = self else {
                 reject(TMMAPIError.ignore)
                 return
             }
             if weakSelf.bindingDevice {
                 reject(TMMAPIError.ignore)
+                return
             }
             weakSelf.bindingDevice = true
             TMMDeviceService.bindUser(
                 idfa: TMMBeacon.shareInstance().deviceId(),
                 provider: weakSelf.deviceServiceProvider)
-                .then(in: .background, {user in
-                    resolve(user)
-                }).catch(in: .background, { error in
-                    reject(error)
+                .always(in: .background, body: {
+                    resolve(())
                 })
         })
     }
 
+}
+
+extension LoginViewController: ReCaptchaDelegate {
+    func didSolve(response: String) {
+        self.doLogin(recaptcha: response)
+    }
 }
 
 extension LoginViewController {
@@ -249,6 +276,5 @@ extension LoginViewController: CountryPickerViewDataSource {
 }
 
 public protocol LoginViewDelegate: NSObjectProtocol {
-    /// Called when the user selects a country from the list.
     func loginSucceeded(token: APIAccessToken?)
 }

@@ -38,11 +38,11 @@ open class RNCountdownButton: UIButton {
             self.isCounting = true
             self.delegate?.countdownButton?(countdownButton: self, didUpdatedWith: newValue)
             if newValue <= 0 {
-                self.setTitle(I18n.resend.description, for: UIControlState())
+                self.setTitle(I18n.resend.description, for: UIControl.State())
                 self.stop()
                 self.isEnabled = true
             } else {
-                self.setTitle("\(I18n.sent.description)(\(newValue))", for: UIControlState())
+                self.setTitle("\(I18n.sent.description)(\(newValue))", for: UIControl.State())
             }
         }
     }

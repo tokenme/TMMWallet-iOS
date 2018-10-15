@@ -14,6 +14,7 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import StoreKit
+import Presentr
 
 fileprivate let DefaultPageSize: UInt = 10
 
@@ -31,11 +32,19 @@ class SDKAppsTableViewController: UITableViewController {
         }
     }
     
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
+    
     private var currentPage: UInt = 1
     
     private var apps: [APIApp] = []
     
     private var loadingApps = false
+    private var presentingAppStore = false
     
     private var appServiceProvider = MoyaProvider<TMMAppService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
@@ -51,13 +60,15 @@ class SDKAppsTableViewController: UITableViewController {
                 navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
-            navigationController.navigationBar.isTranslucent = true
-            //navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            //navigationController.navigationBar.shadowImage = UIImage()
+            navigationController.navigationBar.isTranslucent = false
+            navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
+            navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
             navigationItem.title = I18n.sdkApps.description
         }
         setupTableView()
-        refresh()
+        if userInfo != nil {
+            refresh()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,9 +78,23 @@ class SDKAppsTableViewController: UITableViewController {
                 navigationController.navigationBar.prefersLargeTitles = false
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
-            navigationController.navigationBar.isTranslucent = true
+            navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if userInfo == nil {
+            let vc = LoginViewController.instantiate()
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    static func instantiate() -> SDKAppsTableViewController
+    {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SDKAppsTableViewController") as! SDKAppsTableViewController
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,9 +105,9 @@ class SDKAppsTableViewController: UITableViewController {
         tableView.register(cellType: SDKAppTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 66.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
@@ -128,21 +153,29 @@ extension SDKAppsTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as SDKAppTableViewCell
         let app = self.apps[indexPath.row]
-        cell.fill(app, installed: DetectApp.isInstalled(app.bundleId))
+        cell.fill(app, installed: DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId))
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? SDKAppTableViewCell
         cell?.isSelected = false
+        if self.apps.count < indexPath.row + 1 { return }
         let app = self.apps[indexPath.row]
         guard let storeId = app.storeId else {return}
-        cell?.startLoading()
+        if DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId) {
+            return
+        }
         showAppStore(storeId, cell: cell)
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return true
+        let app = self.apps[indexPath.row]
+        guard let _ = app.storeId else {return false}
+        if DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId) {
+            return false
+        }
+        return !self.loadingApps
     }
 }
 
@@ -162,17 +195,21 @@ extension SDKAppsTableViewController: SkeletonTableViewDataSource {
 extension SDKAppsTableViewController {
     
     private func showAppStore(_ storeId: UInt64, cell: SDKAppTableViewCell?) {
+        if self.presentingAppStore { return }
+        self.presentingAppStore = true
+        cell?.startLoading()
         let storeVC = SKStoreProductViewController.init()
         storeVC.delegate = self
         storeVC.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "\(storeId)"], completionBlock: {[weak self, weak cell] result, error in
             if let weakCell = cell {
                 weakCell.endLoading()
             }
+            guard let weakSelf = self else {return}
             if result {
-                guard let weakSelf = self else {return}
                 weakSelf.present(storeVC, animated: true, completion: nil)
             } else {
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
+                weakSelf.presentingAppStore = false
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
             }
         })
     }
@@ -195,7 +232,11 @@ extension SDKAppsTableViewController {
                 guard let weakSelf = self else {
                     return
                 }
-                weakSelf.apps = apps
+                if refresh {
+                    weakSelf.apps = apps
+                } else {
+                    weakSelf.apps.append(contentsOf: apps)
+                }
                 if apps.count < DefaultPageSize {
                     if weakSelf.apps.count <= DefaultPageSize {
                         weakSelf.tableView.footer?.isHidden = true
@@ -209,8 +250,8 @@ extension SDKAppsTableViewController {
                     weakSelf.currentPage += 1
                 }
             }).catch(in: .main, {[weak self] error in
-                UCAlert.showAlert(imageName: "Error", title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                 weakSelf.tableView.footer?.isHidden = false
                 weakSelf.tableView.footer?.endRefreshing()
             }).always(in: .main, body: {[weak self] in
@@ -219,8 +260,10 @@ extension SDKAppsTableViewController {
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()
-                let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
-                UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
+                if refresh {
+                    let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
+                    UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
+                }
             }
         )
     }
@@ -229,7 +272,16 @@ extension SDKAppsTableViewController {
 extension SDKAppsTableViewController: SKStoreProductViewControllerDelegate {
     
     func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true, completion: nil)
+        viewController.dismiss(animated: true, completion: {[weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.presentingAppStore = false
+        })
     }
     
+}
+
+extension SDKAppsTableViewController: LoginViewDelegate {
+    func loginSucceeded(token: APIAccessToken?) {
+        self.refresh()
+    }
 }

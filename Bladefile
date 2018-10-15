@@ -7,6 +7,9 @@ blades:
   - source: images/icon.png # this image should be the only image, and the biggest image you can use (typically for icons, 1024x1024)
     mount: TimeBank/Assets.xcassets/AppIcon.appiconset
     contents: true  # use 'false' if you want to only update existing catalog, 'true' if you want to generate a full catalog every time
+  - source: images/logo.png
+    mount: TimeBank/Assets.xcassets/Logo.imageset
+    contents: true
   - source: images/account.png
     mount: TimeBank/Assets.xcassets/Account.imageset
     contents: true
@@ -57,6 +60,39 @@ blades:
     contents: true
   - source: images/version.png
     mount: TimeBank/Assets.xcassets/Version.imageset
+    contents: true
+  - source: images/transferIn.png
+    mount: TimeBank/Assets.xcassets/TransferIn.imageset
+    contents: true
+  - source: images/transferOut.png
+    mount: TimeBank/Assets.xcassets/TransferOut.imageset
+    contents: true
+  - source: images/selectImage.png
+    mount: TimeBank/Assets.xcassets/SelectImage.imageset
+    contents: true
+  - source: images/reward.png
+    mount: TimeBank/Assets.xcassets/Reward.imageset
+    contents: true
+  - source: images/exchange.png
+    mount: TimeBank/Assets.xcassets/Exchange.imageset
+    contents: true
+  - source: images/icon_select_fill.png
+    mount: TimeBank/Assets.xcassets/SelectFill.imageset
+    contents: true
+  - source: images/icon_select.png
+    mount: TimeBank/Assets.xcassets/SelectCircle.imageset
+    contents: true
+  - source: images/scan.png
+    mount: TimeBank/Assets.xcassets/Scan.imageset
+    contents: true
+  - source: images/records.png
+    mount: TimeBank/Assets.xcassets/Records.imageset
+    contents: true
+  - source: images/share.png
+    mount: TimeBank/Assets.xcassets/Share.imageset
+    contents: true
+  - source: images/more.png
+    mount: TimeBank/Assets.xcassets/More.imageset
     contents: true
 #  - source: iTunesArtwork@2x.png
 #    template: templates/iphone-appicon.json # use a template if you want to batch build catalogs regardless of an xcode project (e.g. as part of a CI process)

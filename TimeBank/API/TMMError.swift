@@ -11,15 +11,21 @@ enum TMMAPIResponseType: Int {
     case internalError = 500
     case notFound = 404
     case unauthorized = 401
+    case featureNotAvailable = 402
     case invalidPassword = 409
+    case invalidCaptchaError = 408
     case duplicateUser = 202
     case unactivatedUser = 502
     case notEnoughToken = 600
-    case notEnoughTokenProduct = 601
-    case notEnoughTokenTask = 700
-    case duplicateEvidence = 701
-    case tokenUnderConstruction = 800
-    case productUnderConstruction = 801
+    case notEnoughPoints = 700
+    case invalidMinPoints = 701
+    case invalidMinToken = 702
+    case notEnoughEth = 800
+    case uploadImageError = 900
+    case invalidInviteCodeError = 1000
+    case maxBindDeviceError = 1100
+    case otherBindDeviceError = 1101
+    case invalidCdpVendorError = 1200
 }
 
 enum TMMAPIError: Error, CustomStringConvertible {
@@ -27,15 +33,21 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case internalError(msg: String)
     case notFound
     case unauthorized
+    case featureNotAvailable
     case invalidPassword
+    case invalidCaptchaError
     case duplicateUser
     case unactivatedUser
     case notEnoughToken
-    case notEnoughTokenProduct
-    case notEnoughTokenTask
-    case duplicateEvidence
-    case tokenUnderConstruction
-    case productUnderConstruction
+    case notEnoughPoints
+    case invalidMinPoints
+    case invalidMinToken
+    case notEnoughEth
+    case uploadImageError
+    case invalidInviteCodeError
+    case maxBindDeviceError
+    case otherBindDeviceError
+    case invalidCdpVendorError
     case unknown(msg: String)
     case ignore
     
@@ -44,20 +56,30 @@ enum TMMAPIError: Error, CustomStringConvertible {
         // Use Internationalization, as appropriate.
         case .badRequest(let msg): return msg
         case .internalError(let msg): return msg
-        case .notFound: return "请求不存在"
-        case .unauthorized: return "用户未授权"
-        case .invalidPassword: return "密码错误"
-        case .duplicateUser: return "用户已经注册"
-        case .unactivatedUser: return "用户未激活"
-        case .notEnoughToken: return "钱包代币不足"
-        case .notEnoughTokenProduct: return "已售罄"
-        case .notEnoughTokenTask: return "超过参与人数上限"
-        case .duplicateEvidence: return "请勿重复提交证明"
-        case .tokenUnderConstruction: return "代币未创建完成，请等待"
-        case .productUnderConstruction: return "代币权益未创建完成，请等待"
+        case .notFound: return I18n.notFoundError.description
+        case .unauthorized: return I18n.unauthorizedError.description
+        case .featureNotAvailable: return I18n.featureNotAvailableError.description
+        case .invalidPassword: return I18n.invalidPasswordError.description
+        case .duplicateUser: return I18n.duplicateUserError.description
+        case .unactivatedUser: return I18n.inactivatedUserError.description
+        case .invalidCaptchaError: return I18n.invalidCaptchaError.description
+        case .notEnoughToken: return I18n.notEnoughTokenError.description
+        case .notEnoughPoints: return I18n.notEnoughPointsError.description
+        case .invalidMinPoints: return I18n.invalidMinPointsError.description
+        case .invalidMinToken: return I18n.invalidMinTMMError.description
+        case .notEnoughEth: return I18n.notEnoughETHError.description
+        case .uploadImageError: return I18n.uploadImageError.description
+        case .invalidInviteCodeError: return I18n.invalidInviteCodeError.description
+        case .maxBindDeviceError: return I18n.maxBindDeviceError.description
+        case .otherBindDeviceError: return I18n.otherBindDeviceError.description
+        case .invalidCdpVendorError: return I18n.invalidCdpVendorError.description
         case .unknown(let msg): return msg
         case .ignore: return "ignore"
         }
+    }
+    
+    public var localizedDescription: String {
+        return self.description
     }
 }
 
@@ -73,24 +95,36 @@ extension TMMAPIError {
                 return TMMAPIError.notFound
             case .unauthorized:
                 return TMMAPIError.unauthorized
+            case .featureNotAvailable:
+                return TMMAPIError.featureNotAvailable
             case .invalidPassword:
                 return TMMAPIError.invalidPassword
             case .duplicateUser:
                 return TMMAPIError.duplicateUser
             case .unactivatedUser:
                 return TMMAPIError.unactivatedUser
+            case .invalidCaptchaError:
+                return TMMAPIError.invalidCaptchaError
             case .notEnoughToken:
                 return TMMAPIError.notEnoughToken
-            case .notEnoughTokenProduct:
-                return TMMAPIError.notEnoughTokenProduct
-            case .notEnoughTokenTask:
-                return TMMAPIError.notEnoughTokenTask
-            case .duplicateEvidence:
-                return TMMAPIError.duplicateEvidence
-            case .tokenUnderConstruction:
-                return TMMAPIError.tokenUnderConstruction
-            case .productUnderConstruction:
-                return TMMAPIError.productUnderConstruction
+            case .notEnoughPoints:
+                return TMMAPIError.notEnoughPoints
+            case .invalidMinPoints:
+                return TMMAPIError.invalidMinPoints
+            case .invalidMinToken:
+                return TMMAPIError.invalidMinToken
+            case .uploadImageError:
+                return TMMAPIError.uploadImageError
+            case .notEnoughEth:
+                return TMMAPIError.notEnoughEth
+            case .invalidInviteCodeError:
+                return TMMAPIError.invalidInviteCodeError
+            case .maxBindDeviceError:
+                return TMMAPIError.maxBindDeviceError
+            case .otherBindDeviceError:
+                return TMMAPIError.otherBindDeviceError
+            case .invalidCdpVendorError:
+                return TMMAPIError.invalidCdpVendorError
             }
         }
         return TMMAPIError.unknown(msg: msg)
