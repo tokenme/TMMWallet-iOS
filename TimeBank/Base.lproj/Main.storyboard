@@ -1551,7 +1551,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" placeholder="Earn points by input invite code" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="g9l-WR-MgG">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" placeholder="Earn points by input invite code" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="g9l-WR-MgG">
                                                     <rect key="frame" x="110.5" y="17" width="248.5" height="21"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1562,12 +1562,12 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="g9l-WR-MgG" firstAttribute="leading" secondItem="GMn-Zu-lJx" secondAttribute="trailing" constant="8" id="2k9-Ta-7JA"/>
                                                 <constraint firstItem="g9l-WR-MgG" firstAttribute="centerY" secondItem="Gyi-50-o9F" secondAttribute="centerY" id="55V-4l-7La"/>
                                                 <constraint firstItem="GMn-Zu-lJx" firstAttribute="leading" secondItem="Gyi-50-o9F" secondAttribute="leading" constant="16" id="CwC-o7-amD"/>
                                                 <constraint firstItem="g9l-WR-MgG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Gyi-50-o9F" secondAttribute="top" constant="4" id="IL7-IU-0AH"/>
-                                                <constraint firstAttribute="trailing" secondItem="g9l-WR-MgG" secondAttribute="trailing" constant="16" id="c0E-PQ-gKg"/>
+                                                <constraint firstAttribute="trailing" secondItem="g9l-WR-MgG" secondAttribute="trailing" constant="16" id="jPg-yn-3SP"/>
                                                 <constraint firstItem="GMn-Zu-lJx" firstAttribute="centerY" secondItem="Gyi-50-o9F" secondAttribute="centerY" id="ksZ-MB-fBi"/>
+                                                <constraint firstItem="g9l-WR-MgG" firstAttribute="leading" secondItem="GMn-Zu-lJx" secondAttribute="trailing" constant="8" id="mqX-rU-JnS"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="g9l-WR-MgG" secondAttribute="bottom" constant="4" id="mtO-aO-SZV"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GMn-Zu-lJx" secondAttribute="trailing" constant="16" id="nAz-hQ-eTX"/>
                                             </constraints>
@@ -2232,7 +2232,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9G3-0O-l6c">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9G3-0O-l6c">
                                         <rect key="frame" x="201.5" y="0.0" width="133.5" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="More Apps"/>
