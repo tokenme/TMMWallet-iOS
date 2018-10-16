@@ -171,15 +171,11 @@ extension FeedbackTableViewController {
                 })
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
-                weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
-                })
+                weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: nil)
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
             }).always(in: .main, body: { [weak self] in
                 guard let weakSelf = self else { return }
-                weakSelf.submitButton.stopAnimation(animationStyle: .normal, completion: {
-                    weakSelf.isSubmitting = false
-                    weakSelf.navigationController?.popViewController(animated: true)
-                })
+                weakSelf.isSubmitting = false
             })
             return
         }
@@ -204,15 +200,11 @@ extension FeedbackTableViewController {
             })
         }).catch(in: .main, {[weak self] error in
             guard let weakSelf = self else { return }
-            weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
-            })
+            weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: nil)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
         }).always(in: .main, body: { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.submitButton.stopAnimation(animationStyle: .normal, completion: {
-                weakSelf.isSubmitting = false
-                weakSelf.navigationController?.popViewController(animated: true)
-            })
+            weakSelf.isSubmitting = false
         })
     }
 }

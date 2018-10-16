@@ -99,13 +99,14 @@ class LoginViewController: UIViewController {
         self.loginButton.startAnimation()
         async({[weak self] _ in
             guard let weakSelf = self else { return }
-            let _ = try ..TMMAuthService.doLogin(
-                country: country!,
-                mobile: mobile,
-                password: passwd,
-                captcha: recaptcha,
-                provider: weakSelf.authServiceProvider)
-            let _ = try ..weakSelf.getUserInfoAndBindDevice()
+                let _ = try ..TMMAuthService.doLogin(
+                    country: country!,
+                    mobile: mobile,
+                    password: passwd,
+                    captcha: recaptcha,
+                    provider: weakSelf.authServiceProvider)
+                let _ = try ..weakSelf.getUserInfoAndBindDevice()
+            
         }).then(in: .main, {[weak self] _ in
             guard let weakSelf = self else { return }
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
@@ -119,10 +120,8 @@ class LoginViewController: UIViewController {
             default: break
             }
             guard let weakSelf = self else { return  }
-            weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
-                guard let weakSelf2 = weakSelf else { return }
-                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            })
+            weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: nil)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.bindingDevice = false
@@ -164,6 +163,10 @@ class LoginViewController: UIViewController {
     
     private func bindDevice() -> Promise<Void> {
         return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let deviceInfo = TMMBeacon.shareInstance().deviceInfo() as? [String: Any] else {
+                reject(TMMAPIError.ignore)
+                return
+            }
             guard let weakSelf = self else {
                 reject(TMMAPIError.ignore)
                 return
@@ -174,7 +177,7 @@ class LoginViewController: UIViewController {
             }
             weakSelf.bindingDevice = true
             TMMDeviceService.bindUser(
-                idfa: TMMBeacon.shareInstance().deviceId(),
+                device: deviceInfo,
                 provider: weakSelf.deviceServiceProvider)
                 .always(in: .background, body: {
                     resolve(())

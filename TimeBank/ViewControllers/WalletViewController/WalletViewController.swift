@@ -18,6 +18,7 @@ import Presentr
 import TMMSDK
 import SwipeCellKit
 import SwiftRater
+import FlexibleSteppedProgressBar
 
 class WalletViewController: UIViewController {
     
@@ -34,6 +35,8 @@ class WalletViewController: UIViewController {
     }
     
     @IBOutlet private weak var summaryView: PastelView!
+    @IBOutlet private weak var dailyBonusProgressBar: FlexibleSteppedProgressBar!
+    @IBOutlet private weak var dailyBonusButton: TransitionButton!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var pointsLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -89,9 +92,12 @@ class WalletViewController: UIViewController {
     private var loadingDevices = false
     private var loadingBalance = false
     private var unbindingDevice = false
+    private var gettingDailyBonusStatus = false
+    private var committingDailyBonus = false
     
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -166,6 +172,20 @@ class WalletViewController: UIViewController {
                               UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
         
         summaryView.startAnimation()
+        dailyBonusButton.setTitle(I18n.dailyReward.description, for: .normal)
+        dailyBonusProgressBar.numberOfPoints = 7
+        dailyBonusProgressBar.radius = 5
+        dailyBonusProgressBar.lineHeight = 3
+        dailyBonusProgressBar.progressRadius = 5
+        dailyBonusProgressBar.progressLineHeight = 3
+        dailyBonusProgressBar.currentSelectedCenterColor = UIColor.primaryBlue
+        dailyBonusProgressBar.selectedBackgoundColor = UIColor.greenGrass
+        dailyBonusProgressBar.selectedOuterCircleStrokeColor = UIColor.white
+        dailyBonusProgressBar.textDistance = 6.0
+        dailyBonusProgressBar.stepTextFont = UIFont.systemFont(ofSize: 10)
+        dailyBonusProgressBar.stepTextColor = UIColor.lightGray
+        dailyBonusProgressBar.currentSelectedTextColor = UIColor.darkGray
+        dailyBonusProgressBar.delegate = self
     }
     
     private func setupTableView() {
@@ -187,6 +207,7 @@ class WalletViewController: UIViewController {
     }
     
     public func refresh() {
+        getDailyBonusStatus()
         getDevices()
         getBalance()
     }
@@ -406,6 +427,64 @@ extension WalletViewController {
                 })
         })
     }
+    
+    private func getDailyBonusStatus() {
+        if self.gettingDailyBonusStatus {
+            return
+        }
+        self.gettingDailyBonusStatus = true
+        TMMBonusService.getDailyStatus(
+            provider: self.bonusServiceProvider)
+            .then(in: .main, {[weak self] status in
+                guard let weakSelf = self else { return }
+                var days: Int = 0
+                if status.days > 0 {
+                    days = status.days-1
+                }
+                weakSelf.dailyBonusProgressBar.currentIndex = days
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .background, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.gettingDailyBonusStatus = false
+            }
+        )
+    }
+    
+    @IBAction private func commitDailyBonus() {
+        guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
+        if self.committingDailyBonus {
+            return
+        }
+        self.committingDailyBonus = true
+        dailyBonusButton.startAnimation()
+        TMMBonusService.commitDailyBonus(
+            deviceId: deviceId,
+            provider: self.bonusServiceProvider)
+            .then(in: .main, {[weak self] status in
+                guard let weakSelf = self else { return }
+                if status.days > 0 {
+                    weakSelf.dailyBonusProgressBar.currentIndex = status.days - 1
+                    let formatter = NumberFormatter()
+                    formatter.maximumFractionDigits = 4
+                    formatter.groupingSeparator = "";
+                    formatter.numberStyle = NumberFormatter.Style.decimal
+                    let pointsStr = formatter.string(from: status.points)!
+                    let msg: String = String(format: I18n.dailyBonusSuccessMsg.description, pointsStr)
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: msg, closeBtn: I18n.close.description)
+                }
+                
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.committingDailyBonus = false
+                weakSelf.dailyBonusButton.stopAnimation(animationStyle: .normal, completion: nil)
+            }
+        )
+    }
 }
 
 extension WalletViewController: LoginViewDelegate {
@@ -467,6 +546,21 @@ extension WalletViewController: ScanViewDelegate {
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         customPresentViewController(alertPresenter, viewController: alertController, animated: true)
+    }
+}
+
+extension WalletViewController: FlexibleSteppedProgressBarDelegate {
+    func progressBar(_ progressBar: FlexibleSteppedProgressBar,
+                     canSelectItemAtIndex index: Int) -> Bool {
+        return false
+    }
+    
+    func progressBar(_ progressBar: FlexibleSteppedProgressBar,
+                     textAtIndex index: Int, position: FlexibleSteppedProgressBarTextLocation) -> String {
+        if position == FlexibleSteppedProgressBarTextLocation.bottom {
+            return String(format: I18n.xDay.description, index + 1)
+        }
+        return ""
     }
 }
 

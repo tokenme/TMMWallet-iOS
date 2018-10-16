@@ -27,6 +27,7 @@ extern const NSString * TMMToastPositionBottom;
 - (void) setToastDuration:(NSTimeInterval)duration;
 - (void) setNotificationInterval:(NSTimeInterval)notificationInterval;
 - (void) debugToast;
+- (NSDictionary *) deviceInfo;
 - (NSString *) deviceId;
 @end
 

@@ -19,6 +19,7 @@
 "InactivatedUserError" = "用户未激活";
 "InvalidCaptchaError" = "人机验证失败";
 "NotEnoughTokenError" = "没有足够的代币";
+"DailyBonusCommittedError" = "已经领过了，请24小时后再来领取。";
 "NotEnoughPointsError" = "没有足够的积分";
 "InvalidMinPointsError" = "至少需要 %@ 积分";
 "InvalidMinTMMError" = "至少需要 %@ UC";
@@ -81,6 +82,9 @@
 "TMMWithdrawAmount" = "≈ %@ %@";
 "EmptyWithdrawTMM" = "请输入 UC 数量";
 "WithdrawSuccessMsg" = "您已成功兑换 %@UC 为 %@%@";
+"DailyReward" = "每日签到";
+"XDay" = "%d天";
+"DailyBonusSuccessMsg" = "恭喜！您刚刚获得 %@ 积分奖励。";
 
 // Apps
 "SDKApps" = "可挖矿应用";

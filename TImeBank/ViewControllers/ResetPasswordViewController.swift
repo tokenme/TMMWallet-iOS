@@ -169,10 +169,8 @@ class ResetPasswordViewController: UIViewController {
             })
         }).catch(in: .main, {[weak self] error in
             guard let weakSelf = self else { return }
-            weakSelf.resetButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
-                guard let weakSelf2 = weakSelf else { return }
-                UCAlert.showAlert(weakSelf2.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf2)
-            })
+            weakSelf.resetButton.stopAnimation(animationStyle: .shake, completion: nil)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.isResetting = false

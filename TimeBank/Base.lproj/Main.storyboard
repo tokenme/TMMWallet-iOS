@@ -464,8 +464,60 @@
                                     <constraint firstAttribute="height" constant="100" id="lou-x7-u10"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Mya-kY-y37">
+                                <rect key="frame" x="20" y="184" width="335" height="30"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ho6-WF-vTk" customClass="FlexibleSteppedProgressBar" customModule="FlexibleSteppedProgressBar">
+                                        <rect key="frame" x="0.0" y="0.0" width="229" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="L5x-Ds-dxu"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="numberOfPoints">
+                                                <integer key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="progressRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="lineHeight">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iV0-TU-deC" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
+                                        <rect key="frame" x="245" y="1.5" width="90" height="27"/>
+                                        <color key="backgroundColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Q4R-EP-nFR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <inset key="titleEdgeInsets" minX="4" minY="2" maxX="4" maxY="2"/>
+                                        <state key="normal" title="Daily Reward">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                                <color key="value" white="0.90441281389999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="commitDailyBonus" destination="9pv-A4-QxB" eventType="touchUpInside" id="rOi-ky-X0n"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Nw5-u5-v2H">
-                                <rect key="frame" x="0.0" y="184" width="375" height="434"/>
+                                <rect key="frame" x="0.0" y="224" width="375" height="394"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -478,11 +530,14 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Nw5-u5-v2H" firstAttribute="top" secondItem="ePp-bM-lLL" secondAttribute="bottom" constant="10" id="1NW-Ja-h84"/>
                             <constraint firstItem="Nw5-u5-v2H" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" id="H8L-60-WV5"/>
                             <constraint firstItem="ePp-bM-lLL" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="10" id="LAO-FR-3NI"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="ePp-bM-lLL" secondAttribute="trailing" constant="20" id="NjN-ca-ilv"/>
+                            <constraint firstItem="Mya-kY-y37" firstAttribute="leading" secondItem="ePp-bM-lLL" secondAttribute="leading" id="Tv2-X3-cau"/>
+                            <constraint firstItem="Mya-kY-y37" firstAttribute="trailing" secondItem="ePp-bM-lLL" secondAttribute="trailing" id="ecT-IX-vPg"/>
                             <constraint firstItem="ePp-bM-lLL" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="20" id="hoT-oW-fKP"/>
+                            <constraint firstItem="Nw5-u5-v2H" firstAttribute="top" secondItem="Mya-kY-y37" secondAttribute="bottom" constant="10" id="jpg-Sv-ieG"/>
+                            <constraint firstItem="Mya-kY-y37" firstAttribute="top" secondItem="ePp-bM-lLL" secondAttribute="bottom" constant="10" id="ofw-8u-sjD"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="Nw5-u5-v2H" secondAttribute="trailing" id="rcg-gK-bbr"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="Nw5-u5-v2H" secondAttribute="bottom" id="uAh-uV-9Kp"/>
                         </constraints>
@@ -492,6 +547,8 @@
                     <navigationItem key="navigationItem" id="vQk-hX-sMt"/>
                     <connections>
                         <outlet property="balanceLabel" destination="omi-yB-wom" id="AN1-nV-GNn"/>
+                        <outlet property="dailyBonusButton" destination="iV0-TU-deC" id="yaP-jr-4Q4"/>
+                        <outlet property="dailyBonusProgressBar" destination="ho6-WF-vTk" id="Ns6-MO-n17"/>
                         <outlet property="pointsLabel" destination="09m-xb-wwH" id="U77-mU-HQH"/>
                         <outlet property="summaryView" destination="ePp-bM-lLL" id="mb7-6z-J8w"/>
                         <outlet property="tableView" destination="Nw5-u5-v2H" id="uzK-P9-yXy"/>

@@ -45,11 +45,12 @@ class UnbindDeviceHeaderView: UIView, NibOwnerLoadable {
     }
     
     @IBAction private func bind() {
+        guard let deviceInfo = TMMBeacon.shareInstance().deviceInfo() as? [String: Any] else { return }
         if self.bindingDevice { return }
         self.bindingDevice = true
         bindButton.startAnimation()
         TMMDeviceService.bindUser(
-            idfa: TMMBeacon.shareInstance().deviceId(),
+            device: deviceInfo,
             provider: self.deviceServiceProvider)
             .then(in: .main, {[weak self] _ in
                 guard let weakSelf = self else { return }

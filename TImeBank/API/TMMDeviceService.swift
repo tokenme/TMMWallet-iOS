@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import Hydra
 
 enum TMMDeviceService {
-    case bind(idfa: String)
+    case bind(device: [String: Any])
     case unbind(id: String)
     case list()
     case apps(deviceId: String)
@@ -51,8 +51,8 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
     }
     var task: Task {
         switch self {
-        case let .bind(idfa):
-            return .requestParameters(parameters: ["idfa": idfa], encoding: JSONEncoding.default)
+        case let .bind(device):
+            return .requestParameters(parameters: device, encoding: JSONEncoding.default)
         case let .unbind(id):
             return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
         case .list():
@@ -79,10 +79,10 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
 
 extension TMMDeviceService {
     
-    static func bindUser(idfa: String, provider: MoyaProvider<TMMDeviceService>) -> Promise<APIResponse> {
+    static func bindUser(device: [String: Any], provider: MoyaProvider<TMMDeviceService>) -> Promise<APIResponse> {
         return Promise<APIResponse> (in: .background, { resolve, reject, _ in
             provider.request(
-                .bind(idfa: idfa)
+                .bind(device: device)
             ){ result in
                 switch result {
                 case let .success(response):

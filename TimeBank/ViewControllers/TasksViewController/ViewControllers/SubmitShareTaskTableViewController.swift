@@ -240,9 +240,8 @@ extension SubmitShareTaskTableViewController {
                 })
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
-                weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-                })
+                weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: nil)
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: { [weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.isSubmitting = false
@@ -268,9 +267,8 @@ extension SubmitShareTaskTableViewController {
                         })
                     }).catch(in: .main, {[weak self] error in
                         guard let weakSelf = self else { return }
-                        weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-                        })
+                        weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: nil)
+                        UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                     }).always(in: .main,  body: {[weak self] in
                         guard let weakSelf = self else { return }
                         weakSelf.isSubmitting = false
@@ -293,9 +291,8 @@ extension SubmitShareTaskTableViewController {
                         })
                     }).catch(in: .main, {[weak self] error in
                         guard let weakSelf = self else { return }
-                        weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: {
-                            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-                        })
+                        weakSelf.submitButton.stopAnimation(animationStyle: .shake, completion: nil)
+                        UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                     }).always(in: .main,  body: {[weak self] in
                         guard let weakSelf = self else { return }
                         weakSelf.isSubmitting = false

@@ -19,6 +19,7 @@
 "InactivatedUserError" = "User not activated";
 "InvalidCaptchaError" = "Invalid Captcha";
 "NotEnoughTokenError" = "Don't have enough token";
+"DailyBonusCommittedError" = "You've already checked in, please check after 24h.";
 "NotEnoughPointsError" = "Don't have enough points";
 "InvalidMinPointsError" = "Need at least %@ points";
 "InvalidMinTMMError" = "Need at least %@ UC";
@@ -81,6 +82,9 @@
 "TMMWithdrawAmount" = "≈ %@ %@";
 "EmptyWithdrawTMM" = "UC amount must be input";
 "WithdrawSuccessMsg" = "You have successfully withdraw %@UC to %@%@";
+"DailyReward" = "Daily Reward";
+"XDay" = "%dd";
+"DailyBonusSuccessMsg" = "Congratulation! You just get %@ bonus points.";
 
 // Apps
 "SDKApps" = "Minable Apps";

@@ -4,7 +4,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'TimeBank' do
-  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.4.1'
+  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.4.9'
   pod 'Pastel', :git=>'https://github.com/cruisediary/Pastel.git', :tag=>'0.5.1'
   pod 'Schedule', '~> 1.0'
   pod 'GrandTime'
@@ -39,6 +39,7 @@ target 'TimeBank' do
   pod 'SwiftRater'
   pod 'DropDown'
   pod 'DynamicBlurView'
+  pod 'FlexibleSteppedProgressBar', :git=>'https://github.com/tokenme/FlexibleSteppedProgressBar.git', :tag=>'0.5.1'
   pod 'mob_sharesdk'
   pod 'mob_sharesdk/ShareSDKUI'
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'

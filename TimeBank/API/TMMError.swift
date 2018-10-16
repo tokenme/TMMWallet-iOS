@@ -17,6 +17,7 @@ enum TMMAPIResponseType: Int {
     case duplicateUser = 202
     case unactivatedUser = 502
     case notEnoughToken = 600
+    case dailyBonusCommitted = 601
     case notEnoughPoints = 700
     case invalidMinPoints = 701
     case invalidMinToken = 702
@@ -39,6 +40,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case duplicateUser
     case unactivatedUser
     case notEnoughToken
+    case dailyBonusCommitted
     case notEnoughPoints
     case invalidMinPoints
     case invalidMinToken
@@ -64,6 +66,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .unactivatedUser: return I18n.inactivatedUserError.description
         case .invalidCaptchaError: return I18n.invalidCaptchaError.description
         case .notEnoughToken: return I18n.notEnoughTokenError.description
+        case .dailyBonusCommitted: return I18n.dailyBonusCommittedError.description
         case .notEnoughPoints: return I18n.notEnoughPointsError.description
         case .invalidMinPoints: return I18n.invalidMinPointsError.description
         case .invalidMinToken: return I18n.invalidMinTMMError.description
@@ -107,6 +110,8 @@ extension TMMAPIError {
                 return TMMAPIError.invalidCaptchaError
             case .notEnoughToken:
                 return TMMAPIError.notEnoughToken
+            case .dailyBonusCommitted:
+                return TMMAPIError.dailyBonusCommitted
             case .notEnoughPoints:
                 return TMMAPIError.notEnoughPoints
             case .invalidMinPoints:

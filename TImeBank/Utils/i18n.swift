@@ -36,6 +36,7 @@ enum I18n: CustomStringConvertible {
     case invalidCdpVendorError
     case exchangeNotAvailableInYourCountryError
     case featureNotAvailableError
+    case dailyBonusCommittedError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -96,6 +97,9 @@ enum I18n: CustomStringConvertible {
     case TMMWithdrawAmount
     case emptyWithdrawTMM
     case withdrawSuccessMsg
+    case dailyReward
+    case xDay
+    case dailyBonusSuccessMsg
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -255,6 +259,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ExchangeNotAvailableInYourCountryError", comment: "ExchangeNotAvailableInYourCountryError")
         case .featureNotAvailableError:
             return NSLocalizedString("FeatureNotAvailableError", comment: "featureNotAvailableError")
+        case .dailyBonusCommittedError:
+            return NSLocalizedString("DailyBonusCommittedError", comment: "dailyBonusCommittedError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .refresh:
@@ -399,6 +405,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("EmptyWithdrawTMM", comment: "emptyWithdrawTMM")
         case .withdrawSuccessMsg:
             return NSLocalizedString("WithdrawSuccessMsg", comment: "WithdrawSuccessMsg")
+        case .dailyReward:
+            return NSLocalizedString("DailyReward", comment: "DailyReward")
+        case .xDay:
+            return NSLocalizedString("XDay", comment: "XDay")
+        case .dailyBonusSuccessMsg:
+            return NSLocalizedString("DailyBonusSuccessMsg", comment: "dailyBonusSuccessMsg")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .publishedByMe:

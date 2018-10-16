@@ -145,6 +145,8 @@
 		1DA38ECA217084380073DB8A /* APITMMWithdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */; };
 		1DA38ECC21735BE60073DB8A /* TMMFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38ECB21735BE60073DB8A /* TMMFeedbackService.swift */; };
 		1DA38ECE21738EB70073DB8A /* APIFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38ECD21738EB70073DB8A /* APIFeedback.swift */; };
+		1DA38F3D2175B63C0073DB8A /* APIDailyBonusStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38F3C2175B63C0073DB8A /* APIDailyBonusStatus.swift */; };
+		1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38F3E2175B6730073DB8A /* TMMBonusService.swift */; };
 		1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB432932155048C0034B810 /* ExchangeViewController.swift */; };
 		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
 		1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */; };
@@ -324,6 +326,8 @@
 		1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITMMWithdraw.swift; sourceTree = "<group>"; };
 		1DA38ECB21735BE60073DB8A /* TMMFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMFeedbackService.swift; sourceTree = "<group>"; };
 		1DA38ECD21738EB70073DB8A /* APIFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFeedback.swift; sourceTree = "<group>"; };
+		1DA38F3C2175B63C0073DB8A /* APIDailyBonusStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDailyBonusStatus.swift; sourceTree = "<group>"; };
+		1DA38F3E2175B6730073DB8A /* TMMBonusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMBonusService.swift; sourceTree = "<group>"; };
 		1DB432932155048C0034B810 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
 		1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsTableViewController.swift; sourceTree = "<group>"; };
@@ -669,6 +673,7 @@
 				1D0370C62165E2E900E5E3CE /* TMMContactService.swift */,
 				1D0370CC21660FD100E5E3CE /* TMMRedeemService.swift */,
 				1DA38ECB21735BE60073DB8A /* TMMFeedbackService.swift */,
+				1DA38F3E2175B6730073DB8A /* TMMBonusService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -699,6 +704,7 @@
 				1D0370DA21665FF200E5E3CE /* APIRedeemCdpRecord.swift */,
 				1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */,
 				1DA38ECD21738EB70073DB8A /* APIFeedback.swift */,
+				1DA38F3C2175B63C0073DB8A /* APIDailyBonusStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1074,6 +1080,7 @@
 				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/FlexibleSteppedProgressBar/FlexibleSteppedProgressBar.framework",
 				"${BUILT_PRODUCTS_DIR}/GrandTime/GrandTime.framework",
 				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
 				"${BUILT_PRODUCTS_DIR}/HydraAsync/Hydra.framework",
@@ -1113,6 +1120,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleSteppedProgressBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrandTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hydra.framework",
@@ -1188,6 +1196,7 @@
 				1D1D6FC62147B6030001ED49 /* UIButton+Utils.swift in Sources */,
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
+				1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */,
 				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
 				1D5FF681215B5322001E69CD /* MyOrderbooksTableViewController.swift in Sources */,
 				1D3441F3213CFBA300B8E157 /* FontAnimation.swift in Sources */,
@@ -1226,6 +1235,7 @@
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
 				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
+				1DA38F3D2175B63C0073DB8A /* APIDailyBonusStatus.swift in Sources */,
 				1D1D6FD921492D330001ED49 /* WalletQRCodeViewController.swift in Sources */,
 				1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
