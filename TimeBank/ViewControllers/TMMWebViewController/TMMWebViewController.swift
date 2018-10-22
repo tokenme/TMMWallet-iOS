@@ -410,4 +410,17 @@ extension TMMWebViewController: WKNavigationDelegate {
             }
         }
     }
+    
+    public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            if challenge.previousFailureCount == 0 {
+                let credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+                completionHandler(.useCredential, credential)
+            } else {
+                completionHandler(.cancelAuthenticationChallenge, nil)
+            }
+        } else {
+            completionHandler(.cancelAuthenticationChallenge, nil)
+        }
+    }
 }
