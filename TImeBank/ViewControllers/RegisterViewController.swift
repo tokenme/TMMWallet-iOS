@@ -201,10 +201,7 @@ extension RegisterViewController {
         do {
             let phone = self.countryCode + (self.telephoneTextField.text ?? "")
             _ = try phoneNumberKit.parse(phone)
-            if (!self.countdownButton.isCounting) {
-                self.countdownButton.isEnabled = true
-            }
-            self.verifyCodeTextField.isEnabled = true
+            self.countdownButton.isEnabled = !self.countdownButton.isCounting
             self.telephoneTextField.hideInfo()
             return true
         }

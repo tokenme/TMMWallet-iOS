@@ -37,7 +37,7 @@ class TasksViewController: TabmanViewController {
     
     private let viewControllers = [
         ShareTasksTableViewController.instantiate(),
-        AppTasksTableViewController.instantiate()
+        BlowupViewController.instantiate()
     ]
     
     deinit {
@@ -53,13 +53,13 @@ class TasksViewController: TabmanViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = true
-            navigationItem.title = I18n.earnPointsTasks.description
+            navigationItem.title = I18n.discover.description
             let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showTaskRecords))
             navigationItem.leftBarButtonItem = recordButtonItem
             let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
             navigationItem.rightBarButtonItem = submitTaskButtonItem
             
-            let menuItems = [I18n.earnPointsTasks.description, I18n.publishedByMe.description]
+            let menuItems = [I18n.discover.description, I18n.publishedByMe.description]
             let menuView = BTNavigationDropdownMenu(title: BTTitle.index(0), items: menuItems)
             menuView.cellSelectionColor = UIColor(white: 0.91, alpha: 1)
             menuView.cellTextLabelFont = MainFont.light.with(size: 15)
@@ -85,7 +85,7 @@ class TasksViewController: TabmanViewController {
         // configure the bar
         self.bar.items = [
             Item(title: I18n.shareTasks.description),
-            Item(title: I18n.appTasks.description)
+            Item(title: I18n.blowupGame.description)
         ]
         self.bar.style = .buttonBar
         self.automaticallyAdjustsChildViewInsets = true
@@ -123,6 +123,10 @@ class TasksViewController: TabmanViewController {
     }
     
     @objc func addTaskAction(_ sender: UIBarButtonItem, event: UIEvent) {
+        let vc = SubmitShareTaskTableViewController.instantiate()
+        vc.delegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
+        return
         let dropDown = DropDown()
         dropDown.anchorView = sender
         dropDown.bottomOffset = CGPoint(x: 0, y: sender.plainView.bounds.height)

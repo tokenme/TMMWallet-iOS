@@ -37,6 +37,8 @@ enum I18n: CustomStringConvertible {
     case exchangeNotAvailableInYourCountryError
     case featureNotAvailableError
     case dailyBonusCommittedError
+    case escapeLateError
+    case escapeEarlyError
     case invalidPhoneNumber
     case emptyPassword
     case emptyRepassword
@@ -113,6 +115,7 @@ enum I18n: CustomStringConvertible {
     case newTransactionTitle
     case newTransactionDesc
     case earnPointsTasks
+    case discover
     case publishedByMe
     case appTasks
     case shareTasks
@@ -202,6 +205,15 @@ enum I18n: CustomStringConvertible {
     case month
     case week
     case year
+    case blowupGame
+    case waitBlowupNewSession
+    case connecting
+    case connected
+    case disconnected
+    case bid
+    case escape
+    case biddingSuccessMsg
+    case escapeSuccessMsg
     
     var description : String {
         switch self {
@@ -261,6 +273,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("FeatureNotAvailableError", comment: "featureNotAvailableError")
         case .dailyBonusCommittedError:
             return NSLocalizedString("DailyBonusCommittedError", comment: "dailyBonusCommittedError")
+        case .escapeLateError:
+            return NSLocalizedString("EscapeLateError", comment: "EscapeLateError")
+        case .escapeEarlyError:
+            return NSLocalizedString("EscapeEarlyError", comment: "EscapeEarlyError")
         case .invalidPhoneNumber:
             return NSLocalizedString("InvalidPhoneNumber", comment: "Invalid phone number")
         case .refresh:
@@ -413,6 +429,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("DailyBonusSuccessMsg", comment: "dailyBonusSuccessMsg")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
+        case .discover:
+            return NSLocalizedString("Discover", comment: "Discover")
         case .publishedByMe:
             return NSLocalizedString("PublishedByMe", comment: "publishedByMe")
         case .appTasks:
@@ -591,6 +609,24 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Month", comment: "month")
         case .year:
             return NSLocalizedString("Year", comment: "year")
+        case .blowupGame:
+            return NSLocalizedString("BlowupGame", comment: "Blow Up")
+        case .waitBlowupNewSession:
+            return NSLocalizedString("WaitBlowupNewSession", comment: "waitBlowupNewSession")
+        case .connecting:
+            return NSLocalizedString("Connecting", comment: "connecting")
+        case .connected:
+            return NSLocalizedString("Connected", comment: "connected")
+        case .disconnected:
+            return NSLocalizedString("Disconnected", comment: "disconnected")
+        case .bid:
+            return NSLocalizedString("Bid", comment: "bid")
+        case .escape:
+            return NSLocalizedString("Escape", comment: "escape")
+        case .biddingSuccessMsg:
+            return NSLocalizedString("BiddingSuccessMsg", comment: "BiddingSuccessMsg")
+        case .escapeSuccessMsg:
+            return NSLocalizedString("EscapeSuccessMsg", comment: "EscapeSuccessMsg")
         }
     }
 }

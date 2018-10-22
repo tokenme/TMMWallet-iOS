@@ -32,6 +32,7 @@ public class APIShareTask: APIResponse {
     var onlineStatus: APITaskOnlineStatus = .running
     var insertedAt: Date?
     var updatedAt: Date?
+    var showBonusHint: Bool = false
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -60,5 +61,6 @@ public class APIShareTask: APIResponse {
         onlineStatus <- map["online_status"]
         insertedAt <- (map["inserted_at"], dateTimeTransform)
         updatedAt <- (map["updated_at"], dateTimeTransform)
+        showBonusHint <- map["show_bonus_hint"]
     }
 }

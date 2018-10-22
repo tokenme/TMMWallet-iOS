@@ -29,6 +29,10 @@ open class RNCountdownButton: UIButton {
     public var titleColorForDisable: UIColor?
     public var titleColorForCountingDisable: UIColor?
     
+    public var enableTitle: String?
+    public var disableTitle: String?
+    public var countingTitle: String?
+    
     fileprivate var timer: Timer?
     public weak var delegate: RNCountdownButtonDelegate?
     public var isCounting: Bool = false //是否正在倒计时
@@ -38,11 +42,19 @@ open class RNCountdownButton: UIButton {
             self.isCounting = true
             self.delegate?.countdownButton?(countdownButton: self, didUpdatedWith: newValue)
             if newValue <= 0 {
-                self.setTitle(I18n.resend.description, for: UIControl.State())
+                var title = I18n.resend.description
+                if let enableTitle = self.enableTitle {
+                    title = enableTitle
+                }
+                self.setTitle(title, for: UIControl.State())
                 self.stop()
                 self.isEnabled = true
             } else {
-                self.setTitle("\(I18n.sent.description)(\(newValue))", for: UIControl.State())
+                var title = "\(I18n.sent.description)(\(newValue))"
+                if let countingTitle = self.countingTitle {
+                    title = "\(countingTitle)(\(newValue))"
+                }
+                self.setTitle(title, for: UIControl.State())
             }
         }
     }
@@ -63,11 +75,19 @@ open class RNCountdownButton: UIButton {
     }
     
     public func showSending() {
-        self.setTitle("\(I18n.sending.description)..", for: .normal)
+        var title = "\(I18n.sending.description).."
+        if let disableTitle = self.disableTitle {
+            title = disableTitle
+        }
+        self.setTitle(title, for: .normal)
     }
     
     public func showFetchAgain() {
-        self.setTitle(I18n.resend.description, for: .normal)
+        var title = I18n.resend.description
+        if let enableTitle = self.enableTitle {
+            title = enableTitle
+        }
+        self.setTitle(title, for: .normal)
     }
     
     public func stop() {

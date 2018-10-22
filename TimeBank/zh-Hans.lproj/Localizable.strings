@@ -32,6 +32,8 @@
 "InvalidCdpVendorError" = "暂不支持您手机号码运营商充值，目前仅支持中国移动、中国联通、中国电信下的手机号码(不支持虚拟运营商)";
 "ExchangeNotAvailableInYourCountryError" = "在您的国家暂时无法提供购买或销售数字货币功能。我们正努力将该功能带入更多国家。";
 "FeatureNotAvailableError" = "该功能暂不开放，请稍后访问。";
+"EscapeLateError" = "逃晚了";
+"EscapeEarlyError" = "逃早了，请在下注后30秒后逃跑";
 
 "Refresh" = "刷新";
 "Copy" = "复制";
@@ -119,9 +121,10 @@
 
 // Tasks
 "EarnPointsTasks" = "做任务赚积分";
+"Discover" = "发现";
 "PublishedByMe" = "我发布的任务";
 "AppTasks" = "安装应用";
-"ShareTasks" = "分享链接";
+"ShareTasks" = "文章";
 "Earn" = "获得";
 "MinusPoints" = "扣除";
 "MaxBonus" = "最多奖励";
@@ -212,3 +215,14 @@
 "Week" = "1周";
 "Month" = "30天";
 "Year" = "365天";
+
+// Blowup
+"BlowupGame" = "爆点";
+"WaitBlowupNewSession" = "爆了！新一轮马上开始";
+"Connecting" = "连接中";
+"Connected" = "已连接";
+"Disconnected" = "连接已断开";
+"Bid" = "下注";
+"Escape" = "逃跑";
+"BiddingSuccessMsg" = "下注成功！30秒后您可以在本轮游戏结束前任何时间逃跑。";
+"EscapeSuccessMsg" = "逃跑成功！你刚刚赢取 %@ 积分。";

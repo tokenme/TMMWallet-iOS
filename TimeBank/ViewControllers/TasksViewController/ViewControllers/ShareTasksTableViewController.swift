@@ -80,9 +80,6 @@ class ShareTasksTableViewController: UITableViewController {
     
     private func setupTableView() {
         tableView.register(cellType: ShareTaskTableViewCell.self)
-        tableView.register(cellType: ShareTaskStatsTableViewCell.self)
-        tableView.register(cellType: ShareTaskNoImageTableViewCell.self)
-        tableView.register(cellType: ShareTaskNoImageStatsTableViewCell.self)
         tableView.register(cellType: LoadingShareTaskTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -90,8 +87,8 @@ class ShareTasksTableViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
-        //tableView.emptyDataSetSource = self
-        //tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
@@ -103,8 +100,8 @@ class ShareTasksTableViewController: UITableViewController {
         }
         tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
-        //SkeletonAppearance.default.multilineHeight = 10
-        //tableView.showAnimatedSkeleton()
+        SkeletonAppearance.default.multilineHeight = 10
+        tableView.showAnimatedSkeleton()
     }
     
     public func refresh() {
@@ -124,31 +121,13 @@ extension ShareTasksTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = self.tasks[indexPath.row]
-        if task.image != nil {
-            if mineOnly, let creator = task.creator {
-                if creator > 0 && creator == userInfo?.id {
-                    let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskStatsTableViewCell
-                    cell.delegate = self
-                    cell.fill(task)
-                    return cell
-                }
-            }
-            let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskTableViewCell
-            cell.delegate = self
-            cell.fill(task)
-            return cell
+        var showStats: Bool = false
+        if mineOnly, let _ = task.creator {
+            showStats = true
         }
-        if mineOnly, let creator = task.creator  {
-            if creator > 0 && creator == userInfo?.id {
-                let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskNoImageStatsTableViewCell
-                cell.delegate = self
-                cell.fill(task)
-                return cell
-            }
-        }
-        let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskNoImageTableViewCell
+        let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskTableViewCell
         cell.delegate = self
-        cell.fill(task)
+        cell.fill(task, showStats: showStats)
         return cell
     }
     

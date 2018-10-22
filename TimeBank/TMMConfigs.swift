@@ -14,6 +14,10 @@ struct TMMConfigs {
         static let secret = "47535bf74a8072c0b6246b4fb73508eeb12f5982"
     }
     
+    struct Blowup {
+        static let notifyServer = "https://tmm.tokenmama.io/blowup/notify"
+    }
+    
     struct ReCaptcha {
         static let siteKey = "6LdyLnQUAAAAAL9runxAoDhsDm3pEGe0KFVYeFQ7"
         static let domain = "https://tmm.tokenmama.io"

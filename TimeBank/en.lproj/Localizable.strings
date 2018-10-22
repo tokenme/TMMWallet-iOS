@@ -32,6 +32,8 @@
 "InvalidCdpVendorError" = "Your phone number is not supported. Currently we only support China Mobile, China UnionCom and China Telecom.";
 "ExchangeNotAvailableInYourCountryError" = "Buying digital currencies like bitcoin and ethereum is not enabled in your country yet. We're working hard to bring this feature to as many countries as possible.";
 "FeatureNotAvailableError" = "This feature not available currently, please check later.";
+"EscapeLateError" = "Escape too late!";
+"EscapeEarlyError" = "Escape too early, please escape 30s later after bidding.";
 
 "Refresh" = "Refresh";
 "Copy" = "Copy";
@@ -119,9 +121,10 @@
 
 // Tasks
 "EarnPointsTasks" = "Earn Points";
+"Discover" = "Discover";
 "PublishedByMe" = "Published by Me";
 "AppTasks" = "Install Apps";
-"ShareTasks" = "Share Links";
+"ShareTasks" = "Articles";
 "Earn" = "Earn";
 "MinusPoints" = "Punish";
 "MaxBonus" = "Max bonus";
@@ -212,3 +215,14 @@
 "Week" = "Week";
 "Month" = "Month";
 "Year" = "Year";
+
+// Blowup
+"BlowupGame" = "Blow Up";
+"WaitBlowupNewSession" = "Blow Up! New Round Comming soon";
+"Connecting" = "Connecting";
+"Connected" = "Connected";
+"Disconnected" = "Disconnected";
+"Bid" = "Bid";
+"Escape" = "Escape";
+"BiddingSuccessMsg" = "Bidding success! After 30sec you could escape at any time before the bidding round finished.";
+"EscapeSuccessMsg" = "Escape successfully! You just win %@ points.";

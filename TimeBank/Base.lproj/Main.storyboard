@@ -611,6 +611,112 @@
             </objects>
             <point key="canvasLocation" x="5281" y="423"/>
         </scene>
+        <!--Blowup View Controller-->
+        <scene sceneID="Phe-pV-gOU">
+            <objects>
+                <viewController storyboardIdentifier="BlowupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DJr-d2-dYN" customClass="BlowupViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Rsc-Kn-bmC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qna-3Q-1lg" customClass="CombinedChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="36" width="343" height="150"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1x" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="91s-5b-n5m">
+                                        <rect key="frame" x="159" y="61.5" width="25.5" height="27.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="1AI-7n-w6O"/>
+                                    <constraint firstItem="91s-5b-n5m" firstAttribute="centerX" secondItem="Qna-3Q-1lg" secondAttribute="centerX" id="Nj2-4Z-ljo"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="91s-5b-n5m" secondAttribute="trailing" constant="16" id="Zet-gR-0gz"/>
+                                    <constraint firstItem="91s-5b-n5m" firstAttribute="centerY" secondItem="Qna-3Q-1lg" secondAttribute="centerY" id="fOn-0s-ZCD"/>
+                                    <constraint firstItem="91s-5b-n5m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Qna-3Q-1lg" secondAttribute="leading" constant="16" id="ttn-AY-73h"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4Mi-6e-qCg">
+                                <rect key="frame" x="16" y="202" width="343" height="30"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="100" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="FoX-5d-8mk">
+                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqZ-qD-FOu" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
+                                        <rect key="frame" x="119.5" y="0.0" width="104" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Bid">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                                <color key="value" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="bid" destination="DJr-d2-dYN" eventType="touchUpInside" id="jPq-la-Nag"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tE9-1v-qwC" customClass="RNCountdownButton" customModule="TimeBank" customModuleProvider="target">
+                                        <rect key="frame" x="239.5" y="0.0" width="103.5" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Escape">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="escape" destination="DJr-d2-dYN" eventType="touchUpInside" id="HP8-k8-FvU"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w3G-zP-G5D">
+                                <rect key="frame" x="16" y="248" width="343" height="419"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="w3G-zP-G5D" firstAttribute="top" secondItem="4Mi-6e-qCg" secondAttribute="bottom" constant="16" id="0Fj-Mt-pCw"/>
+                            <constraint firstItem="Qna-3Q-1lg" firstAttribute="top" secondItem="f08-oH-DEI" secondAttribute="top" constant="16" id="Fe1-xa-zvw"/>
+                            <constraint firstItem="4Mi-6e-qCg" firstAttribute="top" secondItem="Qna-3Q-1lg" secondAttribute="bottom" constant="16" id="Hah-nr-HS7"/>
+                            <constraint firstItem="w3G-zP-G5D" firstAttribute="trailing" secondItem="4Mi-6e-qCg" secondAttribute="trailing" id="V6n-KZ-V0p"/>
+                            <constraint firstItem="4Mi-6e-qCg" firstAttribute="trailing" secondItem="Qna-3Q-1lg" secondAttribute="trailing" id="Wt7-zg-Toy"/>
+                            <constraint firstItem="f08-oH-DEI" firstAttribute="bottom" secondItem="w3G-zP-G5D" secondAttribute="bottom" id="cWN-zw-t9F"/>
+                            <constraint firstItem="f08-oH-DEI" firstAttribute="trailing" secondItem="Qna-3Q-1lg" secondAttribute="trailing" constant="16" id="hvc-Jh-YtM"/>
+                            <constraint firstItem="4Mi-6e-qCg" firstAttribute="leading" secondItem="Qna-3Q-1lg" secondAttribute="leading" id="irQ-Gg-9De"/>
+                            <constraint firstItem="w3G-zP-G5D" firstAttribute="leading" secondItem="4Mi-6e-qCg" secondAttribute="leading" id="mOi-Cw-p1d"/>
+                            <constraint firstItem="Qna-3Q-1lg" firstAttribute="leading" secondItem="f08-oH-DEI" secondAttribute="leading" constant="16" id="mRc-ar-qvH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="f08-oH-DEI"/>
+                    </view>
+                    <connections>
+                        <outlet property="bidButton" destination="ZqZ-qD-FOu" id="hpn-Hz-AgE"/>
+                        <outlet property="bidValueTextField" destination="FoX-5d-8mk" id="BES-wc-by1"/>
+                        <outlet property="chartView" destination="Qna-3Q-1lg" id="grW-xj-2k0"/>
+                        <outlet property="escapeButton" destination="tE9-1v-qwC" id="lMJ-d5-Bpc"/>
+                        <outlet property="rateLabel" destination="91s-5b-n5m" id="keo-bc-lPp"/>
+                        <outlet property="tableView" destination="w3G-zP-G5D" id="7Ey-83-Pr8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="45U-TZ-FZ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5989.6000000000004" y="417.8410794602699"/>
+        </scene>
         <!--App Tasks Table View Controller-->
         <scene sceneID="l2K-I3-qn0">
             <objects>
@@ -2005,11 +2111,11 @@
             </objects>
             <point key="canvasLocation" x="729" y="1814"/>
         </scene>
-        <!--Rewards-->
+        <!--Discover-->
         <scene sceneID="WS3-zS-Bc5">
             <objects>
                 <navigationController id="A4H-T6-yMc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Rewards" image="Reward" id="yvo-pS-BZM"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="Discover" id="yvo-pS-BZM"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vkw-fh-uox">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2355,9 +2461,9 @@
     </scenes>
     <resources>
         <image name="Account" width="30" height="30"/>
+        <image name="Discover" width="28" height="28"/>
         <image name="Exchange" width="24" height="24"/>
         <image name="Flash" width="30" height="30"/>
-        <image name="Reward" width="30" height="30"/>
         <image name="SelectCircle" width="18" height="18"/>
         <image name="SelectFill" width="18" height="18"/>
         <image name="SelectImage" width="66.5" height="66.5"/>

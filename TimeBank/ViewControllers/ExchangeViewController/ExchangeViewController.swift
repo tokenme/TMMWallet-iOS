@@ -242,7 +242,7 @@ class ExchangeViewController: UIViewController {
             quantities.append(BarChartDataEntry(x: x, y: d.quantity.doubleValue, data: d))
             prices.append(ChartDataEntry(x: x, y: d.price.doubleValue, data: d))
         }
-        let quantitySet = LineChartDataSet(values: quantities, label: "Price")
+        let quantitySet = LineChartDataSet(values: quantities, label: "Quantity")
         quantitySet.axisDependency = .right
         quantitySet.setColor(UIColor(white: 0.8, alpha: 1))
         quantitySet.lineWidth = 0.6
