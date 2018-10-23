@@ -13,6 +13,8 @@ public class APIFeedback: APIResponse {
     var ts: String = ""
     var msg: String = ""
     var image: String?
+    var replies: [APIFeedback]?
+    var bot: Bool = false
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -29,5 +31,7 @@ public class APIFeedback: APIResponse {
         ts <- map["ts"]
         msg <- map["msg"]
         image <- map["image"]
+        replies <- map["replies"]
+        bot <- map["bot"]
     }
 }

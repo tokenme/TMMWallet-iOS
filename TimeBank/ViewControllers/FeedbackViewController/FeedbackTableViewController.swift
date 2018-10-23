@@ -66,10 +66,13 @@ class FeedbackTableViewController: UITableViewController {
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
             navigationItem.title = I18n.feedback.description
+            
+            let myFeedbacksBarItem = UIBarButtonItem(title: I18n.myFeedbacks.description, style: .plain, target: self, action: #selector(self.showMyFeedbacks))
+            navigationItem.rightBarButtonItem = myFeedbacksBarItem
+            
         }
         descTextView.becomeFirstResponder()
         setupTableView()
-        
         setupPhotoSolution()
     }
     
@@ -117,6 +120,11 @@ class FeedbackTableViewController: UITableViewController {
     
     @IBAction private func selectImage() {
         self.present(photoSolution.getPhotoPicker(maxPhotos: 1), animated: true, completion: nil)
+    }
+    
+    @objc private func showMyFeedbacks() {
+        let vc = MyFeedbacksTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

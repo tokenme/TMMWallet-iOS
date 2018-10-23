@@ -226,3 +226,7 @@
 "Escape" = "逃跑";
 "BiddingSuccessMsg" = "下注成功！30秒后您可以在本轮游戏结束前任何时间逃跑。";
 "EscapeSuccessMsg" = "逃跑成功！你刚刚赢取 %@ 积分。";
+
+// Feedback
+"MyFeedbacks" = "我的反馈";
+"Operator" = "客服";

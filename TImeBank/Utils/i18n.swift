@@ -214,6 +214,8 @@ enum I18n: CustomStringConvertible {
     case escape
     case biddingSuccessMsg
     case escapeSuccessMsg
+    case myFeedbacks
+    case operatorName
     
     var description : String {
         switch self {
@@ -627,6 +629,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("BiddingSuccessMsg", comment: "BiddingSuccessMsg")
         case .escapeSuccessMsg:
             return NSLocalizedString("EscapeSuccessMsg", comment: "EscapeSuccessMsg")
+        case .myFeedbacks:
+            return NSLocalizedString("MyFeedbacks", comment: "my feedbacks")
+        case .operatorName:
+            return NSLocalizedString("Operator", comment: "Operator")
         }
     }
 }

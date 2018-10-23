@@ -1959,6 +1959,40 @@
             </objects>
             <point key="canvasLocation" x="2299" y="1815"/>
         </scene>
+        <!--My Feedbacks Table View Controller-->
+        <scene sceneID="4zn-YD-EYc">
+            <objects>
+                <viewController storyboardIdentifier="MyFeedbacksTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QvQ-59-9CE" customClass="MyFeedbacksTableViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gio-0E-Pj4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-p6-Ec8">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="QvQ-59-9CE" id="PlH-7a-XyB"/>
+                                    <outlet property="delegate" destination="QvQ-59-9CE" id="kWi-9D-hd0"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aHi-Pf-LH4" firstAttribute="top" secondItem="BrB-p6-Ec8" secondAttribute="top" id="LGj-nW-ig8"/>
+                            <constraint firstItem="aHi-Pf-LH4" firstAttribute="bottom" secondItem="BrB-p6-Ec8" secondAttribute="bottom" id="a0w-4n-Lwy"/>
+                            <constraint firstItem="aHi-Pf-LH4" firstAttribute="trailing" secondItem="BrB-p6-Ec8" secondAttribute="trailing" id="tGY-KF-8ze"/>
+                            <constraint firstItem="BrB-p6-Ec8" firstAttribute="leading" secondItem="aHi-Pf-LH4" secondAttribute="leading" id="xlP-f7-sjC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aHi-Pf-LH4"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="BrB-p6-Ec8" id="503-fd-NWb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rTv-zQ-sUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2958" y="1815"/>
+        </scene>
         <!--My Invite Code View Controller-->
         <scene sceneID="EIm-oO-bvS">
             <objects>

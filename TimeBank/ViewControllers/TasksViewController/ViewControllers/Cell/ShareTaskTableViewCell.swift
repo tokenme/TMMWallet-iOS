@@ -241,6 +241,7 @@ class ShareTaskTableViewCell: SwipeTableViewCell, Reusable {
         }
         
         titleLabel.text = task.title
+        titleLabel.sizeToFit()
         summaryTextView.text = task.summary
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2

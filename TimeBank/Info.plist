@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAllowsArbitraryLoadsInWebContent</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -94,7 +92,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20</string>
+	<string>21</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -161,6 +159,8 @@
 	<string>27e400d9f7848</string>
 	<key>MOBAppSecret</key>
 	<string>a498dc06a1610ad671564fc575f38835</string>
+	<key>NSAllowsArbitraryLoadsInWebContent</key>
+	<true/>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>是否允许此App访问你的媒体资料库？</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

@@ -30,6 +30,13 @@ extension UIColor {
         )
     }
     
+    convenience init(rgb: (r: CGFloat, g: CGFloat, b: CGFloat)) {
+        self.init(red: rgb.r/255, green: rgb.g/255, blue: rgb.b/255, alpha: 1)
+    }
+    convenience init(rgba: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat)) {
+        self.init(red: rgba.r/255, green: rgba.g/255, blue: rgba.b/255, alpha: rgba.a)
+    }
+    
     static let primaryBlue = UIColor(rgb: 0x3E7CEE)
     static let darkDefault = UIColor(white: 45.0/255.0, alpha: 1)
     static let grayText = UIColor(white: 160.0/255.0, alpha: 1)

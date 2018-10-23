@@ -226,3 +226,7 @@
 "Escape" = "Escape";
 "BiddingSuccessMsg" = "Bidding success! After 30sec you could escape at any time before the bidding round finished.";
 "EscapeSuccessMsg" = "Escape successfully! You just win %@ points.";
+
+// Feedback
+"MyFeedbacks" = "My Feedbacks";
+"Operator" = "Operator";

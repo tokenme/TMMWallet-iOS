@@ -13,6 +13,7 @@ import Hydra
 enum TMMFeedbackService {
     case add(message: String, image: String?, attachements: [String: String])
     case list()
+    case reply(ts: String, message: String)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -30,11 +31,13 @@ extension TMMFeedbackService: TargetType, AccessTokenAuthorizable {
             return "/add"
         case .list():
             return "/list"
+        case .reply(_, _):
+            return "/reply"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .add(_, _, _):
+        case .add(_, _, _), .reply(_, _):
             return .post
         case .list():
             return .get
@@ -56,12 +59,14 @@ extension TMMFeedbackService: TargetType, AccessTokenAuthorizable {
             }
             params["attachements"] = fields.joined(separator: "\n")
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        case let .reply(ts, message):
+            return .requestParameters(parameters: ["ts": ts, "message": message], encoding: JSONEncoding.default)
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .add(_, _, _):
+        case .add(_, _, _), .reply(_, _):
             return "{}".utf8Encoded
         case .list():
             return "[]".utf8Encoded
@@ -79,6 +84,30 @@ extension TMMFeedbackService {
         return Promise<APIResponse> (in: .background, { resolve, reject, _ in
             provider.request(
                 .add(message: message, image:image, attachements: attachements)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APIResponse.self)
+                        if let errorCode = resp.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func doReply(ts: String, message: String, provider: MoyaProvider<TMMFeedbackService>) -> Promise<APIResponse> {
+        return Promise<APIResponse> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .reply(ts: ts, message: message)
             ){ result in
                 switch result {
                 case let .success(response):

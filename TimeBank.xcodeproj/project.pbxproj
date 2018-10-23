@@ -97,6 +97,13 @@
 		1D31FC612179E5C40014712B /* APIBlowupBid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC602179E5C40014712B /* APIBlowupBid.swift */; };
 		1D31FC66217A03D40014712B /* BlowupBidTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC64217A03D40014712B /* BlowupBidTableViewCell.swift */; };
 		1D31FC67217A03D40014712B /* BlowupBidTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D31FC65217A03D40014712B /* BlowupBidTableViewCell.xib */; };
+		1D31FC6C217F00640014712B /* MyFeedbacksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC6B217F00640014712B /* MyFeedbacksTableViewController.swift */; };
+		1D31FC73217F04150014712B /* FeedbackHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC72217F04150014712B /* FeedbackHeaderView.swift */; };
+		1D31FC7A217F18D20014712B /* FeedbackReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC78217F18D20014712B /* FeedbackReplyTableViewCell.swift */; };
+		1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D31FC79217F18D20014712B /* FeedbackReplyTableViewCell.xib */; };
+		1D31FC7E217F3B0E0014712B /* KeyboardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC7D217F3B0D0014712B /* KeyboardTextField.swift */; };
+		1D31FC80217F3C0F0014712B /* TMMKeyboardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC7F217F3C0F0014712B /* TMMKeyboardTextField.swift */; };
+		1D31FC82217F3C460014712B /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC81217F3C460014712B /* UIView+Utils.swift */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
 		1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441BE213CF68500B8E157 /* LoginViewController.swift */; };
@@ -275,6 +282,13 @@
 		1D31FC602179E5C40014712B /* APIBlowupBid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBlowupBid.swift; sourceTree = "<group>"; };
 		1D31FC64217A03D40014712B /* BlowupBidTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlowupBidTableViewCell.swift; sourceTree = "<group>"; };
 		1D31FC65217A03D40014712B /* BlowupBidTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlowupBidTableViewCell.xib; sourceTree = "<group>"; };
+		1D31FC6B217F00640014712B /* MyFeedbacksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFeedbacksTableViewController.swift; sourceTree = "<group>"; };
+		1D31FC72217F04150014712B /* FeedbackHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackHeaderView.swift; sourceTree = "<group>"; };
+		1D31FC78217F18D20014712B /* FeedbackReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackReplyTableViewCell.swift; sourceTree = "<group>"; };
+		1D31FC79217F18D20014712B /* FeedbackReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackReplyTableViewCell.xib; sourceTree = "<group>"; };
+		1D31FC7D217F3B0D0014712B /* KeyboardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardTextField.swift; sourceTree = "<group>"; };
+		1D31FC7F217F3C0F0014712B /* TMMKeyboardTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMKeyboardTextField.swift; sourceTree = "<group>"; };
+		1D31FC81217F3C460014712B /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCountDownButton.swift; sourceTree = "<group>"; };
@@ -612,6 +626,34 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		1D31FC6A217F00410014712B /* MyFeedbacksTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D31FC6B217F00640014712B /* MyFeedbacksTableViewController.swift */,
+				1D31FC6D217F035A0014712B /* Cell */,
+			);
+			path = MyFeedbacksTableViewController;
+			sourceTree = "<group>";
+		};
+		1D31FC6D217F035A0014712B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D31FC72217F04150014712B /* FeedbackHeaderView.swift */,
+				1D31FC78217F18D20014712B /* FeedbackReplyTableViewCell.swift */,
+				1D31FC79217F18D20014712B /* FeedbackReplyTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		1D31FC7C217F3B0D0014712B /* KeyboardTextField */ = {
+			isa = PBXGroup;
+			children = (
+				1D31FC7D217F3B0D0014712B /* KeyboardTextField.swift */,
+				1D31FC7F217F3C0F0014712B /* TMMKeyboardTextField.swift */,
+			);
+			path = KeyboardTextField;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -619,6 +661,7 @@
 				1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */,
 				1DEC5444214FA3AF007A46D5 /* UILabelPadding.swift */,
 				1D0370AA2163CE8900E5E3CE /* Reachability.swift */,
+				1D31FC7C217F3B0D0014712B /* KeyboardTextField */,
 				1D151EA1213E4D75007C87DD /* DetectApp */,
 				1D3441F4213CFBB500B8E157 /* TransitionButton */,
 				1D3441E9213CFBA200B8E157 /* TweeTextField */,
@@ -640,8 +683,9 @@
 				1DEC546021512847007A46D5 /* AccountViewController */,
 				1DB432922155046F0034B810 /* ExchangeViewController */,
 				1D5FF688215B7852001E69CD /* ScanViewController */,
-				1D0370BF21649ABB00E5E3CE /* FeedbackViewController */,
 				1D0370E4216B59AC00E5E3CE /* TMMWebViewController */,
+				1D0370BF21649ABB00E5E3CE /* FeedbackViewController */,
+				1D31FC6A217F00410014712B /* MyFeedbacksTableViewController */,
 				1D022E9E216DC8B10030E4CC /* RecaptchaViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
@@ -723,6 +767,7 @@
 				1D151E78213D5434007C87DD /* Time+Utils.swift */,
 				1D1D6FC52147B6030001ED49 /* UIButton+Utils.swift */,
 				1D1D6FDC214A65750001ED49 /* UIViewController+Utils.swift */,
+				1D31FC81217F3C460014712B /* UIView+Utils.swift */,
 				1DEC544E2150FF82007A46D5 /* UIImage+Utils.swift */,
 				1DF019FA2161EF4400FDD467 /* ChartComponents */,
 				1D151ED0213FC1EE007C87DD /* AppTaskChecker */,
@@ -966,6 +1011,7 @@
 				1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */,
 				1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */,
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
+				1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
@@ -1162,6 +1208,7 @@
 			files = (
 				1D3441E4213CFA1C00B8E157 /* CGRect+Utils.swift in Sources */,
 				1D0370C72165E2E900E5E3CE /* TMMContactService.swift in Sources */,
+				1D31FC82217F3C460014712B /* UIView+Utils.swift in Sources */,
 				1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */,
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */,
@@ -1172,6 +1219,7 @@
 				1D31FC5B2178A1FD0014712B /* APIBlowupEvent.swift in Sources */,
 				1DF802FA215382A90002E054 /* APIInviteSummary.swift in Sources */,
 				1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */,
+				1D31FC73217F04150014712B /* FeedbackHeaderView.swift in Sources */,
 				1D0370E8216B5C2F00E5E3CE /* TMMShareItem.swift in Sources */,
 				1D28DE5C2156214F00FCF6F6 /* TMMOrderBookService.swift in Sources */,
 				1DEC544C2150F5A9007A46D5 /* TMMQiniuService.swift in Sources */,
@@ -1195,6 +1243,7 @@
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
 				1D31FC5F2179D6420014712B /* TMMBlowupService.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
+				1D31FC7E217F3B0E0014712B /* KeyboardTextField.swift in Sources */,
 				1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */,
 				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
 				1D5FF681215B5322001E69CD /* MyOrderbooksTableViewController.swift in Sources */,
@@ -1207,6 +1256,7 @@
 				1D1D6FBA214645B20001ED49 /* PointsTMMExchangeViewController.swift in Sources */,
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D0370CD21660FD100E5E3CE /* TMMRedeemService.swift in Sources */,
+				1D31FC6C217F00640014712B /* MyFeedbacksTableViewController.swift in Sources */,
 				1D1D6FC121468A810001ED49 /* TMMTokenService.swift in Sources */,
 				1D0370C52165E2A400E5E3CE /* APIContact.swift in Sources */,
 				1DF019FC2161EF5B00FDD467 /* ChartTimeFormatter.swift in Sources */,
@@ -1216,6 +1266,7 @@
 				1D1D6FA52140F2270001ED49 /* APITaskRecord.swift in Sources */,
 				1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */,
 				1D31FC612179E5C40014712B /* APIBlowupBid.swift in Sources */,
+				1D31FC7A217F18D20014712B /* FeedbackReplyTableViewCell.swift in Sources */,
 				1D151EC3213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift in Sources */,
 				1DEC5447214FBB5B007A46D5 /* SubmitShareTaskTableViewController.swift in Sources */,
 				1DEC54512150FFD0007A46D5 /* QiniuManager.swift in Sources */,
@@ -1262,6 +1313,7 @@
 				1D1D6FD22148C5BF0001ED49 /* TransactionsTableViewController.swift in Sources */,
 				1D151E82213D6394007C87DD /* DeviceAppTableViewCell.swift in Sources */,
 				1D151E9B213E392C007C87DD /* SDKAppTableViewCell.swift in Sources */,
+				1D31FC80217F3C0F0014712B /* TMMKeyboardTextField.swift in Sources */,
 				1D3441E6213CFB1200B8E157 /* Moya+ObjectMapper.swift in Sources */,
 				1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */,
 				1D31FC66217A03D40014712B /* BlowupBidTableViewCell.swift in Sources */,

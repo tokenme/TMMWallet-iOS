@@ -4,7 +4,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'TimeBank' do
-  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.4.9'
+  pod 'TMMSDK', :git=>'https://github.com/tokenme/TMMSDK.git', :tag=>'0.5.0'
   pod 'Pastel', :git=>'https://github.com/cruisediary/Pastel.git', :tag=>'0.5.1'
   pod 'Schedule', '~> 1.0'
   pod 'GrandTime'
