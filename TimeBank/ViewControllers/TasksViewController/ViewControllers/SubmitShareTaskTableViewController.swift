@@ -323,7 +323,18 @@ extension SubmitShareTaskTableViewController {
 
 extension SubmitShareTaskTableViewController: PhotoSolutionDelegate{
     func returnImages(_ images: [UIImage]) {
-        self.selectedImage = images[0].kf.resize(to: CGSize(width: 500, height: 500))
+        let width = images[0].size.width
+        let height = images[0].size.height
+        var w = width
+        var h = height
+        if width > height {
+            w = 500
+            h = w * height / width
+        } else {
+            h = 500
+            w = h * width / height
+        }
+        self.selectedImage = images[0].kf .resize(to: CGSize(width: w, height: h))
         let img = images[0].kf.resize(to: CGSize(width: 63, height: 63))
         imageButton.setImage(img, for: .normal)
     }

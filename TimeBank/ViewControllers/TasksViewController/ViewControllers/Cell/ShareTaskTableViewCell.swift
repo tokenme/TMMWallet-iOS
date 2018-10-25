@@ -31,6 +31,7 @@ class ShareTaskTableViewCell: SwipeTableViewCell, Reusable {
             maker.width.equalTo(80)
             maker.height.equalTo(80)
         }
+        imgView.contentMode = .scaleAspectFit
         
         titleLabel.numberOfLines = 2
         titleLabel.lineBreakMode = .byWordWrapping
