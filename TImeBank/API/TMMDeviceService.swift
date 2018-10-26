@@ -16,6 +16,7 @@ enum TMMDeviceService {
     case list()
     case apps(deviceId: String)
     case info(deviceId: String)
+    case pushToken(idfa: String, token: String)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -39,11 +40,13 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
             return "/apps/\(deviceId)"
         case let .info(deviceId):
             return "/get/\(deviceId)"
+        case .pushToken(_, _):
+            return "/push-token"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .bind, .unbind:
+        case .bind, .unbind, .pushToken:
             return .post
         case .list, .apps, .info:
             return .get
@@ -61,11 +64,13 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .info(_):
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case let .pushToken(idfa, token):
+            return .requestParameters(parameters: ["idfa": idfa, "token": token], encoding: JSONEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
-        case .bind(_), .unbind(_):
+        case .bind(_), .unbind(_), .pushToken(_, _):
             return "ok".utf8Encoded
         case .list(), .apps(_), .info(_):
             return "[]".utf8Encoded
@@ -206,6 +211,30 @@ extension TMMDeviceService {
                             reject(TMMAPIError.error(code: errorCode, msg: device.message ?? I18n.unknownError.description))
                         } else {
                             resolve(device)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func savePushToken(idfa: String, token: String, provider: MoyaProvider<TMMDeviceService>) -> Promise<APIResponse> {
+        return Promise<APIResponse> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .pushToken(idfa: idfa, token: token)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APIResponse.self)
+                        if let errorCode = resp.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))

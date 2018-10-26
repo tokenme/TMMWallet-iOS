@@ -16,11 +16,12 @@ import Siren
 import SwiftRater
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     
     private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -33,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tmmBeacon?.start()
         let options = TACApplicationOptions.default()
         options?.analyticsOptions.idfa = tmmBeacon?.deviceId()
+        options?.messagingOptions.autoStart = true
         TACApplication.configurate(with: options);
-        
         initTACAnalytics()
         
         AppTaskChecker.sharedInstance.start()
@@ -78,8 +79,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         initTACMessaging()
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        completionHandler(UIBackgroundFetchResult.newData)
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -90,12 +99,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge, .sound, .alert])
+    }
+    
     private func initTACMessaging() {
-        TACMessagingService.default().token.bindTag("IDFA:\(TMMBeacon.shareInstance().deviceId()!)")
-        TACMessagingService.default().token.bindTag("PLATFORM:ios")
         if let userInfo: DefaultsUser = Defaults[.user] {
-            TACMessagingService.default().token.bindTag("USERID:\(userInfo.id ?? 0)")
-            TACMessagingService.default().token.bindTag("COUNTRYCODE:\(userInfo.countryCode ?? 0)")
+            TACApplication.default()?.bindUserIdentifier("UserId:\(userInfo.id ?? 0)")
+            TACMessagingService.default().token.bindTag("Country:\(userInfo.countryCode ?? 0)")
+            savePushToken(token: TACMessagingService.default().token.deviceTokenString)
         }
     }
     
@@ -132,6 +148,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             register.setupTelegram(byBotToken: TMMConfigs.Telegram.botToken, botDomain: TMMConfigs.Telegram.domain)
             register.setupLineAuthType(SSDKAuthorizeType.SSO)
             }
+    }
+    
+    private func savePushToken(token: String) {
+        guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
+        TMMDeviceService.savePushToken(idfa: deviceId, token: token, provider: deviceServiceProvider).then(in: .background, {token in
+            print("Push Token saved!")
+        }).catch(in: .background, { error in
+            print(error)
+        })
     }
 }
 

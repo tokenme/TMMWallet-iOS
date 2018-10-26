@@ -8,6 +8,8 @@
 
 import Moya
 import SwiftyUserDefaults
+import TACCore
+import TACMessaging
 import Hydra
 
 enum TMMUserService {
@@ -183,6 +185,13 @@ extension TMMUserService {
                                 }
                             }
                             Defaults.synchronize()
+                            if let userId = userInfo.id {
+                                TACApplication.default()?.bindUserIdentifier("UserId:\(userId)")
+                            }
+                            if let countryCode = userInfo.countryCode,
+                                let deviceToken = TACMessagingService.default().token {
+                                deviceToken.bindTag("Country:\(countryCode)")
+                            }
                             resolve(userInfo)
                         }
                     } catch {

@@ -474,7 +474,6 @@ extension WalletViewController {
                     let msg: String = String(format: I18n.dailyBonusSuccessMsg.description, pointsStr)
                     UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: msg, closeBtn: I18n.close.description)
                 }
-                
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
