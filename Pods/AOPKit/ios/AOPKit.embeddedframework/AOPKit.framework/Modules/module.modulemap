@@ -1,6 +1,0 @@
-framework module AOPKit {
-  umbrella header "AOPKit.h"
-
-  export *
-  module * { export * }
-}

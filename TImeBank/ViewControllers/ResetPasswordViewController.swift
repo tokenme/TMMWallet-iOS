@@ -146,15 +146,16 @@ class ResetPasswordViewController: UIViewController {
         }
         self.isResetting = true
         
-        let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
-        let mobile = self.telephoneTextField.text!
-        let verifyCode = self.verifyCodeTextField.text!
-        let passwd = self.passwordTextfield.text!
-        let repasswd = self.repasswordTextfield.text!
+        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+"))),
+            let mobile = self.telephoneTextField.text,
+            let verifyCode = self.verifyCodeTextField.text,
+            let passwd = self.passwordTextfield.text,
+            let repasswd = self.repasswordTextfield.text
+        else { return }
         self.resetButton.startAnimation()
         
         TMMUserService.resetUserPassword(
-            country: country!,
+            country: country,
             mobile: mobile,
             verifyCode: verifyCode,
             password: passwd,

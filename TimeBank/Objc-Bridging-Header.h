@@ -15,6 +15,10 @@
 #import <ShareSDKUI/ShareSDKUI.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareSheetConfiguration.h>
+#import "MTA.h"
+#import "MTA+Account.h"
+#import "MTAConfig.h"
+#import "XGPush.h"
 #import "DetectApp.h"
 
 #endif /* Objc_Bridging_Header_h */

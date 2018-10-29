@@ -10,13 +10,11 @@ import UIKit
 import TMMSDK
 import Moya
 import SwiftyUserDefaults
-import TACCore
-import TACMessaging
 import Siren
 import SwiftRater
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
@@ -25,18 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let notificationCenter = UNUserNotificationCenter.current()
-        
-        notificationCenter.requestAuthorization(options:[.badge, .sound, .alert]) {_,_ in
-        }
-        
         let tmmBeacon = TMMBeacon.initWithKey(TMMConfigs.TMMBeacon.key, secret: TMMConfigs.TMMBeacon.secret)
         tmmBeacon?.start()
-        let options = TACApplicationOptions.default()
-        options?.analyticsOptions.idfa = tmmBeacon?.deviceId()
-        options?.messagingOptions.autoStart = true
-        TACApplication.configurate(with: options);
-        initTACAnalytics()
+        
+        setupMTA()
+        setupXG()
         
         AppTaskChecker.sharedInstance.start()
         
@@ -58,8 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        MTA.trackActiveEnd()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -72,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        MTA.trackActiveBegin()
         Siren.shared.checkVersion(checkType: .daily)
     }
 
@@ -80,14 +71,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        initTACMessaging()
+        if let token = XGPushTokenManager.default().deviceTokenString {
+            savePushToken(token)
+            if let userInfo: DefaultsUser = Defaults[.user] {
+                XGPushTokenManager.default().bind(withIdentifier: "UserId:\(userInfo.id ?? 0)", type: .account)
+                XGPushTokenManager.default().bind(withIdentifier: "CountryCode:\(userInfo.countryCode ?? 0)", type: .tag)
+            }
+        }
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         
     }
     
+    /**
+     收到推送的回调
+     @param application  UIApplication 实例
+     @param userInfo 推送时指定的参数
+     @param completionHandler 完成回调
+     */
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        XGPush.defaultManager().reportXGNotificationInfo(userInfo)
         completionHandler(UIBackgroundFetchResult.newData)
     }
     
@@ -99,30 +103,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.badge, .sound, .alert])
-    }
-    
-    private func initTACMessaging() {
+    private func setupMTA() {
+        #if DEBUG
+        if let config = MTAConfig.getInstance() {
+            config.debugEnable = true
+        }
+        #endif
+        MTA.start(withAppkey: TMMConfigs.MTA.appKey)
         if let userInfo: DefaultsUser = Defaults[.user] {
-            TACApplication.default()?.bindUserIdentifier("UserId:\(userInfo.id ?? 0)")
-            TACMessagingService.default().token.bindTag("Country:\(userInfo.countryCode ?? 0)")
-            savePushToken(token: TACMessagingService.default().token.deviceTokenString)
+            let account = MTAAccountInfo.init()
+            account.type = MTAAccountTypeExt.custom
+            account.account = "UserId:\(userInfo.id ?? 0)"
+            account.accountStatus = MTAAccountStatus.normal
+            MTA.reportAccountExt([account])
         }
     }
     
-    private func initTACAnalytics() {
-        var dict: [AnyHashable: Any] = ["platform":"ios"]
-        if let userInfo: DefaultsUser = Defaults[.user] {
-            dict["userId"] = userInfo.id
-            dict["countryCode"] = userInfo.countryCode
-        }
-        let properties = TACAnalyticsProperties(dictionary: dict)
-        TACAnalyticsService.setUserProperties(properties)
+    private func setupXG() {
+        XGPush.defaultManager().startXG(withAppID: TMMConfigs.XG.accessId, appKey: TMMConfigs.XG.accessKey, delegate: self)
+        #if DEBUG
+        XGPush.defaultManager().isEnableDebug = true
+        #endif
     }
     
     private func refreshToken() {
@@ -150,7 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
     }
     
-    private func savePushToken(token: String) {
+    private func savePushToken(_ token: String) {
         guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
         TMMDeviceService.savePushToken(idfa: deviceId, token: token, provider: deviceServiceProvider).then(in: .background, {token in
             print("Push Token saved!")
@@ -160,3 +161,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 }
 
+extension AppDelegate: XGPushDelegate {
+    
+    // iOS 10 新增回调 API
+    // App 用户点击通知
+    // App 用户选择通知中的行为
+    // App 用户在通知中心清除消息
+    // 无论本地推送还是远程推送都会走这个回调
+    func xgPush(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse?, withCompletionHandler completionHandler: @escaping () -> Void) {
+        XGPush.defaultManager().reportXGNotificationResponse(response)
+    }
+    
+    // App 在前台弹通知需要调用这个接口
+    func xgPush(_ center: UNUserNotificationCenter, willPresent notification: UNNotification?, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if let userInfo = notification?.request.content.userInfo {
+            XGPush.defaultManager().reportXGNotificationInfo(userInfo)
+        }
+        completionHandler(UNNotificationPresentationOptions(rawValue: UNNotificationPresentationOptions.badge.rawValue | UNNotificationPresentationOptions.sound.rawValue | UNNotificationPresentationOptions.alert.rawValue))
+    }
+    
+    /**
+     @brief 向信鸽服务器注册设备token的回调
+     
+     @param deviceToken 当前设备的token
+     @param error 错误信息
+     @note 当前的token已经注册过之后，将不会再调用此方法
+     */
+    
+    func xgPushDidRegisteredDeviceToken(_ deviceToken: String?, error: Error?) {
+        if let err = error {
+            print(err.localizedDescription)
+            return
+        }
+        if let token = deviceToken {
+            savePushToken(token)
+        }
+    }
+}

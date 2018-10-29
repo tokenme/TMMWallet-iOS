@@ -144,19 +144,19 @@ class RegisterViewController: UIViewController {
         }
         self.isRegistering = true
         
-        let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
-        let mobile = self.telephoneTextField.text!
-        let verifyCode = self.verifyCodeTextField.text!
-        let passwd = self.passwordTextfield.text!
-        let repasswd = self.repasswordTextfield.text!
+        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+"))),
+            let mobile = self.telephoneTextField.text,
+            let verifyCode = self.verifyCodeTextField.text,
+            let passwd = self.passwordTextfield.text,
+            let repasswd = self.repasswordTextfield.text
+            else { return }
         self.registerButton.startAnimation()
-        
         async({[weak self] _ in
             guard let weakSelf = self else {
                 return
             }
             let _ = try ..TMMUserService.createUser(
-                country: country!,
+                country: country,
                 mobile: mobile,
                 verifyCode: verifyCode,
                 password: passwd,
@@ -164,9 +164,7 @@ class RegisterViewController: UIViewController {
                 captcha: recaptcha,
                 provider: weakSelf.userServiceProvider)
         }).then(in: .main, {[weak self] user in
-            guard let weakSelf = self else {
-                return
-            }
+            guard let weakSelf = self else { return }
             weakSelf.registerButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.dismiss(animated: true, completion: nil)
             })

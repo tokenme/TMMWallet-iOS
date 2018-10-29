@@ -340,6 +340,13 @@ extension AccountTableViewController {
             let vc = FeedbackTableViewController.instantiate()
             self.navigationController?.pushViewController(vc, animated: true)
         case .signout:
+            if let userInfo: DefaultsUser = Defaults[.user] {
+                let account = MTAAccountInfo.init()
+                account.type = MTAAccountTypeExt.custom
+                account.account = "UserId:\(userInfo.id ?? 0)"
+                account.accountStatus = MTAAccountStatus.logout
+                MTA.reportAccountExt([account])
+            }
             Defaults.removeAll()
             Defaults.synchronize()
             let vc = LoginViewController.instantiate()

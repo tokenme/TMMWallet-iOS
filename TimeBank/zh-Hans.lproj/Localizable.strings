@@ -122,7 +122,7 @@
 // Tasks
 "EarnPointsTasks" = "做任务赚积分";
 "Discover" = "发现";
-"PublishedByMe" = "我发布的任务";
+"PublishedByMe" = "我发布的";
 "AppTasks" = "安装应用";
 "ShareTasks" = "文章";
 "Earn" = "获得";
@@ -135,19 +135,19 @@
 "PointsPerInstall" = "积分/安装";
 "AppTaskSuccess" = "安装应用任务成功";
 "AppTaskFailed" = "安装应用任务被卸载";
-"TaskRecords" = "任务记录";
-"EmptyTaskRecordsTitle" = "还没有任务记录";
-"EmptyTaskRecordsDesc" = "马上做任务赢积分吧!";
+"TaskRecords" = "记录";
+"EmptyTaskRecordsTitle" = "还没有记录";
+"EmptyTaskRecordsDesc" = ":(";
 "EmptyAppTasksTitle" = "暂时还没有应用安装任务";
 "EmptyAppTasksDesc" = "请稍后回来查看任务列表。";
 "EmptyShareTasksTitle" = "暂时还没有分享任务";
 "EmptyShareTasksDesc" = "请稍后回来查看任务列表。";
 "SubmitTask" = "发布任务";
 "SubmitNewAppTask" = "发布应用下载任务";
-"SubmitNewShareTask" = "发布分享链接任务";
+"SubmitNewShareTask" = "发布分享链接";
 "SubmitAppTaskNotAvailable" = "iOS平台发布应用下载任务暂时不支持直接发布，请将需求反馈给客服，我们会安排专人与您联系。";
-"EditAppTask" = "编辑应用下载任务";
-"EditShareTask" = "编辑分享链接任务";
+"EditAppTask" = "编辑";
+"EditShareTask" = "编辑";
 "URL" = "链接";
 "Title" = "标题";
 "Description" = "描述";

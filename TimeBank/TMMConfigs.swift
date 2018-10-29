@@ -72,4 +72,23 @@ struct TMMConfigs {
         static let channelSecret = "ca196c328a296e454e80cec08411539a"
         static let schemes = ["line"]
     }
+    
+    struct MTA {
+        static let appKey = "IV9I18EL7INX"
+    }
+    
+    struct XG {
+        static let accessId: UInt32 = 2200315653
+        static let accessKey = "I1ZKJ4D22E7R"
+    }
+}
+
+enum TrackEvent: String {
+    case login = "Login"
+    case register = "Register"
+    case pointsChangeTBC = "PointsChangeTBC"
+    case TBCChangePoints = "TBCChangePoints"
+    case TokenTransfer = "TokenTransfer"
+    case BlowupBid = "BlowupBid"
+    case BlowupEscape = "BlowupEscape"
 }

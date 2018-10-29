@@ -91,16 +91,17 @@ class LoginViewController: UIViewController {
             return
         }
         
-        let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
-        let mobile = self.telephoneTextField.text!
-        let passwd = self.passwordTextfield.text!
+        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+"))),
+            let mobile = self.telephoneTextField.text,
+            let passwd = self.passwordTextfield.text
+        else { return }
         self.isLogining = true
         
         self.loginButton.startAnimation()
         async({[weak self] _ in
             guard let weakSelf = self else { return }
                 let _ = try ..TMMAuthService.doLogin(
-                    country: country!,
+                    country: country,
                     mobile: mobile,
                     password: passwd,
                     captcha: recaptcha,
@@ -109,6 +110,13 @@ class LoginViewController: UIViewController {
             
         }).then(in: .main, {[weak self] _ in
             guard let weakSelf = self else { return }
+            if let userInfo: DefaultsUser = Defaults[.user] {
+                let account = MTAAccountInfo.init()
+                account.type = MTAAccountTypeExt.custom
+                account.account = "UserId:\(userInfo.id ?? 0)"
+                account.accountStatus = MTAAccountStatus.normal
+                MTA.reportAccountExt([account])
+            }
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.delegate?.loginSucceeded(token: nil)
                 weakSelf.dismiss(animated: true, completion: nil)

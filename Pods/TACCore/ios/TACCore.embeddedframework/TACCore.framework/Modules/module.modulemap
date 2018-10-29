@@ -1,6 +1,0 @@
-framework module TACCore {
-  umbrella header "TACCore.h"
-
-  export *
-  module * { export * }
-}

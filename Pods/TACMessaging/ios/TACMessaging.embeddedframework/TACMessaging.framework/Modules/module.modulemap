@@ -1,6 +1,0 @@
-framework module TACMessaging {
-  umbrella header "TACMessaging.h"
-
-  export *
-  module * { export * }
-}

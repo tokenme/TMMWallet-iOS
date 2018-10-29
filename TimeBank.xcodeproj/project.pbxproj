@@ -83,7 +83,6 @@
 		1D1D6FD921492D330001ED49 /* WalletQRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FD821492D330001ED49 /* WalletQRCodeViewController.swift */; };
 		1D1D6FDD214A65750001ED49 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FDC214A65750001ED49 /* UIViewController+Utils.swift */; };
 		1D1D6FE0214A7C760001ED49 /* TransferTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FDF214A7C760001ED49 /* TransferTableViewController.swift */; };
-		1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */; };
 		1D1D6FE9214D26C30001ED49 /* APIMinETH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */; };
 		1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D6FEB214EA3470001ED49 /* ExchangeRecordsViewController.swift */; };
 		1D28DE5A2155F98200FCF6F6 /* APIOrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28DE592155F98200FCF6F6 /* APIOrderBook.swift */; };
@@ -104,6 +103,15 @@
 		1D31FC7E217F3B0E0014712B /* KeyboardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC7D217F3B0D0014712B /* KeyboardTextField.swift */; };
 		1D31FC80217F3C0F0014712B /* TMMKeyboardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC7F217F3C0F0014712B /* TMMKeyboardTextField.swift */; };
 		1D31FC82217F3C460014712B /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC81217F3C460014712B /* UIView+Utils.swift */; };
+		1D31FC8A2186E6060014712B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC892186E6060014712B /* libz.tbd */; };
+		1D31FC8C2186E6170014712B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC8B2186E6170014712B /* libsqlite3.tbd */; };
+		1D31FC8E2186E6200014712B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC8D2186E6200014712B /* AdSupport.framework */; };
+		1D31FC902186E6300014712B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC8F2186E6300014712B /* CFNetwork.framework */; };
+		1D31FC922186E6400014712B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC912186E6400014712B /* SystemConfiguration.framework */; };
+		1D31FC942186F0950014712B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC932186F0950014712B /* UserNotifications.framework */; };
+		1D31FC9C218702780014712B /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC962186F1050014712B /* libXG-SDK.a */; };
+		1D31FC9D218702780014712B /* libxgidfa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC972186F1050014712B /* libxgidfa.a */; };
+		1D31FC9E2187028E0014712B /* libmtasdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC842186E5E10014712B /* libmtasdk.a */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
 		1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441BE213CF68500B8E157 /* LoginViewController.swift */; };
@@ -267,7 +275,6 @@
 		1D1D6FD821492D330001ED49 /* WalletQRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletQRCodeViewController.swift; sourceTree = "<group>"; };
 		1D1D6FDC214A65750001ED49 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		1D1D6FDF214A7C760001ED49 /* TransferTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferTableViewController.swift; sourceTree = "<group>"; };
-		1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = tac_services_configurations.plist; path = TimeBank/tac_services_configurations.plist; sourceTree = "<group>"; };
 		1D1D6FE7214D139C0001ED49 /* TimeBank.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeBank.entitlements; sourceTree = "<group>"; };
 		1D1D6FE8214D26C30001ED49 /* APIMinETH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMinETH.swift; sourceTree = "<group>"; };
 		1D1D6FEB214EA3470001ED49 /* ExchangeRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +296,19 @@
 		1D31FC7D217F3B0D0014712B /* KeyboardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardTextField.swift; sourceTree = "<group>"; };
 		1D31FC7F217F3C0F0014712B /* TMMKeyboardTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMKeyboardTextField.swift; sourceTree = "<group>"; };
 		1D31FC81217F3C460014712B /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
+		1D31FC842186E5E10014712B /* libmtasdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmtasdk.a; path = TimeBank/Dependencies/MTA/libmtasdk.a; sourceTree = SOURCE_ROOT; };
+		1D31FC852186E5E10014712B /* MTA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTA.h; path = TimeBank/Dependencies/MTA/MTA.h; sourceTree = SOURCE_ROOT; };
+		1D31FC862186E5E10014712B /* MTA+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MTA+Account.h"; path = "TimeBank/Dependencies/MTA/MTA+Account.h"; sourceTree = SOURCE_ROOT; };
+		1D31FC872186E5E10014712B /* MTAConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTAConfig.h; path = TimeBank/Dependencies/MTA/MTAConfig.h; sourceTree = SOURCE_ROOT; };
+		1D31FC892186E6060014712B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		1D31FC8B2186E6170014712B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		1D31FC8D2186E6200014712B /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		1D31FC8F2186E6300014712B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1D31FC912186E6400014712B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1D31FC932186F0950014712B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		1D31FC962186F1050014712B /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "TimeBank/Dependencies/XG/libXG-SDK.a"; sourceTree = SOURCE_ROOT; };
+		1D31FC972186F1050014712B /* libxgidfa.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libxgidfa.a; path = TimeBank/Dependencies/XG/libxgidfa.a; sourceTree = SOURCE_ROOT; };
+		1D31FC992186F6B80014712B /* XGPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGPush.h; path = TimeBank/Dependencies/XG/XGPush.h; sourceTree = SOURCE_ROOT; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCountDownButton.swift; sourceTree = "<group>"; };
@@ -381,6 +401,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D31FC9E2187028E0014712B /* libmtasdk.a in Frameworks */,
+				1D31FC9C218702780014712B /* libXG-SDK.a in Frameworks */,
+				1D31FC9D218702780014712B /* libxgidfa.a in Frameworks */,
+				1D31FC942186F0950014712B /* UserNotifications.framework in Frameworks */,
+				1D31FC922186E6400014712B /* SystemConfiguration.framework in Frameworks */,
+				1D31FC902186E6300014712B /* CFNetwork.framework in Frameworks */,
+				1D31FC8E2186E6200014712B /* AdSupport.framework in Frameworks */,
+				1D31FC8C2186E6170014712B /* libsqlite3.tbd in Frameworks */,
+				1D31FC8A2186E6060014712B /* libz.tbd in Frameworks */,
 				1D0370C321649FA500E5E3CE /* CoreTelephony.framework in Frameworks */,
 				1D151EA0213E453A007C87DD /* StoreKit.framework in Frameworks */,
 				F658EBA45F30103182A90E1D /* Pods_TimeBank.framework in Frameworks */,
@@ -592,7 +621,6 @@
 		1D1D6FE2214CE6F40001ED49 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				1D1D6FE3214CE7310001ED49 /* tac_services_configurations.plist */,
 				1DEC544D2150FCC1007A46D5 /* Objc-Bridging-Header.h */,
 				1DEC5458215121F5007A46D5 /* InfoPlist.strings */,
 				1DEC5454215121BF007A46D5 /* Localizable.strings */,
@@ -654,6 +682,27 @@
 			path = KeyboardTextField;
 			sourceTree = "<group>";
 		};
+		1D31FC832186E5C70014712B /* MTA */ = {
+			isa = PBXGroup;
+			children = (
+				1D31FC842186E5E10014712B /* libmtasdk.a */,
+				1D31FC852186E5E10014712B /* MTA.h */,
+				1D31FC862186E5E10014712B /* MTA+Account.h */,
+				1D31FC872186E5E10014712B /* MTAConfig.h */,
+			);
+			path = MTA;
+			sourceTree = "<group>";
+		};
+		1D31FC952186F0AF0014712B /* XG */ = {
+			isa = PBXGroup;
+			children = (
+				1D31FC962186F1050014712B /* libXG-SDK.a */,
+				1D31FC972186F1050014712B /* libxgidfa.a */,
+				1D31FC992186F6B80014712B /* XGPush.h */,
+			);
+			path = XG;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -661,6 +710,8 @@
 				1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */,
 				1DEC5444214FA3AF007A46D5 /* UILabelPadding.swift */,
 				1D0370AA2163CE8900E5E3CE /* Reachability.swift */,
+				1D31FC952186F0AF0014712B /* XG */,
+				1D31FC832186E5C70014712B /* MTA */,
 				1D31FC7C217F3B0D0014712B /* KeyboardTextField */,
 				1D151EA1213E4D75007C87DD /* DetectApp */,
 				1D3441F4213CFBB500B8E157 /* TransitionButton */,
@@ -900,6 +951,12 @@
 		7B80D9EDE9EDDA13FC0B0936 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D31FC932186F0950014712B /* UserNotifications.framework */,
+				1D31FC912186E6400014712B /* SystemConfiguration.framework */,
+				1D31FC8F2186E6300014712B /* CFNetwork.framework */,
+				1D31FC8D2186E6200014712B /* AdSupport.framework */,
+				1D31FC8B2186E6170014712B /* libsqlite3.tbd */,
+				1D31FC892186E6060014712B /* libz.tbd */,
 				1D0370C221649FA500E5E3CE /* CoreTelephony.framework */,
 				1D151E9F213E453A007C87DD /* StoreKit.framework */,
 				41E721555CBBB57939E2AE89 /* Pods_TimeBank.framework */,
@@ -924,12 +981,10 @@
 			buildConfigurationList = 1D36D9AF213CED5E0002EDBF /* Build configuration list for PBXNativeTarget "TimeBank" */;
 			buildPhases = (
 				01FE09DA524FF541CDC44078 /* [CP] Check Pods Manifest.lock */,
-				3EBBECB2622B7AEEA3E03A5D /* [TAC] Run Before Script */,
 				1D36D997213CED5D0002EDBF /* Sources */,
 				1D36D998213CED5D0002EDBF /* Frameworks */,
 				1D36D999213CED5D0002EDBF /* Resources */,
 				A7A9CE702B1E3B2A86202BAA /* [CP] Embed Pods Frameworks */,
-				2E30EBF1A630A3CA2EAFFA95 /* [TAC] Run After Script */,
 				2D13F116A3D6866E66CDC711 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -1017,7 +1072,6 @@
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
 				1D0370DF2166638C00E5E3CE /* RedeemCdpRecordTableViewCell.xib in Resources */,
-				1D1D6FE4214CE7320001ED49 /* tac_services_configurations.plist in Resources */,
 				1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */,
 				1D3441DA213CF94F00B8E157 /* Default-568h@2x.png in Resources */,
 				1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */,
@@ -1076,34 +1130,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TimeBank/Pods-TimeBank-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		2E30EBF1A630A3CA2EAFFA95 /* [TAC] Run After Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[TAC] Run After Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\n              if [ -f \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.after.sh\" ]; then\n                  bash \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.after.sh\"\n              fi\n              ";
-		};
-		3EBBECB2622B7AEEA3E03A5D /* [TAC] Run Before Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[TAC] Run Before Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\n              if [ -f \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.before.sh\" ]; then\n                  bash \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.before.sh\"\n                  fi\n                  ";
 		};
 		A7A9CE702B1E3B2A86202BAA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1538,6 +1564,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mta-ios-stats-sdk-2.5.0/sdk",
+					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk",
+					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk/idfa",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/XG",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1620,6 +1654,14 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mta-ios-stats-sdk-2.5.0/sdk",
+					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk",
+					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk/idfa",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/XG",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

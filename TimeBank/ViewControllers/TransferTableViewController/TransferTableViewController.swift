@@ -221,8 +221,9 @@ extension TransferTableViewController {
             return
         }
         if !self.verifyFields() { return }
-        guard let tokenAddress = self.token?.address else { return }
-        guard let toAddress = walletAddressTextField.text else { return }
+        guard let tokenAddress = self.token?.address,
+            let toAddress = walletAddressTextField.text
+        else { return }
         let amount = NSDecimalNumber.init(string: transferAmountTextField.text)
         if amount.isNaN() { return }
         

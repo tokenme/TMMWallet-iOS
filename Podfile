@@ -1,4 +1,3 @@
-source 'https://git.cloud.tencent.com/qcloud_u/cocopoads-repo'
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 use_frameworks!
@@ -29,9 +28,6 @@ target 'TimeBank' do
   pod 'Presentr'
   pod 'swiftScan', :git=>'https://github.com/tokenme/swiftScan.git', :tag=>'1.1.7'
   pod 'SwipeCellKit'
-  pod 'TACCore'
-  pod 'TACMessaging'
-  pod 'TACCrash'
   pod 'PhotoSolution', '~> 1.0.2'
   pod 'Qiniu'
   pod 'Charts'
@@ -53,72 +49,6 @@ target 'TimeBank' do
   pod 'mob_sharesdk/ShareSDKPlatforms/Telegram'
   pod 'mob_sharesdk/ShareSDKConfigFile'
   pod 'mob_sharesdk/ShareSDKExtension'
-end
-
-pre_install do |installer|
-    puts "[TAC]-Running post installer"
-    xcodeproj_file_name = "placeholder"
-    Dir.foreach("./") do |file|
-        if file.include?("xcodeproj")
-            xcodeproj_file_name = file
-        end
-    end
-    puts "[TAC]-project file is #{xcodeproj_file_name}"
-    project = Xcodeproj::Project.open(xcodeproj_file_name)
-    project.targets.each do |target|
-        shell_script_after_build_phase_name = "[TAC] Run After Script"
-        shell_script_before_build_phase_name = "[TAC] Run Before Script"
-        puts "[TAC]-target.product_type is #{target.product_type}"
-          if target.product_type.include?("application")
-              should_insert_after_build_phases = 0
-              should_insert_before_build_phases=0
-              after_build_phase = nil
-              before_build_phase = nil
-              target.shell_script_build_phases.each do |bp|
-                    if !bp.name.nil? and bp.name.include?(shell_script_after_build_phase_name)
-                        should_insert_after_build_phases = 1
-                        after_build_phase = bp
-                    end
-                    if !bp.name.nil? and bp.name.include?(shell_script_before_build_phase_name)
-                        should_insert_before_build_phases = 1
-                        before_build_phase = bp
-                    end
-              end
-
-
-              if should_insert_after_build_phases == 1
-                  puts "[TAC]-Build phases with the same name--#{shell_script_after_build_phase_name} has already existed"
-              else
-                  after_build_phase = target.new_shell_script_build_phase
-                  puts "[TAC]-installing run afger build phases-- #{after_build_phase}"
-
-              end
-              after_build_phase.name = shell_script_after_build_phase_name
-              after_build_phase.shell_script = "
-              if [ -f \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.after.sh\" ]; then
-                  bash \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.after.sh\"
-              fi
-              "
-              after_build_phase.shell_path = '/bin/sh'
-              if should_insert_before_build_phases == 1
-                  puts "[TAC]-Build phases with the same name--#{shell_script_before_build_phase_name} has already existed"
-                  else
-                  before_build_phase = target.new_shell_script_build_phase
-                  target.build_phases.insert(0,target.build_phases.pop)
-                  puts "[TAC]-installing run before build phases-- #{before_build_phase}"
-
-              end
-              before_build_phase.name = shell_script_before_build_phase_name
-              before_build_phase.shell_script = "
-              if [ -f \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.before.sh\" ]; then
-                  bash \"${SRCROOT}/Pods/TACCore/Scripts/tac.run.all.before.sh\"
-                  fi
-                  "
-              before_build_phase.shell_path = '/bin/sh'
-         end
-    end
-    puts "[TAC]-Saving projects"
-    project.save()
 end
 
 post_install do |installer|

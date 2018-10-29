@@ -351,10 +351,11 @@ extension BlowupViewController {
         }
         self.isBidding = true
         self.bidValueTextField.resignFirstResponder()
-        guard let sessionId = self.currentSession?.sessionId, sessionId > 0 else { return }
+        guard let sessionId = self.currentSession?.sessionId, sessionId > 0,
+            let deviceId = TMMBeacon.shareInstance()?.deviceId()
+        else { return }
         let points = NSDecimalNumber.init(string: bidValueTextField.text)
         if points.isNaN() { return }
-        guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
         bidButton.startAnimation()
         TMMBlowupService.newBid(
             sessionId: sessionId,
@@ -386,8 +387,9 @@ extension BlowupViewController {
             return
         }
         self.isEscaping = true
-        guard let sessionId = self.currentSession?.sessionId, sessionId > 0 else { return }
-        guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
+        guard let sessionId = self.currentSession?.sessionId, sessionId > 0,
+            let deviceId = TMMBeacon.shareInstance()?.deviceId()
+        else { return }
         TMMBlowupService.tryEscape(
             sessionId: sessionId,
             idfa: deviceId,
