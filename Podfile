@@ -35,6 +35,7 @@ target 'TimeBank' do
   pod 'DropDown'
   pod 'DynamicBlurView'
   pod 'MKRingProgressView'
+  pod 'BiometricAuthentication'
   pod 'IKEventSource', :git=>'https://github.com/inaka/EventSource.git', :tag=>'2.2.0'
   pod 'FlexibleSteppedProgressBar', :git=>'https://github.com/tokenme/FlexibleSteppedProgressBar.git', :tag=>'0.5.1'
   pod 'SnapKit'

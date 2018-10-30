@@ -14,6 +14,7 @@ import SwiftyUserDefaults
 import Hydra
 import TMMSDK
 import Presentr
+import BiometricAuthentication
 
 class LoginViewController: UIViewController {
     
@@ -54,6 +55,7 @@ class LoginViewController: UIViewController {
         telephoneTextField.leftView = cpv
         telephoneTextField.leftViewMode = .always
         passwordTextfield.tweePlaceholder = I18n.password.description
+        self.biometricLogin()
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,6 +66,79 @@ class LoginViewController: UIViewController {
     static func instantiate() -> LoginViewController
     {
         return UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+    }
+    
+    private func biometricLogin() {
+        if Defaults[.user] == nil || !BioMetricAuthenticator.canAuthenticate() {
+            return
+        }
+        guard let passwd = Defaults.string(forKey: "authKey") else {
+            return }
+        guard let authKeyStr = passwd.desDecrypt(withKey: TMMConfigs.TMMBeacon.secret) else { return }
+        guard let jsonData = Data(base64Encoded: authKeyStr, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
+            return }
+        var authPasswd: String?
+        do {
+            let decoder = JSONDecoder()
+            let authKey = try decoder.decode(APIAuthKey.self, from: jsonData)
+            authKey.ts = Int64(Date().timeIntervalSince1970)
+            let encoder = JSONEncoder()
+            let encodeData = try encoder.encode(authKey)
+            authPasswd = encodeData.base64EncodedString().desEncrypt(withKey: TMMConfigs.TMMBeacon.secret)
+        } catch  {
+            return
+        }
+        if authPasswd == nil { return }
+        
+        BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", success: {
+            // authentication successful
+            self.doLogin(recaptcha: TMMConfigs.TMMBeacon.key, biometricAuthentication: authPasswd)
+        }, failure: { [weak self] (error) in
+            guard let weakSelf = self else { return }
+            // do nothing on canceled
+            if error == .canceledByUser || error == .canceledBySystem {
+                return
+            }
+                
+                // device does not support biometric (face id or touch id) authentication
+            else if error == .biometryNotAvailable {
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.message(), closeBtn: I18n.close.description)
+            }
+                
+                // show alternatives on fallback button clicked
+            else if error == .fallback {
+                // here we're entering username and password
+                return
+            }
+                
+                // No biometry enrolled in this device, ask user to register fingerprint or face
+            else if error == .biometryNotEnrolled {
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.message(), closeBtn: I18n.close.description)
+            }
+                
+                // Biometry is locked out now, because there were too many failed attempts.
+                // Need to enter device passcode to unlock.
+            else if error == .biometryLockedout {
+                // show passcode authentication
+                weakSelf.biometricPasscode()
+            }
+                
+                // show error on authentication failed
+            else {
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.message(), closeBtn: I18n.close.description)
+            }
+        })
+    }
+    
+    private func biometricPasscode() {
+        BioMetricAuthenticator.authenticateWithPasscode(reason: "", success: {[weak self] in
+            // passcode authentication success
+            guard let weakSelf = self else { return }
+            weakSelf.biometricLogin()
+        }) { [weak self] (error) in
+            guard let weakSelf = self else { return }
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.message(), closeBtn: I18n.close.description)
+        }
     }
     
     //================
@@ -86,24 +161,40 @@ class LoginViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    private func doLogin(recaptcha: String) {
+    private func doLogin(recaptcha: String, biometricAuthentication: String?) {
         if isLogining {
             return
         }
+        var authCountry: UInt = 0
+        var authMobile: String = ""
+        var authPasswd: String = ""
+        if let userInfo: DefaultsUser = Defaults[.user],
+            let country = userInfo.countryCode,
+            let mobile = userInfo.mobile,
+            let passwd = biometricAuthentication {
+            authCountry = country
+            authMobile = mobile
+            authPasswd = passwd
+        } else {
+            guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+"))),
+                let mobile = self.telephoneTextField.text,
+                let passwd = self.passwordTextfield.text
+                else { return }
+            authCountry = country
+            authMobile = mobile
+            authPasswd = passwd
+        }
         
-        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+"))),
-            let mobile = self.telephoneTextField.text,
-            let passwd = self.passwordTextfield.text
-        else { return }
         self.isLogining = true
         
         self.loginButton.startAnimation()
         async({[weak self] _ in
             guard let weakSelf = self else { return }
                 let _ = try ..TMMAuthService.doLogin(
-                    country: country,
-                    mobile: mobile,
-                    password: passwd,
+                    country: authCountry,
+                    mobile: authMobile,
+                    password: authPasswd,
+                    biometric: biometricAuthentication != nil,
                     captcha: recaptcha,
                     provider: weakSelf.authServiceProvider)
                 let _ = try ..weakSelf.getUserInfoAndBindDevice()
@@ -111,6 +202,18 @@ class LoginViewController: UIViewController {
         }).then(in: .main, {[weak self] _ in
             guard let weakSelf = self else { return }
             if let userInfo: DefaultsUser = Defaults[.user] {
+                if biometricAuthentication != nil {
+                    Defaults.setValue(authPasswd, forKey: "authKey")
+                } else {
+                    let authKey = APIAuthKey(passwd: authPasswd, ts: Int64(Date().timeIntervalSince1970))
+                    let encoder = JSONEncoder()
+                    do {
+                        let encodeData = try encoder.encode(authKey)
+                        let pass = encodeData.base64EncodedString().desEncrypt(withKey: TMMConfigs.TMMBeacon.secret)
+                        Defaults.setValue(pass, forKey: "authKey")
+                    } catch { }
+                }
+                Defaults.synchronize()
                 let account = MTAAccountInfo.init()
                 account.type = MTAAccountTypeExt.custom
                 account.account = "UserId:\(userInfo.id ?? 0)"
@@ -197,7 +300,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: ReCaptchaDelegate {
     func didSolve(response: String) {
-        self.doLogin(recaptcha: response)
+        self.doLogin(recaptcha: response, biometricAuthentication: nil)
     }
 }
 

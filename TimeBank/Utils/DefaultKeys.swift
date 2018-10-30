@@ -52,6 +52,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
     var canPay: UInt8!
     var inviteCode: String = ""
     var inviterCode: String = ""
+    var passwd: String = ""
     var exchangeEnabled: Bool = false
     
     enum CodingKeys: String, CodingKey {

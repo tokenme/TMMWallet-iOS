@@ -21,5 +21,6 @@
 #import "XGPush.h"
 #import "DetectApp.h"
 #import "NSString+Encrypt.h"
+#import "NSData+Base64.h"
 
 #endif /* Objc_Bridging_Header_h */

@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.7.3)
   - AutoInsetter (1.3.0)
+  - BiometricAuthentication (2.1)
   - BTNavigationDropdownMenu (0.5)
   - Charts (3.2.0):
     - Charts/Core (= 3.2.0)
@@ -95,6 +96,7 @@ PODS:
   - ZHRefresh (0.2.1)
 
 DEPENDENCIES:
+  - BiometricAuthentication
   - BTNavigationDropdownMenu
   - Charts
   - CountryPickerView
@@ -146,6 +148,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AutoInsetter
+    - BiometricAuthentication
     - BTNavigationDropdownMenu
     - Charts
     - CountryPickerView
@@ -229,6 +232,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
+  BiometricAuthentication: 6928c01583bc707f92c11349f190d5ae052217d3
   BTNavigationDropdownMenu: ba3a26fdb6a56c4721c31df8a0875106c259663a
   Charts: 680c8328bd5e90cb14f67e00d2176f3113d19141
   CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
@@ -270,6 +274,6 @@ SPEC CHECKSUMS:
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 7d45fb141f241ef6f0b30e2f1c5ca2044c7337c9
+PODFILE CHECKSUM: 7f20f27fc01379734caa27380a9c72d0ee8edbd3
 
 COCOAPODS: 1.6.0.beta.1

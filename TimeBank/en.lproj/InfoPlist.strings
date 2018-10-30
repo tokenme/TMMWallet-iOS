@@ -23,3 +23,4 @@ NSMotionUsageDescription = "Allow this App to access your Motion？";
 NSPhotoLibraryAddUsageDescription = "This allow us to use your photo library to provide you certain features like saving your QRCode (transfer info or wallet address) image into your photo library.";
 NSPhotoLibraryUsageDescription = "This allow us to use your photo library to provide you certain features like scanning QRCode (transfer info or wallet address) image inside your photo library.";
 NSRemindersUsageDescription = "Allow this App to access your Reminder?";
+NSFaceIDUsageDescription = "This allow us to use your Face Id to help you login without password.";

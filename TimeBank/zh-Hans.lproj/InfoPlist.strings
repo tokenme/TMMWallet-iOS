@@ -23,3 +23,4 @@ NSMotionUsageDescription = "是否允许此App访问你的运动与健身？";
 NSPhotoLibraryAddUsageDescription = "该功能允许我们访问您的相册，以便您保存转账二维码到相册中。";
 NSPhotoLibraryUsageDescription = "该功能允许我们访问您的相册，以便您在扫描转账二维码时可以选择保存在相册中的二维码图片。";
 NSRemindersUsageDescription = "是否允许此App访问你的提醒事项？";
+NSFaceIDUsageDescription = "该功能允许我们使用您的Face ID，以便您免密码登录。";

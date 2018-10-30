@@ -92,7 +92,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>25</string>
+	<string>26</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -172,7 +172,7 @@
 	<key>NSContactsUsageDescription</key>
 	<string>是否允许此App访问你的通讯录？</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>是否允许此APP使用你的Face ID?</string>
+	<string>该功能允许我们使用您的Face ID，以便您免密码登录。</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>是否允许此App访问你的健康分享？</string>
 	<key>NSHealthUpdateUsageDescription</key>
