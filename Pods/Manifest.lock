@@ -17,6 +17,7 @@ PODS:
   - IQKeyboardManagerSwift (6.1.1)
   - Kingfisher (4.10.0)
   - KMNavigationBarTransition (1.1.5)
+  - MKRingProgressView (2.1.1)
   - moa (10.0.0)
   - mob_sharesdk (4.2.0):
     - mob_sharesdk/ShareSDK (= 4.2.0)
@@ -79,7 +80,6 @@ PODS:
   - Reusable/Storyboard (4.0.3)
   - Reusable/View (4.0.3)
   - Schedule (1.0.0)
-  - ShadowView (1.3)
   - Siren (3.7.1)
   - SkeletonView (1.4.1)
   - SnapKit (4.0.1)
@@ -108,6 +108,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - Kingfisher (~> 4.10)
   - KMNavigationBarTransition
+  - MKRingProgressView
   - moa (~> 10.0)
   - mob_sharesdk
   - mob_sharesdk/ShareSDKConfigFile
@@ -129,7 +130,6 @@ DEPENDENCIES:
   - Qiniu
   - Reusable
   - Schedule (~> 1.0)
-  - ShadowView (~> 1.3)
   - Siren
   - SkeletonView (from `https://github.com/tokenme/SkeletonView.git`, tag `1.4.1`)
   - SnapKit
@@ -158,6 +158,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Kingfisher
     - KMNavigationBarTransition
+    - MKRingProgressView
     - moa
     - mob_sharesdk
     - MOBFoundation
@@ -171,7 +172,6 @@ SPEC REPOS:
     - Result
     - Reusable
     - Schedule
-    - ShadowView
     - Siren
     - SnapKit
     - SwiftRater
@@ -243,6 +243,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
+  MKRingProgressView: 6142b3bc5d6a94c03c58dded51133e5579d8046f
   moa: 95c863fd1059e6b5c7f6be30627823bb07ebca25
   mob_sharesdk: fc8a9aab921c08e5e88a5b1f36229c6d406a2ff8
   MOBFoundation: 11500153c10d83e4ac341f6ad6301b3998ce6db2
@@ -257,7 +258,6 @@ SPEC CHECKSUMS:
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
   Schedule: 64f334e01daa6f80201ab147b59cb4f1e118ae74
-  ShadowView: 80c923f88fe2e6602066aa535f46621f0f6471d1
   Siren: ccfbb3e0556c5c49817214716a45be6910cacdb4
   SkeletonView: 60d6ce7edb0cb4c7758db33c74add50392b3c475
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
@@ -270,6 +270,6 @@ SPEC CHECKSUMS:
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 60b294128f32108ce9fb54f396fbbc4e64a53625
+PODFILE CHECKSUM: 7d45fb141f241ef6f0b30e2f1c5ca2044c7337c9
 
 COCOAPODS: 1.6.0.beta.1

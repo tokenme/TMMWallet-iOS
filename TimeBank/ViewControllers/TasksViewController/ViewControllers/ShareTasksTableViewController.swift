@@ -142,14 +142,14 @@ extension ShareTasksTableViewController {
                 var shareItem: TMMShareItem?
                 if image != nil {
                     let img = image?.kf.resize(to: CGSize(width: 500, height: 500), for: .aspectFit)
-                    shareItem = TMMShareItem(title: task.title, description: task.summary, image: img, link: URL(string:task.shareLink))
+                    shareItem = TMMShareItem(id: task.id, title: task.title, description: task.summary, image: img, link: URL(string:task.shareLink))
                 } else {
-                    shareItem = TMMShareItem(title: task.title, description: task.summary, image: nil, link: URL(string:task.shareLink))
+                    shareItem = TMMShareItem(id: task.id, title: task.title, description: task.summary, image: nil, link: URL(string:task.shareLink))
                 }
                 weakSelf.presentWebVC(task.link, shareItem)
             })
         } else {
-            let shareItem = TMMShareItem(title: task.title, description: task.summary, image: nil, link: URL(string:task.shareLink))
+            let shareItem = TMMShareItem(id: task.id, title: task.title, description: task.summary, image: nil, link: URL(string:task.shareLink))
             presentWebVC(task.link, shareItem)
         }
     }

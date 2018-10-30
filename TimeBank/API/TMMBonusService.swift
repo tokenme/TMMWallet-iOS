@@ -13,6 +13,7 @@ import Hydra
 enum TMMBonusService {
     case dailyStatus()
     case dailyCommit(deviceId: String)
+    case readingBonus(idfa: String, appKey: String, payload: String)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -30,13 +31,15 @@ extension TMMBonusService: TargetType, AccessTokenAuthorizable {
             return "/daily/status"
         case .dailyCommit(_):
             return "/daily/commit"
+        case .readingBonus(_, _, _):
+            return "/reading"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .dailyCommit(_):
+        case .dailyCommit, .readingBonus:
             return .post
-        case .dailyStatus():
+        case .dailyStatus:
             return .get
         }
     }
@@ -47,12 +50,14 @@ extension TMMBonusService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case let .dailyCommit(deviceId):
             return .requestParameters(parameters: ["idfa": deviceId, "platform": APIPlatform.iOS.rawValue], encoding: JSONEncoding.default)
+        case let .readingBonus(idfa, appKey, payload):
+            return .requestParameters(parameters: ["idfa": idfa, "key": appKey, "payload": payload], encoding: JSONEncoding.default)
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .dailyStatus(), .dailyCommit(_):
+        case .dailyStatus, .dailyCommit, .readingBonus:
             return "{}".utf8Encoded
         }
     }
@@ -97,6 +102,30 @@ extension TMMBonusService {
                 case let .success(response):
                     do {
                         let resp = try response.mapObject(APIDailyBonusStatus.self)
+                        if let errorCode = resp.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func saveReadingBonus(idfa: String, appKey: String, payload: String, provider: MoyaProvider<TMMBonusService>) -> Promise<APIReadBonus> {
+        return Promise<APIReadBonus> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .readingBonus(idfa: idfa, appKey: appKey, payload: payload)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APIReadBonus.self)
                         if let errorCode = resp.code {
                             reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
                         } else {

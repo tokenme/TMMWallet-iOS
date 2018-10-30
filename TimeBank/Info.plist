@@ -92,7 +92,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>24</string>
+	<string>25</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -168,7 +168,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>是否允许此App访问你的日历？</string>
 	<key>NSCameraUsageDescription</key>
-	<string>是否允许此App访问你的相机？</string>
+	<string>该功能允许我们使用您的相机，以便您可以用相机扫描二维码图片。</string>
 	<key>NSContactsUsageDescription</key>
 	<string>是否允许此App访问你的通讯录？</string>
 	<key>NSFaceIDUsageDescription</key>
@@ -192,9 +192,9 @@
 	<key>NSMotionUsageDescription</key>
 	<string>是否允许此App访问你的运动与健身？</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>是否允许此App访问并使用你的相册？</string>
+	<string>该功能允许我们访问您的相册，以便您保存转账二维码到相册中。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>是否允许此App访问你的相册？</string>
+	<string>该功能允许我们访问您的相册，以便您在扫描转账二维码时可以选择保存在相册中的二维码图片。</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>是否允许此App访问你的提醒事项？</string>
 	<key>TMMMaxSchemeQuery</key>

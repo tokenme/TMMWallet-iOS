@@ -112,6 +112,10 @@
 		1D31FC9C218702780014712B /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC962186F1050014712B /* libXG-SDK.a */; };
 		1D31FC9D218702780014712B /* libxgidfa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC972186F1050014712B /* libxgidfa.a */; };
 		1D31FC9E2187028E0014712B /* libmtasdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D31FC842186E5E10014712B /* libmtasdk.a */; };
+		1D31FCA1218826750014712B /* JSDOMParser.js in Resources */ = {isa = PBXBuildFile; fileRef = 1D31FCA0218826750014712B /* JSDOMParser.js */; };
+		1D31FCA3218826AF0014712B /* Readability.js in Resources */ = {isa = PBXBuildFile; fileRef = 1D31FCA2218826AF0014712B /* Readability.js */; };
+		1D31FCA921882AE10014712B /* WordCounter.js in Resources */ = {isa = PBXBuildFile; fileRef = 1D31FCA821882AE10014712B /* WordCounter.js */; };
+		1D31FCAB21884D540014712B /* APIReadBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FCAA21884D540014712B /* APIReadBonus.swift */; };
 		1D3441AB213CF39600B8E157 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441AA213CF39600B8E157 /* TasksViewController.swift */; };
 		1D3441BB213CF61400B8E157 /* RNCountDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */; };
 		1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3441BE213CF68500B8E157 /* LoginViewController.swift */; };
@@ -309,6 +313,10 @@
 		1D31FC962186F1050014712B /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "TimeBank/Dependencies/XG/libXG-SDK.a"; sourceTree = SOURCE_ROOT; };
 		1D31FC972186F1050014712B /* libxgidfa.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libxgidfa.a; path = TimeBank/Dependencies/XG/libxgidfa.a; sourceTree = SOURCE_ROOT; };
 		1D31FC992186F6B80014712B /* XGPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XGPush.h; path = TimeBank/Dependencies/XG/XGPush.h; sourceTree = SOURCE_ROOT; };
+		1D31FCA0218826750014712B /* JSDOMParser.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = JSDOMParser.js; sourceTree = "<group>"; };
+		1D31FCA2218826AF0014712B /* Readability.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Readability.js; sourceTree = "<group>"; };
+		1D31FCA821882AE10014712B /* WordCounter.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = WordCounter.js; sourceTree = "<group>"; };
+		1D31FCAA21884D540014712B /* APIReadBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIReadBonus.swift; sourceTree = "<group>"; };
 		1D3441AA213CF39600B8E157 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		1D3441AD213CF49600B8E157 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCountDownButton.swift; sourceTree = "<group>"; };
@@ -440,6 +448,7 @@
 			children = (
 				1D0370E5216B59CF00E5E3CE /* TMMWebViewController.swift */,
 				1D0370E7216B5C2F00E5E3CE /* TMMShareItem.swift */,
+				1D31FC9F218826490014712B /* js */,
 			);
 			path = TMMWebViewController;
 			sourceTree = "<group>";
@@ -703,6 +712,16 @@
 			path = XG;
 			sourceTree = "<group>";
 		};
+		1D31FC9F218826490014712B /* js */ = {
+			isa = PBXGroup;
+			children = (
+				1D31FCA0218826750014712B /* JSDOMParser.js */,
+				1D31FCA2218826AF0014712B /* Readability.js */,
+				1D31FCA821882AE10014712B /* WordCounter.js */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
 		1D3441A7213CF17400B8E157 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,6 +797,7 @@
 				1D151E6E213D3161007C87DD /* APIDevice.swift */,
 				1D151E7A213D5DBA007C87DD /* APIApp.swift */,
 				1D151EB8213E734D007C87DD /* APIShareTask.swift */,
+				1D31FCAA21884D540014712B /* APIReadBonus.swift */,
 				1D151EC8213F8CE2007C87DD /* APIAppTask.swift */,
 				1D1D6FA42140F2270001ED49 /* APITaskRecord.swift */,
 				1D1D6FB2214129B00001ED49 /* APIExchangeRate.swift */,
@@ -1050,7 +1070,9 @@
 				1D151E94213E2FCA007C87DD /* LoadingTableViewCell.xib in Resources */,
 				1D151E9C213E392C007C87DD /* SDKAppTableViewCell.xib in Resources */,
 				1DEC5456215121BF007A46D5 /* Localizable.strings in Resources */,
+				1D31FCA3218826AF0014712B /* Readability.js in Resources */,
 				1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */,
+				1D31FCA921882AE10014712B /* WordCounter.js in Resources */,
 				1D1D6FD72148CB1B0001ED49 /* TransactionTableViewCell.xib in Resources */,
 				1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */,
 				1D31FC67217A03D40014712B /* BlowupBidTableViewCell.xib in Resources */,
@@ -1068,6 +1090,7 @@
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
+				1D31FCA1218826750014712B /* JSDOMParser.js in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
@@ -1154,6 +1177,7 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/MKRingProgressView/MKRingProgressView.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1165,7 +1189,6 @@
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
 				"${BUILT_PRODUCTS_DIR}/Schedule/Schedule.framework",
-				"${BUILT_PRODUCTS_DIR}/ShadowView/ShadowView.framework",
 				"${BUILT_PRODUCTS_DIR}/Siren/Siren.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -1196,6 +1219,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MKRingProgressView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1207,7 +1231,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Schedule.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ShadowView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siren.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -1346,6 +1369,7 @@
 				1D1D6FE9214D26C30001ED49 /* APIMinETH.swift in Sources */,
 				1D31FC5D217993180014712B /* ShareTaskTableViewCell.swift in Sources */,
 				1D3441C7213CF74800B8E157 /* TMMBaseService.swift in Sources */,
+				1D31FCAB21884D540014712B /* APIReadBonus.swift in Sources */,
 				1D3441F1213CFBA300B8E157 /* TweeAttributedTextField.swift in Sources */,
 				1D36D9A1213CED5E0002EDBF /* WalletViewController.swift in Sources */,
 				1D1D6FE0214A7C760001ED49 /* TransferTableViewController.swift in Sources */,
@@ -1566,9 +1590,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/mta-ios-stats-sdk-2.5.0/sdk",
-					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk",
-					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk/idfa",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/XG",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA",
 				);
@@ -1613,8 +1634,6 @@
 					"\"Reusable\"",
 					"-framework",
 					"\"Schedule\"",
-					"-framework",
-					"\"ShadowView\"",
 					"-framework",
 					"\"SwiftyUserDefaults\"",
 					"-framework",
@@ -1657,9 +1676,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/mta-ios-stats-sdk-2.5.0/sdk",
-					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk",
-					"$(PROJECT_DIR)/Xg-Push-SDK-iOS-3.2.1/demo/sdk/idfa",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/XG",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA",
 				);
@@ -1704,8 +1720,6 @@
 					"\"Reusable\"",
 					"-framework",
 					"\"Schedule\"",
-					"-framework",
-					"\"ShadowView\"",
 					"-framework",
 					"\"SwiftyUserDefaults\"",
 					"-framework",

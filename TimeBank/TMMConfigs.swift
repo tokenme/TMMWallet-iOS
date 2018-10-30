@@ -81,6 +81,10 @@ struct TMMConfigs {
         static let accessId: UInt32 = 2200315653
         static let accessKey = "I1ZKJ4D22E7R"
     }
+    
+    static let defaultReadSpeed: Int = 500
+    
+    static let defaultPointsPerTs: NSDecimalNumber = 0.1
 }
 
 enum TrackEvent: String {

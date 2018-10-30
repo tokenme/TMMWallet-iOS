@@ -8,19 +8,152 @@
 
 import UIKit
 import WebKit
+import Moya
+import Hydra
 import ZHRefresh
 import Presentr
+import SnapKit
+import DynamicBlurView
+import Schedule
+import MKRingProgressView
+import TMMSDK
+
+fileprivate let DefaultSleepTime: Double = 30
 
 class TMMWebViewController: UIViewController {
     
     lazy private var webView: WKWebView = {
+        let wkController = WKUserContentController()
+        wkController.add(self, name: "TMMWordCounter")
+        wkController.addUserScript(self.injectJS())
         let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.userContentController = wkController
         let tmpWebView = WKWebView(frame: .zero, configuration: webConfiguration)
         tmpWebView.uiDelegate = self
         tmpWebView.navigationDelegate = self
+        tmpWebView.scrollView.delegate = self
         self.view = tmpWebView
         return tmpWebView
     }()
+    
+    lazy private var toolbarView: DynamicBlurView = {
+        let blurOverlay = DynamicBlurView()
+        blurOverlay.blurRatio = 0.5
+        blurOverlay.trackingMode = .common
+        blurOverlay.isUserInteractionEnabled = true
+        self.view.addSubview(blurOverlay)
+        blurOverlay.snp.remakeConstraints { (maker) -> Void in
+            maker.trailing.equalToSuperview()
+            maker.leading.equalToSuperview()
+            maker.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-8)
+        }
+        approximatePointsLabel.font = UIFont.systemFont(ofSize: 12)
+        approximatePointsLabel.backgroundColor = UIColor(white: 0.98, alpha: 1)
+        approximatePointsLabel.paddingTop = 4
+        approximatePointsLabel.paddingBottom = 4
+        approximatePointsLabel.paddingLeft = 16
+        approximatePointsLabel.paddingRight = 16
+        approximatePointsLabel.layer.cornerRadius = 5
+        approximatePointsLabel.layer.borderWidth = 0
+        approximatePointsLabel.clipsToBounds = true
+        blurOverlay.addSubview(approximatePointsLabel)
+        approximatePointsLabel.snp.remakeConstraints { (maker) -> Void in
+            maker.trailing.equalToSuperview().offset(-16)
+            maker.leading.equalToSuperview().offset(16)
+            maker.top.equalToSuperview().offset(8)
+        }
+        let stackView = UIStackView()
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 16.0
+        blurOverlay.addSubview(stackView)
+        stackView.snp.remakeConstraints { (maker) -> Void in
+            maker.trailing.equalToSuperview().offset(-16)
+            maker.leading.equalToSuperview().offset(16)
+            maker.top.equalTo(approximatePointsLabel.snp.bottom).offset(8)
+            maker.bottom.equalToSuperview().offset(-8)
+        }
+        let shareButton = UIButton(type: .custom)
+        shareButton.backgroundColor = .greenGrass
+        shareButton.layer.cornerRadius = 10.0
+        shareButton.layer.borderWidth = 0.0
+        shareButton.layer.shadowOffset =  CGSize(width: 0, height: 0)
+        shareButton.layer.shadowOpacity = 0.42
+        shareButton.layer.shadowRadius = 2
+        shareButton.layer.shadowColor = UIColor.black.cgColor
+        shareButton.setTitleColor(.white, for: .normal)
+        shareButton.setTitle(I18n.shareEarnPoints.description, for: .normal)
+        shareButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        shareButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        shareButton.addTarget(self, action: #selector(showShareSheet), for: .touchUpInside)
+        stackView.addArrangedSubview(shareButton)
+        
+        timerProgressView.startColor = .red
+        timerProgressView.endColor = .magenta
+        timerProgressView.ringWidth = 10
+        timerProgressView.progress = 0.0
+        stackView.addArrangedSubview(timerProgressView)
+        timerProgressView.snp.remakeConstraints { (maker) -> Void in
+            maker.width.equalTo(40)
+            maker.height.equalTo(40)
+        }
+        
+        pointsLabel.font = MainFont.bold.with(size: 14)
+        pointsLabel.textColor = .white
+        pointsLabel.backgroundColor = UIColor.redish
+        pointsLabel.textAlignment = .center
+        pointsLabel.paddingTop = 4
+        pointsLabel.paddingBottom = 4
+        pointsLabel.paddingLeft = 16
+        pointsLabel.paddingRight = 16
+        pointsLabel.layer.cornerRadius = 10
+        pointsLabel.layer.borderWidth = 0
+        pointsLabel.clipsToBounds = true
+        stackView.addArrangedSubview(pointsLabel)
+        return blurOverlay
+    }()
+    
+    private let approximatePointsLabel: UILabelPadding = UILabelPadding()
+    private let pointsLabel: UILabelPadding = UILabelPadding()
+    
+    private var readTime: Int = 0 {
+        didSet {
+            let points = NSDecimalNumber(integerLiteral: readTime) * TMMConfigs.defaultPointsPerTs
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 4
+            formatter.groupingSeparator = "";
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            let formattedPoints = formatter.string(from: points)!
+            DispatchQueue.main.async {
+                self.approximatePointsLabel.text = String(format: I18n.approximateTime.description, self.readTime.timeSpan(), formattedPoints)
+            }
+        }
+    }
+    
+    private var timer: Schedule.Task?
+    private let timerProgressView: RingProgressView = RingProgressView(frame: CGRect.zero)
+    
+    private var lastTime: Date = Date()
+    private var lastScrollTime: Date = Date()
+    private var duration: Double = 0 {
+        didSet {
+            let points = NSDecimalNumber(decimal: Decimal(duration)) * TMMConfigs.defaultPointsPerTs
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 4
+            formatter.minimumFractionDigits = 4
+            formatter.groupingSeparator = "";
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            let formattedPoints = formatter.string(from: points)!
+            DispatchQueue.main.async {
+                self.pointsLabel.text = formattedPoints
+                UIView.animate(withDuration: 0.5) {[weak self] in
+                    guard let weakSelf = self else { return }
+                    weakSelf.timerProgressView.progress = weakSelf.duration / Double(weakSelf.readTime)
+                }
+            }
+        }
+    }
     
     lazy private var shareSheetItems: [SSUIPlatformItem] = {
         var items:[SSUIPlatformItem] = []
@@ -127,6 +260,18 @@ class TMMWebViewController: UIViewController {
         return presenter
     }()
     
+    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    
+    deinit {
+        timer?.cancel()
+        webView.stopLoading()
+        webView.uiDelegate = nil
+        webView.navigationDelegate = nil
+        webView.scrollView.delegate = nil
+        webView.configuration.removeObserver(self, forKeyPath: "TMMWordCounter")
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let navigationController = self.navigationController {
@@ -137,10 +282,17 @@ class TMMWebViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
+            self.tabBarController?.tabBar.isHidden = true
             if self.shareItem != nil {
                 let shareBtn: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share")?.kf.resize(to: CGSize(width: 24, height: 24), for: .aspectFit), style: .plain, target: self, action: #selector(showShareSheet))
                 navigationItem.rightBarButtonItem = shareBtn
                 navigationItem.title = shareItem?.title
+                toolbarView.setNeedsDisplay()
+                self.updateTimer()
+                self.timer = Plan.every(0.5.seconds).do(queue: .global()) {[weak self] in
+                    guard let weakSelf = self else { return }
+                    weakSelf.updateTimer()
+                }
             }
         }
     }
@@ -166,6 +318,8 @@ class TMMWebViewController: UIViewController {
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         webView.removeObserver(self, forKeyPath: "estimatedProgress")
+        self.savePoints()
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -207,6 +361,13 @@ class TMMWebViewController: UIViewController {
         webView.load(request)
     }
     
+    private func injectJS() -> WKUserScript {
+        let jsDomParser = try! String(contentsOfFile: (Bundle.main.path(forResource: "JSDOMParser", ofType: "js"))!)
+        let readability = try! String(contentsOfFile: (Bundle.main.path(forResource: "Readability", ofType: "js"))!)
+        let wordCounter = try! String(contentsOfFile: (Bundle.main.path(forResource: "WordCounter", ofType: "js"))!)
+        return WKUserScript(source: "\(jsDomParser)\n\(readability)\n\(wordCounter)", injectionTime: WKUserScriptInjectionTime.atDocumentEnd, forMainFrameOnly: true)
+    }
+    
     override public func loadView() {
         guard let req = request else { return }
         loadRequest(req)
@@ -219,12 +380,6 @@ class TMMWebViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    deinit {
-        webView.stopLoading()
-        webView.uiDelegate = nil;
-        webView.navigationDelegate = nil;
     }
     
     @objc func showShareSheet() {
@@ -421,6 +576,66 @@ extension TMMWebViewController: WKNavigationDelegate {
             }
         } else {
             completionHandler(.cancelAuthenticationChallenge, nil)
+        }
+    }
+}
+
+extension TMMWebViewController: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if let msg = message.body as? [AnyHashable: Any] {
+            var totalTs: Int = 0
+            if let imageTs = msg["imgTS"] as? Int {
+                totalTs += imageTs
+            }
+            if let length = msg["length"] as? Int {
+                totalTs += length * 60 / TMMConfigs.defaultReadSpeed
+            }
+            self.readTime = totalTs
+        }
+    }
+}
+
+extension TMMWebViewController: UIScrollViewDelegate {
+    private func updateTimer() {
+        let now = Date()
+        let du = now.timeIntervalSince1970 - self.lastTime.timeIntervalSince1970
+        if du >= DefaultSleepTime {
+            self.duration += DefaultSleepTime
+        } else {
+            self.duration += du
+        }
+        self.lastTime = now
+        
+        let scrollDu = now.timeIntervalSince1970 - self.lastScrollTime.timeIntervalSince1970
+        if scrollDu < DefaultSleepTime {
+            self.timer?.resume()
+        } else {
+            self.timer?.suspend()
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.lastScrollTime = Date()
+        if let suspensions = self.timer?.suspensions, suspensions > 0 {
+            self.lastTime = Date()
+        }
+        self.timer?.resume()
+    }
+    
+    private func savePoints() {
+        guard let bonus = APIReadBonus(),
+            let taskId = self.shareItem?.id,
+            let idfa = TMMBeacon.shareInstance()?.deviceId()
+        else { return }
+        bonus.taskId = taskId
+        bonus.points = NSDecimalNumber(decimal: Decimal(duration)) * TMMConfigs.defaultPointsPerTs
+        bonus.duration = Int64(duration.rounded())
+        bonus.ts = Int64(Date().timeIntervalSince1970)
+        guard let payload = bonus.toJSONString()?.desEncrypt(withKey: TMMConfigs.TMMBeacon.secret) else { return }
+        TMMBonusService.saveReadingBonus(idfa: idfa, appKey: TMMConfigs.TMMBeacon.key, payload: payload, provider: self.bonusServiceProvider).catch { error in
+            #if DEBUG
+            print(error.localizedDescription)
+            #endif
         }
     }
 }

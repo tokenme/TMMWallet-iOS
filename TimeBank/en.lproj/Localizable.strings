@@ -165,6 +165,8 @@
 "Viewers" = "Viewers";
 "BonusPoint" = "Give Out";
 "PointsLeft" = "Points Left";
+"ShareEarnPoints" = "Share to get Points";
+"ApproximateTime" = "Approximate %@ to read，get %@ Points bonus";
 
 // Account
 "Account" = "Account";

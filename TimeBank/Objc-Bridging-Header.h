@@ -20,5 +20,6 @@
 #import "MTAConfig.h"
 #import "XGPush.h"
 #import "DetectApp.h"
+#import "NSString+Encrypt.h"
 
 #endif /* Objc_Bridging_Header_h */

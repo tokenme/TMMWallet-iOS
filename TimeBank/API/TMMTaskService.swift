@@ -106,6 +106,7 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
         }
     }
+    
     var sampleData: Data {
         switch self {
         case .shares(_, _, _, _), .apps(_, _, _, _), .appsCheck(_), .records(_, _):

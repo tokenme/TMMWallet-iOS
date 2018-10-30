@@ -165,6 +165,8 @@
 "Viewers" = "浏览人数";
 "BonusPoint" = "已奖励积分";
 "PointsLeft" = "剩余积分";
+"ShareEarnPoints" = "分享赚积分";
+"ApproximateTime" = "全文阅读 %@，预计获得 %@ 积分";
 
 // Account
 "Account" = "账户";

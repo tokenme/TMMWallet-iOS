@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double ShadowViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char ShadowViewVersionString[];
+FOUNDATION_EXPORT double MKRingProgressViewVersionNumber;
+FOUNDATION_EXPORT const unsigned char MKRingProgressViewVersionString[];
 
