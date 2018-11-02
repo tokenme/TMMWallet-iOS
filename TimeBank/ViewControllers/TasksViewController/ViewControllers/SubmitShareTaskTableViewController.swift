@@ -13,7 +13,8 @@ import Hydra
 import Kingfisher
 import Presentr
 import TMMSDK
-import PhotoSolution
+import Photos
+import AssetsPickerViewController
 import Qiniu
 
 class SubmitShareTaskTableViewController: UITableViewController {
@@ -39,7 +40,11 @@ class SubmitShareTaskTableViewController: UITableViewController {
         return presenter
     }()
     
-    private let photoSolution = PhotoSolution()
+    private let photoSolution = AssetsPickerViewController()
+    
+    lazy var imageManager = {
+        return PHCachingImageManager()
+    }()
     
     public var task: APIShareTask?
     
@@ -151,11 +156,24 @@ class SubmitShareTaskTableViewController: UITableViewController {
     }
     
     private func setupPhotoSolution() {
-        photoSolution.delegate = self
+        let pickerConfig = AssetsPickerConfig()
+        pickerConfig.albumIsShowHiddenAlbum = true
+        
+        let options = PHFetchOptions()
+        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+        
+        pickerConfig.assetFetchOptions = [
+            .smartAlbum: options,
+            .album: options
+        ]
+        
+        photoSolution.pickerConfig = pickerConfig
+        
+        photoSolution.pickerDelegate = self
     }
     
     @IBAction private func selectImage() {
-        self.present(photoSolution.getPhotoPicker(maxPhotos: 1), animated: true, completion: nil)
+        self.present(photoSolution, animated: true, completion: nil)
     }
 }
 
@@ -321,25 +339,44 @@ extension SubmitShareTaskTableViewController {
     }
 }
 
-extension SubmitShareTaskTableViewController: PhotoSolutionDelegate{
-    func returnImages(_ images: [UIImage]) {
-        let width = images[0].size.width
-        let height = images[0].size.height
+extension SubmitShareTaskTableViewController: AssetsPickerViewControllerDelegate{
+    func assetsPicker(controller: AssetsPickerViewController, selected assets: [PHAsset]) {
+        let asset = assets[0]
+        let width = asset.pixelWidth
+        let height = asset.pixelHeight
         var w = width
         var h = height
+        var scaleW = w
+        var scaleH = h
         if width > height {
             w = 500
             h = w * height / width
+            scaleW = 63
+            scaleH = scaleW * height / width
         } else {
             h = 500
             w = h * width / height
+            scaleH = 63
+            scaleW = scaleH * width / height
         }
-        self.selectedImage = images[0].kf .resize(to: CGSize(width: w, height: h))
-        let img = images[0].kf.resize(to: CGSize(width: 63, height: 63))
-        imageButton.setImage(img, for: .normal)
+        imageManager.requestImage(for: asset, targetSize: CGSize(width: w, height: h), contentMode: .aspectFill, options: nil) {[weak self] (image, info) in
+            guard let weakSelf = self else { return }
+            weakSelf.selectedImage = image
+            let img = image?.kf.resize(to: CGSize(width: scaleW, height: scaleH))
+            weakSelf.imageButton.contentMode = .scaleAspectFit
+            weakSelf.imageButton.setImage(img, for: .normal)
+        }
     }
     
-    func pickerCancel() {
-        // when user cancel
+    func assetsPicker(controller: AssetsPickerViewController, shouldSelect asset: PHAsset, at indexPath: IndexPath) -> Bool {
+        // can limit selection count
+        if controller.selectedAssets.count > 0 {
+            return false
+        }
+        return true
+    }
+    
+    func assetsPicker(controller: AssetsPickerViewController, shouldDeselect asset: PHAsset, at indexPath: IndexPath) -> Bool {
+        return true
     }
 }

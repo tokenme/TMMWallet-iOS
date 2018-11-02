@@ -22,27 +22,27 @@ fileprivate let DefaultSleepTime: Double = 30
 
 class TMMWebViewController: UIViewController {
     
-    lazy private var webView: WKWebView = {
+    lazy private var webView: WKWebView = {[weak self] in
         let wkController = WKUserContentController()
-        wkController.add(self, name: "TMMWordCounter")
-        wkController.addUserScript(self.injectJS())
+        wkController.add(TMMWebViewLeakAvoider(delegate: self!), name: "TMMWordCounter")
+        wkController.addUserScript(self!.injectJS())
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = wkController
         let tmpWebView = WKWebView(frame: .zero, configuration: webConfiguration)
         tmpWebView.uiDelegate = self
         tmpWebView.navigationDelegate = self
         tmpWebView.scrollView.delegate = self
-        self.view = tmpWebView
+        self?.view = tmpWebView
         return tmpWebView
     }()
     
-    lazy private var toolbarView: DynamicBlurView = {
+    lazy private var toolbarView: DynamicBlurView = {[weak self] in
         let blurOverlay = DynamicBlurView()
         blurOverlay.blurRatio = 0.5
         blurOverlay.trackingMode = .common
         blurOverlay.isUserInteractionEnabled = true
-        self.view.addSubview(blurOverlay)
-        blurOverlay.snp.remakeConstraints { (maker) -> Void in
+        self?.view.addSubview(blurOverlay)
+        blurOverlay.snp.remakeConstraints {[weak self] (maker) -> Void in
             maker.trailing.equalToSuperview()
             maker.leading.equalToSuperview()
             maker.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-8)
@@ -68,7 +68,7 @@ class TMMWebViewController: UIViewController {
         stackView.distribution = .fillProportionally
         stackView.spacing = 16.0
         blurOverlay.addSubview(stackView)
-        stackView.snp.remakeConstraints { (maker) -> Void in
+        stackView.snp.remakeConstraints {[weak self] (maker) -> Void in
             maker.trailing.equalToSuperview().offset(-16)
             maker.leading.equalToSuperview().offset(16)
             maker.top.equalTo(approximatePointsLabel.snp.bottom).offset(8)
@@ -119,14 +119,14 @@ class TMMWebViewController: UIViewController {
     
     private var readTime: Int = 0 {
         didSet {
-            let points = NSDecimalNumber(integerLiteral: readTime) * TMMConfigs.defaultPointsPerTs
+            let points = NSDecimalNumber(integerLiteral: self.readTime) * TMMConfigs.defaultPointsPerTs
             let formatter = NumberFormatter()
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
             let formattedPoints = formatter.string(from: points)!
-            DispatchQueue.main.async {
-                self.approximatePointsLabel.text = String(format: I18n.approximateTime.description, self.readTime.timeSpan(), formattedPoints)
+            DispatchQueue.main.async {[weak self] in
+                self!.approximatePointsLabel.text = String(format: I18n.approximateTime.description, self!.readTime.timeSpan(), formattedPoints)
             }
         }
     }
@@ -145,8 +145,8 @@ class TMMWebViewController: UIViewController {
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
             let formattedPoints = formatter.string(from: points)!
-            DispatchQueue.main.async {
-                self.pointsLabel.text = formattedPoints
+            DispatchQueue.main.async {[weak self] in
+                self?.pointsLabel.text = formattedPoints
                 UIView.animate(withDuration: 0.5) {[weak self] in
                     guard let weakSelf = self else { return }
                     weakSelf.timerProgressView.progress = weakSelf.duration / Double(weakSelf.readTime)
@@ -155,7 +155,7 @@ class TMMWebViewController: UIViewController {
         }
     }
     
-    lazy private var shareSheetItems: [SSUIPlatformItem] = {
+    lazy private var shareSheetItems: [SSUIPlatformItem] = {[weak self] in
         var items:[SSUIPlatformItem] = []
         for scheme in TMMConfigs.WeChat.schemes {
             guard let url = URL(string: "\(scheme)://") else { continue}
@@ -263,12 +263,6 @@ class TMMWebViewController: UIViewController {
     private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
-        timer?.cancel()
-        webView.stopLoading()
-        webView.uiDelegate = nil
-        webView.navigationDelegate = nil
-        webView.scrollView.delegate = nil
-        webView.configuration.removeObserver(self, forKeyPath: "TMMWordCounter")
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -282,7 +276,6 @@ class TMMWebViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
-            self.tabBarController?.tabBar.isHidden = true
             if self.shareItem != nil {
                 let shareBtn: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share")?.kf.resize(to: CGSize(width: 24, height: 24), for: .aspectFit), style: .plain, target: self, action: #selector(showShareSheet))
                 navigationItem.rightBarButtonItem = shareBtn
@@ -295,6 +288,12 @@ class TMMWebViewController: UIViewController {
                 }
             }
         }
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+        webView.scrollView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.webView.reload()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -307,19 +306,24 @@ class TMMWebViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
-        
-        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
-        webView.scrollView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.webView.reload()
-        }
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        webView.removeObserver(self, forKeyPath: "estimatedProgress")
         self.savePoints()
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer?.cancel()
+        webView.stopLoading()
+        webView.uiDelegate = nil
+        webView.navigationDelegate = nil
+        webView.scrollView.delegate = nil
+        webView.removeObserver(self, forKeyPath: "estimatedProgress")
+        webView.configuration.userContentController.removeAllUserScripts()
     }
     
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

@@ -1,5 +1,12 @@
 PODS:
   - Alamofire (4.7.3)
+  - AssetsPickerViewController (2.5.2):
+    - Device
+    - Dimmer
+    - FadeView
+    - SnapKit
+    - SwiftARGB
+    - TinyLog
   - AutoInsetter (1.3.0)
   - BiometricAuthentication (2.1)
   - BTNavigationDropdownMenu (0.5)
@@ -7,9 +14,16 @@ PODS:
     - Charts/Core (= 3.2.0)
   - Charts/Core (3.2.0)
   - CountryPickerView (2.1.1)
+  - Device (3.1.2)
+  - Dimmer (2.0.3):
+    - FadeView (~> 2.0)
+    - PureLayout
+    - TinyLog (~> 2.0)
+    - UIViewKVO (~> 2.0)
   - DropDown (2.3.6)
   - DynamicBlurView (3.0.1)
   - EmptyDataSet-Swift (4.2.0)
+  - FadeView (2.0.0)
   - FlexibleSteppedProgressBar (0.5.1)
   - GrandTime (1.3.0)
   - HappyDNS (0.3.14)
@@ -70,8 +84,8 @@ PODS:
   - PhoneNumberKit/PhoneNumberKitCore (2.1.0)
   - PhoneNumberKit/UIKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore
-  - PhotoSolution (1.0.2)
   - Presentr (1.3.2)
+  - PureLayout (3.1.2)
   - Qiniu (7.2.5):
     - HappyDNS (~> 0.3)
   - Result (3.2.4)
@@ -84,6 +98,7 @@ PODS:
   - Siren (3.7.1)
   - SkeletonView (1.4.1)
   - SnapKit (4.0.1)
+  - SwiftARGB (2.0.0)
   - SwiftRater (1.3.0)
   - swiftScan (1.1.7)
   - SwiftyUserDefaults (4.0.0-alpha.1)
@@ -91,11 +106,14 @@ PODS:
   - Tabman (1.10.0):
     - AutoInsetter (~> 1.3.0)
     - Pageboy (~> 2.6.0)
+  - TinyLog (2.0.7)
   - TMMSDK (0.5.0)
+  - UIViewKVO (2.0.0)
   - ViewAnimator (2.2.0)
   - ZHRefresh (0.2.1)
 
 DEPENDENCIES:
+  - AssetsPickerViewController (from `https://github.com/DragonCherry/AssetsPickerViewController.git`, tag `2.5.2`)
   - BiometricAuthentication
   - BTNavigationDropdownMenu
   - Charts
@@ -127,7 +145,6 @@ DEPENDENCIES:
   - ObjectMapper
   - Pastel (from `https://github.com/cruisediary/Pastel.git`, tag `0.5.1`)
   - PhoneNumberKit
-  - PhotoSolution (~> 1.0.2)
   - Presentr
   - Qiniu
   - Reusable
@@ -152,9 +169,12 @@ SPEC REPOS:
     - BTNavigationDropdownMenu
     - Charts
     - CountryPickerView
+    - Device
+    - Dimmer
     - DropDown
     - DynamicBlurView
     - EmptyDataSet-Swift
+    - FadeView
     - GrandTime
     - HappyDNS
     - HydraAsync
@@ -169,21 +189,27 @@ SPEC REPOS:
     - ObjectMapper
     - Pageboy
     - PhoneNumberKit
-    - PhotoSolution
     - Presentr
+    - PureLayout
     - Qiniu
     - Result
     - Reusable
     - Schedule
     - Siren
     - SnapKit
+    - SwiftARGB
     - SwiftRater
     - SwiftyUserDefaults
     - SwipeCellKit
     - Tabman
+    - TinyLog
+    - UIViewKVO
     - ViewAnimator
 
 EXTERNAL SOURCES:
+  AssetsPickerViewController:
+    :git: https://github.com/DragonCherry/AssetsPickerViewController.git
+    :tag: 2.5.2
   FlexibleSteppedProgressBar:
     :git: https://github.com/tokenme/FlexibleSteppedProgressBar.git
     :tag: 0.5.1
@@ -207,6 +233,9 @@ EXTERNAL SOURCES:
     :tag: 0.2.1
 
 CHECKOUT OPTIONS:
+  AssetsPickerViewController:
+    :git: https://github.com/DragonCherry/AssetsPickerViewController.git
+    :tag: 2.5.2
   FlexibleSteppedProgressBar:
     :git: https://github.com/tokenme/FlexibleSteppedProgressBar.git
     :tag: 0.5.1
@@ -231,14 +260,18 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AssetsPickerViewController: b1dc7c944ccbc1d9790fa718dce21cb5cda35288
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   BiometricAuthentication: 6928c01583bc707f92c11349f190d5ae052217d3
   BTNavigationDropdownMenu: ba3a26fdb6a56c4721c31df8a0875106c259663a
   Charts: 680c8328bd5e90cb14f67e00d2176f3113d19141
   CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
+  Device: 62242076214c30fb5760174b3601cefafa70a481
+  Dimmer: 9908a0003f4882eca1b2e318e11f82d32280794e
   DropDown: e8bfbce001b2e6b7e8abfdd42e12b565712d84f4
   DynamicBlurView: b1df5415f9bd31897549e5d7077e5ec120a4d636
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
+  FadeView: 80197da2fbee5382b178127e8c5f988a35eef018
   FlexibleSteppedProgressBar: 7385d2cfa13265b37327098c2918d4b1fd2f8676
   GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
   HappyDNS: dc6a164ee81979093123c241c6353bcf0218add6
@@ -256,8 +289,8 @@ SPEC CHECKSUMS:
   Pageboy: 1a5535f0d5a321045971cc2ddc6bcb53302392cb
   Pastel: b3dd5b8d612dac06ae7c63c97c45c900829bc139
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
-  PhotoSolution: 699897aa33a6ef56c6a5b9758ade9b941f2663ba
   Presentr: 797ae6ec8904eaba4ec58a4c2065bd66e31569ea
+  PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
   Qiniu: 909b408ee489ea54827e9717be90b94bc9dfbc48
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
@@ -265,15 +298,18 @@ SPEC CHECKSUMS:
   Siren: ccfbb3e0556c5c49817214716a45be6910cacdb4
   SkeletonView: 60d6ce7edb0cb4c7758db33c74add50392b3c475
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SwiftARGB: 8727cfcdcfe8709e707a2391f1d5802a7c40dcad
   SwiftRater: 035512c0c454c83bd4d96b483d8854606aeecccf
   swiftScan: a36a3aa9c8deed9502cbd76d8da47a94f12fbf69
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   SwipeCellKit: d8f2617538ce3021cb0a11d1b93856a06a2f2e20
   Tabman: 1d8fef96c8e12d0f7919c8b5a5e2ed2955ee3cf5
+  TinyLog: 073a9abfd44a944886d5d07aa49cbba5ef192335
   TMMSDK: b34e76aa25c9c83e98e56d4ae581c1eb01d62122
+  UIViewKVO: 091f9e020d69e73c4bf5e5ef61cde7bff1c24bbf
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 7f20f27fc01379734caa27380a9c72d0ee8edbd3
+PODFILE CHECKSUM: 738d2cb224e52f4c6a97314fa2e9a9a988c27a5d
 
 COCOAPODS: 1.6.0.beta.1

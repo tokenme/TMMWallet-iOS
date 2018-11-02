@@ -27,7 +27,7 @@ target 'TimeBank' do
   pod 'Presentr'
   pod 'swiftScan', :git=>'https://github.com/tokenme/swiftScan.git', :tag=>'1.1.7'
   pod 'SwipeCellKit'
-  pod 'PhotoSolution', '~> 1.0.2'
+  pod 'AssetsPickerViewController', :git=>'https://github.com/DragonCherry/AssetsPickerViewController.git', :tag=>'2.5.2'
   pod 'Qiniu'
   pod 'Charts'
   pod 'Siren'

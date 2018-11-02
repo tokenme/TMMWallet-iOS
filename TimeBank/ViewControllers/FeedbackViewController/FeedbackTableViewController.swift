@@ -14,7 +14,8 @@ import Hydra
 import Kingfisher
 import Presentr
 import TMMSDK
-import PhotoSolution
+import Photos
+import AssetsPickerViewController
 
 class FeedbackTableViewController: UITableViewController {
     
@@ -37,7 +38,11 @@ class FeedbackTableViewController: UITableViewController {
         return presenter
     }()
     
-    private let photoSolution = PhotoSolution()
+    private let photoSolution = AssetsPickerViewController()
+    
+    lazy var imageManager = {
+        return PHCachingImageManager()
+    }()
     
     @IBOutlet private weak var descTextView: UITextView!
     @IBOutlet private weak var imageButton: UIButton!
@@ -115,11 +120,24 @@ class FeedbackTableViewController: UITableViewController {
     }
     
     private func setupPhotoSolution() {
-        photoSolution.delegate = self
+        let pickerConfig = AssetsPickerConfig()
+        pickerConfig.albumIsShowHiddenAlbum = true
+        
+        let options = PHFetchOptions()
+        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+        
+        pickerConfig.assetFetchOptions = [
+            .smartAlbum: options,
+            .album: options
+        ]
+        
+        photoSolution.pickerConfig = pickerConfig
+        
+        photoSolution.pickerDelegate = self
     }
     
     @IBAction private func selectImage() {
-        self.present(photoSolution.getPhotoPicker(maxPhotos: 1), animated: true, completion: nil)
+        self.present(photoSolution, animated: true, completion: nil)
     }
     
     @objc private func showMyFeedbacks() {
@@ -258,15 +276,39 @@ extension FeedbackTableViewController {
     }
 }
 
-extension FeedbackTableViewController: PhotoSolutionDelegate{
-    func returnImages(_ images: [UIImage]) {
-        self.selectedImage = images[0].kf.scaled(to: 0.75)
-        let img = images[0].kf.resize(to: CGSize(width: 63, height: 63))
-        imageButton.setImage(img, for: .normal)
+extension FeedbackTableViewController: AssetsPickerViewControllerDelegate{
+    func assetsPicker(controller: AssetsPickerViewController, selected assets: [PHAsset]) {
+        let asset = assets[0]
+        let width = asset.pixelWidth
+        let height = asset.pixelHeight
+        var scaleW = width
+        var scaleH = height
+        if width > height {
+            scaleW = 63
+            scaleH = scaleW * height / width
+        } else {
+            scaleH = 63
+            scaleW = scaleH * width / height
+        }
+        imageManager.requestImage(for: asset, targetSize: CGSize(width: width, height: height), contentMode: .aspectFit, options: nil) {[weak self] (image, info) in
+            guard let weakSelf = self else { return }
+            weakSelf.selectedImage = image?.kf.scaled(to: 0.75)
+            let img = image?.kf.resize(to: CGSize(width: scaleW, height: scaleH))
+            weakSelf.imageButton.contentMode = .scaleAspectFit
+            weakSelf.imageButton.setImage(img, for: .normal)
+        }
     }
     
-    func pickerCancel() {
-        // when user cancel
+    func assetsPicker(controller: AssetsPickerViewController, shouldSelect asset: PHAsset, at indexPath: IndexPath) -> Bool {
+        // can limit selection count
+        if controller.selectedAssets.count > 0 {
+            return false
+        }
+        return true
+    }
+    
+    func assetsPicker(controller: AssetsPickerViewController, shouldDeselect asset: PHAsset, at indexPath: IndexPath) -> Bool {
+        return true
     }
 }
 
