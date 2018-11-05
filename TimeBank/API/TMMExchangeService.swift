@@ -11,6 +11,7 @@ import Hydra
 
 enum TMMExchangeService {
     case tmmRate()
+    case pointsRate()
     case tmmChange(deviceId: String, points: NSDecimalNumber, direction: APIExchangeDirection)
     case records(page: UInt, pageSize: UInt, direction: APIExchangeDirection)
     case redeemCdpRecords(page: UInt, pageSize: UInt)
@@ -29,6 +30,8 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmRate():
             return "/tmm/rate"
+        case .pointsRate():
+            return "/points/rate"
         case .tmmChange(_, _, _):
             return "/tmm/change"
         case .records(_, _, _):
@@ -39,7 +42,7 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
     }
     var method: Moya.Method {
         switch self {
-        case .tmmRate, .records(_, _, _), .redeemCdpRecords(_, _):
+        case .tmmRate, .records(_, _, _), .redeemCdpRecords(_, _), .pointsRate:
             return .get
         case .tmmChange(_, _, _):
             return .post
@@ -48,6 +51,8 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
     var task: Task {
         switch self {
         case .tmmRate():
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .pointsRate():
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case let .tmmChange(deviceId, points, direction):
             return .requestParameters(parameters: ["device_id": deviceId, "points": points, "direction": direction.rawValue], encoding: JSONEncoding.default)
@@ -59,7 +64,7 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
     }
     var sampleData: Data {
         switch self {
-        case .tmmRate(), .tmmChange(_, _, _):
+        case .tmmRate(), .pointsRate(), .tmmChange(_, _, _):
             return "{}".utf8Encoded
         case .records(_, _, _), .redeemCdpRecords(_, _):
             return "[]".utf8Encoded
@@ -77,6 +82,30 @@ extension TMMExchangeService {
         return Promise<APIExchangeRate> (in: .background, { resolve, reject, _ in
             provider.request(
                 .tmmRate()
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APIExchangeRate.self)
+                        if let errorCode = resp.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getPointsRate(provider: MoyaProvider<TMMExchangeService>) -> Promise<APIExchangeRate> {
+        return Promise<APIExchangeRate> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .pointsRate()
             ){ result in
                 switch result {
                 case let .success(response):

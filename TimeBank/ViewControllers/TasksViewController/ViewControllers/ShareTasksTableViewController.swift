@@ -42,12 +42,9 @@ class ShareTasksTableViewController: UITableViewController {
         return presenter
     }()
     
-    public var mineOnly: Bool = false {
-        didSet {
-            self.refresh()
-        }
-    }
+    public var mineOnly: Bool = false
     
+    private var cid: UInt = 0
     private var currentPage: UInt = 1
     
     private var tasks: [APIShareTask] = []
@@ -78,8 +75,16 @@ class ShareTasksTableViewController: UITableViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShareTasksTableViewController") as! ShareTasksTableViewController
     }
     
+    static func instantiate(cid: UInt) -> ShareTasksTableViewController
+    {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShareTasksTableViewController") as! ShareTasksTableViewController
+        vc.cid = cid
+        return vc
+    }
+    
     private func setupTableView() {
         tableView.register(cellType: ShareTaskTableViewCell.self)
+        tableView.register(cellType: ShareTaskSwipableTableViewCell.self)
         tableView.register(cellType: LoadingShareTaskTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -125,8 +130,14 @@ extension ShareTasksTableViewController {
         if mineOnly, let _ = task.creator {
             showStats = true
         }
+        
+        if mineOnly {
+            let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskSwipableTableViewCell
+            cell.delegate = self
+            cell.fill(task, showStats: showStats)
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskTableViewCell
-        cell.delegate = self
         cell.fill(task, showStats: showStats)
         return cell
     }
@@ -335,6 +346,7 @@ extension ShareTasksTableViewController {
         
         TMMTaskService.getShares(
             idfa: TMMBeacon.shareInstance().deviceId(),
+            cid: cid,
             page: currentPage,
             pageSize: DefaultPageSize,
             mineOnly: self.mineOnly,

@@ -167,6 +167,7 @@
 "PointsLeft" = "Points Left";
 "ShareEarnPoints" = "Share to get Points";
 "ApproximateTime" = "Approximate %@ to read，get %@ Points bonus";
+"GetPointsReward" = "Got %@ Points";
 
 // Account
 "Account" = "Account";
@@ -232,3 +233,13 @@
 // Feedback
 "MyFeedbacks" = "My Feedbacks";
 "Operator" = "Operator";
+
+// ArticleCategory
+"SuggestCategory" = "Suggest";
+"SociatyCategory" = "Sociaty";
+"FinanceCategory" = "Finance";
+"FunnyCategory" = "Funny";
+"EntertainmentCategory" = "Entertainment";
+"TechnologyCategory" = "Technology";
+"FashionCategory" = "Fashion";
+"BlockchainCategory" = "Blockchain";

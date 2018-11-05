@@ -1,8 +1,8 @@
 //
-//  ShareTaskTableViewCell.swift
+//  ShareTaskSwipableTableViewCell.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/10/19.
+//  Created by Syd Xu on 2018/11/5.
 //  Copyright © 2018 Tokenmama.io. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import Reusable
 import SnapKit
 import SwipeCellKit
 
-class ShareTaskTableViewCell: UITableViewCell, Reusable {
+class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
     private let imgView = UIImageView()
     private let titleLabel = UILabel()
     private let summaryTextView = UITextView()

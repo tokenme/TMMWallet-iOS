@@ -36,7 +36,14 @@ class TasksViewController: TabmanViewController {
     }()
     
     private let viewControllers = [
-        ShareTasksTableViewController.instantiate(),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.suggest.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.sociaty.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.finance.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.funny.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.entertainment.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.technology.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.fashion.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.blockchain.rawValue),
         BlowupViewController.instantiate()
     ]
     
@@ -72,22 +79,27 @@ class TasksViewController: TabmanViewController {
             menuView.didSelectItemAtIndexHandler = {[weak self] (indexPath: Int) -> () in
                 guard let weakSelf = self else { return }
                 let mineOnly = indexPath == 1
-                for vc in weakSelf.viewControllers {
-                    if vc.isMember(of: AppTasksTableViewController.self) {
-                        (vc as? AppTasksTableViewController)?.mineOnly = mineOnly
-                    } else if vc.isMember(of: ShareTasksTableViewController.self) {
-                        (vc as? ShareTasksTableViewController)?.mineOnly = mineOnly
-                    }
+                if mineOnly {
+                    let vc = ShareTasksTableViewController.instantiate()
+                    vc.mineOnly = mineOnly
+                    weakSelf.navigationController?.pushViewController(vc, animated: true)
                 }
             }
         }
         
         // configure the bar
         self.bar.items = [
-            Item(title: I18n.shareTasks.description),
+            Item(title: APIArticleCategory.suggest.description),
+            Item(title: APIArticleCategory.sociaty.description),
+            Item(title: APIArticleCategory.finance.description),
+            Item(title: APIArticleCategory.funny.description),
+            Item(title: APIArticleCategory.entertainment.description),
+            Item(title: APIArticleCategory.technology.description),
+            Item(title: APIArticleCategory.fashion.description),
+            Item(title: APIArticleCategory.blockchain.description),
             Item(title: I18n.blowupGame.description)
         ]
-        self.bar.style = .buttonBar
+        self.bar.style = .scrollingButtonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self
     }

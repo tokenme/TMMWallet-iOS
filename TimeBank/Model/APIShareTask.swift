@@ -9,6 +9,30 @@
 import Foundation
 import ObjectMapper
 
+enum APIArticleCategory: UInt {
+    case suggest = 0
+    case sociaty = 1
+    case finance = 2
+    case funny = 3
+    case entertainment = 4
+    case technology = 5
+    case fashion = 6
+    case blockchain = 7
+    
+    var description: String {
+        switch self {
+        case .suggest: return NSLocalizedString("SuggestCategory", comment: "SuggestCategory")
+        case .sociaty: return NSLocalizedString("SociatyCategory", comment: "SociatyCategory")
+        case .finance: return NSLocalizedString("FinanceCategory", comment: "FinanceCategory")
+        case .funny: return NSLocalizedString("FunnyCategory", comment: "FunnyCategory")
+        case .entertainment: return NSLocalizedString("EntertainmentCategory", comment: "EntertainmentCategory")
+        case .technology: return NSLocalizedString("TechnologyCategory", comment: "TechnologyCategory")
+        case .fashion: return NSLocalizedString("FashionCategory", comment: "FashionCategory")
+        case .blockchain: return NSLocalizedString("BlockchainCategory", comment: "BlockchainCategory")
+        }
+    }
+}
+
 enum APITaskOnlineStatus: Int8 {
     case canceled = -2
     case stopped = -1

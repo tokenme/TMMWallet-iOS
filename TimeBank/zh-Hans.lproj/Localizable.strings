@@ -167,6 +167,7 @@
 "PointsLeft" = "剩余积分";
 "ShareEarnPoints" = "分享赚积分";
 "ApproximateTime" = "全文阅读 %@，预计获得 %@ 积分";
+"GetPointsReward" = "赚 %@ 积分";
 
 // Account
 "Account" = "账户";
@@ -232,3 +233,13 @@
 // Feedback
 "MyFeedbacks" = "我的反馈";
 "Operator" = "客服";
+
+// ArticleCategory
+"SuggestCategory" = "推荐";
+"SociatyCategory" = "社会";
+"FinanceCategory" = "财经";
+"FunnyCategory" = "搞笑";
+"EntertainmentCategory" = "娱乐";
+"TechnologyCategory" = "科技";
+"FashionCategory" = "时尚";
+"BlockchainCategory" = "区块链";

@@ -56,6 +56,8 @@ class TMMWebViewController: UIViewController {
         approximatePointsLabel.layer.cornerRadius = 5
         approximatePointsLabel.layer.borderWidth = 0
         approximatePointsLabel.clipsToBounds = true
+        approximatePointsLabel.adjustsFontSizeToFitWidth = true
+        approximatePointsLabel.minimumScaleFactor = 0.5
         blurOverlay.addSubview(approximatePointsLabel)
         approximatePointsLabel.snp.remakeConstraints { (maker) -> Void in
             maker.trailing.equalToSuperview().offset(-16)
@@ -87,6 +89,8 @@ class TMMWebViewController: UIViewController {
         shareButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         shareButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         shareButton.addTarget(self, action: #selector(showShareSheet), for: .touchUpInside)
+        shareButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        shareButton.titleLabel?.minimumScaleFactor = 0.5
         stackView.addArrangedSubview(shareButton)
         
         timerProgressView.startColor = .red
@@ -103,6 +107,8 @@ class TMMWebViewController: UIViewController {
         pointsLabel.textColor = .white
         pointsLabel.backgroundColor = UIColor.redish
         pointsLabel.textAlignment = .center
+        pointsLabel.adjustsFontSizeToFitWidth = true
+        pointsLabel.minimumScaleFactor = 0.5
         pointsLabel.paddingTop = 4
         pointsLabel.paddingBottom = 4
         pointsLabel.paddingLeft = 16
@@ -116,18 +122,23 @@ class TMMWebViewController: UIViewController {
     
     private let approximatePointsLabel: UILabelPadding = UILabelPadding()
     private let pointsLabel: UILabelPadding = UILabelPadding()
+    private var pointsRate: APIExchangeRate? {
+        didSet {
+            if let rate = pointsRate?.rate {
+                let points = NSDecimalNumber(integerLiteral: self.readTime) * rate
+                self.updateApproximatePointsLabel(points)
+            }
+        }
+    }
     
     private var readTime: Int = 0 {
         didSet {
-            let points = NSDecimalNumber(integerLiteral: self.readTime) * TMMConfigs.defaultPointsPerTs
-            let formatter = NumberFormatter()
-            formatter.maximumFractionDigits = 4
-            formatter.groupingSeparator = "";
-            formatter.numberStyle = NumberFormatter.Style.decimal
-            let formattedPoints = formatter.string(from: points)!
-            DispatchQueue.main.async {[weak self] in
-                self!.approximatePointsLabel.text = String(format: I18n.approximateTime.description, self!.readTime.timeSpan(), formattedPoints)
+            var pointsRate = TMMConfigs.defaultPointsPerTs
+            if let rate = self.pointsRate {
+                pointsRate = rate.rate
             }
+            let points = NSDecimalNumber(integerLiteral: self.readTime) * pointsRate
+            self.updateApproximatePointsLabel(points)
         }
     }
     
@@ -138,7 +149,11 @@ class TMMWebViewController: UIViewController {
     private var lastScrollTime: Date = Date()
     private var duration: Double = 0 {
         didSet {
-            let points = NSDecimalNumber(decimal: Decimal(duration)) * TMMConfigs.defaultPointsPerTs
+            var pointsRate = TMMConfigs.defaultPointsPerTs
+            if let rate = self.pointsRate {
+                pointsRate = rate.rate
+            }
+            let points = NSDecimalNumber(decimal: Decimal(duration)) * pointsRate
             let formatter = NumberFormatter()
             formatter.maximumFractionDigits = 4
             formatter.minimumFractionDigits = 4
@@ -146,7 +161,7 @@ class TMMWebViewController: UIViewController {
             formatter.numberStyle = NumberFormatter.Style.decimal
             let formattedPoints = formatter.string(from: points)!
             DispatchQueue.main.async {[weak self] in
-                self?.pointsLabel.text = formattedPoints
+                self?.pointsLabel.text = String(format: I18n.getPointsReward.description, formattedPoints)
                 UIView.animate(withDuration: 0.5) {[weak self] in
                     guard let weakSelf = self else { return }
                     weakSelf.timerProgressView.progress = weakSelf.duration / Double(weakSelf.readTime)
@@ -261,6 +276,7 @@ class TMMWebViewController: UIViewController {
     }()
     
     private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -288,6 +304,7 @@ class TMMWebViewController: UIViewController {
                 }
             }
         }
+        getPointsRate()
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         webView.scrollView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
@@ -487,6 +504,17 @@ class TMMWebViewController: UIViewController {
             paste.string = "\(link)"
         }
     }
+    
+    private func updateApproximatePointsLabel(_ points: NSDecimalNumber) {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let formattedPoints = formatter.string(from: points)!
+        DispatchQueue.main.async {[weak self] in
+            self!.approximatePointsLabel.text = String(format: I18n.approximateTime.description, self!.readTime.timeSpan(), formattedPoints)
+        }
+    }
 }
 
 extension TMMWebViewController: WKUIDelegate {
@@ -632,7 +660,11 @@ extension TMMWebViewController: UIScrollViewDelegate {
             let idfa = TMMBeacon.shareInstance()?.deviceId()
         else { return }
         bonus.taskId = taskId
-        bonus.points = NSDecimalNumber(decimal: Decimal(duration)) * TMMConfigs.defaultPointsPerTs
+        var pointsRate = TMMConfigs.defaultPointsPerTs
+        if let rate = self.pointsRate {
+            pointsRate = rate.rate
+        }
+        bonus.points = NSDecimalNumber(decimal: Decimal(duration)) * pointsRate
         bonus.duration = Int64(duration.rounded())
         bonus.ts = Int64(Date().timeIntervalSince1970)
         guard let payload = bonus.toJSONString()?.desEncrypt(withKey: TMMConfigs.TMMBeacon.secret) else { return }
@@ -641,5 +673,17 @@ extension TMMWebViewController: UIScrollViewDelegate {
             print(error.localizedDescription)
             #endif
         }
+    }
+    
+    private func getPointsRate() {
+        TMMExchangeService.getPointsRate(
+            provider: self.exchangeServiceProvider)
+            .then(in: .main, {[weak self] rate in
+                guard let weakSelf = self else { return }
+                weakSelf.pointsRate = rate
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            })
     }
 }

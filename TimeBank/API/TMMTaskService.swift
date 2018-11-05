@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import Hydra
 
 enum TMMTaskService {
-    case shares(idfa: String, page: UInt, pageSize: UInt, mineOnly: Bool)
+    case shares(idfa: String, cid: UInt, page: UInt, pageSize: UInt, mineOnly: Bool)
     case apps(idfa: String, page: UInt, pageSize: UInt, mineOnly: Bool)
     case install(idfa: String, bundleId: String, taskId: UInt64, status: Int8)
     case appsCheck(idfa: String)
@@ -32,7 +32,7 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
     var baseURL: URL { return URL(string: kAPIBaseURL + "/task")! }
     var path: String {
         switch self {
-        case .shares(_, _, _, _):
+        case .shares(_, _, _, _, _):
             return "/shares"
         case .apps(_, _, _, _):
             return "/apps"
@@ -60,9 +60,9 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
     }
     var task: Task {
         switch self {
-        case let .shares(idfa, page, pageSize, mineOnly):
+        case let .shares(idfa, cid, page, pageSize, mineOnly):
             let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-            return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "app_version": currentVersion], encoding: URLEncoding.default)
+            return .requestParameters(parameters: ["idfa": idfa, "cid": cid, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "app_version": currentVersion], encoding: URLEncoding.default)
         case let .apps(idfa, page, pageSize, mineOnly):
             return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly], encoding: URLEncoding.default)
         case let .install(idfa, bundleId, taskId, status):
@@ -109,7 +109,7 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
     
     var sampleData: Data {
         switch self {
-        case .shares(_, _, _, _), .apps(_, _, _, _), .appsCheck(_), .records(_, _):
+        case .shares(_, _, _, _, _), .apps(_, _, _, _), .appsCheck(_), .records(_, _):
             return "[]".utf8Encoded
         case .install(_, _, _, _), .shareAdd(_, _, _, _, _, _, _), .shareUpdate(_, _, _, _, _, _, _, _, _), .appAdd(_, _, _, _):
             return "{}".utf8Encoded
@@ -123,10 +123,10 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
 
 extension TMMTaskService {
     
-    static func getShares(idfa: String, page: UInt, pageSize: UInt, mineOnly: Bool, provider: MoyaProvider<TMMTaskService>) -> Promise<[APIShareTask]> {
+    static func getShares(idfa: String, cid: UInt, page: UInt, pageSize: UInt, mineOnly: Bool, provider: MoyaProvider<TMMTaskService>) -> Promise<[APIShareTask]> {
         return Promise<[APIShareTask]> (in: .background, { resolve, reject, _ in
             provider.request(
-                .shares(idfa: idfa, page: page, pageSize: pageSize, mineOnly: mineOnly)
+                .shares(idfa: idfa, cid: cid, page: page, pageSize: pageSize, mineOnly: mineOnly)
             ){ result in
                 switch result {
                 case let .success(response):

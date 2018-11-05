@@ -90,6 +90,7 @@
 		1D28DE6021563FBE00FCF6F6 /* MarketTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28DE5E21563FBE00FCF6F6 /* MarketTopTableViewCell.swift */; };
 		1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */; };
 		1D297DA9218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DA8218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift */; };
+		1D297DAB2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */; };
 		1D31FC59217850D00014712B /* BlowupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC58217850D00014712B /* BlowupViewController.swift */; };
 		1D31FC5B2178A1FD0014712B /* APIBlowupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC5A2178A1FD0014712B /* APIBlowupEvent.swift */; };
 		1D31FC5D217993180014712B /* ShareTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */; };
@@ -288,6 +289,7 @@
 		1D28DE5E21563FBE00FCF6F6 /* MarketTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewCell.swift; sourceTree = "<group>"; };
 		1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewCell.xib; sourceTree = "<group>"; };
 		1D297DA8218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMWebViewLeakAvoider.swift; sourceTree = "<group>"; };
+		1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskSwipableTableViewCell.swift; sourceTree = "<group>"; };
 		1D31FC58217850D00014712B /* BlowupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlowupViewController.swift; sourceTree = "<group>"; };
 		1D31FC5A2178A1FD0014712B /* APIBlowupEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBlowupEvent.swift; sourceTree = "<group>"; };
 		1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskTableViewCell.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 				1D151EC1213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift */,
 				1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */,
 				1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */,
+				1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */,
 				1D151ECA213F8F14007C87DD /* AppTaskTableViewCell.swift */,
 				1D151ECB213F8F14007C87DD /* AppTaskTableViewCell.xib */,
 				1D31FC64217A03D40014712B /* BlowupBidTableViewCell.swift */,
@@ -1378,6 +1381,7 @@
 				1D1D6FDD214A65750001ED49 /* UIViewController+Utils.swift in Sources */,
 				1D151EBB213E744D007C87DD /* TMMTaskService.swift in Sources */,
 				1D0370DB21665FF200E5E3CE /* APIRedeemCdpRecord.swift in Sources */,
+				1D297DAB2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift in Sources */,
 				1D151ECF213FB575007C87DD /* AppTaskChecker.swift in Sources */,
 				1D1D6FD22148C5BF0001ED49 /* TransactionsTableViewController.swift in Sources */,
 				1D151E82213D6394007C87DD /* DeviceAppTableViewCell.swift in Sources */,
