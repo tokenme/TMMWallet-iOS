@@ -130,6 +130,7 @@
 "MaxBonus" = "Max bonus";
 "Points" = "Points";
 "ShareTaskRewardDesc" = "%@ Points/Viewer, Max bonus %@ Points";
+"ShareTaskRewardDescSimple" = "Share to get %@ Points";
 "View" = "View";
 "Times" = "times";
 "PointsPerInstall" = "Points/Install";
@@ -187,6 +188,7 @@
 "CopyInviteCode" = "Copy Invite Code";
 "InviteUsers" = "Invite Users";
 "InviteIncome" = "Invite Income";
+"InviteFriends" = "Invite Friends";
 
 // Market
 "Buy" = "Buy";

@@ -91,6 +91,9 @@
 		1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */; };
 		1D297DA9218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DA8218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift */; };
 		1D297DAB2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */; };
+		1D297DAD21919466001C7CF7 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DAC21919465001C7CF7 /* InviteViewController.swift */; };
+		1D297DB02191A35F001C7CF7 /* InviteImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DAE2191A35F001C7CF7 /* InviteImageViewController.swift */; };
+		1D297DB12191A35F001C7CF7 /* InviteImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D297DAF2191A35F001C7CF7 /* InviteImageViewController.xib */; };
 		1D31FC59217850D00014712B /* BlowupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC58217850D00014712B /* BlowupViewController.swift */; };
 		1D31FC5B2178A1FD0014712B /* APIBlowupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC5A2178A1FD0014712B /* APIBlowupEvent.swift */; };
 		1D31FC5D217993180014712B /* ShareTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */; };
@@ -290,6 +293,9 @@
 		1D28DE5F21563FBE00FCF6F6 /* MarketTopTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewCell.xib; sourceTree = "<group>"; };
 		1D297DA8218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMWebViewLeakAvoider.swift; sourceTree = "<group>"; };
 		1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskSwipableTableViewCell.swift; sourceTree = "<group>"; };
+		1D297DAC21919465001C7CF7 /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		1D297DAE2191A35F001C7CF7 /* InviteImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteImageViewController.swift; sourceTree = "<group>"; };
+		1D297DAF2191A35F001C7CF7 /* InviteImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteImageViewController.xib; sourceTree = "<group>"; };
 		1D31FC58217850D00014712B /* BlowupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlowupViewController.swift; sourceTree = "<group>"; };
 		1D31FC5A2178A1FD0014712B /* APIBlowupEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBlowupEvent.swift; sourceTree = "<group>"; };
 		1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskTableViewCell.swift; sourceTree = "<group>"; };
@@ -970,6 +976,9 @@
 			children = (
 				1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */,
 				1D0370C82165E7D300E5E3CE /* WechatQRCodeViewController.swift */,
+				1D297DAC21919465001C7CF7 /* InviteViewController.swift */,
+				1D297DAE2191A35F001C7CF7 /* InviteImageViewController.swift */,
+				1D297DAF2191A35F001C7CF7 /* InviteImageViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1096,6 +1105,7 @@
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
+				1D297DB12191A35F001C7CF7 /* InviteImageViewController.xib in Resources */,
 				1D31FCA1218826750014712B /* JSDOMParser.js in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
@@ -1376,6 +1386,8 @@
 				1D1D6FA92140F3F00001ED49 /* TaskRecordsTableViewController.swift in Sources */,
 				1D0370D021661C1200E5E3CE /* RedeemCdpCollectionViewCell.swift in Sources */,
 				1D3441F0213CFBA300B8E157 /* TweeBorderedTextField.swift in Sources */,
+				1D297DB02191A35F001C7CF7 /* InviteImageViewController.swift in Sources */,
+				1D297DAD21919466001C7CF7 /* InviteViewController.swift in Sources */,
 				1D151EB7213E6E73007C87DD /* ShareTasksTableViewController.swift in Sources */,
 				1D3441DC213CF98E00B8E157 /* String+Utils.swift in Sources */,
 				1D1D6FDD214A65750001ED49 /* UIViewController+Utils.swift in Sources */,

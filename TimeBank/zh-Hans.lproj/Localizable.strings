@@ -130,6 +130,7 @@
 "MaxBonus" = "最多奖励";
 "Points" = "积分";
 "ShareTaskRewardDesc" = "分享后每个新用户浏览获得 %@ 积分, 最多奖励 %@ 积分";
+"ShareTaskRewardDescSimple" = "分享可获得 %@ 积分";
 "View" = "浏览";
 "Times" = "次";
 "PointsPerInstall" = "积分/安装";
@@ -187,6 +188,7 @@
 "CopyInviteCode" = "复制邀请码";
 "InviteUsers" = "邀请人数";
 "InviteIncome" = "邀请收入";
+"InviteFriends" = "邀请好友";
 
 // Market
 "Buy" = "买入";

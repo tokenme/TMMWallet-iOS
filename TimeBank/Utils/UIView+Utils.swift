@@ -24,4 +24,11 @@ extension UIView {
             self.frame = frame;
         }
     }
+    
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { renderContext in
+            layer.render(in: renderContext.cgContext)
+        }
+    }
 }

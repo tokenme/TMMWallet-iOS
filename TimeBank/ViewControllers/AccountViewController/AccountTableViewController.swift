@@ -26,6 +26,7 @@ enum AccountTableCellType {
     case inviteSummary
     case myInviteCode
     case inviteCode
+    case inviteButton
     case bindWechatAccount
     case currency
     case telegramGroup
@@ -83,7 +84,7 @@ class AccountTableViewController: UITableViewController {
     
     private var contacts:[String:String] = [:]
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
+    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode, .inviteButton], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
     
     @IBOutlet private weak var avatarImageView : UIImageView!
     @IBOutlet private weak var mobileLabel: UILabel!
@@ -298,6 +299,11 @@ class AccountTableViewController: UITableViewController {
         sheet.addAction(cancelAction)
         self.present(sheet, animated: true, completion: nil)
     }
+    
+    private func showInvitePage() {
+        let vc = InviteViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension AccountTableViewController: UIViewControllerTransitioningDelegate {
@@ -322,6 +328,8 @@ extension AccountTableViewController {
         switch self.sections[indexPath.section][indexPath.row] {
         case .myInviteCode:
             self.showMyInviteCode()
+        case .inviteButton:
+            self.showInvitePage()
         case .bindWechatAccount:
             if ShareSDK.hasAuthorized(.typeWechat) {
                 self.getWechatInfo()

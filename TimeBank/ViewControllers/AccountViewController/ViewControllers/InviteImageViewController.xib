@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InviteImageViewController" customModule="TimeBank" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="r7W-vT-n4q" id="LRj-vN-d4U"/>
+                <outlet property="logoView" destination="zlL-WW-CEM" id="3yx-Yp-CoT"/>
+                <outlet property="qrcodeView" destination="HNz-qB-ueA" id="eYH-BL-hFG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="579"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7W-vT-n4q">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="579"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InviteImage" translatesAutoresizingMaskIntoConstraints="NO" id="CtR-VQ-xwG">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="579"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="579" id="Ty3-ps-M8N"/>
+                                <constraint firstAttribute="width" constant="320" id="cKz-rM-G8b"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HNz-qB-ueA">
+                            <rect key="frame" x="122" y="467" width="86" height="86"/>
+                            <color key="backgroundColor" white="0.90588944579999997" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="HNz-qB-ueA" secondAttribute="height" id="GYT-Pk-FV0"/>
+                                <constraint firstAttribute="width" constant="86" id="yKO-jF-0CB"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="zlL-WW-CEM">
+                            <rect key="frame" x="36" y="36" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="5JB-Eb-58C"/>
+                                <constraint firstAttribute="width" secondItem="zlL-WW-CEM" secondAttribute="height" multiplier="1:1" id="wdR-vA-amL"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="CtR-VQ-xwG" firstAttribute="centerY" secondItem="r7W-vT-n4q" secondAttribute="centerY" id="HLa-hL-tfc"/>
+                        <constraint firstItem="zlL-WW-CEM" firstAttribute="top" secondItem="r7W-vT-n4q" secondAttribute="top" constant="36" id="aGx-yL-uig"/>
+                        <constraint firstItem="CtR-VQ-xwG" firstAttribute="centerX" secondItem="r7W-vT-n4q" secondAttribute="centerX" id="fmJ-aW-eeu"/>
+                        <constraint firstAttribute="bottom" secondItem="HNz-qB-ueA" secondAttribute="bottom" constant="26" id="lCW-cI-wi6"/>
+                        <constraint firstItem="zlL-WW-CEM" firstAttribute="leading" secondItem="r7W-vT-n4q" secondAttribute="leading" constant="36" id="lsj-44-5Gt"/>
+                        <constraint firstItem="CtR-VQ-xwG" firstAttribute="width" secondItem="r7W-vT-n4q" secondAttribute="width" id="mlC-Qs-hnz"/>
+                        <constraint firstItem="CtR-VQ-xwG" firstAttribute="height" secondItem="r7W-vT-n4q" secondAttribute="height" id="pxS-T9-zaf"/>
+                        <constraint firstItem="HNz-qB-ueA" firstAttribute="centerX" secondItem="r7W-vT-n4q" secondAttribute="centerX" constant="5" id="tOn-pR-ab3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="r7W-vT-n4q" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="evH-hd-eAK"/>
+                <constraint firstItem="r7W-vT-n4q" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="l0Y-nu-Hzp"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="136" y="198.35082458770617"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="InviteImage" width="382" height="692"/>
+        <image name="Logo" width="120" height="120"/>
+    </resources>
+</document>

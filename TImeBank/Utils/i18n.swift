@@ -124,6 +124,7 @@ enum I18n: CustomStringConvertible {
     case maxBonus
     case points
     case shareTaskRewardDesc
+    case shareTaskRewardDescSimple
     case view
     case times
     case pointsPerInstall
@@ -176,6 +177,7 @@ enum I18n: CustomStringConvertible {
     case copyInviteCode
     case inviteUsers
     case inviteIncome
+    case inviteFriends
     case bindWechatAccount
     case binded
     case notbinded
@@ -452,6 +454,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Points", comment: "Points")
         case .shareTaskRewardDesc:
             return NSLocalizedString("ShareTaskRewardDesc", comment: "ShareTaskRewardDesc")
+        case .shareTaskRewardDescSimple:
+            return NSLocalizedString("ShareTaskRewardDescSimple", comment: "shareTaskRewardDescSimple")
         case .view:
             return NSLocalizedString("View", comment: "View")
         case .times:
@@ -556,6 +560,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InviteUsers", comment: "Invite Users")
         case .inviteIncome:
             return NSLocalizedString("InviteIncome", comment: "Invite Income")
+        case .inviteFriends:
+            return NSLocalizedString("InviteFriends", comment: "Invite Friends")
         case .bindWechatAccount:
             return NSLocalizedString("BindWechatAccount", comment: "Bind Wechat Account")
         case .binded:

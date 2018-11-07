@@ -248,10 +248,10 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
-        let formattedBonus: String = formatter.string(from: task.bonus)!
+        //let formattedBonus: String = formatter.string(from: task.bonus)!
         let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
         let formattedMaxBonus: String = formatter.string(from: maxBonus)!
-        let rewardMsg = String(format: I18n.shareTaskRewardDesc.description, formattedBonus, formattedMaxBonus)
+        let rewardMsg = String(format: I18n.shareTaskRewardDescSimple.description, formattedMaxBonus)
         rewardLabel.text = rewardMsg
         
         formatter.maximumFractionDigits = 4
