@@ -21,7 +21,7 @@ class TokenTableViewCell: SwipeTableViewCell, NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        iconImageView.layer.cornerRadius = 5.0
+        iconImageView.layer.cornerRadius = 20.0
         iconImageView.layer.borderWidth = 0.0
         iconImageView.clipsToBounds = true
     }

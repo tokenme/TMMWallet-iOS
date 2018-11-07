@@ -15,7 +15,7 @@ enum TMMUserService {
     case resetPassword(country: UInt, mobile: String, verifyCode: String, password: String, repassword: String)
     case update(user: APIUser)
     case info(refresh: Bool)
-    case bindWechat(unionId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval)
+    case bindWechat(unionId: String, openId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval)
     case inviteSummary()
 }
 
@@ -36,7 +36,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             return "/reset-password"
         case .update(_):
             return "/update"
-        case .bindWechat(_, _, _, _, _, _):
+        case .bindWechat(_, _, _, _, _, _, _):
             return "/update"
         case .info(_):
             return "/info"
@@ -73,8 +73,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
                 params["inviter_code"] = inviterCode
             }
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
-        case let .bindWechat(unionId, nick, avatar, gender, accessToken, expires):
-            return .requestParameters(parameters: ["wx_union_id": unionId, "wx_nick": nick, "wx_avatar": avatar, "wx_gender": gender, "wx_token": accessToken, "wx_expires": Int64(expires)], encoding: JSONEncoding.default)
+        case let .bindWechat(unionId, openId, nick, avatar, gender, accessToken, expires):
+            return .requestParameters(parameters: ["wx_union_id": unionId, "wx_open_id": openId, "wx_nick": nick, "wx_avatar": avatar, "wx_gender": gender, "wx_token": accessToken, "wx_expires": Int64(expires)], encoding: JSONEncoding.default)
         case let .info(refresh):
             return .requestParameters(parameters: ["refresh": refresh], encoding: URLEncoding.queryString)
         case .inviteSummary():
@@ -89,7 +89,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             return "ok".utf8Encoded
         case .update(_):
             return "ok".utf8Encoded
-        case .bindWechat(_, _, _, _, _, _):
+        case .bindWechat(_, _, _, _, _, _, _):
             return "ok".utf8Encoded
         case .info(_), .inviteSummary():
             return "{}".utf8Encoded
@@ -219,10 +219,10 @@ extension TMMUserService {
         })
     }
     
-    static func bindWechatInfo(unionId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval, provider: MoyaProvider<TMMUserService>) -> Promise<APIResponse> {
+    static func bindWechatInfo(unionId: String, openId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval, provider: MoyaProvider<TMMUserService>) -> Promise<APIResponse> {
         return Promise<APIResponse> (in: .background, { resolve, reject, _ in
             provider.request(
-                .bindWechat(unionId: unionId, nick: nick, avatar: avatar, gender: gender, accessToken: accessToken, expires: expires)
+                .bindWechat(unionId: unionId, openId: openId, nick: nick, avatar: avatar, gender: gender, accessToken: accessToken, expires: expires)
             ){ result in
                 switch result {
                 case let .success(response):

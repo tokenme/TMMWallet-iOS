@@ -415,9 +415,11 @@ extension ETHWalletViewController {
                 return
             }
             weakSelf.bindingWechat = true
-            
+            guard let rawInfo = user.rawData else { return }
+            guard let openId = rawInfo["openid"] as? String else { return }
             TMMUserService.bindWechatInfo(
                 unionId: user.uid,
+                openId: openId,
                 nick: user.nickname,
                 avatar: user.icon,
                 gender: user.gender,
