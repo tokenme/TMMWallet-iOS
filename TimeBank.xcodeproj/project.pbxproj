@@ -24,6 +24,15 @@
 		1D0370E6216B59CF00E5E3CE /* TMMWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370E5216B59CF00E5E3CE /* TMMWebViewController.swift */; };
 		1D0370E8216B5C2F00E5E3CE /* TMMShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370E7216B5C2F00E5E3CE /* TMMShareItem.swift */; };
 		1D0370EA216B671D00E5E3CE /* TMMConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0370E9216B671D00E5E3CE /* TMMConfigs.swift */; };
+		1D05B4F1219441CF008EE10D /* TMMGoodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05B4F0219441CF008EE10D /* TMMGoodService.swift */; };
+		1D05B4F3219465E4008EE10D /* GoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05B4F2219465E4008EE10D /* GoodViewController.swift */; };
+		1D05B4F521946800008EE10D /* APIGoodInvest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05B4F421946800008EE10D /* APIGoodInvest.swift */; };
+		1D05B4F8219469AC008EE10D /* GoodInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05B4F6219469AC008EE10D /* GoodInfoTableViewCell.swift */; };
+		1D05B4F9219469AC008EE10D /* GoodInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D05B4F7219469AC008EE10D /* GoodInfoTableViewCell.xib */; };
+		1D05B4FC219469F7008EE10D /* GoodInvestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05B4FA219469F7008EE10D /* GoodInvestTableViewCell.swift */; };
+		1D05B4FD219469F7008EE10D /* GoodInvestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D05B4FB219469F7008EE10D /* GoodInvestTableViewCell.xib */; };
+		1D05B50021957719008EE10D /* InvestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05B4FE21957719008EE10D /* InvestViewController.swift */; };
+		1D05B50121957719008EE10D /* InvestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D05B4FF21957719008EE10D /* InvestViewController.xib */; };
 		1D151E64213D03FC007C87DD /* i18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E63213D03FC007C87DD /* i18n.swift */; };
 		1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E65213D0775007C87DD /* TMMDeviceService.swift */; };
 		1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */; };
@@ -157,6 +166,8 @@
 		1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A4213CED5E0002EDBF /* Main.storyboard */; };
 		1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A7213CED5E0002EDBF /* Assets.xcassets */; };
 		1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A9213CED5E0002EDBF /* LaunchScreen.storyboard */; };
+		1D3E42C42195B8280014CEB1 /* GoodInvestTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42C32195B8280014CEB1 /* GoodInvestTableHeaderView.swift */; };
+		1D3E42C62195B90B0014CEB1 /* GoodInvestTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42C52195B90B0014CEB1 /* GoodInvestTableHeaderView.xib */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -167,6 +178,9 @@
 		1D5FF687215B6514001E69CD /* MyOrderbooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */; };
 		1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF689215B7867001E69CD /* ScanViewController.swift */; };
 		1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */; };
+		1D77AD36219436A1004EBCBF /* MallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D77AD35219436A1004EBCBF /* MallViewController.swift */; };
+		1D77AD382194370A004EBCBF /* APIGood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D77AD372194370A004EBCBF /* APIGood.swift */; };
+		1D77AD3D21943A6C004EBCBF /* GoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D77AD3B21943A6C004EBCBF /* GoodCollectionViewCell.swift */; };
 		1DA38EC72170753F0073DB8A /* TMMRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */; };
 		1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */; };
 		1DA38ECA217084380073DB8A /* APITMMWithdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */; };
@@ -219,6 +233,15 @@
 		1D0370E5216B59CF00E5E3CE /* TMMWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMWebViewController.swift; sourceTree = "<group>"; };
 		1D0370E7216B5C2F00E5E3CE /* TMMShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMShareItem.swift; sourceTree = "<group>"; };
 		1D0370E9216B671D00E5E3CE /* TMMConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMConfigs.swift; sourceTree = "<group>"; };
+		1D05B4F0219441CF008EE10D /* TMMGoodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMGoodService.swift; sourceTree = "<group>"; };
+		1D05B4F2219465E4008EE10D /* GoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodViewController.swift; sourceTree = "<group>"; };
+		1D05B4F421946800008EE10D /* APIGoodInvest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIGoodInvest.swift; sourceTree = "<group>"; };
+		1D05B4F6219469AC008EE10D /* GoodInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodInfoTableViewCell.swift; sourceTree = "<group>"; };
+		1D05B4F7219469AC008EE10D /* GoodInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoodInfoTableViewCell.xib; sourceTree = "<group>"; };
+		1D05B4FA219469F7008EE10D /* GoodInvestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodInvestTableViewCell.swift; sourceTree = "<group>"; };
+		1D05B4FB219469F7008EE10D /* GoodInvestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoodInvestTableViewCell.xib; sourceTree = "<group>"; };
+		1D05B4FE21957719008EE10D /* InvestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvestViewController.swift; sourceTree = "<group>"; };
+		1D05B4FF21957719008EE10D /* InvestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InvestViewController.xib; sourceTree = "<group>"; };
 		1D151E55213D000C007C87DD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TimeBank/Info.plist; sourceTree = "<group>"; };
 		1D151E63213D03FC007C87DD /* i18n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = i18n.swift; sourceTree = "<group>"; };
 		1D151E65213D0775007C87DD /* TMMDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMDeviceService.swift; sourceTree = "<group>"; };
@@ -365,6 +388,8 @@
 		1D36D9A5213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D36D9A7213CED5E0002EDBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D36D9AA213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1D3E42C32195B8280014CEB1 /* GoodInvestTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodInvestTableHeaderView.swift; sourceTree = "<group>"; };
+		1D3E42C52195B90B0014CEB1 /* GoodInvestTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoodInvestTableHeaderView.xib; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -375,6 +400,9 @@
 		1D5FF686215B6514001E69CD /* MyOrderbooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderbooksViewController.swift; sourceTree = "<group>"; };
 		1D5FF689215B7867001E69CD /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		1D5FF68D215B7E50001E69CD /* QRCodeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeResult.swift; sourceTree = "<group>"; };
+		1D77AD35219436A1004EBCBF /* MallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallViewController.swift; sourceTree = "<group>"; };
+		1D77AD372194370A004EBCBF /* APIGood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIGood.swift; sourceTree = "<group>"; };
+		1D77AD3B21943A6C004EBCBF /* GoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodCollectionViewCell.swift; sourceTree = "<group>"; };
 		1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMRedeemViewController.swift; sourceTree = "<group>"; };
 		1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TMMRedeemViewController.xib; sourceTree = "<group>"; };
 		1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITMMWithdraw.swift; sourceTree = "<group>"; };
@@ -769,6 +797,7 @@
 				1D0370BF21649ABB00E5E3CE /* FeedbackViewController */,
 				1D31FC6A217F00410014712B /* MyFeedbacksTableViewController */,
 				1D022E9E216DC8B10030E4CC /* RecaptchaViewController */,
+				1D77AD3421943686004EBCBF /* MallViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
@@ -786,6 +815,7 @@
 				1D3441C2213CF74800B8E157 /* TMMUserService.swift */,
 				1D151E9D213E3C56007C87DD /* TMMAppService.swift */,
 				1D151EBA213E744D007C87DD /* TMMTaskService.swift */,
+				1D05B4F0219441CF008EE10D /* TMMGoodService.swift */,
 				1D1D6FB421412A850001ED49 /* TMMExchangeService.swift */,
 				1D28DE5B2156214F00FCF6F6 /* TMMOrderBookService.swift */,
 				1D1D6FC021468A810001ED49 /* TMMTokenService.swift */,
@@ -829,6 +859,8 @@
 				1DA38F3C2175B63C0073DB8A /* APIDailyBonusStatus.swift */,
 				1D31FC5A2178A1FD0014712B /* APIBlowupEvent.swift */,
 				1D31FC602179E5C40014712B /* APIBlowupBid.swift */,
+				1D77AD372194370A004EBCBF /* APIGood.swift */,
+				1D05B4F421946800008EE10D /* APIGoodInvest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -928,6 +960,32 @@
 				1D5FF689215B7867001E69CD /* ScanViewController.swift */,
 			);
 			path = ScanViewController;
+			sourceTree = "<group>";
+		};
+		1D77AD3421943686004EBCBF /* MallViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D77AD35219436A1004EBCBF /* MallViewController.swift */,
+				1D05B4F2219465E4008EE10D /* GoodViewController.swift */,
+				1D05B4FE21957719008EE10D /* InvestViewController.swift */,
+				1D05B4FF21957719008EE10D /* InvestViewController.xib */,
+				1D77AD3A21943A4C004EBCBF /* Cell */,
+			);
+			path = MallViewController;
+			sourceTree = "<group>";
+		};
+		1D77AD3A21943A4C004EBCBF /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D77AD3B21943A6C004EBCBF /* GoodCollectionViewCell.swift */,
+				1D05B4F6219469AC008EE10D /* GoodInfoTableViewCell.swift */,
+				1D05B4F7219469AC008EE10D /* GoodInfoTableViewCell.xib */,
+				1D05B4FA219469F7008EE10D /* GoodInvestTableViewCell.swift */,
+				1D05B4FB219469F7008EE10D /* GoodInvestTableViewCell.xib */,
+				1D3E42C32195B8280014CEB1 /* GoodInvestTableHeaderView.swift */,
+				1D3E42C52195B90B0014CEB1 /* GoodInvestTableHeaderView.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		1DB432922155046F0034B810 /* ExchangeViewController */ = {
@@ -1037,6 +1095,9 @@
 		1D36D993213CED5D0002EDBF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					100,
+				);
 				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Tokenmama.io;
@@ -1083,13 +1144,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D151E94213E2FCA007C87DD /* LoadingTableViewCell.xib in Resources */,
+				1D05B4F9219469AC008EE10D /* GoodInfoTableViewCell.xib in Resources */,
 				1D151E9C213E392C007C87DD /* SDKAppTableViewCell.xib in Resources */,
 				1DEC5456215121BF007A46D5 /* Localizable.strings in Resources */,
 				1D31FCA3218826AF0014712B /* Readability.js in Resources */,
 				1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */,
+				1D05B50121957719008EE10D /* InvestViewController.xib in Resources */,
 				1D31FCA921882AE10014712B /* WordCounter.js in Resources */,
 				1D1D6FD72148CB1B0001ED49 /* TransactionTableViewCell.xib in Resources */,
 				1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */,
+				1D05B4FD219469F7008EE10D /* GoodInvestTableViewCell.xib in Resources */,
 				1D31FC67217A03D40014712B /* BlowupBidTableViewCell.xib in Resources */,
 				1D0370D121661C1200E5E3CE /* RedeemCdpCollectionViewCell.xib in Resources */,
 				1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */,
@@ -1097,6 +1161,7 @@
 				1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
+				1D3E42C62195B90B0014CEB1 /* GoodInvestTableHeaderView.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */,
 				1DEC5443214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib in Resources */,
@@ -1290,6 +1355,7 @@
 				1D3441E4213CFA1C00B8E157 /* CGRect+Utils.swift in Sources */,
 				1D0370C72165E2E900E5E3CE /* TMMContactService.swift in Sources */,
 				1D31FC82217F3C460014712B /* UIView+Utils.swift in Sources */,
+				1D05B4F1219441CF008EE10D /* TMMGoodService.swift in Sources */,
 				1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */,
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
 				1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */,
@@ -1303,6 +1369,7 @@
 				1D31FC73217F04150014712B /* FeedbackHeaderView.swift in Sources */,
 				1D0370E8216B5C2F00E5E3CE /* TMMShareItem.swift in Sources */,
 				1D28DE5C2156214F00FCF6F6 /* TMMOrderBookService.swift in Sources */,
+				1D77AD36219436A1004EBCBF /* MallViewController.swift in Sources */,
 				1DEC544C2150F5A9007A46D5 /* TMMQiniuService.swift in Sources */,
 				1D0370C121649AF400E5E3CE /* FeedbackTableViewController.swift in Sources */,
 				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,
@@ -1324,6 +1391,7 @@
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
 				1D31FC5F2179D6420014712B /* TMMBlowupService.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
+				1D05B4F521946800008EE10D /* APIGoodInvest.swift in Sources */,
 				1D31FC7E217F3B0E0014712B /* KeyboardTextField.swift in Sources */,
 				1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */,
 				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
@@ -1335,6 +1403,7 @@
 				1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */,
 				1D3441D7213CF94200B8E157 /* DefaultKeys.swift in Sources */,
 				1D1D6FBA214645B20001ED49 /* PointsTMMExchangeViewController.swift in Sources */,
+				1D77AD382194370A004EBCBF /* APIGood.swift in Sources */,
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D0370CD21660FD100E5E3CE /* TMMRedeemService.swift in Sources */,
 				1D31FC6C217F00640014712B /* MyFeedbacksTableViewController.swift in Sources */,
@@ -1353,6 +1422,7 @@
 				1DEC54512150FFD0007A46D5 /* QiniuManager.swift in Sources */,
 				1DF802F02152495B0002E054 /* MyInviteCodeViewController.swift in Sources */,
 				1D3441D1213CF86A00B8E157 /* RegisterViewController.swift in Sources */,
+				1D05B4F8219469AC008EE10D /* GoodInfoTableViewCell.swift in Sources */,
 				1D151E93213E2FCA007C87DD /* LoadingTableViewCell.swift in Sources */,
 				1D297DA9218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift in Sources */,
 				1D0370EA216B671D00E5E3CE /* TMMConfigs.swift in Sources */,
@@ -1361,6 +1431,7 @@
 				1DF01A002161F09E00FDD467 /* ChartXYMarker.swift in Sources */,
 				1D1D6FB3214129B00001ED49 /* APIExchangeRate.swift in Sources */,
 				1DEC5445214FA3AF007A46D5 /* UILabelPadding.swift in Sources */,
+				1D3E42C42195B8280014CEB1 /* GoodInvestTableHeaderView.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
 				1D28DE5A2155F98200FCF6F6 /* APIOrderBook.swift in Sources */,
 				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
@@ -1380,6 +1451,7 @@
 				1D3441DF213CF9BD00B8E157 /* Font.swift in Sources */,
 				1DEC544F2150FF82007A46D5 /* UIImage+Utils.swift in Sources */,
 				1DEC544A2150F572007A46D5 /* APIQiniu.swift in Sources */,
+				1D77AD3D21943A6C004EBCBF /* GoodCollectionViewCell.swift in Sources */,
 				1DA38ECE21738EB70073DB8A /* APIFeedback.swift in Sources */,
 				1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */,
 				1D28DE6021563FBE00FCF6F6 /* MarketTopTableViewCell.swift in Sources */,
@@ -1398,6 +1470,7 @@
 				1D1D6FD22148C5BF0001ED49 /* TransactionsTableViewController.swift in Sources */,
 				1D151E82213D6394007C87DD /* DeviceAppTableViewCell.swift in Sources */,
 				1D151E9B213E392C007C87DD /* SDKAppTableViewCell.swift in Sources */,
+				1D05B4F3219465E4008EE10D /* GoodViewController.swift in Sources */,
 				1D31FC80217F3C0F0014712B /* TMMKeyboardTextField.swift in Sources */,
 				1D3441E6213CFB1200B8E157 /* Moya+ObjectMapper.swift in Sources */,
 				1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */,
@@ -1409,10 +1482,12 @@
 				1D3441F1213CFBA300B8E157 /* TweeAttributedTextField.swift in Sources */,
 				1D36D9A1213CED5E0002EDBF /* WalletViewController.swift in Sources */,
 				1D1D6FE0214A7C760001ED49 /* TransferTableViewController.swift in Sources */,
+				1D05B50021957719008EE10D /* InvestViewController.swift in Sources */,
 				1D151E6F213D3161007C87DD /* APIDevice.swift in Sources */,
 				1D3441FD213CFBB500B8E157 /* TransitionButton.swift in Sources */,
 				1D3441E0213CF9BD00B8E157 /* UIScreen+Utils.swift in Sources */,
 				1D1D6FC42147A5680001ED49 /* ETHWalletViewController.swift in Sources */,
+				1D05B4FC219469F7008EE10D /* GoodInvestTableViewCell.swift in Sources */,
 				1D151E71213D3995007C87DD /* NSDecimalNumber+Utils.swift in Sources */,
 				1D3441FB213CFBB500B8E157 /* CustomTransitionViewController.swift in Sources */,
 				1D3441E2213CFA0600B8E157 /* UIColor+Utils.swift in Sources */,

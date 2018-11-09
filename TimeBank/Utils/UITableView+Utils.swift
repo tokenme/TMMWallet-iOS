@@ -16,3 +16,12 @@ extension UITableView {
         self.layoutIfNeeded()
     }
 }
+
+extension UICollectionView {
+    func reloadDataWithAutoSizingCellWorkAround() {
+        self.reloadData()
+        //self.collectionViewLayout.invalidateLayout()
+        //self.setNeedsLayout()
+        //self.layoutIfNeeded()
+    }
+}

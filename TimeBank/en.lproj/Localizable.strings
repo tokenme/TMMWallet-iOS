@@ -245,3 +245,7 @@
 "TechnologyCategory" = "Technology";
 "FashionCategory" = "Fashion";
 "BlockchainCategory" = "Blockchain";
+
+// Mall
+"Mall" = "Mall";
+"MyInvest" = "My Invest";

@@ -245,3 +245,7 @@
 "TechnologyCategory" = "科技";
 "FashionCategory" = "时尚";
 "BlockchainCategory" = "区块链";
+
+// Mall
+"Mall" = "商城";
+"MyInvest" = "我的投资";

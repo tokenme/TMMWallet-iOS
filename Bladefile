@@ -25,6 +25,9 @@ blades:
   - source: images/success.png
     mount: TimeBank/Assets.xcassets/Success.imageset
     contents: true
+  - source: images/goods.png
+    mount: TimeBank/Assets.xcassets/Goods.imageset
+    contents: true
   - source: images/cancel.png
     mount: TimeBank/Assets.xcassets/Cancel.imageset
     contents: true

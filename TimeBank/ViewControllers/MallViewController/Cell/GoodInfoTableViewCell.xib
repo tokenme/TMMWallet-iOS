@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="410" id="KGk-i7-Jjw" customClass="GoodInfoTableViewCell" customModule="TimeBank" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="409.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G31-KN-mLt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="G31-KN-mLt" secondAttribute="height" id="uh8-FV-1CU"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZl-FP-Cz8" customClass="UILabelPadding" customModule="TimeBank" customModuleProvider="target">
+                        <rect key="frame" x="16" y="328" width="288" height="13.5"/>
+                        <color key="backgroundColor" white="0.97999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="81s-97-Qvg">
+                        <rect key="frame" x="16" y="357.5" width="288" height="17"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yT8-QP-weB">
+                                <rect key="frame" x="0.0" y="0.0" width="226.5" height="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Withdraw" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P00-ei-dx3" customClass="UILabelPadding" customModule="TimeBank" customModuleProvider="target">
+                                <rect key="frame" x="226.5" y="0.0" width="61.5" height="17"/>
+                                <color key="backgroundColor" name="systemPinkColor" catalog="System" colorSpace="catalog"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="G31-KN-mLt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5nA-Yq-uIf"/>
+                    <constraint firstAttribute="bottom" secondItem="81s-97-Qvg" secondAttribute="bottom" constant="35" id="8ee-aj-YeB"/>
+                    <constraint firstAttribute="trailing" secondItem="G31-KN-mLt" secondAttribute="trailing" id="9GL-bV-LkD"/>
+                    <constraint firstItem="G31-KN-mLt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Cb8-zY-YpL"/>
+                    <constraint firstAttribute="trailing" secondItem="EZl-FP-Cz8" secondAttribute="trailing" constant="16" id="FXg-09-4JA"/>
+                    <constraint firstItem="81s-97-Qvg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="FfN-jk-8D4"/>
+                    <constraint firstItem="81s-97-Qvg" firstAttribute="top" secondItem="EZl-FP-Cz8" secondAttribute="bottom" constant="16" id="VYf-10-x47"/>
+                    <constraint firstAttribute="trailing" secondItem="81s-97-Qvg" secondAttribute="trailing" constant="16" id="Xrn-38-gDU"/>
+                    <constraint firstItem="EZl-FP-Cz8" firstAttribute="top" secondItem="G31-KN-mLt" secondAttribute="bottom" constant="8" id="m1c-bv-xHe"/>
+                    <constraint firstItem="EZl-FP-Cz8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="o85-Du-qhj"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cover" destination="G31-KN-mLt" id="bAX-Uo-iPE"/>
+                <outlet property="priceLabel" destination="yT8-QP-weB" id="ORH-vF-Sr2"/>
+                <outlet property="titleLabel" destination="EZl-FP-Cz8" id="qr3-lk-hC7"/>
+                <outlet property="withdrawLabel" destination="P00-ei-dx3" id="B9E-AF-v9v"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="309.44527736131937"/>
+        </tableViewCell>
+    </objects>
+</document>
