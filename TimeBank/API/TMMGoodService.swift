@@ -15,6 +15,9 @@ enum TMMGoodService {
     case item(id: UInt64)
     case invest(goodId: UInt64, idfa: String, points: NSDecimalNumber)
     case invests(goodId: UInt64, page: UInt, pageSize: UInt)
+    case myInvests(page: UInt, pageSize: UInt)
+    case investWithdraw(id: UInt64)
+    case investSummary()
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -36,11 +39,17 @@ extension TMMGoodService: TargetType, AccessTokenAuthorizable {
             return "/invest"
         case let .invests(goodId, page, pageSize):
             return "/invests/item/\(goodId)/\(page)/\(pageSize)"
+        case let .myInvests(page, pageSize):
+            return "/invests/my/\(page)/\(pageSize)"
+        case let .investWithdraw(id):
+            return "/invest/withdraw/\(id)"
+        case .investSummary:
+            return "/invest/summary"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .list, .item, .invests:
+        case .list, .item, .invests, .myInvests, .investWithdraw, .investSummary:
             return .get
         case .invest:
             return .post
@@ -56,13 +65,19 @@ extension TMMGoodService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case let .invest(goodId, idfa, points):
             return .requestParameters(parameters: ["good_id": goodId, "points": points, "idfa": idfa], encoding: JSONEncoding.default)
+        case .myInvests(_, _):
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .investWithdraw(_):
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .investSummary():
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
-        case .list, .invests:
+        case .list, .invests, .myInvests:
             return "[]".utf8Encoded
-        case .item, .invest:
+        case .item, .invest, .investWithdraw, .investSummary:
             return "{}".utf8Encoded
         }
     }
@@ -177,6 +192,87 @@ extension TMMGoodService {
                             reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
                         } else {
                             resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getMyInvests(page: UInt, pageSize: UInt, provider: MoyaProvider<TMMGoodService>) -> Promise<[APIGoodInvest]> {
+        return Promise<[APIGoodInvest]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .myInvests(page: page, pageSize: pageSize)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let invests: [APIGoodInvest] = try response.mapArray(APIGoodInvest.self)
+                        resolve(invests)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func withdrawInvest(id: UInt64, provider: MoyaProvider<TMMGoodService>) -> Promise<APIResponse> {
+        return Promise<APIResponse> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .investWithdraw(id: id)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APIResponse.self)
+                        if let errorCode = resp.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getInvestSummary(provider: MoyaProvider<TMMGoodService>) -> Promise<APIGoodInvestSummary> {
+        return Promise<APIGoodInvestSummary> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .investSummary()
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let summary = try response.mapObject(APIGoodInvestSummary.self)
+                        if let errorCode = summary.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: summary.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(summary)
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))

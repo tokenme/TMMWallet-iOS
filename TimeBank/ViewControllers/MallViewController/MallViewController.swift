@@ -137,7 +137,7 @@ class MallViewController: UIViewController {
     }
     
     @objc func showMyInvestView() {
-        let vc = SDKAppsTableViewController.instantiate()
+        let vc = MyInvestsViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

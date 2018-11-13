@@ -168,6 +168,9 @@
 		1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D36D9A9213CED5E0002EDBF /* LaunchScreen.storyboard */; };
 		1D3E42C42195B8280014CEB1 /* GoodInvestTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42C32195B8280014CEB1 /* GoodInvestTableHeaderView.swift */; };
 		1D3E42C62195B90B0014CEB1 /* GoodInvestTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42C52195B90B0014CEB1 /* GoodInvestTableHeaderView.xib */; };
+		1D3E42C8219A928B0014CEB1 /* MyInvestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42C7219A928B0014CEB1 /* MyInvestsViewController.swift */; };
+		1D3E42CB219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42C9219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift */; };
+		1D3E42CC219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42CA219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -390,6 +393,9 @@
 		1D36D9AA213CED5E0002EDBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1D3E42C32195B8280014CEB1 /* GoodInvestTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodInvestTableHeaderView.swift; sourceTree = "<group>"; };
 		1D3E42C52195B90B0014CEB1 /* GoodInvestTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoodInvestTableHeaderView.xib; sourceTree = "<group>"; };
+		1D3E42C7219A928B0014CEB1 /* MyInvestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvestsViewController.swift; sourceTree = "<group>"; };
+		1D3E42C9219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGoodInvestTableViewCell.swift; sourceTree = "<group>"; };
+		1D3E42CA219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyGoodInvestTableViewCell.xib; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -969,6 +975,7 @@
 				1D05B4F2219465E4008EE10D /* GoodViewController.swift */,
 				1D05B4FE21957719008EE10D /* InvestViewController.swift */,
 				1D05B4FF21957719008EE10D /* InvestViewController.xib */,
+				1D3E42C7219A928B0014CEB1 /* MyInvestsViewController.swift */,
 				1D77AD3A21943A4C004EBCBF /* Cell */,
 			);
 			path = MallViewController;
@@ -984,6 +991,8 @@
 				1D05B4FB219469F7008EE10D /* GoodInvestTableViewCell.xib */,
 				1D3E42C32195B8280014CEB1 /* GoodInvestTableHeaderView.swift */,
 				1D3E42C52195B90B0014CEB1 /* GoodInvestTableHeaderView.xib */,
+				1D3E42C9219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift */,
+				1D3E42CA219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1180,6 +1189,7 @@
 				1D3441DA213CF94F00B8E157 /* Default-568h@2x.png in Resources */,
 				1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */,
 				1D151E86213D69A9007C87DD /* Login.storyboard in Resources */,
+				1D3E42CC219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib in Resources */,
 				1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1389,6 +1399,7 @@
 				1D1D6FCE2147BCF30001ED49 /* TokenTableViewCell.swift in Sources */,
 				1D1D6FC62147B6030001ED49 /* UIButton+Utils.swift in Sources */,
 				1D151E97213E3882007C87DD /* SDKAppsTableViewController.swift in Sources */,
+				1D3E42C8219A928B0014CEB1 /* MyInvestsViewController.swift in Sources */,
 				1D31FC5F2179D6420014712B /* TMMBlowupService.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
 				1D05B4F521946800008EE10D /* APIGoodInvest.swift in Sources */,
@@ -1403,6 +1414,7 @@
 				1D151E66213D0775007C87DD /* TMMDeviceService.swift in Sources */,
 				1D3441D7213CF94200B8E157 /* DefaultKeys.swift in Sources */,
 				1D1D6FBA214645B20001ED49 /* PointsTMMExchangeViewController.swift in Sources */,
+				1D3E42CB219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift in Sources */,
 				1D77AD382194370A004EBCBF /* APIGood.swift in Sources */,
 				1D151E76213D463D007C87DD /* DeviceTableViewCell.swift in Sources */,
 				1D0370CD21660FD100E5E3CE /* TMMRedeemService.swift in Sources */,
