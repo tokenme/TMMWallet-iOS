@@ -9,34 +9,20 @@
 import UIKit
 import Reusable
 import Kingfisher
-import Moya
-import Hydra
-import Presentr
 
 class MyGoodInvestTableViewCell: UITableViewCell, NibReusable {
     
-    public weak var delegate: ViewUpdateDelegate?
-    
-    private var withdrawing: Bool = false
+    public weak var delegate: MyGoodInvestTableViewCellDelegate?
     private var invest: APIGoodInvest?
-    
-    private var goodServiceProvider = MoyaProvider<TMMGoodService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     @IBOutlet public weak var imgView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var investLabel: UILabel!
     @IBOutlet private weak var incomeLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
-    @IBOutlet private weak var redeemButton: TransitionButton!
-    @IBOutlet private weak var withdrawButton: TransitionButton!
+    @IBOutlet public weak var redeemButton: TransitionButton!
+    @IBOutlet public weak var withdrawButton: TransitionButton!
     @IBOutlet private weak var statusLabel: UILabelPadding!
-    
-    private let alertPresenter: Presentr = {
-        let presenter = Presentr(presentationType: .alert)
-        presenter.transitionType = TransitionType.coverVerticalFromTop
-        presenter.dismissOnSwipe = true
-        return presenter
-    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -81,7 +67,7 @@ class MyGoodInvestTableViewCell: UITableViewCell, NibReusable {
             statusLabel.text = "已投资"
         }
         investLabel.attributedText = numberLabelAttribute("投资积分: ", invest.points, 4, strikethrough)
-        incomeLabel.attributedText = numberLabelAttribute("投资收益: ", invest.income, 2, strikethrough)
+        incomeLabel.attributedText = numberLabelAttribute("投资收益: ", invest.income, 4, strikethrough)
         contentView.updateConstraints()
     }
     
@@ -110,61 +96,16 @@ class MyGoodInvestTableViewCell: UITableViewCell, NibReusable {
 extension MyGoodInvestTableViewCell {
     @IBAction func redeem() {
         guard let invest = self.invest else { return }
-        if invest.redeemStatus == .redeemed {
-            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已提现", closeBtn: I18n.close.description)
-            return
-        } else if invest.redeemStatus == .withdraw {
-            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已撤回", closeBtn: I18n.close.description)
-            return
-        } else if invest.income <= 0 {
-            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资还没有收益", closeBtn: I18n.close.description)
-            return
-        }
+        self.delegate?.investRedeem(invest: invest, cell: self)
     }
     
     @IBAction func withdraw() {
         guard let invest = self.invest else { return }
-        if invest.redeemStatus == .redeemed {
-            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已提现", closeBtn: I18n.close.description)
-            return
-        } else if invest.redeemStatus == .withdraw {
-            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已撤回", closeBtn: I18n.close.description)
-            return
-        }
-        if let vc = UIViewController.currentViewController() {
-            let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "撤回投资后该投资收益将被清空，确定撤回投资？")
-            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                //
-            }
-            let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] alert in
-                guard let weakSelf = self else { return }
-                weakSelf.doWithdraw(goodId: invest.goodId!)
-            }
-            alertController.addAction(cancelAction)
-            alertController.addAction(okAction)
-            vc.customPresentViewController(self.alertPresenter, viewController: alertController, animated: true)
-        }
+        self.delegate?.investWithdraw(invest: invest, cell: self)
     }
-    
-    private func doWithdraw(goodId: UInt64) {
-        if self.withdrawing { return }
-        self.withdrawing = true
-        withdrawButton.startAnimation()
-        TMMGoodService.withdrawInvest(
-            id: goodId,
-            provider: self.goodServiceProvider)
-            .then(in: .main, {[weak self] _ in
-                guard let weakSelf = self else { return }
-                weakSelf.withdrawButton.stopAnimation(animationStyle: .normal, completion: nil)
-                weakSelf.delegate?.shouldRefresh()
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.withdrawing = false
-            }
-        )
-    }
+}
+
+public protocol MyGoodInvestTableViewCellDelegate: NSObjectProtocol {
+    func investWithdraw(invest: APIGoodInvest, cell: UITableViewCell)
+    func investRedeem(invest: APIGoodInvest, cell: UITableViewCell)
 }

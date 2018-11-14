@@ -25,6 +25,9 @@ enum I18n: CustomStringConvertible {
     case invalidCaptchaError
     case notEnoughTokenError
     case notEnoughPointsError
+    case wechatUnauthorizedError
+    case wechatPaymentError
+    case wechatOpenIdError
     case invalidMinPointsError
     case invalidMinTMMError
     case notEnoughETHError
@@ -264,6 +267,12 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InvalidMinTMMError", comment: "InvalidMinTMMError")
         case .notEnoughETHError:
             return NSLocalizedString("NotEnoughETHError", comment: "notEnoughETHError")
+        case .wechatUnauthorizedError:
+            return NSLocalizedString("WechatUnauthourizedError", comment: "WechatUnauthourizedError")
+        case .wechatPaymentError:
+            return NSLocalizedString("WechatPaymentError", comment: "wechatPaymentError")
+        case .wechatOpenIdError:
+            return NSLocalizedString("WechatOpenIdError", comment: "wechatOpenIdError")
         case .uploadImageError:
             return NSLocalizedString("UploadImageError", comment: "uploadImageError")
         case .maxQuerySchemeError:

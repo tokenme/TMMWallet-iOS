@@ -225,12 +225,13 @@ class LoginViewController: UIViewController {
                 weakSelf.dismiss(animated: true, completion: nil)
             })
         }).catch(in: .main, {[weak self] error in
+            guard let weakSelf = self else { return  }
             switch error as! TMMAPIError {
             case .ignore:
+                weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: nil)
                 return
             default: break
             }
-            guard let weakSelf = self else { return  }
             weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: nil)
             UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
         }).always(in: .main, body: {[weak self]  in

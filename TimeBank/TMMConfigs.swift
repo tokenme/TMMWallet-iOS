@@ -39,6 +39,7 @@ struct TMMConfigs {
         static let appID = "wx0a039e7ca8ba313d"
         static let appKey = "93ec8a485c885fa3d69510ef9fb1c8a9"
         static let schemes = ["weixin", "wechat"]
+        static let authLink = "https://ucoin.io/wechat/mapping"
     }
     
     struct QQ {

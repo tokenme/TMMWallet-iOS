@@ -396,7 +396,7 @@ extension ETHWalletViewController {
                 }
             }
             weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
-            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as? TMMAPIError)?.description ?? error.localizedDescription, closeBtn: I18n.close.description)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.bindingWechat = false

@@ -25,18 +25,20 @@ class GoodInvestTableHeaderView: UIView, NibOwnerLoadable {
     }
     
     public func fill(_ good: APIGood) {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let income = formatter.string(from: good.investIncome)
         if good.totalInvestors == 0 && good.investIncome == 0 {
             titleLabel.text = "还没人投资"
             return
         } else if good.investIncome == 0 {
             titleLabel.text = "还没有投资收益"
             return
+        } else if good.totalInvestors == 0 {
+            titleLabel.text = "¥\(income!) 投资收益等待瓜分"
         }
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
-        formatter.groupingSeparator = "";
-        formatter.numberStyle = NumberFormatter.Style.decimal
-        let income = formatter.string(from: good.investIncome)
         titleLabel.text = "\(good.totalInvestors)个人瓜分 ¥\(income!) 投资收益"
     }
 

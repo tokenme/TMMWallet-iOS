@@ -23,6 +23,9 @@
 "NotEnoughPointsError" = "没有足够的积分";
 "InvalidMinPointsError" = "至少需要 %@ 积分";
 "InvalidMinTMMError" = "至少需要 %@ UC";
+"WechatUnauthourizedError" = "微信未授权";
+"WechatPaymentError" = "微信支付失败";
+"WechatOpenIdError" = "获取微信OpenId失败";
 "NotEnoughETHError" = "至少需要 %@ ETH";
 "UploadImageError" = "上传图片失败";
 "MaxQuerySchemeError" = "请更新App至最新版本，否则部分应用安装任务无法验证是否成功！";

@@ -267,7 +267,7 @@ extension MyFeedbacksTableViewController {
         })
         .catch(in: .background, {[weak self] error in
             guard let weakSelf = self else { return }
-            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as? TMMAPIError)?.description ?? error.localizedDescription, closeBtn: I18n.close.description)
         }).always(in: .main, body: {[weak self] in
             guard let weakSelf = self else { return }
             weakSelf.loadingFeedbacks = false
@@ -296,7 +296,7 @@ extension MyFeedbacksTableViewController {
             })
             .catch(in: .background, {[weak self] error in
                 guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as? TMMAPIError)?.description ?? error.localizedDescription, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.sendingReply = false

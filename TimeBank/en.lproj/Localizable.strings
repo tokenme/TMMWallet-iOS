@@ -23,6 +23,9 @@
 "NotEnoughPointsError" = "Don't have enough points";
 "InvalidMinPointsError" = "Need at least %@ points";
 "InvalidMinTMMError" = "Need at least %@ UC";
+"WechatUnauthourizedError" = "Wechat Unauthorized";
+"WechatPaymentError" = "Wechat Payment Failed";
+"WechatOpenIdError" = "Failed to abtain wechat openid";
 "NotEnoughETHError" = "Need at least %@ ETH";
 "UploadImageError" = "Upload image failed";
 "MaxQuerySchemeError" = "Please upgrade to the latest version otherwise some of the app installation tasks could not be verified!";

@@ -21,6 +21,9 @@ enum TMMAPIResponseType: Int {
     case notEnoughPoints = 700
     case invalidMinPoints = 701
     case invalidMinToken = 702
+    case wechatUnauthorized = 703
+    case wechatPaymentError = 704
+    case wechatOpenIdError = 705
     case notEnoughEth = 800
     case uploadImageError = 900
     case invalidInviteCodeError = 1000
@@ -46,6 +49,9 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case notEnoughPoints
     case invalidMinPoints
     case invalidMinToken
+    case wechatUnauthorized
+    case wechatPaymentError(msg: String)
+    case wechatOpenIdError
     case notEnoughEth
     case uploadImageError
     case invalidInviteCodeError
@@ -74,6 +80,9 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .notEnoughPoints: return I18n.notEnoughPointsError.description
         case .invalidMinPoints: return I18n.invalidMinPointsError.description
         case .invalidMinToken: return I18n.invalidMinTMMError.description
+        case .wechatUnauthorized: return I18n.wechatUnauthorizedError.description
+        case .wechatPaymentError(let msg): return msg
+        case .wechatOpenIdError: return I18n.wechatOpenIdError.description
         case .notEnoughEth: return I18n.notEnoughETHError.description
         case .uploadImageError: return I18n.uploadImageError.description
         case .invalidInviteCodeError: return I18n.invalidInviteCodeError.description
@@ -124,6 +133,12 @@ extension TMMAPIError {
                 return TMMAPIError.invalidMinPoints
             case .invalidMinToken:
                 return TMMAPIError.invalidMinToken
+            case .wechatUnauthorized:
+                return TMMAPIError.wechatUnauthorized
+            case .wechatPaymentError:
+                return TMMAPIError.wechatPaymentError(msg: msg)
+            case .wechatOpenIdError:
+                return TMMAPIError.wechatOpenIdError
             case .uploadImageError:
                 return TMMAPIError.uploadImageError
             case .notEnoughEth:

@@ -44,11 +44,46 @@ class MyInvestsViewController: UIViewController {
         return presenter
     }()
     
+    lazy private var shareSheetItems: [SSUIPlatformItem] = {[weak self] in
+        var items:[SSUIPlatformItem] = []
+        for scheme in TMMConfigs.WeChat.schemes {
+            guard let url = URL(string: "\(scheme)://") else { continue}
+            if UIApplication.shared.canOpenURL(url) {
+                items.append(SSUIPlatformItem(platformType: .subTypeWechatTimeline))
+                items.append(SSUIPlatformItem(platformType: .subTypeWechatSession))
+                break
+            }
+        }
+        for item in items {
+            item.addTarget(self, action: #selector(shareItemClicked))
+        }
+        return items
+        }()
+    
+    lazy var shareParams: NSMutableDictionary = {
+        let image = UIImage(named: "Logo")
+        let shareLink = URL(string: TMMConfigs.WeChat.authLink)
+        let title = "打开完成微信支付授权"
+        let desc = "打开后点击完成微信支付授权"
+        let thumbnail = image?.kf.resize(to: CGSize(width: 300, height: 300))
+        let params = NSMutableDictionary()
+        params.ssdkSetupWeChatParams(byText: desc, title: title, url: shareLink, thumbImage: thumbnail, image: image, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .webPage, forPlatformSubType: .subTypeWechatSession)
+        params.ssdkSetupWeChatParams(byText: desc, title: title, url: shareLink, thumbImage: thumbnail, image: image, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .webPage, forPlatformSubType: .subTypeWechatTimeline)
+        return params
+    }()
+    
     private var currentPage: UInt = 1
     private var invests: [APIGoodInvest] = []
     private var loadingInvests = false
     private var loadingSummary = false
+    private var withdrawing = false
+    private var bindingWechat = false
+    private var redeeming = false
     
+    private var redeemIds: [UInt64]?
+    private var redeemCell: MyGoodInvestTableViewCell?
+    
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     private var goodServiceProvider = MoyaProvider<TMMGoodService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
     deinit {
@@ -124,6 +159,7 @@ class MyInvestsViewController: UIViewController {
                                UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
         
         summaryView.startAnimation()
+        withdrawButton.setTitle(I18n.withdraw.description, for: .normal)
     }
     
     private func setupTableView() {
@@ -157,7 +193,6 @@ class MyInvestsViewController: UIViewController {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         investLabel.text = formatter.string(from: summary.invest)
-        formatter.maximumFractionDigits = 2
         incomeLabel.text = "¥\(formatter.string(from: summary.income)!)"
     }
     
@@ -295,16 +330,283 @@ extension MyInvestsViewController {
             }
         )
     }
+    
+    @IBAction private func showRedeemAlert() {
+        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "确定要提现吗？")
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        let okAction = AlertAction(title: I18n.withdraw.description, style: .destructive) {[weak self] alert in
+            guard let weakSelf = self else { return }
+            weakSelf.tryRedeem()
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.customPresentViewController(self.alertPresenter, viewController: alertController, animated: true)
+    }
+    
+    private func tryRedeem() {
+        if self.redeemCell != nil {
+            self.redeemCell?.redeemButton.startAnimation()
+        } else {
+            withdrawButton.startAnimation()
+        }
+        async({ _ in
+            if !ShareSDK.hasAuthorized(.typeWechat) {
+                let user = try ..self.authWechat()
+                let _ = try ..self.doBindWechat(user: user)
+            }
+            let _ = try ..self.doRedeem()
+        }).then(in: .main, {[weak self] _ in
+            guard let weakSelf = self else { return }
+            weakSelf.redeemIds = nil
+            if weakSelf.redeemCell != nil {
+                weakSelf.redeemCell?.redeemButton.stopAnimation(animationStyle: .normal, completion: {[weak weakSelf] in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.redeemCell = nil
+                })
+            } else {
+                weakSelf.withdrawButton.stopAnimation(animationStyle: .normal, completion: nil)
+            }
+        }).catch(in: .main, {[weak self] error in
+            guard let weakSelf = self else { return }
+            if let err = error as? TMMAPIError {
+                switch err {
+                case .ignore:
+                    if weakSelf.redeemCell != nil {
+                        weakSelf.redeemCell?.redeemButton.stopAnimation(animationStyle: .shake, completion: nil)
+                    } else {
+                        weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
+                    }
+                    return
+                case .wechatOpenIdError:
+                    if weakSelf.redeemCell != nil {
+                        weakSelf.redeemCell?.redeemButton.stopAnimation(animationStyle: .normal, completion: nil)
+                    } else {
+                        weakSelf.withdrawButton.stopAnimation(animationStyle: .normal, completion: nil)
+                    }
+                    let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
+                    let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) {[weak weakSelf] alert in
+                        guard let weakSelf2 = weakSelf else { return }
+                        weakSelf2.redeemIds = nil
+                        weakSelf2.redeemCell = nil
+                    }
+                    let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] alert in
+                        guard let weakSelf = self else { return }
+                        weakSelf.showShareSheet()
+                    }
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(okAction)
+                    weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+                    return
+                default: break
+                }
+            }
+            weakSelf.redeemIds = nil
+            if weakSelf.redeemCell != nil {
+                weakSelf.redeemCell?.redeemButton.stopAnimation(animationStyle: .shake, completion: {[weak weakSelf] in
+                    guard let weakSelf2 = weakSelf else { return }
+                    weakSelf2.redeemCell = nil
+                })
+            } else {
+                weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
+            }
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as? TMMAPIError)?.description ?? error.localizedDescription, closeBtn: I18n.close.description)
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.bindingWechat = false
+            weakSelf.redeeming = false
+        })
+    }
+    
+    private func doBindWechat(user: SSDKUser) -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.bindingWechat {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.bindingWechat = true
+            guard let rawInfo = user.rawData else { return }
+            guard let openId = rawInfo["openid"] as? String else { return }
+            TMMUserService.bindWechatInfo(
+                unionId: user.uid,
+                openId: openId,
+                nick: user.nickname,
+                avatar: user.icon,
+                gender: user.gender,
+                accessToken: user.credential.token,
+                expires: user.credential.expired,
+                provider: weakSelf.userServiceProvider)
+                .then(in: .background, { _ in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
+    
+    private func authWechat() -> Promise<SSDKUser> {
+        return Promise<SSDKUser> (in: .background, { resolve, reject, _ in
+            ShareSDK.authorize(.typeWechat, settings: nil) { (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+                switch state {
+                case .success:
+                    guard let userInfo = user else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    resolve(userInfo)
+                case .fail:
+                    guard let err = error else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    reject(err)
+                default:
+                    reject(TMMAPIError.ignore)
+                }
+            }
+        })
+    }
+    
+    private func doRedeem() -> Promise<APIResponse> {
+        return Promise<APIResponse> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.redeeming {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.redeeming = true
+            TMMGoodService.redeemInvest(
+                ids: weakSelf.redeemIds,
+                provider: weakSelf.goodServiceProvider)
+                .then(in: .background, { resp  in
+                    resolve(resp)
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
+}
+
+extension MyInvestsViewController {
+    private func showShareSheet() {
+        ShareSDK.showShareActionSheet(self.view, customItems: shareSheetItems as [Any], shareParams: shareParams, sheetConfiguration: nil){[weak self] (state, platformType, userData, contentEntity, error, end) in
+            guard let weakSelf = self else { return }
+            switch (state) {
+            case SSDKResponseState.success:
+                weakSelf.tryRedeem()
+                //UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: "", closeBtn: I18n.close.description, viewController: weakSelf)
+            case SSDKResponseState.fail:
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error?.localizedDescription ?? "", closeBtn: I18n.close.description, viewController: weakSelf)
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    @objc func shareItemClicked(_ item: SSUIPlatformItem) {
+        var platform: SSDKPlatformType?
+        switch item.platformName {
+        case SSUIPlatformItem(platformType: .subTypeWechatTimeline)?.platformName:
+            platform = .subTypeWechatTimeline
+            break
+        case SSUIPlatformItem(platformType: .subTypeWechatSession)?.platformName:
+            platform = .subTypeWechatSession
+            break
+        default:
+            break
+        }
+        if let platformType = platform {
+            ShareSDK.share(platformType, parameters: shareParams) {[weak self] (state, userData, contentEntity, error) in
+                guard let weakSelf = self else { return }
+                switch (state) {
+                case SSDKResponseState.success:
+                    weakSelf.tryRedeem()
+                    //UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: I18n.shareSuccess.description, closeBtn: I18n.close.description, viewController: weakSelf)
+                case SSDKResponseState.fail:
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: error?.localizedDescription ?? "", closeBtn: I18n.close.description, viewController: weakSelf)
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+}
+
+extension MyInvestsViewController: MyGoodInvestTableViewCellDelegate {
+    func investWithdraw(invest: APIGoodInvest, cell: UITableViewCell) {
+        guard let currentCell = cell as? MyGoodInvestTableViewCell else { return }
+        if invest.redeemStatus == .redeemed {
+            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已提现", closeBtn: I18n.close.description)
+            return
+        } else if invest.redeemStatus == .withdraw {
+            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已撤回", closeBtn: I18n.close.description)
+            return
+        }
+        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "撤回投资后该投资收益将被清空，确定撤回投资？")
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+            //
+        }
+        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] alert in
+            guard let weakSelf = self else { return }
+            weakSelf.doWithdraw(goodId: invest.goodId!, cell: currentCell)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.customPresentViewController(self.alertPresenter, viewController: alertController, animated: true)
+    }
+    
+    private func doWithdraw(goodId: UInt64, cell: MyGoodInvestTableViewCell) {
+        if self.withdrawing { return }
+        self.withdrawing = true
+        cell.withdrawButton.startAnimation()
+        TMMGoodService.withdrawInvest(
+            id: goodId,
+            provider: self.goodServiceProvider)
+            .then(in: .main, {[weak self] _ in
+                guard let weakSelf = self else { return }
+                cell.withdrawButton.stopAnimation(animationStyle: .normal, completion: nil)
+                weakSelf.refresh()
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.withdrawing = false
+            }
+        )
+    }
+    
+    func investRedeem(invest: APIGoodInvest, cell: UITableViewCell) {
+        if invest.redeemStatus == .redeemed {
+            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已提现", closeBtn: I18n.close.description)
+            return
+        } else if invest.redeemStatus == .withdraw {
+            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已撤回", closeBtn: I18n.close.description)
+            return
+        } else if invest.income <= 0 {
+            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资还没有收益", closeBtn: I18n.close.description)
+            return
+        }
+        guard let goodId = invest.goodId else { return }
+        self.redeemIds = [goodId]
+        self.redeemCell = cell as? MyGoodInvestTableViewCell
+        self.showRedeemAlert()
+    }
 }
 
 extension MyInvestsViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
-        self.refresh()
-    }
-}
-
-extension MyInvestsViewController: ViewUpdateDelegate {
-    func shouldRefresh() {
         self.refresh()
     }
 }
