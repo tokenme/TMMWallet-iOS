@@ -15,6 +15,8 @@ import ZHRefresh
 import SkeletonView
 import ViewAnimator
 import Presentr
+import Haptica
+import Peep
 
 class DeviceAppsViewController: UIViewController {
     
@@ -449,7 +451,7 @@ extension DeviceAppsViewController {
     
     private func showExchangeForm(_ rate: APIExchangeRate, _ points: NSDecimalNumber, _ direction: APIExchangeDirection) {
         guard let device = self.device else { return }
-        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device, direction: direction)
+        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device, tmmBalance: self.tmm?.balance ?? 0, direction: direction)
         vc.delegate = self
         customPresentViewController(exchangePresenter, viewController: vc, animated: true, completion: nil)
     }
@@ -566,6 +568,8 @@ extension DeviceAppsViewController {
 extension DeviceAppsViewController: TransactionDelegate {
     func newTransaction(tx: APITransaction) {
         guard let receipt = tx.receipt else { return }
+        let _ = Haptic.notification(.success)
+        Peep.play(sound: AlertTone.complete)
         self.delegate?.shouldRefresh()
         let message = String(format: I18n.newTransactionDesc.description, receipt)
         let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)

@@ -39,6 +39,8 @@ target 'TimeBank' do
   pod 'IKEventSource', :git=>'https://github.com/inaka/EventSource.git', :tag=>'2.2.0'
   pod 'FlexibleSteppedProgressBar', :git=>'https://github.com/tokenme/FlexibleSteppedProgressBar.git', :tag=>'0.5.1'
   pod 'SnapKit'
+  pod 'Haptica'
+  pod 'Peep'
   pod 'mob_sharesdk'
   pod 'mob_sharesdk/ShareSDKUI'
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'

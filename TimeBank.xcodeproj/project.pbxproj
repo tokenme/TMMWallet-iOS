@@ -172,7 +172,7 @@
 		1D3E42CB219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42C9219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift */; };
 		1D3E42CC219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42CA219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib */; };
 		1D3E42CF219C34EB0014CEB1 /* InviteImagePresentrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42CD219C34EB0014CEB1 /* InviteImagePresentrViewController.swift */; };
-		1D3E42D0219C34EB0014CEB1 /* InviteImagePresentrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42CE219C34EB0014CEB1 /* InviteImagePresentrViewController.xib */; };
+		1D3E42D2219D591A0014CEB1 /* InviteImagePresentrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42D1219D591A0014CEB1 /* InviteImagePresentrViewController.xib */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -399,7 +399,7 @@
 		1D3E42C9219A94B00014CEB1 /* MyGoodInvestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGoodInvestTableViewCell.swift; sourceTree = "<group>"; };
 		1D3E42CA219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyGoodInvestTableViewCell.xib; sourceTree = "<group>"; };
 		1D3E42CD219C34EB0014CEB1 /* InviteImagePresentrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteImagePresentrViewController.swift; sourceTree = "<group>"; };
-		1D3E42CE219C34EB0014CEB1 /* InviteImagePresentrViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteImagePresentrViewController.xib; sourceTree = "<group>"; };
+		1D3E42D1219D591A0014CEB1 /* InviteImagePresentrViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteImagePresentrViewController.xib; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -1051,7 +1051,7 @@
 				1D297DAE2191A35F001C7CF7 /* InviteImageViewController.swift */,
 				1D297DAF2191A35F001C7CF7 /* InviteImageViewController.xib */,
 				1D3E42CD219C34EB0014CEB1 /* InviteImagePresentrViewController.swift */,
-				1D3E42CE219C34EB0014CEB1 /* InviteImagePresentrViewController.xib */,
+				1D3E42D1219D591A0014CEB1 /* InviteImagePresentrViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1176,7 +1176,7 @@
 				1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
-				1D3E42D0219C34EB0014CEB1 /* InviteImagePresentrViewController.xib in Resources */,
+				1D3E42D2219D591A0014CEB1 /* InviteImagePresentrViewController.xib in Resources */,
 				1D3E42C62195B90B0014CEB1 /* GoodInvestTableHeaderView.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */,
@@ -1275,6 +1275,7 @@
 				"${BUILT_PRODUCTS_DIR}/FlexibleSteppedProgressBar/FlexibleSteppedProgressBar.framework",
 				"${BUILT_PRODUCTS_DIR}/GrandTime/GrandTime.framework",
 				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
+				"${BUILT_PRODUCTS_DIR}/Haptica/Haptica.framework",
 				"${BUILT_PRODUCTS_DIR}/HydraAsync/Hydra.framework",
 				"${BUILT_PRODUCTS_DIR}/IKEventSource/IKEventSource.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -1285,6 +1286,7 @@
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework",
+				"${BUILT_PRODUCTS_DIR}/Peep/Peep.framework",
 				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Presentr/Presentr.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
@@ -1325,6 +1327,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleSteppedProgressBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrandTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haptica.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hydra.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IKEventSource.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
@@ -1335,6 +1338,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pastel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Peep.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Presentr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",

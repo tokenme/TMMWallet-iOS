@@ -12,6 +12,7 @@ import Moya
 import Hydra
 import TMMSDK
 import Presentr
+import Haptica
 
 class TMMRedeemViewController: UIViewController {
     weak public var delegate: RedeemDelegate?
@@ -122,6 +123,7 @@ extension TMMRedeemViewController {
                 if let err = error as? TMMAPIError {
                     switch err {
                     case .wechatOpenIdError:
+                        let _ = Haptic.notification(.warning)
                         weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
                         let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
                         let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in

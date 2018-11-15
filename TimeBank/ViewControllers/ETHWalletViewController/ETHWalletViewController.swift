@@ -16,6 +16,8 @@ import SkeletonView
 import ViewAnimator
 import Presentr
 import SwipeCellKit
+import Haptica
+import Peep
 
 class ETHWalletViewController: UIViewController {
     
@@ -533,6 +535,8 @@ extension ETHWalletViewController: ScanViewDelegate {
 
 extension ETHWalletViewController: RedeemDelegate {
     func redeemSuccess(resp: APITMMWithdraw) {
+        let _ = Haptic.notification(.success)
+        Peep.play(sound: AlertTone.complete)
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";

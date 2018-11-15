@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Kingfisher
+import SnapKit
 
 class InviteImagePresentrViewController: UIViewController {
     
     @IBOutlet private weak var imageView: UIImageView!
-    private var image: UIImage?
+    private weak var image: UIImage?
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -19,7 +21,7 @@ class InviteImagePresentrViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = self.image
+        self.imageView.image = self.image
     }
     
     public func setImage(img: UIImage) {

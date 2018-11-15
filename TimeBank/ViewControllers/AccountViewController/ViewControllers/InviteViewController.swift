@@ -39,7 +39,22 @@ class InviteViewController: UIViewController {
     
     private let inviteImagePresentr = InviteImagePresentrViewController()
     
-    private var shareImage: UIImage?
+    lazy private var inviteImageController: InviteImageViewController? = {[weak self] in
+        let vc = InviteImageViewController()
+        vc.view.isHidden = true
+        self?.view.addSubview(vc.view)
+        vc.view.snp.remakeConstraints {(maker) -> Void in
+            maker.leading.equalToSuperview().offset(16)
+            maker.trailing.equalToSuperview().offset(-16)
+            maker.top.equalTo(topLayoutGuide.snp.bottom).offset(16)
+            maker.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-16)
+        }
+        return vc
+    }()
+    
+    lazy private var shareImage: UIImage? = {[weak self] in
+        return self?.inviteImageController?.containerView.asImage()
+    }()
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -64,18 +79,6 @@ class InviteViewController: UIViewController {
         inviteButton.layer.shadowOpacity = 0.42
         inviteButton.layer.shadowRadius = 6
         inviteButton.layer.shadowColor = UIColor.black.cgColor
-        let inviteImageController = InviteImageViewController()
-        inviteImageController.view.isHidden = true
-        view.addSubview(inviteImageController.view)
-        inviteImageController.view.snp.remakeConstraints {(maker) -> Void in
-            maker.leading.equalToSuperview().offset(16)
-            maker.trailing.equalToSuperview().offset(-16)
-            maker.top.equalTo(topLayoutGuide.snp.bottom).offset(16)
-            maker.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-16)
-        }
-        shareImage = inviteImageController.containerView.asImage()
-        guard let img = shareImage else { return }
-        inviteImagePresentr.setImage(img: img)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,6 +103,8 @@ class InviteViewController: UIViewController {
     }
     
     @IBAction private func showShareImage() {
+        guard let img = shareImage else { return }
+        self.inviteImagePresentr.setImage(img: img)
         customPresentViewController(invitePresenter, viewController: inviteImagePresentr, animated: true, completion: {[weak self] in
             self?.showShareSheet()
         })

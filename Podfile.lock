@@ -27,6 +27,7 @@ PODS:
   - FlexibleSteppedProgressBar (0.5.1)
   - GrandTime (1.3.0)
   - HappyDNS (0.3.14)
+  - Haptica (2.2.1)
   - HydraAsync (1.2.1)
   - IKEventSource (2.1.0)
   - IQKeyboardManagerSwift (6.1.1)
@@ -78,6 +79,7 @@ PODS:
   - ObjectMapper (3.3.0)
   - Pageboy (2.6.0)
   - Pastel (0.5.1)
+  - Peep (2.1.2)
   - PhoneNumberKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.1.0)
     - PhoneNumberKit/UIKit (= 2.1.0)
@@ -123,6 +125,7 @@ DEPENDENCIES:
   - EmptyDataSet-Swift (~> 4.2)
   - FlexibleSteppedProgressBar (from `https://github.com/tokenme/FlexibleSteppedProgressBar.git`, tag `0.5.1`)
   - GrandTime
+  - Haptica
   - HydraAsync
   - IKEventSource (from `https://github.com/inaka/EventSource.git`, tag `2.2.0`)
   - IQKeyboardManagerSwift
@@ -144,6 +147,7 @@ DEPENDENCIES:
   - Moya
   - ObjectMapper
   - Pastel (from `https://github.com/cruisediary/Pastel.git`, tag `0.5.1`)
+  - Peep
   - PhoneNumberKit
   - Presentr
   - Qiniu
@@ -177,6 +181,7 @@ SPEC REPOS:
     - FadeView
     - GrandTime
     - HappyDNS
+    - Haptica
     - HydraAsync
     - IQKeyboardManagerSwift
     - Kingfisher
@@ -188,6 +193,7 @@ SPEC REPOS:
     - Moya
     - ObjectMapper
     - Pageboy
+    - Peep
     - PhoneNumberKit
     - Presentr
     - PureLayout
@@ -275,6 +281,7 @@ SPEC CHECKSUMS:
   FlexibleSteppedProgressBar: 7385d2cfa13265b37327098c2918d4b1fd2f8676
   GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
   HappyDNS: dc6a164ee81979093123c241c6353bcf0218add6
+  Haptica: 754e5879991be64bd8d47b21cb1862d052624ec4
   HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
   IKEventSource: eeb589b05053ac0e1314dea015f5a8d3c3cb24ab
   IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
@@ -288,6 +295,7 @@ SPEC CHECKSUMS:
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Pageboy: 1a5535f0d5a321045971cc2ddc6bcb53302392cb
   Pastel: b3dd5b8d612dac06ae7c63c97c45c900829bc139
+  Peep: adfea4fc564a121ec467bfa5f7edd2f9b3c4de27
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
   Presentr: 797ae6ec8904eaba4ec58a4c2065bd66e31569ea
   PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
@@ -310,6 +318,6 @@ SPEC CHECKSUMS:
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 738d2cb224e52f4c6a97314fa2e9a9a988c27a5d
+PODFILE CHECKSUM: 64e1f681b95083ab1a6c2752be8d788a3ddd7047
 
 COCOAPODS: 1.6.0.beta.1

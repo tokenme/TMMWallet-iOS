@@ -10,6 +10,7 @@ import UIKit
 import Moya
 import Hydra
 import TMMSDK
+import Haptica
 import Presentr
 
 class PointsTMMExchangeViewController: UIViewController {
@@ -24,6 +25,7 @@ class PointsTMMExchangeViewController: UIViewController {
     private var isChanging = false
     private var changeRate: APIExchangeRate?
     private var device: APIDevice?
+    private var tmmBalance: NSDecimalNumber?
     private var direction: APIExchangeDirection?
     
     private let alertPresenter: Presentr = {
@@ -39,11 +41,12 @@ class PointsTMMExchangeViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    convenience init(changeRate: APIExchangeRate, device: APIDevice, direction: APIExchangeDirection) {
+    convenience init(changeRate: APIExchangeRate, device: APIDevice, tmmBalance: NSDecimalNumber, direction: APIExchangeDirection) {
         self.init()
         self.changeRate = changeRate
         self.device = device
         self.direction = direction
+        self.tmmBalance = tmmBalance
     }
     
     override func viewDidLoad() {
@@ -74,15 +77,21 @@ class PointsTMMExchangeViewController: UIViewController {
 }
 
 extension PointsTMMExchangeViewController {
+    
     private func verifyPoints() -> Bool {
+        guard let rate = changeRate?.rate else { return false }
+        guard let direction = self.direction else { return false }
         guard let points = self.device?.points else { return false }
         let changePoints = NSDecimalNumber.init(string: amountTextField.text)
         if changePoints <= 0 {
             self.amountTextField.showInfo(I18n.emptyChangePoints.description)
             return false
         }
-        if changePoints > points {
+        let tmmAmount = changePoints.multiplying(by: rate)
+        if direction == .TMMIn && changePoints > points {
             self.amountTextField.showInfo(I18n.exceedChangePoints.description)
+            return false
+        } else if direction == .TMMOut && tmmAmount > tmmBalance ?? 0 {
             return false
         }
         guard let minPoints = self.changeRate?.minPoints else { return false }
@@ -107,7 +116,10 @@ extension PointsTMMExchangeViewController {
         }
         guard let deviceId = device?.id else { return }
         guard let direction = self.direction else { return }
-        if !self.verifyPoints() { return }
+        if !self.verifyPoints() {
+            let _ = Haptic.notification(.error)
+            return
+        }
         let changePoints = NSDecimalNumber.init(string: amountTextField.text)
         if changePoints.isNaN() { return }
         

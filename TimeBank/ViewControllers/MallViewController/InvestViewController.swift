@@ -11,6 +11,8 @@ import Moya
 import Hydra
 import TMMSDK
 import Presentr
+import Haptica
+import Peep
 
 class InvestViewController: UIViewController {
     
@@ -114,11 +116,15 @@ extension InvestViewController {
             provider: self.goodServiceProvider)
             .then(in: .main, {[weak self] _ in
                 guard let weakSelf = self else { return }
+                let _ = Haptic.notification(.success)
+                Peep.play(sound: AlertTone.complete)
                 weakSelf.investBtn.stopAnimation(animationStyle: .normal, completion: nil)
                 weakSelf.delegate?.shouldRefresh()
                 weakSelf.dismiss(animated: true, completion: nil)
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
+                let _ = Haptic.notification(.error)
+                Peep.play(sound: AlertTone.alert)
                 weakSelf.investBtn.stopAnimation(animationStyle: .shake, completion: nil)
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             }).always(in: .main, body: {[weak self] in
