@@ -9,6 +9,7 @@
 import UIKit
 import Presentr
 import SnapKit
+import Kingfisher
 
 class InviteViewController: UIViewController {
     
@@ -44,10 +45,10 @@ class InviteViewController: UIViewController {
         vc.view.isHidden = true
         self?.view.addSubview(vc.view)
         vc.view.snp.remakeConstraints {(maker) -> Void in
-            maker.leading.equalToSuperview().offset(16)
-            maker.trailing.equalToSuperview().offset(-16)
-            maker.top.equalTo(topLayoutGuide.snp.bottom).offset(16)
-            maker.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-16)
+            maker.leading.equalToSuperview()
+            maker.trailing.equalToSuperview()
+            maker.top.equalTo(topLayoutGuide.snp.bottom)
+            maker.bottom.equalTo(bottomLayoutGuide.snp.top)
         }
         return vc
     }()
@@ -168,11 +169,6 @@ class InviteViewController: UIViewController {
                 break
             }
         }
-        let moreItem = SSUIPlatformItem(platformType: SSDKPlatformType.typeAny)
-        moreItem?.iconNormal = UIImage(named: "More")
-        moreItem?.iconSimple = UIImage(named: "More")
-        moreItem?.platformName = I18n.more.description
-        items.append(moreItem!)
         for item in items {
             item.addTarget(self, action: #selector(shareItemClicked))
         }
@@ -181,15 +177,16 @@ class InviteViewController: UIViewController {
     
     lazy var shareParams: NSMutableDictionary = {
         let params = NSMutableDictionary()
-        params.ssdkSetupShareParams(byText: nil, images: shareImage, url: nil, title: nil, type: .image)
-        params.ssdkSetupWeChatParams(byText: nil, title: nil, url: nil, thumbImage: nil, image: shareImage, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .image, forPlatformSubType: .subTypeWechatSession)
-        params.ssdkSetupWeChatParams(byText: nil, title: nil, url: nil, thumbImage: nil, image: shareImage, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .image, forPlatformSubType: .subTypeWechatTimeline)
-        params.ssdkSetupSinaWeiboShareParams(byText: nil, title: nil, images: shareImage, video: nil, url: nil, latitude: 0, longitude: 0, objectID: nil, isShareToStory: true, type: .webPage)
-        params.ssdkSetupFacebookParams(byText: nil, image: shareImage, url: nil, urlTitle: nil, urlName: TMMConfigs.Facebook.displayName, attachementUrl: nil, hashtag: "UCoin", quote: nil, type: .image)
-        params.ssdkSetupTwitterParams(byText: nil, images: shareImage, video: nil, latitude: 0, longitude: 0, type: .image)
-        params.ssdkSetupQQParams(byText: nil, title: nil, url: nil, audioFlash: nil, videoFlash: nil, thumbImage: nil, images: shareImage, type: .image, forPlatformSubType: .subTypeQZone)
-        params.ssdkSetupQQParams(byText: nil, title: nil, url: nil, audioFlash: nil, videoFlash: nil, thumbImage: nil, images: shareImage, type: .image, forPlatformSubType: .subTypeQQFriend)
-        params.ssdkSetupTelegramParams(byText: nil, image: shareImage, audio: nil, video: nil, file: nil, menuDisplay: CGPoint.zero, type: .auto)
+        guard let img = self.shareImage?.kf.resize(to: CGSize(width: 500, height: 500), for: .aspectFit) else { return params }
+        params.ssdkSetupShareParams(byText: nil, images: img, url: nil, title: nil, type: .image)
+        params.ssdkSetupWeChatParams(byText: nil, title: nil, url: nil, thumbImage: img, image: img, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .image, forPlatformSubType: .subTypeWechatSession)
+        params.ssdkSetupWeChatParams(byText: nil, title: nil, url: nil, thumbImage: img, image: img, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .image, forPlatformSubType: .subTypeWechatTimeline)
+        params.ssdkSetupSinaWeiboShareParams(byText: nil, title: nil, images: img, video: nil, url: nil, latitude: 0, longitude: 0, objectID: nil, isShareToStory: true, type: .image)
+        params.ssdkSetupFacebookParams(byText: nil, image: img, url: nil, urlTitle: nil, urlName: TMMConfigs.Facebook.displayName, attachementUrl: nil, hashtag: "UCoin", quote: nil, type: .image)
+        params.ssdkSetupTwitterParams(byText: nil, images: img, video: nil, latitude: 0, longitude: 0, type: .image)
+        params.ssdkSetupQQParams(byText: nil, title: nil, url: nil, audioFlash: nil, videoFlash: nil, thumbImage: img, images: img, type: .image, forPlatformSubType: .subTypeQZone)
+        params.ssdkSetupQQParams(byText: nil, title: nil, url: nil, audioFlash: nil, videoFlash: nil, thumbImage: img, images: img, type: .image, forPlatformSubType: .subTypeQQFriend)
+        params.ssdkSetupTelegramParams(byText: nil, image: img, audio: nil, video: nil, file: nil, menuDisplay: CGPoint.zero, type: .image)
         return params
     }()
 }
@@ -241,26 +238,10 @@ extension InviteViewController {
         case SSUIPlatformItem(platformType: .typeTelegram)?.platformName:
             platform = .typeTelegram
             break
-        case I18n.more.description:
-            platform = .typeAny
         default:
             break
         }
         if let platformType = platform {
-            if platformType == .typeAny {
-                guard let image = shareImage else {
-                    return
-                }
-                let activityItems: [Any] = [image]
-                let activityController: UIActivityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-                activityController.excludedActivityTypes = [
-                    UIActivity.ActivityType.copyToPasteboard,
-                    UIActivity.ActivityType.assignToContact,
-                    UIActivity.ActivityType.addToReadingList
-                ]
-                present(activityController, animated: true, completion: nil)
-                return
-            }
             ShareSDK.share(platformType, parameters: shareParams) {[weak self] (state, userData, contentEntity, error) in
                 guard let weakSelf = self else { return }
                 switch (state) {
@@ -272,6 +253,7 @@ extension InviteViewController {
                 default:
                     break
                 }
+                weakSelf.inviteImagePresentr.dismiss(animated: true, completion: nil)
             }
         }
     }

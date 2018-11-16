@@ -9,9 +9,11 @@
 import UIKit
 import Reusable
 import SwipeCellKit
+import TMMSDK
 
 class DeviceTableViewCell: SwipeTableViewCell, NibReusable {
     
+    @IBOutlet private weak var currentDeviceMark: UIView!
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var tsLabel: UILabel!
@@ -26,6 +28,9 @@ class DeviceTableViewCell: SwipeTableViewCell, NibReusable {
         let flashImage = UIImage(named:"Flash")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         pointsImageView.image = pointsImage
         growthFactorImageView.image = flashImage
+        currentDeviceMark.layer.cornerRadius = currentDeviceMark.frame.width / 2.0
+        currentDeviceMark.layer.borderWidth = 0
+        currentDeviceMark.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -55,5 +60,6 @@ class DeviceTableViewCell: SwipeTableViewCell, NibReusable {
         formatterGf.groupingSeparator = "";
         formatterGf.numberStyle = NumberFormatter.Style.decimal
         growthFactorLabel.text = formatterGf.string(from: device.growthFactor)
+        currentDeviceMark.isHidden = TMMBeacon.shareInstance()?.deviceId() != device.idfa
     }
 }
