@@ -36,6 +36,13 @@ class TMMWebViewController: UIViewController {
         return tmpWebView
     }()
     
+    private let alertPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .alert)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
+    
     lazy private var toolbarView: DynamicBlurView = {[weak self] in
         let blurOverlay = DynamicBlurView()
         blurOverlay.blurRatio = 0.5
@@ -88,7 +95,7 @@ class TMMWebViewController: UIViewController {
         shareButton.setTitle(I18n.shareEarnPoints.description, for: .normal)
         shareButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         shareButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        shareButton.addTarget(self, action: #selector(showShareSheet), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(showShareSheetAlert), for: .touchUpInside)
         shareButton.titleLabel?.adjustsFontSizeToFitWidth = true
         shareButton.titleLabel?.minimumScaleFactor = 0.5
         stackView.addArrangedSubview(shareButton)
@@ -268,13 +275,6 @@ class TMMWebViewController: UIViewController {
     
     fileprivate var progressView: UIProgressView!
     
-    private let alertPresenter: Presentr = {
-        let presenter = Presentr(presentationType: .alert)
-        presenter.transitionType = TransitionType.coverVerticalFromTop
-        presenter.dismissOnSwipe = true
-        return presenter
-    }()
-    
     private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
     
@@ -401,6 +401,31 @@ class TMMWebViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @objc func showShareSheetAlert() {
+        if let task = self.shareItem?.task {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 4
+            formatter.groupingSeparator = "";
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
+            let formattedMaxBonus: String = formatter.string(from: maxBonus)!
+            let msg = String(format: I18n.toShareAlert.description, formatter.string(from: task.bonus)!, formattedMaxBonus)
+            let alertController = Presentr.alertViewController(title: I18n.alert.description, body: msg)
+            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
+                //
+            }
+            let okAction = AlertAction(title: I18n.toShare.description, style: .destructive) {[weak self] alert in
+                guard let weakSelf = self else { return }
+                weakSelf.showShareSheet()
+            }
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            self.customPresentViewController(self.alertPresenter, viewController: alertController, animated: true)
+            return
+        }
+        self.showShareSheet()
     }
     
     @objc func showShareSheet() {

@@ -16,10 +16,12 @@ enum I18n: CustomStringConvertible {
     case close
     case shareSuccess
     case more
+    case toShare
     case unknownError
     case notFoundError
     case unauthorizedError
     case invalidPasswordError
+    case invalidPasswordLengthError
     case duplicateUserError
     case inactivatedUserError
     case invalidCaptchaError
@@ -166,6 +168,7 @@ enum I18n: CustomStringConvertible {
     case shareEarnPoints
     case approximateTime
     case getPointsReward
+    case toShareAlert
     case account
     case signout
     case myInviteCode
@@ -243,6 +246,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ShareSuccess", comment: "Share Success")
         case .more:
             return NSLocalizedString("More", comment: "More")
+        case .toShare:
+            return NSLocalizedString("ToShare", comment: "To Share")
         case .unknownError:
             return NSLocalizedString("UnknownError", comment: "Unknown Error")
         case .notFoundError:
@@ -251,6 +256,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("UnauthorizedError", comment: "Unauthorized")
         case .invalidPasswordError:
             return NSLocalizedString("InvalidPasswordError", comment: "Invalid Password")
+        case .invalidPasswordLengthError:
+            return NSLocalizedString("InvalidPasswordLengthError", comment: "InvalidPasswordLengthError")
         case .duplicateUserError:
             return NSLocalizedString("DuplicateUserError", comment: "User already exists!")
         case .inactivatedUserError:
@@ -543,6 +550,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ApproximateTime", comment: "ApproximateTime")
         case .getPointsReward:
             return NSLocalizedString("GetPointsReward", comment: "GetPointsReward")
+        case .toShareAlert:
+            return NSLocalizedString("ToShareAlert", comment: "ToShareAlert")
         case .account:
             return NSLocalizedString("Account", comment: "account")
         case .signout:

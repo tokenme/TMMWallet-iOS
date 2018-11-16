@@ -11,10 +11,12 @@
 "Alert" = "提示";
 "Confirm" = "确认";
 "Close" = "关闭";
+"ToShare" = "去分享";
 "UnknownError" = "未知错误";
 "NotFoundError" = "请求不存在";
 "UnauthorizedError" = "用户未授权";
 "InvalidPasswordError" = "密码错误";
+"InvalidPasswordLengthError" = "密码长度请大于等于8位，小于等于32位";
 "DuplicateUserError" = "用户已经注册";
 "InactivatedUserError" = "用户未激活";
 "InvalidCaptchaError" = "人机验证失败";
@@ -172,6 +174,7 @@
 "ShareEarnPoints" = "分享赚积分";
 "ApproximateTime" = "全文阅读 %@，预计获得 %@ 积分";
 "GetPointsReward" = "赚 %@ 积分";
+"ToShareAlert" = "分享后每个用户浏览您可以获得 %@ 积分，本次分享最多获得 %@ 积分。";
 
 // Account
 "Account" = "账户";

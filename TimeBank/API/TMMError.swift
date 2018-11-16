@@ -14,6 +14,7 @@ enum TMMAPIResponseType: Int {
     case featureNotAvailable = 402
     case invalidPassword = 409
     case invalidCaptchaError = 408
+    case invalidPasswordLength = 407
     case duplicateUser = 202
     case unactivatedUser = 502
     case notEnoughToken = 600
@@ -41,6 +42,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
     case unauthorized
     case featureNotAvailable
     case invalidPassword
+    case invalidPasswordLength
     case invalidCaptchaError
     case duplicateUser
     case unactivatedUser
@@ -72,6 +74,7 @@ enum TMMAPIError: Error, CustomStringConvertible {
         case .unauthorized: return I18n.unauthorizedError.description
         case .featureNotAvailable: return I18n.featureNotAvailableError.description
         case .invalidPassword: return I18n.invalidPasswordError.description
+        case .invalidPasswordLength: return I18n.invalidPasswordLengthError.description
         case .duplicateUser: return I18n.duplicateUserError.description
         case .unactivatedUser: return I18n.inactivatedUserError.description
         case .invalidCaptchaError: return I18n.invalidCaptchaError.description
@@ -117,6 +120,8 @@ extension TMMAPIError {
                 return TMMAPIError.featureNotAvailable
             case .invalidPassword:
                 return TMMAPIError.invalidPassword
+            case .invalidPasswordLength:
+                return TMMAPIError.invalidPasswordLength
             case .duplicateUser:
                 return TMMAPIError.duplicateUser
             case .unactivatedUser:

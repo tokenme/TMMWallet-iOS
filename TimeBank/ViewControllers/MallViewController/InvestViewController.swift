@@ -116,11 +116,13 @@ extension InvestViewController {
             provider: self.goodServiceProvider)
             .then(in: .main, {[weak self] _ in
                 guard let weakSelf = self else { return }
-                let _ = Haptic.notification(.success)
-                Peep.play(sound: AlertTone.complete)
                 weakSelf.investBtn.stopAnimation(animationStyle: .normal, completion: nil)
-                weakSelf.delegate?.shouldRefresh()
-                weakSelf.dismiss(animated: true, completion: nil)
+                weakSelf.dismiss(animated: true, completion: {[weak weakSelf] in
+                    guard let weakSelf2 = weakSelf else { return }
+                    let _ = Haptic.notification(.success)
+                    Peep.play(sound: AlertTone.complete)
+                    weakSelf2.delegate?.shouldRefresh()
+                })
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 let _ = Haptic.notification(.error)

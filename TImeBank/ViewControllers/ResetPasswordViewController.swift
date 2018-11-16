@@ -212,22 +212,34 @@ extension ResetPasswordViewController {
     }
     
     fileprivate func verifyPassword() -> Bool {
-        if (self.passwordTextfield.text == "") {
-            self.passwordTextfield.showInfo(I18n.emptyPassword.description)
-            return false
+        if let passwd = self.passwordTextfield.text {
+            if (passwd == "") {
+                self.passwordTextfield.showInfo(I18n.emptyPassword.description)
+                return false
+            }
+            if (passwd.count < 8 || passwd.count > 32) {
+                self.passwordTextfield.showInfo(I18n.invalidPasswordLengthError.description)
+                return false
+            }
+            return true
         }
-        return true
+        self.passwordTextfield.showInfo(I18n.emptyPassword.description)
+        return false
     }
     
     fileprivate func verifyRepassword() -> Bool {
-        if self.repasswordTextfield.text == "" {
-            self.repasswordTextfield.showInfo(I18n.emptyRepassword.description)
-            return false
-        } else if (self.repasswordTextfield.text != self.passwordTextfield.text) {
-            self.repasswordTextfield.showInfo(I18n.passwordNotMatch.description)
-            return false
+        if let passwd = self.repasswordTextfield.text {
+            if passwd == "" {
+                self.repasswordTextfield.showInfo(I18n.emptyRepassword.description)
+                return false
+            } else if (passwd != self.passwordTextfield.text) {
+                self.repasswordTextfield.showInfo(I18n.passwordNotMatch.description)
+                return false
+            }
+            return true
         }
-        return true
+        self.repasswordTextfield.showInfo(I18n.emptyRepassword.description)
+        return false
     }
 }
 

@@ -11,10 +11,12 @@
 "Alert" = "Alert";
 "Confirm" = "Confirm";
 "Close" = "Close";
+"ToShare" = "To Share";
 "UnknownError" = "Unknown Error";
 "NotFoundError" = "Not Found Request";
 "UnauthorizedError" = "Unauthorized";
 "InvalidPasswordError" = "Invalid Password";
+"InvalidPasswordLengthError" = "password length must between 8-32";
 "DuplicateUserError" = "User Already Exists";
 "InactivatedUserError" = "User not activated";
 "InvalidCaptchaError" = "Invalid Captcha";
@@ -172,6 +174,7 @@
 "ShareEarnPoints" = "Share to get Points";
 "ApproximateTime" = "Approximate %@ to read，get %@ Points bonus";
 "GetPointsReward" = "Got %@ Points";
+"ToShareAlert" = "You could get %@ points after share for every unique viewer, and you could get %@ points in maximum.";
 
 // Account
 "Account" = "Account";
