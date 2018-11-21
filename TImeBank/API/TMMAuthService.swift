@@ -12,7 +12,7 @@ import Hydra
 
 enum TMMAuthService {
     case sendCode(country: UInt, mobile: String)
-    case login(country: UInt, mobile: String, password: String, biometric: Bool, captcha: String)
+    case login(country: UInt, mobile: String, password: String, biometric: Bool, captcha: String, afsSession: String)
     case refresh()
 }
 
@@ -27,9 +27,9 @@ extension TMMAuthService: TargetType, AccessTokenAuthorizable {
     var baseURL: URL { return URL(string: kAPIBaseURL + "/auth")! }
     var path: String {
         switch self {
-        case .sendCode(_, _):
+        case .sendCode:
             return "/send"
-        case .login(_, _, _, _, _):
+        case .login:
             return "/login"
         case .refresh():
             return "/refresh_token"
@@ -47,17 +47,17 @@ extension TMMAuthService: TargetType, AccessTokenAuthorizable {
         switch self {
         case let .sendCode(country, mobile):
             return .requestParameters(parameters: ["country": country, "mobile": mobile], encoding: JSONEncoding.default)
-        case let .login(country, mobile, password, biometric, captcha):
-            return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "password": password, "biometric": biometric, "captcha": captcha], encoding: JSONEncoding.default)
+        case let .login(country, mobile, password, biometric, captcha, afsSession):
+            return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "password": password, "biometric": biometric, "captcha": captcha, "afs_session":afsSession], encoding: JSONEncoding.default)
         case .refresh():
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {
         switch self {
-        case .sendCode(_, _):
+        case .sendCode:
             return "ok".utf8Encoded
-        case .login(_, _, _, _, _), .refresh():
+        case .login, .refresh():
             return "{'token':'xxx', 'expire': 'xxxxxx'}".utf8Encoded
         }
     }
@@ -69,10 +69,10 @@ extension TMMAuthService: TargetType, AccessTokenAuthorizable {
 
 extension TMMAuthService {
     
-    static func doLogin(country: UInt, mobile: String, password: String, biometric: Bool, captcha: String, provider: MoyaProvider<TMMAuthService>) -> Promise<APIAccessToken> {
+    static func doLogin(country: UInt, mobile: String, password: String, biometric: Bool, captcha: String, afsSession: String, provider: MoyaProvider<TMMAuthService>) -> Promise<APIAccessToken> {
         return Promise<APIAccessToken> (in: .background, { resolve, reject, _ in
             provider.request(
-                .login(country: country, mobile: mobile, password: password, biometric: biometric, captcha: captcha)
+                .login(country: country, mobile: mobile, password: password, biometric: biometric, captcha: captcha, afsSession: afsSession)
             ){ result in
                 switch result {
                 case let .success(response):

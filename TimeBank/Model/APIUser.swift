@@ -22,6 +22,7 @@ public class APIUser: APIResponse {
     var inviteCode: String?
     var inviterCode: String?
     var exchangeEnabled: Bool = false
+    var wxBinded: Bool = false
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -40,6 +41,7 @@ public class APIUser: APIResponse {
         self.inviteCode = user.inviteCode
         self.inviterCode = user.inviterCode
         self.exchangeEnabled = user.exchangeEnabled
+        self.wxBinded = user.wxBinded
     }
     
     convenience init?() {
@@ -59,5 +61,6 @@ public class APIUser: APIResponse {
         inviteCode <- map["invite_code"]
         inviterCode <- map["inviter_code"]
         exchangeEnabled <- map["exchange_enabled"]
+        wxBinded <- map["wx_binded"]
     }
 }

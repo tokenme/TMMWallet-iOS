@@ -92,7 +92,7 @@ class LoginViewController: UIViewController {
         
         BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", success: {
             // authentication successful
-            self.doLogin(recaptcha: TMMConfigs.TMMBeacon.key, biometricAuthentication: authPasswd)
+            self.doLogin(recaptcha: TMMConfigs.TMMBeacon.key, afsSession: "", biometricAuthentication: authPasswd)
         }, failure: { [weak self] (error) in
             guard let weakSelf = self else { return }
             // do nothing on canceled
@@ -156,12 +156,28 @@ class LoginViewController: UIViewController {
         if !valid {
             return
         }
-        let vc = ReCaptchaViewController()
-        vc.delegate = self
-        self.present(vc, animated: true, completion: nil)
+        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
+            else { return }
+        var lang = "zh_CN"
+        if country != 86 {
+            lang = "en"
+        }
+        if let vc = MSAuthVCFactory.simapleVerify(with: MSAuthTypeSlide, language: lang, delegate: self, authCode: "0335", appKey: nil) {
+            let navigationController = UINavigationController(rootViewController: vc)
+            let backBtn = UIBarButtonItem(title: I18n.close.description, style: .plain, target: nil, action: nil)
+            navigationController.navigationItem.leftBarButtonItem = backBtn;
+            navigationController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            navigationController.preferredContentSize  = CGSize(width: 400, height: 800)
+            self.present(navigationController, animated: true, completion: nil)
+        }
+        
+        //let vc = ReCaptchaViewController()
+        //vc.delegate = self
+        
     }
     
-    private func doLogin(recaptcha: String, biometricAuthentication: String?) {
+    private func doLogin(recaptcha: String, afsSession: String, biometricAuthentication: String?) {
         if isLogining {
             return
         }
@@ -196,6 +212,7 @@ class LoginViewController: UIViewController {
                     password: authPasswd,
                     biometric: biometricAuthentication != nil,
                     captcha: recaptcha,
+                    afsSession: afsSession,
                     provider: weakSelf.authServiceProvider)
                 let _ = try ..weakSelf.getUserInfoAndBindDevice()
             
@@ -218,7 +235,11 @@ class LoginViewController: UIViewController {
                 account.type = MTAAccountTypeExt.custom
                 account.account = "UserId:\(userInfo.id ?? 0)"
                 account.accountStatus = MTAAccountStatus.normal
-                MTA.reportAccountExt([account])
+                let accountPhone = MTAAccountInfo.init()
+                accountPhone.type = MTAAccountTypeExt.phone
+                accountPhone.account = "+\(userInfo.countryCode ?? 0)\(userInfo.mobile!)"
+                accountPhone.accountStatus = MTAAccountStatus.normal
+                MTA.reportAccountExt([account, accountPhone])
             }
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.delegate?.loginSucceeded(token: nil)
@@ -233,7 +254,7 @@ class LoginViewController: UIViewController {
             default: break
             }
             weakSelf.loginButton.stopAnimation(animationStyle: .shake, completion: nil)
-            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description, viewController: weakSelf)
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.bindingDevice = false
@@ -301,7 +322,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: ReCaptchaDelegate {
     func didSolve(response: String) {
-        self.doLogin(recaptcha: response, biometricAuthentication: nil)
+        self.doLogin(recaptcha: response, afsSession: "", biometricAuthentication: nil)
     }
 }
 
@@ -313,6 +334,7 @@ extension LoginViewController {
             return true
         }
         catch {
+            guard let phone = self.telephoneTextField.text, phone != "" else { return false }
             self.telephoneTextField.showInfo(I18n.invalidPhoneNumber.description)
         }
         return false
@@ -387,6 +409,19 @@ extension LoginViewController: CountryPickerViewDataSource {
     
     func showPhoneCodeInList(in countryPickerView: CountryPickerView) -> Bool {
         return true
+    }
+}
+
+extension LoginViewController: MSAuthProtocol {
+    func verifyDidFinished(withResult code: t_verify_reuslt, error: Error!, sessionId: String!) {
+        if error != nil {
+            DispatchQueue.main.async {
+                UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            }
+            return
+        }
+        self.dismiss(animated: true, completion: nil)
+        self.doLogin(recaptcha: "", afsSession: sessionId, biometricAuthentication: nil)
     }
 }
 

@@ -199,7 +199,10 @@ class AccountTableViewController: UITableViewController {
     }
     
     public func refresh() {
-        self.getUserInfo().catch(in: .main, {[weak self] error in
+        self.getUserInfo().then(in: .main, {[weak self] _ in
+            guard let weakSelf = self else { return }
+            weakSelf.updateView()
+        }).catch(in: .main, {[weak self] error in
             switch error as! TMMAPIError {
             case .ignore:
                 return
@@ -240,7 +243,7 @@ class AccountTableViewController: UITableViewController {
             inviteCodeTextField.isEnabled = true
         }
         
-        if ShareSDK.hasAuthorized(.typeWechat) {
+        if ShareSDK.hasAuthorized(.typeWechat) || userInfo.wxBinded {
             bindWechatStatusLabel.backgroundColor = UIColor.greenGrass
             bindWechatStatusLabel.text = I18n.binded.description
             bindWechatStatusLabel.textColor = .white
@@ -353,7 +356,11 @@ extension AccountTableViewController {
                 account.type = MTAAccountTypeExt.custom
                 account.account = "UserId:\(userInfo.id ?? 0)"
                 account.accountStatus = MTAAccountStatus.logout
-                MTA.reportAccountExt([account])
+                let accountPhone = MTAAccountInfo.init()
+                accountPhone.type = MTAAccountTypeExt.phone
+                accountPhone.account = "+\(userInfo.countryCode ?? 0)\(userInfo.mobile!)"
+                accountPhone.accountStatus = MTAAccountStatus.logout
+                MTA.reportAccountExt([account, accountPhone])
             }
             Defaults.removeAll()
             Defaults.synchronize()
@@ -494,6 +501,9 @@ extension AccountTableViewController {
             let user = try ..weakSelf.authWechat()
             let _ = try ..weakSelf.doBindWechat(user: user)
             let _ = try ..weakSelf.getUserInfo()
+        }).then(in: .main, {[weak self] _ in
+            guard let weakSelf = self else { return }
+            weakSelf.updateView()
         }).catch(in: .main, {[weak self] error in
             if let err = error as? TMMAPIError {
                 switch err {

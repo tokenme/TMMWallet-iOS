@@ -115,7 +115,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             account.type = MTAAccountTypeExt.custom
             account.account = "UserId:\(userInfo.id ?? 0)"
             account.accountStatus = MTAAccountStatus.normal
-            MTA.reportAccountExt([account])
+            let accountPhone = MTAAccountInfo.init()
+            accountPhone.type = MTAAccountTypeExt.phone
+            accountPhone.account = "+\(userInfo.countryCode ?? 0)\(userInfo.mobile!)"
+            accountPhone.accountStatus = MTAAccountStatus.normal
+            MTA.reportAccountExt([account, accountPhone])
         }
     }
     

@@ -54,6 +54,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
     var inviterCode: String = ""
     var passwd: String = ""
     var exchangeEnabled: Bool = false
+    var wxBinded: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -66,9 +67,10 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         case inviteCode
         case inviterCode
         case exchangeEnabled
+        case wxBinded
     }
     
-    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String, exchangeEnabled: Bool) {
+    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String, exchangeEnabled: Bool, wxBinded: Bool) {
         self.id = id
         self.countryCode = countryCode
         self.mobile = mobile
@@ -79,6 +81,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.inviteCode = inviteCode
         self.inviterCode = inviterCode
         self.exchangeEnabled = exchangeEnabled
+        self.wxBinded = wxBinded
     }
     
     required init(from decoder: Decoder) throws {
@@ -93,6 +96,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.inviteCode = try container.decode(String.self, forKey: .inviteCode)
         self.inviterCode = try container.decode(String.self, forKey: .inviterCode)
         self.exchangeEnabled = try container.decode(Bool.self, forKey: .exchangeEnabled)
+        self.wxBinded = try container.decode(Bool.self, forKey: .wxBinded)
     }
     
 }

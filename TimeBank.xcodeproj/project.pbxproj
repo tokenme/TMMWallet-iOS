@@ -101,8 +101,6 @@
 		1D297DA9218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DA8218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift */; };
 		1D297DAB2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */; };
 		1D297DAD21919466001C7CF7 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DAC21919465001C7CF7 /* InviteViewController.swift */; };
-		1D297DB02191A35F001C7CF7 /* InviteImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D297DAE2191A35F001C7CF7 /* InviteImageViewController.swift */; };
-		1D297DB12191A35F001C7CF7 /* InviteImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D297DAF2191A35F001C7CF7 /* InviteImageViewController.xib */; };
 		1D31FC59217850D00014712B /* BlowupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC58217850D00014712B /* BlowupViewController.swift */; };
 		1D31FC5B2178A1FD0014712B /* APIBlowupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC5A2178A1FD0014712B /* APIBlowupEvent.swift */; };
 		1D31FC5D217993180014712B /* ShareTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */; };
@@ -173,6 +171,16 @@
 		1D3E42CC219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42CA219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib */; };
 		1D3E42CF219C34EB0014CEB1 /* InviteImagePresentrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42CD219C34EB0014CEB1 /* InviteImagePresentrViewController.swift */; };
 		1D3E42D2219D591A0014CEB1 /* InviteImagePresentrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42D1219D591A0014CEB1 /* InviteImagePresentrViewController.xib */; };
+		1D3E42DB21A3FFD00014CEB1 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3E42D421A3FFD00014CEB1 /* ZipArchive.framework */; };
+		1D3E42DC21A3FFD00014CEB1 /* SecurityGuardSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3E42D521A3FFD00014CEB1 /* SecurityGuardSDK.framework */; };
+		1D3E42DD21A3FFD00014CEB1 /* yw_1222_0335.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42D621A3FFD00014CEB1 /* yw_1222_0335.jpg */; };
+		1D3E42DE21A3FFD00014CEB1 /* SGMain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3E42D721A3FFD00014CEB1 /* SGMain.framework */; };
+		1D3E42DF21A3FFD00014CEB1 /* SGNoCaptcha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3E42D821A3FFD00014CEB1 /* SGNoCaptcha.framework */; };
+		1D3E42E021A3FFD00014CEB1 /* MSAuthSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3E42D921A3FFD00014CEB1 /* MSAuthSDK.framework */; };
+		1D3E42E121A3FFD00014CEB1 /* SGSecurityBody.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3E42DA21A3FFD00014CEB1 /* SGSecurityBody.framework */; };
+		1D3E42E421A4008A0014CEB1 /* MSADefaultImages.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42E221A4008A0014CEB1 /* MSADefaultImages.bundle */; };
+		1D3E42E521A4008A0014CEB1 /* MSADefaultLocale.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42E321A4008A0014CEB1 /* MSADefaultLocale.bundle */; };
+		1D3E42E721A555250014CEB1 /* GoodLoadingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42E621A555250014CEB1 /* GoodLoadingCollectionViewCell.swift */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -322,8 +330,6 @@
 		1D297DA8218C1827001C7CF7 /* TMMWebViewLeakAvoider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMWebViewLeakAvoider.swift; sourceTree = "<group>"; };
 		1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskSwipableTableViewCell.swift; sourceTree = "<group>"; };
 		1D297DAC21919465001C7CF7 /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
-		1D297DAE2191A35F001C7CF7 /* InviteImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteImageViewController.swift; sourceTree = "<group>"; };
-		1D297DAF2191A35F001C7CF7 /* InviteImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteImageViewController.xib; sourceTree = "<group>"; };
 		1D31FC58217850D00014712B /* BlowupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlowupViewController.swift; sourceTree = "<group>"; };
 		1D31FC5A2178A1FD0014712B /* APIBlowupEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBlowupEvent.swift; sourceTree = "<group>"; };
 		1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTaskTableViewCell.swift; sourceTree = "<group>"; };
@@ -400,6 +406,16 @@
 		1D3E42CA219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyGoodInvestTableViewCell.xib; sourceTree = "<group>"; };
 		1D3E42CD219C34EB0014CEB1 /* InviteImagePresentrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteImagePresentrViewController.swift; sourceTree = "<group>"; };
 		1D3E42D1219D591A0014CEB1 /* InviteImagePresentrViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteImagePresentrViewController.xib; sourceTree = "<group>"; };
+		1D3E42D421A3FFD00014CEB1 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
+		1D3E42D521A3FFD00014CEB1 /* SecurityGuardSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SecurityGuardSDK.framework; sourceTree = "<group>"; };
+		1D3E42D621A3FFD00014CEB1 /* yw_1222_0335.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yw_1222_0335.jpg; sourceTree = "<group>"; };
+		1D3E42D721A3FFD00014CEB1 /* SGMain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SGMain.framework; sourceTree = "<group>"; };
+		1D3E42D821A3FFD00014CEB1 /* SGNoCaptcha.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SGNoCaptcha.framework; sourceTree = "<group>"; };
+		1D3E42D921A3FFD00014CEB1 /* MSAuthSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSAuthSDK.framework; sourceTree = "<group>"; };
+		1D3E42DA21A3FFD00014CEB1 /* SGSecurityBody.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SGSecurityBody.framework; sourceTree = "<group>"; };
+		1D3E42E221A4008A0014CEB1 /* MSADefaultImages.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MSADefaultImages.bundle; path = MSAuthSDK.framework/Resources/MSADefaultImages.bundle; sourceTree = "<group>"; };
+		1D3E42E321A4008A0014CEB1 /* MSADefaultLocale.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MSADefaultLocale.bundle; path = MSAuthSDK.framework/Resources/MSADefaultLocale.bundle; sourceTree = "<group>"; };
+		1D3E42E621A555250014CEB1 /* GoodLoadingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodLoadingCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -458,14 +474,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D31FC9E2187028E0014712B /* libmtasdk.a in Frameworks */,
+				1D3E42DC21A3FFD00014CEB1 /* SecurityGuardSDK.framework in Frameworks */,
 				1D31FC9C218702780014712B /* libXG-SDK.a in Frameworks */,
 				1D31FC9D218702780014712B /* libxgidfa.a in Frameworks */,
+				1D3E42DB21A3FFD00014CEB1 /* ZipArchive.framework in Frameworks */,
 				1D31FC942186F0950014712B /* UserNotifications.framework in Frameworks */,
 				1D31FC922186E6400014712B /* SystemConfiguration.framework in Frameworks */,
 				1D31FC902186E6300014712B /* CFNetwork.framework in Frameworks */,
+				1D3E42E121A3FFD00014CEB1 /* SGSecurityBody.framework in Frameworks */,
 				1D31FC8E2186E6200014712B /* AdSupport.framework in Frameworks */,
+				1D3E42DE21A3FFD00014CEB1 /* SGMain.framework in Frameworks */,
 				1D31FC8C2186E6170014712B /* libsqlite3.tbd in Frameworks */,
 				1D31FC8A2186E6060014712B /* libz.tbd in Frameworks */,
+				1D3E42DF21A3FFD00014CEB1 /* SGNoCaptcha.framework in Frameworks */,
+				1D3E42E021A3FFD00014CEB1 /* MSAuthSDK.framework in Frameworks */,
 				1D0370C321649FA500E5E3CE /* CoreTelephony.framework in Frameworks */,
 				1D151EA0213E453A007C87DD /* StoreKit.framework in Frameworks */,
 				F658EBA45F30103182A90E1D /* Pods_TimeBank.framework in Frameworks */,
@@ -776,6 +798,7 @@
 			isa = PBXGroup;
 			children = (
 				1DEC54502150FFD0007A46D5 /* QiniuManager.swift */,
+				1D3E42D321A3FFD00014CEB1 /* SG */,
 				1D3441B6213CF61400B8E157 /* RNCountDownButton.swift */,
 				1DEC5444214FA3AF007A46D5 /* UILabelPadding.swift */,
 				1D0370AA2163CE8900E5E3CE /* Reachability.swift */,
@@ -964,6 +987,22 @@
 			path = TimeBank;
 			sourceTree = "<group>";
 		};
+		1D3E42D321A3FFD00014CEB1 /* SG */ = {
+			isa = PBXGroup;
+			children = (
+				1D3E42D421A3FFD00014CEB1 /* ZipArchive.framework */,
+				1D3E42D521A3FFD00014CEB1 /* SecurityGuardSDK.framework */,
+				1D3E42D621A3FFD00014CEB1 /* yw_1222_0335.jpg */,
+				1D3E42E221A4008A0014CEB1 /* MSADefaultImages.bundle */,
+				1D3E42E321A4008A0014CEB1 /* MSADefaultLocale.bundle */,
+				1D3E42D721A3FFD00014CEB1 /* SGMain.framework */,
+				1D3E42D821A3FFD00014CEB1 /* SGNoCaptcha.framework */,
+				1D3E42D921A3FFD00014CEB1 /* MSAuthSDK.framework */,
+				1D3E42DA21A3FFD00014CEB1 /* SGSecurityBody.framework */,
+			);
+			path = SG;
+			sourceTree = "<group>";
+		};
 		1D5FF688215B7852001E69CD /* ScanViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -989,6 +1028,7 @@
 			isa = PBXGroup;
 			children = (
 				1D77AD3B21943A6C004EBCBF /* GoodCollectionViewCell.swift */,
+				1D3E42E621A555250014CEB1 /* GoodLoadingCollectionViewCell.swift */,
 				1D05B4F6219469AC008EE10D /* GoodInfoTableViewCell.swift */,
 				1D05B4F7219469AC008EE10D /* GoodInfoTableViewCell.xib */,
 				1D05B4FA219469F7008EE10D /* GoodInvestTableViewCell.swift */,
@@ -1048,8 +1088,6 @@
 				1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */,
 				1D0370C82165E7D300E5E3CE /* WechatQRCodeViewController.swift */,
 				1D297DAC21919465001C7CF7 /* InviteViewController.swift */,
-				1D297DAE2191A35F001C7CF7 /* InviteImageViewController.swift */,
-				1D297DAF2191A35F001C7CF7 /* InviteImageViewController.xib */,
 				1D3E42CD219C34EB0014CEB1 /* InviteImagePresentrViewController.swift */,
 				1D3E42D1219D591A0014CEB1 /* InviteImagePresentrViewController.xib */,
 			);
@@ -1165,6 +1203,7 @@
 				1D31FCA3218826AF0014712B /* Readability.js in Resources */,
 				1D36D9AB213CED5E0002EDBF /* LaunchScreen.storyboard in Resources */,
 				1D05B50121957719008EE10D /* InvestViewController.xib in Resources */,
+				1D3E42DD21A3FFD00014CEB1 /* yw_1222_0335.jpg in Resources */,
 				1D31FCA921882AE10014712B /* WordCounter.js in Resources */,
 				1D1D6FD72148CB1B0001ED49 /* TransactionTableViewCell.xib in Resources */,
 				1D28DE6121563FBE00FCF6F6 /* MarketTopTableViewCell.xib in Resources */,
@@ -1186,17 +1225,18 @@
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
 				1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
-				1D297DB12191A35F001C7CF7 /* InviteImageViewController.xib in Resources */,
 				1D31FCA1218826750014712B /* JSDOMParser.js in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D36D9A8213CED5E0002EDBF /* Assets.xcassets in Resources */,
 				1D0370DF2166638C00E5E3CE /* RedeemCdpRecordTableViewCell.xib in Resources */,
 				1DF802F8215367EA0002E054 /* UnbindDeviceHeaderView.xib in Resources */,
+				1D3E42E521A4008A0014CEB1 /* MSADefaultLocale.bundle in Resources */,
 				1D3441DA213CF94F00B8E157 /* Default-568h@2x.png in Resources */,
 				1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */,
 				1D151E86213D69A9007C87DD /* Login.storyboard in Resources */,
 				1D3E42CC219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib in Resources */,
+				1D3E42E421A4008A0014CEB1 /* MSADefaultImages.bundle in Resources */,
 				1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1293,6 +1333,7 @@
 				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Schedule/Schedule.framework",
 				"${BUILT_PRODUCTS_DIR}/Siren/Siren.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
@@ -1345,6 +1386,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Schedule.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siren.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
@@ -1415,6 +1457,7 @@
 				1D31FC5F2179D6420014712B /* TMMBlowupService.swift in Sources */,
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
 				1D05B4F521946800008EE10D /* APIGoodInvest.swift in Sources */,
+				1D3E42E721A555250014CEB1 /* GoodLoadingCollectionViewCell.swift in Sources */,
 				1D31FC7E217F3B0E0014712B /* KeyboardTextField.swift in Sources */,
 				1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */,
 				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
@@ -1482,7 +1525,6 @@
 				1D1D6FA92140F3F00001ED49 /* TaskRecordsTableViewController.swift in Sources */,
 				1D0370D021661C1200E5E3CE /* RedeemCdpCollectionViewCell.swift in Sources */,
 				1D3441F0213CFBA300B8E157 /* TweeBorderedTextField.swift in Sources */,
-				1D297DB02191A35F001C7CF7 /* InviteImageViewController.swift in Sources */,
 				1D297DAD21919466001C7CF7 /* InviteViewController.swift in Sources */,
 				1D151EB7213E6E73007C87DD /* ShareTasksTableViewController.swift in Sources */,
 				1D3441DC213CF98E00B8E157 /* String+Utils.swift in Sources */,
@@ -1716,6 +1758,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TimeBank/Dependencies",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/SG",
 				);
 				INFOPLIST_FILE = TimeBank/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1802,6 +1845,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TimeBank/Dependencies",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/SG",
 				);
 				INFOPLIST_FILE = TimeBank/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

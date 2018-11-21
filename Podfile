@@ -41,6 +41,7 @@ target 'TimeBank' do
   pod 'SnapKit'
   pod 'Haptica'
   pod 'Peep'
+  pod 'SVProgressHUD'
   pod 'mob_sharesdk'
   pod 'mob_sharesdk/ShareSDKUI'
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'

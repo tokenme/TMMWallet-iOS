@@ -62,7 +62,7 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
         switch self {
         case let .shares(idfa, cid, page, pageSize, mineOnly):
             let buildVersion = UInt(Bundle.main.infoDictionary!["CFBundleVersion"] as! String)
-            return .requestParameters(parameters: ["idfa": idfa, "cid": cid, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "build": buildVersion], encoding: URLEncoding.default)
+            return .requestParameters(parameters: ["idfa": idfa, "cid": cid, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "build": buildVersion ?? 0], encoding: URLEncoding.default)
         case let .apps(idfa, page, pageSize, mineOnly):
             return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly], encoding: URLEncoding.default)
         case let .install(idfa, bundleId, taskId, status):

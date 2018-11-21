@@ -130,7 +130,21 @@ class RegisterViewController: UIViewController {
         if !valid {
             return
         }
-        self.doRegister(recaptcha: "")
+        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
+            else { return }
+        var lang = "zh_CN"
+        if country != 86 {
+            lang = "en"
+        }
+        if let vc = MSAuthVCFactory.simapleVerify(with: MSAuthTypeSlide, language: lang, delegate: self, authCode: "0335", appKey: nil) {
+            let navigationController = UINavigationController(rootViewController: vc)
+            let backBtn = UIBarButtonItem(title: I18n.close.description, style: .plain, target: nil, action: nil)
+            navigationController.navigationItem.leftBarButtonItem = backBtn;
+            navigationController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            navigationController.preferredContentSize  = CGSize(width: 400, height: 800)
+            self.present(navigationController, animated: true, completion: nil)
+        }
         /*
         if self.isRegistering {
             return
@@ -141,7 +155,7 @@ class RegisterViewController: UIViewController {
         */
     }
     
-    private func doRegister(recaptcha: String) {
+    private func doRegister(recaptcha: String, afsSession: String) {
         if self.isRegistering { return }
         self.isRegistering = true
         
@@ -163,6 +177,7 @@ class RegisterViewController: UIViewController {
                 password: passwd,
                 repassword: repasswd,
                 captcha: recaptcha,
+                afsSession: afsSession,
                 provider: weakSelf.userServiceProvider)
         }).then(in: .main, {[weak self] user in
             guard let weakSelf = self else { return }
@@ -189,9 +204,22 @@ class RegisterViewController: UIViewController {
     }
 }
 
+extension RegisterViewController: MSAuthProtocol {
+    func verifyDidFinished(withResult code: t_verify_reuslt, error: Error!, sessionId: String!) {
+        if error != nil {
+            DispatchQueue.main.async {
+                UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            }
+            return
+        }
+        self.dismiss(animated: true, completion: nil)
+        self.doRegister(recaptcha: "", afsSession: sessionId)
+    }
+}
+
 extension RegisterViewController: ReCaptchaDelegate {
     func didSolve(response: String) {
-        self.doRegister(recaptcha: response)
+        self.doRegister(recaptcha: response, afsSession: "")
     }
 }
 

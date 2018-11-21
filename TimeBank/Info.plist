@@ -159,8 +159,11 @@
 	<string>27e400d9f7848</string>
 	<key>MOBAppSecret</key>
 	<string>a498dc06a1610ad671564fc575f38835</string>
-	<key>NSAllowsArbitraryLoadsInWebContent</key>
-	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>是否允许此App访问你的媒体资料库？</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

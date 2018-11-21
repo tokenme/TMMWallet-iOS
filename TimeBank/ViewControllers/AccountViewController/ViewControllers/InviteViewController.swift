@@ -9,9 +9,23 @@
 import UIKit
 import Presentr
 import SnapKit
+import swiftScan
 import Kingfisher
+import SwiftyUserDefaults
 
 class InviteViewController: UIViewController {
+    
+    private var userInfo: APIUser? {
+        get {
+            if let userInfo: DefaultsUser = Defaults[.user] {
+                if CheckValidAccessToken() {
+                    return APIUser.init(user: userInfo)
+                }
+                return nil
+            }
+            return nil
+        }
+    }
     
     @IBOutlet private weak var inviteLabel: UILabel!
     @IBOutlet private weak var inviteButton: UIButton!
@@ -40,21 +54,23 @@ class InviteViewController: UIViewController {
     
     private let inviteImagePresentr = InviteImagePresentrViewController()
     
-    lazy private var inviteImageController: InviteImageViewController? = {[weak self] in
-        let vc = InviteImageViewController()
-        vc.view.isHidden = true
-        self?.view.addSubview(vc.view)
-        vc.view.snp.remakeConstraints {(maker) -> Void in
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview()
-            maker.top.equalTo(topLayoutGuide.snp.bottom)
-            maker.bottom.equalTo(bottomLayoutGuide.snp.top)
-        }
-        return vc
-    }()
-    
     lazy private var shareImage: UIImage? = {[weak self] in
-        return self?.inviteImageController?.containerView.asImage()
+        let bgImage = UIImage(named: "InviteImage")!
+        let logoImage = UIImage(named: "Logo")!.kf.image(withRoundRadius: 22.0, fit: CGSize(width: 44.0, height: 44.0), roundingCorners: .all, backgroundColor: UIColor.clear)
+        
+        let qrcodeWidth = bgImage.size.width * 0.25
+        let qrcodeCenterX = (bgImage.size.width - qrcodeWidth) / 2 + 8
+        let qrcodeCenterY = bgImage.size.height - qrcodeWidth - 28
+        let qrcodeLink = String(format: "https://tmm.tokenmama.io/invite/%@", self?.userInfo?.inviteCode ?? "emptycode")
+        let qrImg = LBXScanWrapper.createCode(codeType: "CIQRCodeGenerator",codeString: qrcodeLink, size:
+            CGSize(width: qrcodeWidth, height: qrcodeWidth), qrColor: UIColor.black, bkColor: UIColor.white)!
+        UIGraphicsBeginImageContext(bgImage.size)
+        bgImage.draw(in: CGRect(origin: CGPoint.zero, size: bgImage.size))
+        logoImage.draw(in: CGRect(origin: CGPoint(x: 36.0, y: 36.0), size: logoImage.size))
+        qrImg.draw(in: CGRect(origin: CGPoint(x: qrcodeCenterX, y: qrcodeCenterY), size: qrImg.size))
+        var image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!.kf.scaled(to: 5.0)
     }()
     
     deinit {

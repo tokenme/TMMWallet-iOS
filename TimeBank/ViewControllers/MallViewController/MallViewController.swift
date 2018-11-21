@@ -8,10 +8,12 @@
 
 import UIKit
 import SwiftyUserDefaults
+import EmptyDataSet_Swift
 import Moya
 import Hydra
 import ZHRefresh
 import Presentr
+import SkeletonView
 import SnapKit
 
 fileprivate let DefaultPageSize: UInt = 10
@@ -109,8 +111,12 @@ class MallViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(cellType: GoodCollectionViewCell.self)
+        collectionView.register(cellType: GoodLoadingCollectionViewCell.self)
         collectionView.backgroundColor = UIColor(white: 0.98, alpha: 1)
         collectionView.contentInset = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
+        
+        collectionView.emptyDataSetSource = self
+        collectionView.emptyDataSetDelegate = self
         
         collectionView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
@@ -130,6 +136,16 @@ class MallViewController: UIViewController {
             maker.top.equalTo(topLayoutGuide.snp.bottom)
             maker.bottom.equalTo(bottomLayoutGuide.snp.top)
         }
+        
+        SkeletonAppearance.default.multilineHeight = 10
+        collectionView.prepareSkeleton { [weak self] (done) in
+            if let visibleCells = self?.collectionView.visibleCells {
+                for cell in visibleCells {
+                    cell.contentView.showAnimatedSkeleton()
+                }
+            }
+        }
+        collectionView.showAnimatedSkeleton()
     }
     
     func refresh() {
@@ -152,6 +168,19 @@ extension MallViewController: UIViewControllerTransitioningDelegate {
         return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
     }
     
+}
+
+extension MallViewController: SkeletonCollectionViewDataSource {
+    
+    func numSections(in collectionSkeletonView: UICollectionView) -> Int {
+        return 1
+    }
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return GoodLoadingCollectionViewCell.self.reuseIdentifier
+    }
 }
 
 extension MallViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -185,6 +214,32 @@ extension MallViewController: UICollectionViewDelegate, UICollectionViewDataSour
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+}
+
+extension MallViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
+        return self.goods.count == 0
+    }
+    
+    func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
+        return true
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView, didTapButton button: UIButton) {
+        self.refresh()
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: "怎么没有商品？")
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: "稍后刷新试试吧！")
+    }
+    
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.refresh.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:17), NSAttributedString.Key.foregroundColor:UIColor.primaryBlue])
+    }
 }
 
 extension MallViewController {
@@ -228,6 +283,7 @@ extension MallViewController {
                 weakSelf.loadingItems = false
                 weakSelf.collectionView.header?.isHidden = false
                 weakSelf.collectionView.header?.endRefreshing()
+                weakSelf.collectionView.hideSkeleton()
                 weakSelf.collectionView.reloadDataWithAutoSizingCellWorkAround()
             }
         )

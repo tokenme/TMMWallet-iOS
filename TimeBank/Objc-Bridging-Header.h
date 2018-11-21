@@ -15,6 +15,7 @@
 #import <ShareSDKUI/ShareSDKUI.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareSheetConfiguration.h>
+#import <MSAuthSDK/MSAuthSDK.h>
 #import "MTA.h"
 #import "MTA+Account.h"
 #import "MTAConfig.h"
