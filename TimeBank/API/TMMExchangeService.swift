@@ -18,7 +18,7 @@ enum TMMExchangeService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
+extension TMMExchangeService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -48,18 +48,32 @@ extension TMMExchangeService: TargetType, AccessTokenAuthorizable {
             return .post
         }
     }
+    var params: [String: Any] {
+        switch self {
+        case .tmmRate:
+            return [:]
+        case .pointsRate:
+            return [:]
+        case let .tmmChange(deviceId, points, direction):
+            return ["device_id": deviceId, "points": points, "direction": direction.rawValue]
+        case let .records(page, pageSize, direction):
+            return ["page": page, "page_size": pageSize, "direction": direction.rawValue]
+        case let .redeemCdpRecords(page, pageSize):
+            return ["page": page, "page_size": pageSize, "type": 1]
+        }
+    }
     var task: Task {
         switch self {
-        case .tmmRate():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case .pointsRate():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case let .tmmChange(deviceId, points, direction):
-            return .requestParameters(parameters: ["device_id": deviceId, "points": points, "direction": direction.rawValue], encoding: JSONEncoding.default)
-        case let .records(page, pageSize, direction):
-            return .requestParameters(parameters: ["page": page, "page_size": pageSize, "direction": direction.rawValue], encoding: URLEncoding.default)
-        case let .redeemCdpRecords(page, pageSize):
-            return .requestParameters(parameters: ["page": page, "page_size": pageSize, "type": 1], encoding: URLEncoding.default)
+        case .tmmRate:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .pointsRate:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .tmmChange:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .records:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .redeemCdpRecords:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {

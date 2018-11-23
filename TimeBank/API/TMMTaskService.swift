@@ -22,7 +22,7 @@ enum TMMTaskService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMTaskService: TargetType, AccessTokenAuthorizable {
+extension TMMTaskService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -58,22 +58,21 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
             return .post
         }
     }
-    var task: Task {
+    var params: [String: Any] {
         switch self {
         case let .shares(idfa, cid, page, pageSize, mineOnly):
             let buildVersion = UInt(Bundle.main.infoDictionary!["CFBundleVersion"] as! String)
-            return .requestParameters(parameters: ["idfa": idfa, "cid": cid, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "build": buildVersion ?? 0], encoding: URLEncoding.default)
+            return ["idfa": idfa, "cid": cid, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "build": buildVersion ?? 0]
         case let .apps(idfa, page, pageSize, mineOnly):
-            return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly], encoding: URLEncoding.default)
+            return ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly]
         case let .install(idfa, bundleId, taskId, status):
-            return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "bundle_id": bundleId, "task_id": taskId, "status": status], encoding: JSONEncoding.default)
+            return ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "bundle_id": bundleId, "task_id": taskId, "status": status]
         case let .appsCheck(idfa):
-            return .requestParameters(parameters: ["idfa": idfa, "platform": APIPlatform.iOS.rawValue], encoding: URLEncoding.default)
+            return ["idfa": idfa, "platform": APIPlatform.iOS.rawValue]
         case let .records(page, pageSize):
-            return .requestParameters(parameters: ["page": page, "page_size": pageSize], encoding: URLEncoding.default)
+            return ["page": page, "page_size": pageSize]
         case let .shareAdd(link, title, summary, image, points, bonus, maxViewers):
-            let params: [String:Any] = ["link": link, "title": title, "summary": summary, "image": image, "points": points, "bonus": bonus, "max_viewers": maxViewers]
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            return ["link": link, "title": title, "summary": summary, "image": image, "points": points, "bonus": bonus, "max_viewers": maxViewers]
         case let .shareUpdate(id, link, title, summary, image, points, bonus, maxViewers, onlineStatus):
             var params: [String:Any] = ["id": id]
             if !link.isEmpty {
@@ -100,18 +99,37 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable {
             if onlineStatus != .unknown {
                 params["online_status"] = onlineStatus.rawValue
             }
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            return params
         case let .appAdd(name, bundleId, points, bonus):
-            let params: [String:Any] = ["platform": APIPlatform.iOS.rawValue, "name": name, "bundle_id": bundleId, "points": points, "bonus": bonus]
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            return ["platform": APIPlatform.iOS.rawValue, "name": name, "bundle_id": bundleId, "points": points, "bonus": bonus]
+        }
+    }
+    var task: Task {
+        switch self {
+        case .shares:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .apps:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .install:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .appsCheck:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .records:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .shareAdd:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .shareUpdate:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .appAdd:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .shares(_, _, _, _, _), .apps(_, _, _, _), .appsCheck(_), .records(_, _):
+        case .shares, .apps, .appsCheck, .records:
             return "[]".utf8Encoded
-        case .install(_, _, _, _), .shareAdd(_, _, _, _, _, _, _), .shareUpdate(_, _, _, _, _, _, _, _, _), .appAdd(_, _, _, _):
+        case .install, .shareAdd, .shareUpdate, .appAdd:
             return "{}".utf8Encoded
         }
     }

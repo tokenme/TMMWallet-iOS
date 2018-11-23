@@ -17,7 +17,7 @@ enum TMMBlowupService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMBlowupService: TargetType, AccessTokenAuthorizable {
+extension TMMBlowupService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -44,14 +44,25 @@ extension TMMBlowupService: TargetType, AccessTokenAuthorizable {
         }
     }
     
+    var params: [String: Any] {
+        switch self {
+        case .bids:
+            return [:]
+        case let .bid(sessionId, points, idfa):
+            return ["session_id": sessionId, "points": points, "idfa": idfa]
+        case let .escape(sessionId, idfa):
+            return ["session_id": sessionId, "idfa": idfa]
+        }
+    }
+    
     var task: Task {
         switch self {
-        case .bids():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case let .bid(sessionId, points, idfa):
-            return .requestParameters(parameters: ["session_id": sessionId, "points": points, "idfa": idfa], encoding: JSONEncoding.default)
-        case let .escape(sessionId, idfa):
-            return .requestParameters(parameters: ["session_id": sessionId, "idfa": idfa], encoding: JSONEncoding.default)
+        case .bids:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .bid:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .escape:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
         }
     }
     

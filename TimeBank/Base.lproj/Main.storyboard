@@ -404,6 +404,24 @@
             </objects>
             <point key="canvasLocation" x="2429" y="-963"/>
         </scene>
+        <!--Withdraw Records Table View Controller-->
+        <scene sceneID="uac-Ei-7rc">
+            <objects>
+                <tableViewController storyboardIdentifier="TMMWithdrawRecordsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0KK-kB-gSM" customClass="TMMWithdrawRecordsTableViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="urb-27-JGQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <outlet property="dataSource" destination="0KK-kB-gSM" id="s2A-Pp-Wvo"/>
+                            <outlet property="delegate" destination="0KK-kB-gSM" id="1Lf-8q-Uun"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VGv-Ox-QhE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3252" y="-953"/>
+        </scene>
         <!--Wallet-->
         <scene sceneID="hNz-n2-bh7">
             <objects>

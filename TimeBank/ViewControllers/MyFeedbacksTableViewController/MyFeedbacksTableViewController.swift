@@ -49,7 +49,7 @@ class MyFeedbacksTableViewController: UIViewController {
     private var loadingFeedbacks: Bool = false
     private var sendingReply: Bool = false
     
-    private var feedbackServiceProvider = MoyaProvider<TMMFeedbackService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var feedbackServiceProvider = MoyaProvider<TMMFeedbackService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)

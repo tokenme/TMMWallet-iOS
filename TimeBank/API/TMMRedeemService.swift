@@ -15,10 +15,11 @@ enum TMMRedeemService {
     case cdpOrderAdd(offerId: UInt64, deviceId: String)
     case tmmRate(currency: String)
     case tmmWithdraw(tmm: NSDecimalNumber, currency: String)
+    case tmmWithdrawList(page: UInt, pageSize: UInt)
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMRedeemService: TargetType, AccessTokenAuthorizable {
+extension TMMRedeemService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -36,35 +37,54 @@ extension TMMRedeemService: TargetType, AccessTokenAuthorizable {
             return "/tmm/rate"
         case .tmmWithdraw(_, _):
             return "/tmm/withdraw"
+        case .tmmWithdrawList(_, _):
+            return "/tmm/withdraw/list"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .cdps, .tmmRate(_):
+        case .cdps, .tmmRate, .tmmWithdrawList:
             return .get
-        case .cdpOrderAdd(_, _), .tmmWithdraw(_, _):
+        case .cdpOrderAdd, .tmmWithdraw:
             return .post
+        }
+    }
+    
+    var params: [String: Any] {
+        switch self {
+        case .cdps:
+            return [:]
+        case let .cdpOrderAdd(offerId, deviceId):
+            return ["offer_id": offerId, "device_id": deviceId]
+        case let .tmmRate(currency):
+            return ["currency": currency]
+        case let .tmmWithdraw(tmm, currency):
+            return ["tmm": tmm, "currency": currency]
+        case let .tmmWithdrawList(page, pageSize):
+            return ["page": page, "page_size": pageSize]
         }
     }
     
     var task: Task {
         switch self {
-        case .cdps():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case let .cdpOrderAdd(offerId, deviceId):
-            return .requestParameters(parameters: ["offer_id": offerId, "device_id": deviceId], encoding: JSONEncoding.default)
-        case let .tmmRate(currency):
-            return .requestParameters(parameters: ["currency": currency], encoding: URLEncoding.default)
-        case let .tmmWithdraw(tmm, currency):
-            return .requestParameters(parameters: ["tmm": tmm, "currency": currency], encoding: JSONEncoding.default)
+        case .cdps:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .cdpOrderAdd:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .tmmRate:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .tmmWithdraw:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .tmmWithdrawList:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .cdps():
+        case .cdps, .tmmWithdrawList:
             return "[]".utf8Encoded
-        case .cdpOrderAdd(_, _), .tmmRate(_), .tmmWithdraw(_, _):
+        case .cdpOrderAdd, .tmmRate, .tmmWithdraw:
             return "{}".utf8Encoded
         }
     }
@@ -188,6 +208,39 @@ extension TMMRedeemService {
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getTMMWithdrawRecords(page: UInt, pageSize: UInt, provider: MoyaProvider<TMMRedeemService>) -> Promise<[APITMMWithdrawRecord]> {
+        return Promise<[APITMMWithdrawRecord]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .tmmWithdrawList(page: page, pageSize: pageSize)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let records: [APITMMWithdrawRecord] = try response.mapArray(APITMMWithdrawRecord.self)
+                        resolve(records)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
                     }
                 case let .failure(error):
                     reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))

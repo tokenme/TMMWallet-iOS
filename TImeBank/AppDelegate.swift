@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
-    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppTaskChecker.sharedInstance.start()
         
         refreshToken()
-        
+        /*
         Siren.shared.checkVersion(checkType: .immediately)
         
         SwiftRater.daysUntilPrompt = 7
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SwiftRater.showLaterButton = true
         SwiftRater.debugMode = false
         SwiftRater.appLaunched()
-        
+        */
         setupShareSDK()
         
         return true

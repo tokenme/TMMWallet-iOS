@@ -44,11 +44,80 @@ let networkActivityPlugin = NetworkActivityPlugin { (change, _) -> () in
     }
 }
 
+protocol SignatureTargetType: TargetType {
+    var params: [String: Any] { get }
+}
+
+struct SignaturePlugin: PluginType {
+    let appKeyClosure: () -> String
+    let secretClosure: () -> String
+    let appBuildClosure: () -> String?
+    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
+        guard
+            let appBuild = appBuildClosure(),
+            let target = target as? SignatureTargetType
+            else {
+                return request
+        }
+        let gateway = target.baseURL.absoluteString + target.path
+        let ts = Int64(Date().timeIntervalSince1970)
+        let nounce = UUID().uuidString
+        let appKey = appKeyClosure()
+        let secret = secretClosure()
+        var headers: [String:String] = ["tmm-ts": String(ts), "tmm-build": appBuild, "tmm-nounce": nounce, "tmm-platform": APIPlatform.iOS.rawValue]
+        var request = request
+        for (key, val) in headers {
+            request.addValue(val, forHTTPHeaderField: key)
+        }
+        for (key, val) in target.params {
+            var v = ""
+            if let b = val as? Bool {
+                v = b ? "1" : "0"
+            } else {
+                v = "\(val)"
+            }
+            if v == "" {
+                continue
+            }
+            headers[key] = v
+        }
+        let sortedHeaders = headers.sorted {$0.0 < $1.0}
+        var rawSign: String = gateway + appKey
+        for (key, val) in sortedHeaders {
+            rawSign += key + val
+        }
+        rawSign += secret
+        let sign = MD5(rawSign).lowercased()
+        request.addValue(sign, forHTTPHeaderField: "tmm-sign")
+        request.addValue(appKey, forHTTPHeaderField: "tmm-appkey")
+        #if DEBUG
+        print(rawSign)
+        print(sign)
+        #endif
+        return request
+    }
+}
+
 let kAPIBaseURL = "https://tmm.tokenmama.io"
 
-let AccessTokenClosure: () -> String  = {
+let AccessTokenClosure: () -> String = {
     if let token = Defaults[.accessToken]?.token {
         return token
+    }
+    return ""
+}
+
+let AppKeyClosure: () -> String = {
+    return TMMConfigs.TMMBeacon.key
+}
+
+let SecretClosure: () -> String = {
+    return TMMConfigs.TMMBeacon.secret
+}
+
+let AppBuildClosure: () -> String = {
+    if let buildVersion = Bundle.main.infoDictionary!["CFBundleVersion"] as? String {
+        return buildVersion
     }
     return ""
 }

@@ -20,7 +20,8 @@ enum TMMDeviceService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
+extension TMMDeviceService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
+    
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -52,20 +53,37 @@ extension TMMDeviceService: TargetType, AccessTokenAuthorizable {
             return .get
         }
     }
-    var task: Task {
+    var params: [String: Any] {
         switch self {
         case let .bind(device):
-            return .requestParameters(parameters: device, encoding: JSONEncoding.default)
+            return device
         case let .unbind(id):
-            return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
-        case .list():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case .apps(_):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case .info(_):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+            return ["id": id]
+        case .list:
+            return [:]
+        case .apps:
+            return [:]
+        case .info:
+            return [:]
         case let .pushToken(idfa, token):
-            return .requestParameters(parameters: ["idfa": idfa, "token": token], encoding: JSONEncoding.default)
+            return ["idfa": idfa, "token": token]
+        }
+    }
+    
+    var task: Task {
+        switch self {
+        case .bind:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .unbind:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .list:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .apps:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .info:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .pushToken:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
         }
     }
     var sampleData: Data {

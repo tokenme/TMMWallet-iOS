@@ -29,8 +29,8 @@ class ResetPasswordViewController: UIViewController {
         return presenter
     }()
     
-    private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin])
-    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin])
+    private var authServiceProvider = MoyaProvider<TMMAuthService>(plugins: [networkActivityPlugin, SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     private var countryCode: String = "+86"
     private let phoneNumberKit = PhoneNumberKit()

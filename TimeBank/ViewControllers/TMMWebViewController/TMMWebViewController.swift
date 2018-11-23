@@ -18,7 +18,7 @@ import Schedule
 import MKRingProgressView
 import TMMSDK
 
-fileprivate let DefaultSleepTime: Double = 30
+fileprivate let DefaultSleepTime: Double = 15
 
 class TMMWebViewController: UIViewController {
     
@@ -275,8 +275,8 @@ class TMMWebViewController: UIViewController {
     
     fileprivate var progressView: UIProgressView!
     
-    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
-    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)

@@ -15,7 +15,7 @@ enum TMMAppService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMAppService: TargetType, AccessTokenAuthorizable {
+extension TMMAppService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -35,10 +35,16 @@ extension TMMAppService: TargetType, AccessTokenAuthorizable {
             return .get
         }
     }
+    var params: [String: Any] {
+        switch self {
+        case .sdks:
+            return [:]
+        }
+    }
     var task: Task {
         switch self {
         case .sdks(_, _):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {

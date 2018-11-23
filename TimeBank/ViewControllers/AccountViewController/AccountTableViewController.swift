@@ -113,9 +113,9 @@ class AccountTableViewController: UITableViewController {
     private var gettingContacts: Bool = false
     private var bindingWechat: Bool = false
     
-    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
-    private var contactServiceProvider = MoyaProvider<TMMContactService>(plugins: [networkActivityPlugin])
+    private var contactServiceProvider = MoyaProvider<TMMContactService>(plugins: [networkActivityPlugin, SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     override func viewDidLoad() {
         super.viewDidLoad()

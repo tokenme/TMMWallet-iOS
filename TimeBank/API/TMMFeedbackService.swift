@@ -17,7 +17,7 @@ enum TMMFeedbackService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMFeedbackService: TargetType, AccessTokenAuthorizable {
+extension TMMFeedbackService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -44,10 +44,10 @@ extension TMMFeedbackService: TargetType, AccessTokenAuthorizable {
         }
     }
     
-    var task: Task {
+    var params: [String: Any] {
         switch self {
-        case .list():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .list:
+            return [:]
         case let .add(message, image, attachements):
             var params: [String: Any] = ["message": message]
             if image != nil {
@@ -58,9 +58,20 @@ extension TMMFeedbackService: TargetType, AccessTokenAuthorizable {
                 fields.append("\(title)\t\(value)")
             }
             params["attachements"] = fields.joined(separator: "\n")
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            return params
         case let .reply(ts, message):
-            return .requestParameters(parameters: ["ts": ts, "message": message], encoding: JSONEncoding.default)
+            return ["ts": ts, "message": message]
+        }
+    }
+    
+    var task: Task {
+        switch self {
+        case .list:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .add:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .reply:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
         }
     }
     

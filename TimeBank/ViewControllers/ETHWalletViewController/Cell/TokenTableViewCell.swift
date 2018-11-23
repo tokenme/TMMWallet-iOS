@@ -44,13 +44,16 @@ class TokenTableViewCell: SwipeTableViewCell, NibReusable {
             let currency = Defaults[.currency] ?? Currency.USD.rawValue
             let totalPrice = token.balance * token.price
             let priceStr = "\(formatter.string(from: totalPrice)!)"
+            let prefixStr = I18n.marketPrice.description
+            let prefixAttributes = [NSAttributedString.Key.font:MainFont.light.with(size: 10), NSAttributedString.Key.foregroundColor:UIColor.lightGray]
             
             let priceAttributes = [NSAttributedString.Key.font:MainFont.light.with(size: 14), NSAttributedString.Key.foregroundColor:UIColor.lightGray]
             let currencyAttributes = [NSAttributedString.Key.font:MainFont.light.with(size: 10), NSAttributedString.Key.foregroundColor:UIColor.lightGray]
             
-            let attString = NSMutableAttributedString(string: "\(priceStr) \(currency)")
-            attString.addAttributes(priceAttributes, range:NSRange.init(location: 0, length: priceStr.count))
-            attString.addAttributes(currencyAttributes, range: NSRange.init(location: priceStr.count, length: currency.count + 1))
+            let attString = NSMutableAttributedString(string: "\(prefixStr) \(priceStr) \(currency)")
+            attString.addAttributes(prefixAttributes, range:NSRange.init(location: 0, length: prefixStr.count))
+            attString.addAttributes(priceAttributes, range:NSRange.init(location: prefixStr.count, length: priceStr.count + 1))
+            attString.addAttributes(currencyAttributes, range: NSRange.init(location: prefixStr.count + priceStr.count + 1, length: currency.count + 1))
             
             priceLabel.attributedText = attString
         } else {

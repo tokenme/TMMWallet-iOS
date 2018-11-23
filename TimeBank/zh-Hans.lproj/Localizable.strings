@@ -92,6 +92,10 @@
 "DailyReward" = "每日签到";
 "XDay" = "%d天";
 "DailyBonusSuccessMsg" = "恭喜！您刚刚获得 %@ 积分奖励。";
+"MarketPrice" = "市场价格";
+"WithdrawRecords" = "提现记录";
+"EmptyWithdrawRecordsTitle" = "还没有提现记录？";
+"EmptyWithdrawRecordsDesc" = "现在去试试提现吧！";
 
 // Apps
 "SDKApps" = "可挖矿应用";

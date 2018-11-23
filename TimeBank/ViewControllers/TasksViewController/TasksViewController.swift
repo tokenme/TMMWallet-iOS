@@ -44,7 +44,7 @@ class TasksViewController: TabmanViewController {
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.technology.rawValue),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.fashion.rawValue),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.blockchain.rawValue),
-        BlowupViewController.instantiate()
+        //BlowupViewController.instantiate()
     ]
     
     deinit {
@@ -97,7 +97,7 @@ class TasksViewController: TabmanViewController {
             Item(title: APIArticleCategory.technology.description),
             Item(title: APIArticleCategory.fashion.description),
             Item(title: APIArticleCategory.blockchain.description),
-            Item(title: I18n.blowupGame.description)
+            //Item(title: I18n.blowupGame.description)
         ]
         self.bar.style = .scrollingButtonBar
         self.automaticallyAdjustsChildViewInsets = true

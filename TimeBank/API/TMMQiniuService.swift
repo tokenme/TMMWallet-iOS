@@ -15,7 +15,7 @@ enum TMMQiniuService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMQiniuService: TargetType, AccessTokenAuthorizable {
+extension TMMQiniuService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     
     var authorizationType: AuthorizationType {
         get {
@@ -37,10 +37,16 @@ extension TMMQiniuService: TargetType, AccessTokenAuthorizable {
             return .get
         }
     }
+    var params: [String: Any] {
+        switch self {
+        case .upToken:
+            return [:]
+        }
+    }
     var task: Task {
         switch self {
         case .upToken():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         }
     }
     

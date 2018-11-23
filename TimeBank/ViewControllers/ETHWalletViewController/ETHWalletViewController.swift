@@ -99,9 +99,9 @@ class ETHWalletViewController: UIViewController {
     private var bindingWechat = false
     private var gettingTMMRate = false
     
-    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
-    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
-    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -121,7 +121,8 @@ class ETHWalletViewController: UIViewController {
             navigationItem.title = I18n.ethWallet.description
             
             let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
-            navigationItem.rightBarButtonItem = scanBarItem
+            let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(self.showWithdrawRecords))
+            navigationItem.rightBarButtonItems = [recordButtonItem, scanBarItem]
         }
         setupSummaryView()
         setupTableView()
@@ -218,6 +219,11 @@ class ETHWalletViewController: UIViewController {
         let vc = ScanViewController()
         vc.scanDelegate = self
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func showWithdrawRecords() {
+        let vc = TMMWithdrawRecordsTableViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

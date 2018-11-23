@@ -20,7 +20,7 @@ enum TMMUserService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMUserService: TargetType, AccessTokenAuthorizable {
+extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -52,12 +52,12 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             return .get
         }
     }
-    var task: Task {
+    var params: [String: Any] {
         switch self {
         case let .create(country, mobile, verifyCode, password, repassword, captcha, afsSession):
-            return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "verify_code": verifyCode, "passwd": password, "repasswd": repassword, "captcha": captcha, "afs_session": afsSession], encoding: JSONEncoding.default)
+            return ["country_code": country, "mobile": mobile, "verify_code": verifyCode, "passwd": password, "repasswd": repassword, "captcha": captcha, "afs_session": afsSession]
         case let .resetPassword(country, mobile, verifyCode, password, repassword):
-            return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "verify_code": verifyCode, "passwd": password, "repasswd": repassword], encoding: JSONEncoding.default)
+            return ["country_code": country, "mobile": mobile, "verify_code": verifyCode, "passwd": password, "repasswd": repassword]
         case let .update(user):
             var params: [String:Any] = [:]
             if let nick = user.nick {
@@ -72,13 +72,29 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable {
             if let inviterCode = user.inviterCode {
                 params["inviter_code"] = inviterCode
             }
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            return params
         case let .bindWechat(unionId, openId, nick, avatar, gender, accessToken, expires):
-            return .requestParameters(parameters: ["wx_union_id": unionId, "wx_open_id": openId, "wx_nick": nick, "wx_avatar": avatar, "wx_gender": gender, "wx_token": accessToken, "wx_expires": Int64(expires)], encoding: JSONEncoding.default)
+            return ["wx_union_id": unionId, "wx_open_id": openId, "wx_nick": nick, "wx_avatar": avatar, "wx_gender": gender, "wx_token": accessToken, "wx_expires": Int64(expires)]
         case let .info(refresh):
-            return .requestParameters(parameters: ["refresh": refresh], encoding: URLEncoding.queryString)
+            return ["refresh": refresh]
+        case .inviteSummary:
+            return [:]
+        }
+    }
+    var task: Task {
+        switch self {
+        case .create:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .resetPassword:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .update:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .bindWechat:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .info:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         case .inviteSummary():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         }
     }
     var sampleData: Data {

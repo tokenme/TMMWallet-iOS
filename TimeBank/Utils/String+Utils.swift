@@ -7,6 +7,7 @@
 //
 
 import Moya
+import CommonCrypto
 
 extension String {
     var urlEscaped: String {

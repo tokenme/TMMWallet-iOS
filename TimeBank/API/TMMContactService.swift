@@ -15,7 +15,7 @@ enum TMMContactService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMContactService: TargetType, AccessTokenAuthorizable {
+extension TMMContactService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -35,10 +35,16 @@ extension TMMContactService: TargetType, AccessTokenAuthorizable {
             return .get
         }
     }
+    var params: [String: Any] {
+        switch self {
+        case .list:
+            return [:]
+        }
+    }
     var task: Task {
         switch self {
-        case .list():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .list:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {

@@ -1,9 +1,9 @@
 //
-//  SDKAppsTableViewController.swift
+//  TMMWithdrawRecordsTableViewController.swift
 //  TimeBank
 //
-//  Created by Syd Xu on 2018/9/4.
-//  Copyright © 2018年 Tokenmama.io. All rights reserved.
+//  Created by Syd Xu on 2018/11/23.
+//  Copyright © 2018 Tokenmama.io. All rights reserved.
 //
 
 import UIKit
@@ -13,12 +13,13 @@ import Hydra
 import ZHRefresh
 import SkeletonView
 import ViewAnimator
-import StoreKit
+import Kingfisher
+import EmptyDataSet_Swift
 import Presentr
 
 fileprivate let DefaultPageSize: UInt = 10
 
-class SDKAppsTableViewController: UITableViewController {
+class TMMWithdrawRecordsTableViewController: UITableViewController {
     
     private var userInfo: APIUser? {
         get {
@@ -41,12 +42,11 @@ class SDKAppsTableViewController: UITableViewController {
     
     private var currentPage: UInt = 1
     
-    private var apps: [APIApp] = []
+    private var records: [APITMMWithdrawRecord] = []
     
-    private var loadingApps = false
-    private var presentingAppStore = false
+    private var loadingRecords = false
     
-    private var appServiceProvider = MoyaProvider<TMMAppService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -63,7 +63,7 @@ class SDKAppsTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
-            navigationItem.title = I18n.sdkApps.description
+            navigationItem.title = I18n.withdrawRecords.description
         }
         setupTableView()
         if userInfo != nil {
@@ -83,52 +83,48 @@ class SDKAppsTableViewController: UITableViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if userInfo == nil {
-            let vc = LoginViewController.instantiate()
-            vc.delegate = self
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
-    
-    static func instantiate() -> SDKAppsTableViewController
-    {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SDKAppsTableViewController") as! SDKAppsTableViewController
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    static func instantiate() -> TMMWithdrawRecordsTableViewController
+    {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TMMWithdrawRecordsTableViewController") as! TMMWithdrawRecordsTableViewController
+    }
+    
     private func setupTableView() {
-        tableView.register(cellType: SDKAppTableViewCell.self)
+        tableView.register(cellType: TMMWithdrawRecordTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.estimatedRowHeight = 66.0
+        tableView.estimatedRowHeight = 55.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
         
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.refresh()
         }
+        
         tableView.footer = ZHRefreshAutoNormalFooter.footerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.getApps(false)
+            weakSelf.getRecords(false)
         }
+        tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }
     
-    private func refresh() {
-        getApps(true)
+    func refresh() {
+        getRecords(true)
     }
 }
 
-extension SDKAppsTableViewController: UIViewControllerTransitioningDelegate {
+extension TMMWithdrawRecordsTableViewController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return FadeTransition(transitionDuration: 0.5, startingAlpha: 0.8)
@@ -140,46 +136,67 @@ extension SDKAppsTableViewController: UIViewControllerTransitioningDelegate {
     
 }
 
-extension SDKAppsTableViewController {
-
+// MARK: - Table view data source
+extension TMMWithdrawRecordsTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return apps.count
+        return records.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(for: indexPath) as SDKAppTableViewCell
-        let app = self.apps[indexPath.row]
-        cell.fill(app, installed: DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId))
+        let record = self.records[indexPath.row]
+        let cell = tableView.dequeueReusableCell(for: indexPath) as TMMWithdrawRecordTableViewCell
+        cell.fill(record)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? SDKAppTableViewCell
+        let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
-        if self.apps.count < indexPath.row + 1 { return }
-        let app = self.apps[indexPath.row]
-        guard let storeId = app.storeId else {return}
-        if DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId) {
-            return
-        }
-        showAppStore(storeId, cell: cell)
+        if self.records.count < indexPath.row + 1 { return }
+        let record = self.records[indexPath.row]
+        let urlString = "https://etherscan.io/tx/\(record.tx)"
+        guard let url = URL(string: urlString) else { return }
+        let vc = TMMWebViewController.instantiate()
+        vc.request = URLRequest(url: url)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        let app = self.apps[indexPath.row]
-        guard let _ = app.storeId else {return false}
-        if DetectApp.isInstalled(app.bundleId, schemeId: app.schemeId) {
-            return false
-        }
-        return !self.loadingApps
+        return !self.loadingRecords
     }
 }
 
-extension SDKAppsTableViewController: SkeletonTableViewDataSource {
+extension TMMWithdrawRecordsTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
+        return self.records.count == 0
+    }
+    
+    func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView) -> Bool {
+        return true
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView, didTapButton button: UIButton) {
+        self.refresh()
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyWithdrawRecordsTitle.description)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.emptyWithdrawRecordsDesc.description)
+    }
+    
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
+        return NSAttributedString(string: I18n.refresh.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:17), NSAttributedString.Key.foregroundColor:UIColor.primaryBlue])
+    }
+}
+
+extension TMMWithdrawRecordsTableViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
         return 1
@@ -192,53 +209,33 @@ extension SDKAppsTableViewController: SkeletonTableViewDataSource {
     }
 }
 
-extension SDKAppsTableViewController {
+extension TMMWithdrawRecordsTableViewController {
     
-    private func showAppStore(_ storeId: UInt64, cell: SDKAppTableViewCell?) {
-        if self.presentingAppStore { return }
-        self.presentingAppStore = true
-        cell?.startLoading()
-        let storeVC = SKStoreProductViewController.init()
-        storeVC.delegate = self
-        storeVC.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "\(storeId)"], completionBlock: {[weak self, weak cell] result, error in
-            if let weakCell = cell {
-                weakCell.endLoading()
-            }
-            guard let weakSelf = self else {return}
-            if result {
-                weakSelf.present(storeVC, animated: true, completion: nil)
-            } else {
-                weakSelf.presentingAppStore = false
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error?.localizedDescription)!, closeBtn: I18n.close.description)
-            }
-        })
-    }
-    
-    private func getApps(_ refresh: Bool) {
-        if self.loadingApps {
+    private func getRecords(_ refresh: Bool) {
+        if self.loadingRecords {
             return
         }
-        self.loadingApps = true
+        self.loadingRecords = true
         
         if refresh {
             currentPage = 1
         }
         
-        TMMAppService.getSdks(
+        TMMRedeemService.getTMMWithdrawRecords(
             page: currentPage,
             pageSize: DefaultPageSize,
-            provider: self.appServiceProvider)
-            .then(in: .main, {[weak self] apps in
+            provider: self.redeemServiceProvider)
+            .then(in: .main, {[weak self] records in
                 guard let weakSelf = self else {
                     return
                 }
                 if refresh {
-                    weakSelf.apps = apps
+                    weakSelf.records = records
                 } else {
-                    weakSelf.apps.append(contentsOf: apps)
+                    weakSelf.records.append(contentsOf: records)
                 }
-                if apps.count < DefaultPageSize {
-                    if weakSelf.apps.count <= DefaultPageSize {
+                if records.count < DefaultPageSize {
+                    if weakSelf.records.count <= DefaultPageSize {
                         weakSelf.tableView.footer?.isHidden = true
                     } else {
                         weakSelf.tableView.footer?.isHidden = false
@@ -256,32 +253,16 @@ extension SDKAppsTableViewController {
                 weakSelf.tableView.footer?.endRefreshing()
             }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
-                weakSelf.loadingApps = false
+                weakSelf.loadingRecords = false
+                weakSelf.tableView.header?.isHidden = false
                 weakSelf.tableView.hideSkeleton()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
                 weakSelf.tableView.header?.endRefreshing()
                 if refresh {
-                    let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
-                    UIView.animate(views: weakSelf.tableView.visibleCells, animations: [fromAnimation], completion:nil)
+                    let zoomAnimation = AnimationType.zoom(scale: 0.2)
+                    UIView.animate(views: weakSelf.tableView.visibleCells, animations: [zoomAnimation], completion:nil)
                 }
-            }
+                }
         )
-    }
-}
-
-extension SDKAppsTableViewController: SKStoreProductViewControllerDelegate {
-    
-    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true, completion: {[weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.presentingAppStore = false
-        })
-    }
-    
-}
-
-extension SDKAppsTableViewController: LoginViewDelegate {
-    func loginSucceeded(token: APIAccessToken?) {
-        self.refresh()
     }
 }

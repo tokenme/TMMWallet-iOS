@@ -92,6 +92,10 @@
 "DailyReward" = "Daily Reward";
 "XDay" = "%dd";
 "DailyBonusSuccessMsg" = "Congratulation! You just get %@ bonus points.";
+"MarketPrice" = "market price";
+"WithdrawRecords" = "Withdraw Records";
+"EmptyWithdrawRecordsTitle" = "No Withdraw Records?";
+"EmptyWithdrawRecordsDesc" = "Try to withdraw UCoin now!";
 
 // Apps
 "SDKApps" = "Minable Apps";

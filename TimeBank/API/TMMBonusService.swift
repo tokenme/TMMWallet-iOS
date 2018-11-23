@@ -17,7 +17,7 @@ enum TMMBonusService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMBonusService: TargetType, AccessTokenAuthorizable {
+extension TMMBonusService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -44,14 +44,25 @@ extension TMMBonusService: TargetType, AccessTokenAuthorizable {
         }
     }
     
+    var params: [String: Any] {
+        switch self {
+        case .dailyStatus:
+            return [:]
+        case let .dailyCommit(deviceId):
+            return ["idfa": deviceId, "platform": APIPlatform.iOS.rawValue]
+        case let .readingBonus(idfa, appKey, payload):
+            return ["idfa": idfa, "key": appKey, "payload": payload]
+        }
+    }
+    
     var task: Task {
         switch self {
-        case .dailyStatus():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case let .dailyCommit(deviceId):
-            return .requestParameters(parameters: ["idfa": deviceId, "platform": APIPlatform.iOS.rawValue], encoding: JSONEncoding.default)
-        case let .readingBonus(idfa, appKey, payload):
-            return .requestParameters(parameters: ["idfa": idfa, "key": appKey, "payload": payload], encoding: JSONEncoding.default)
+        case .dailyStatus:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .dailyCommit:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .readingBonus:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
         }
     }
     

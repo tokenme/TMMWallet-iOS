@@ -17,7 +17,7 @@ enum TMMAuthService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMAuthService: TargetType, AccessTokenAuthorizable {
+extension TMMAuthService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -43,14 +43,24 @@ extension TMMAuthService: TargetType, AccessTokenAuthorizable {
             return .get
         }
     }
-    var task: Task {
+    var params: [String: Any] {
         switch self {
         case let .sendCode(country, mobile):
-            return .requestParameters(parameters: ["country": country, "mobile": mobile], encoding: JSONEncoding.default)
+            return ["country": country, "mobile": mobile]
         case let .login(country, mobile, password, biometric, captcha, afsSession):
-            return .requestParameters(parameters: ["country_code": country, "mobile": mobile, "password": password, "biometric": biometric, "captcha": captcha, "afs_session":afsSession], encoding: JSONEncoding.default)
-        case .refresh():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+            return ["country_code": country, "mobile": mobile, "password": password, "biometric": biometric, "captcha": captcha, "afs_session":afsSession]
+        case .refresh:
+            return [:]
+        }
+    }
+    var task: Task {
+        switch self {
+        case .sendCode:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .login:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .refresh:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
         }
     }
     var sampleData: Data {

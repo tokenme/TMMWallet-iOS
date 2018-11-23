@@ -22,7 +22,7 @@ enum TMMGoodService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMGoodService: TargetType, AccessTokenAuthorizable {
+extension TMMGoodService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -58,22 +58,22 @@ extension TMMGoodService: TargetType, AccessTokenAuthorizable {
             return .post
         }
     }
-    var task: Task {
+    var params: [String: Any] {
         switch self {
         case let .list(page, pageSize):
-            return .requestParameters(parameters: ["page": page, "page_size": pageSize], encoding: URLEncoding.default)
-        case .item(_):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case .invests(_, _, _):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+            return ["page": page, "page_size": pageSize]
+        case .item:
+            return [:]
+        case .invests:
+            return [:]
         case let .invest(goodId, idfa, points):
-            return .requestParameters(parameters: ["good_id": goodId, "points": points, "idfa": idfa], encoding: JSONEncoding.default)
-        case .myInvests(_, _):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case .investWithdraw(_):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
-        case .investSummary():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+            return ["good_id": goodId, "points": points, "idfa": idfa]
+        case .myInvests:
+            return [:]
+        case .investWithdraw:
+            return [:]
+        case .investSummary:
+            return [:]
         case let .investRedeem(ids):
             var strArr: [String] = []
             if let ids = ids {
@@ -81,7 +81,27 @@ extension TMMGoodService: TargetType, AccessTokenAuthorizable {
                     strArr.append("\(id)")
                 }
             }
-            return .requestParameters(parameters: ["ids": strArr.joined(separator: ",")], encoding: JSONEncoding.default)
+            return ["ids": strArr.joined(separator: ",")]
+        }
+    }
+    var task: Task {
+        switch self {
+        case .list:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .item:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .invests:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .invest:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .myInvests:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .investWithdraw:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .investSummary:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
+        case .investRedeem:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
         }
     }
     var sampleData: Data {

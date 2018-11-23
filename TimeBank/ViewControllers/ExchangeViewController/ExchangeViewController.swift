@@ -96,7 +96,7 @@ class ExchangeViewController: UIViewController {
     private var gettingMarketTopBids: Bool = false
     private var isSubmitting: Bool = false
     
-    private var orderBookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure())])
+    private var orderBookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)

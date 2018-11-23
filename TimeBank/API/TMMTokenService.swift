@@ -19,7 +19,7 @@ enum TMMTokenService {
 }
 
 // MARK: - TargetType Protocol Implementation
-extension TMMTokenService: TargetType, AccessTokenAuthorizable {
+extension TMMTokenService: TargetType, AccessTokenAuthorizable, SignatureTargetType {
     var authorizationType: AuthorizationType {
         get {
             return .bearer
@@ -31,7 +31,7 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .tmmBalance():
             return "/tmm/balance"
-        case .assets(_):
+        case .assets:
             return "/assets"
         case let .transactions(address, page, pageSize):
             return "/transactions/\(address)/\(page)/\(pageSize)"
@@ -49,18 +49,32 @@ extension TMMTokenService: TargetType, AccessTokenAuthorizable {
             return .post
         }
     }
+    var params: [String: Any] {
+        switch self {
+        case .tmmBalance:
+            return [:]
+        case let .assets(currency):
+            return ["currency": currency]
+        case .transactions:
+            return [:]
+        case let .transfer(token, amount, to):
+            return ["token": token, "amount": amount, "to": to]
+        case .info:
+            return [:]
+        }
+    }
     var task: Task {
         switch self {
-        case .tmmBalance():
-            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
-        case let .assets(currency):
-            return .requestParameters(parameters: ["currency": currency], encoding: URLEncoding.queryString)
-        case .transactions(_, _, _):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
-        case let .transfer(token, amount, to):
-            return .requestParameters(parameters: ["token": token, "amount": amount, "to": to], encoding: JSONEncoding.default)
-        case .info(_):
-            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+        case .tmmBalance:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
+        case .assets:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
+        case .transactions:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
+        case .transfer:
+            return .requestParameters(parameters: self.params, encoding: JSONEncoding.default)
+        case .info:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         }
     }
     var sampleData: Data {

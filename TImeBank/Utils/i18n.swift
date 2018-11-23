@@ -107,6 +107,10 @@ enum I18n: CustomStringConvertible {
     case dailyReward
     case xDay
     case dailyBonusSuccessMsg
+    case marketPrice
+    case withdrawRecords
+    case emptyWithdrawRecordsTitle
+    case emptyWithdrawRecordsDesc
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -452,6 +456,14 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("XDay", comment: "XDay")
         case .dailyBonusSuccessMsg:
             return NSLocalizedString("DailyBonusSuccessMsg", comment: "dailyBonusSuccessMsg")
+        case .marketPrice:
+            return NSLocalizedString("MarketPrice", comment: "Market Price")
+        case .withdrawRecords:
+            return NSLocalizedString("WithdrawRecords", comment: "WithdrawRecords")
+        case .emptyWithdrawRecordsTitle:
+            return NSLocalizedString("EmptyWithdrawRecordsTitle", comment: "EmptyWithdrawRecordsTitle")
+        case .emptyWithdrawRecordsDesc:
+            return NSLocalizedString("EmptyWithdrawRecordsDesc", comment: "EmptyWithdrawRecordsDesc")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .discover:
