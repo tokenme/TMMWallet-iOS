@@ -12,6 +12,8 @@ import ObjectMapper
 public class APIInviteSummary: APIResponse {
     var invites: UInt = 0
     var points: NSDecimalNumber = 0
+    var nextLevelInvites: UInt = 0
+    var users: [APIUser] = []
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -26,6 +28,8 @@ public class APIInviteSummary: APIResponse {
     override public func mapping(map: Map) {
         super.mapping(map: map)
         invites <- map["invites"]
+        nextLevelInvites <- map["next_level_invites"]
         points <- (map["points"], decimalTransform)
+        users <- map["users"]
     }
 }

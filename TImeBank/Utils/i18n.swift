@@ -188,6 +188,11 @@ enum I18n: CustomStringConvertible {
     case inviteUsers
     case inviteIncome
     case inviteFriends
+    case userCreditLevelRights
+    case userCreditLevelRules
+    case member
+    case nextLevelInvitesDesc
+    case creditLevelUpgradeDesc
     case bindWechatAccount
     case binded
     case notbinded
@@ -594,6 +599,16 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InviteIncome", comment: "Invite Income")
         case .inviteFriends:
             return NSLocalizedString("InviteFriends", comment: "Invite Friends")
+        case .userCreditLevelRights:
+            return NSLocalizedString("UserCreditLevelRights", comment: "UserCreditLevelRights")
+        case .userCreditLevelRules:
+            return NSLocalizedString("UserCreditLevelRules", comment: "UserCreditLevelRules")
+        case .member:
+            return NSLocalizedString("Member", comment: "Member")
+        case .nextLevelInvitesDesc:
+            return NSLocalizedString("NextLevelInvitesDesc", comment: "NextLevelInvitesDesc")
+        case .creditLevelUpgradeDesc:
+            return NSLocalizedString("CreditLevelUpgradeDesc", comment: "CreditLevelUpgradeDesc")
         case .bindWechatAccount:
             return NSLocalizedString("BindWechatAccount", comment: "Bind Wechat Account")
         case .binded:

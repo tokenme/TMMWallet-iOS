@@ -54,6 +54,9 @@ final class DefaultsUser: Codable, DefaultsSerializable {
     var inviterCode: String = ""
     var passwd: String = ""
     var exchangeEnabled: Bool = false
+    var level: UInt8 = 0
+    var levelName: String = "普通"
+    var levelEnname: String = "normal"
     var wxBinded: Bool = false
     
     enum CodingKeys: String, CodingKey {
@@ -67,10 +70,13 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         case inviteCode
         case inviterCode
         case exchangeEnabled
+        case level
+        case levelName
+        case levelEnname
         case wxBinded
     }
     
-    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String, exchangeEnabled: Bool, wxBinded: Bool) {
+    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String, exchangeEnabled: Bool, level: UInt8, levelName: String, levelEnname: String, wxBinded: Bool) {
         self.id = id
         self.countryCode = countryCode
         self.mobile = mobile
@@ -81,6 +87,9 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.inviteCode = inviteCode
         self.inviterCode = inviterCode
         self.exchangeEnabled = exchangeEnabled
+        self.level = level
+        self.levelName = levelName
+        self.levelEnname = levelEnname
         self.wxBinded = wxBinded
     }
     
@@ -96,6 +105,10 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.inviteCode = try container.decode(String.self, forKey: .inviteCode)
         self.inviterCode = try container.decode(String.self, forKey: .inviterCode)
         self.exchangeEnabled = try container.decode(Bool.self, forKey: .exchangeEnabled)
+        self.level = try container.decode(UInt8.self, forKey: .level)
+        self.levelName = try container.decode(String.self, forKey: .levelName)
+        self.levelEnname = try container.decode(String.self, forKey: .levelEnname)
+        self.avatar = try container.decode(String.self, forKey: .avatar)
         self.wxBinded = try container.decode(Bool.self, forKey: .wxBinded)
     }
     

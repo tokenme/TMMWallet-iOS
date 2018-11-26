@@ -115,6 +115,9 @@ blades:
   - source: images/invite-image.png
     mount: TimeBank/Assets.xcassets/InviteImage.imageset
     contents: true
+  - source: images/creditlevelfilling.png
+    mount: TimeBank/Assets.xcassets/CreditLevel.imageset
+    contents: true
 #  - source: iTunesArtwork@2x.png
 #    template: templates/iphone-appicon.json # use a template if you want to batch build catalogs regardless of an xcode project (e.g. as part of a CI process)
 #    out: out/newiphone

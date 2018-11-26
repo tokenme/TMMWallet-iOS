@@ -14,14 +14,14 @@ import ZHRefresh
 import Kingfisher
 import Presentr
 
-enum AccountTableSectionType {
+fileprivate enum AccountTableSectionType {
     case account
     case invite
     case contact
     case signout
 }
 
-enum AccountTableCellType {
+fileprivate enum AccountTableCellType {
     case accountInfo
     case inviteSummary
     case myInviteCode
@@ -88,6 +88,9 @@ class AccountTableViewController: UITableViewController {
     
     @IBOutlet private weak var avatarImageView : UIImageView!
     @IBOutlet private weak var mobileLabel: UILabel!
+    @IBOutlet private weak var levelImageView: UIImageView!
+    @IBOutlet private weak var levelNameLabel: UILabel!
+    @IBOutlet private weak var nextLevelInvitesLabel: UILabel!
     
     @IBOutlet private weak var myInviteCodeLabel: UILabel!
     @IBOutlet private weak var inviteUsersLabel: UILabel!
@@ -129,10 +132,10 @@ class AccountTableViewController: UITableViewController {
             navigationItem.title = I18n.account.description
         }
         setupTableView()
-        
-        avatarImageView.layer.cornerRadius = 20.0
+        avatarImageView.layer.cornerRadius = 22
         avatarImageView.layer.borderWidth = 0.0
         avatarImageView.clipsToBounds = true
+        
         inviteUsersTitleLabel.text = I18n.inviteUsers.description
         inviteIncomeTitleLabel.text = I18n.inviteIncome.description
         myInviteCodeLabel.text = I18n.myInviteCode.description
@@ -160,6 +163,7 @@ class AccountTableViewController: UITableViewController {
         versionLabel.textColor = UIColor.lightGray
         versionLabel.font = MainFont.light.with(size: 12)
         tableView.tableFooterView = versionLabel
+        self.updateView()
         self.refresh()
     }
     
@@ -227,7 +231,13 @@ class AccountTableViewController: UITableViewController {
         if let avatar = userInfo.avatar {
             avatarImageView.kf.setImage(with: URL(string: avatar))
         }
+        
+        levelImageView.tintColor = userInfo.level?.color() ?? APICreditLevel()!.color()
+        levelNameLabel.text = userInfo.level?.showName(true) ?? APICreditLevel()!.showName(true)
+        let levelImage = UIImage(named: "CreditLevel")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        levelImageView.image = levelImage
         if let summary = self.inviteSummary {
+            nextLevelInvitesLabel.text = String(format: I18n.nextLevelInvitesDesc.description, summary.nextLevelInvites)
             inviteUsersLabel.text = String(summary.invites)
             let formatter = NumberFormatter()
             formatter.maximumFractionDigits = 4
@@ -329,6 +339,10 @@ extension AccountTableViewController {
         if self.sections.count < indexPath.section + 1 { return }
         if self.sections[indexPath.section].count < indexPath.row + 1 { return }
         switch self.sections[indexPath.section][indexPath.row] {
+        case .accountInfo:
+            let vc = UserLevelTableViewController.instantiate()
+            vc.inviteSummary = self.inviteSummary
+            self.navigationController?.pushViewController(vc, animated: true)
         case .myInviteCode:
             self.showMyInviteCode()
         case .inviteButton:

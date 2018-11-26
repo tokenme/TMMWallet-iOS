@@ -199,6 +199,11 @@
 "InviteUsers" = "Invite Users";
 "InviteIncome" = "Invite Income";
 "InviteFriends" = "Invite Friends";
+"UserCreditLevelRights" = "Credit Rights";
+"UserCreditLevelRules" = "Credit Level Rules";
+"Member" = "Member";
+"NextLevelInvitesDesc" = "Invite %d more people to upgrade";
+"CreditLevelUpgradeDesc" = "Invite %d friends to upgrade to %@";
 
 // Market
 "Buy" = "Buy";

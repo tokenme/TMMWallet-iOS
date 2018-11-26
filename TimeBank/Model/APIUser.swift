@@ -22,6 +22,7 @@ public class APIUser: APIResponse {
     var inviteCode: String?
     var inviterCode: String?
     var exchangeEnabled: Bool = false
+    var level: APICreditLevel?
     var wxBinded: Bool = false
     
     // MARK: JSON
@@ -41,6 +42,12 @@ public class APIUser: APIResponse {
         self.inviteCode = user.inviteCode
         self.inviterCode = user.inviterCode
         self.exchangeEnabled = user.exchangeEnabled
+        if let level = APICreditLevel() {
+            level.id = user.level
+            level.name = user.levelName
+            level.enname = user.levelEnname
+            self.level = level
+        }
         self.wxBinded = user.wxBinded
     }
     
@@ -61,6 +68,7 @@ public class APIUser: APIResponse {
         inviteCode <- map["invite_code"]
         inviterCode <- map["inviter_code"]
         exchangeEnabled <- map["exchange_enabled"]
+        level <- map["level"]
         wxBinded <- map["wx_binded"]
     }
 }
