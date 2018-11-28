@@ -53,7 +53,7 @@ class TransferTableViewController: UITableViewController {
     
     private var token: APIToken?
     
-    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -238,11 +238,9 @@ extension TransferTableViewController {
                 guard let weakSelf = self else { return }
                 guard let receipt = tx.receipt else { return }
                 let message = String(format: I18n.newTransactionDesc.description, receipt)
-                let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
-                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                    //
-                }
-                let okAction = AlertAction(title: I18n.viewTransaction.description, style: .destructive) {[weak self] alert in
+                let alertController = AlertViewController(title: I18n.newTransactionTitle.description, body: message)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                let okAction = AlertAction(title: I18n.viewTransaction.description, style: .destructive) {[weak self] in
                     guard let weakSelf = self else { return }
                     let urlString = "https://etherscan.io/tx/\(receipt)"
                     guard let url = URL(string: urlString) else { return }
@@ -301,11 +299,9 @@ extension TransferTableViewController: ScanViewDelegate {
             walletAddressTextField.text = walletAddress
             return
         }
-        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: qrcode)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) { alert in
+        let alertController = AlertViewController(title: I18n.alert.description, body: qrcode)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) {
             let paste = UIPasteboard.general
             paste.string = qrcode
         }

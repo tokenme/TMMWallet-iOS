@@ -33,7 +33,6 @@ public enum RingProgressViewStyle: Int {
 @IBDesignable
 @objc(MKRingProgressView)
 open class RingProgressView: UIView {
-
     /// The start color of the progress ring.
     @IBInspectable open var startColor: UIColor {
         get {
@@ -99,6 +98,16 @@ open class RingProgressView: UIView {
         }
     }
 
+    /// Whether or not to hide the progress ring when progress is zero. Defaults to `false`.
+    @IBInspectable open var hidesRingForZeroProgress: Bool {
+        get {
+            return ringProgressLayer.hidesRingForZeroProgress
+        }
+        set {
+            ringProgressLayer.hidesRingForZeroProgress = newValue
+        }
+    }
+
     /// The Antialiasing switch. Defaults to `true`.
     @IBInspectable open var allowsAntialiasing: Bool {
         get {
@@ -120,8 +129,7 @@ open class RingProgressView: UIView {
         }
     }
 
-    /// The progress. Can be any nonnegative number, every whole number corresponding to one full revolution, i.e. 1.0 -> 360°, 2.0 -> 720°, etc. Defaults to `0.0`.
-    /// Progress animation duration can be adjusted using `CATransaction.setAnimationDuration()`.
+    /// The progress. Can be any nonnegative number, every whole number corresponding to one full revolution, i.e. 1.0 -> 360°, 2.0 -> 720°, etc. Defaults to `0.0`. Animatable.
     @IBInspectable open var progress: Double {
         get {
             return Double(ringProgressLayer.progress)
@@ -186,5 +194,4 @@ open class RingProgressView: UIView {
             overriddenAccessibilityValue = newValue
         }
     }
-
 }

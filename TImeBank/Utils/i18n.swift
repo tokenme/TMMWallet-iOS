@@ -173,6 +173,7 @@ enum I18n: CustomStringConvertible {
     case approximateTime
     case getPointsReward
     case toShareAlert
+    case video
     case account
     case signout
     case myInviteCode
@@ -569,6 +570,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("GetPointsReward", comment: "GetPointsReward")
         case .toShareAlert:
             return NSLocalizedString("ToShareAlert", comment: "ToShareAlert")
+        case .video:
+            return NSLocalizedString("Video", comment: "Video")
         case .account:
             return NSLocalizedString("Account", comment: "account")
         case .signout:

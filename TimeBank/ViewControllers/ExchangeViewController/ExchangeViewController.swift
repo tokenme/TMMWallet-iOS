@@ -96,7 +96,7 @@ class ExchangeViewController: UIViewController {
     private var gettingMarketTopBids: Bool = false
     private var isSubmitting: Bool = false
     
-    private var orderBookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var orderBookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -399,11 +399,9 @@ extension ExchangeViewController {
             UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: I18n.emptyPrice.description, closeBtn: I18n.close.description)
             return
         }
-        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmOrder.description)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] alert in
+        let alertController = AlertViewController(title: I18n.alert.description, body: I18n.confirmOrder.description)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] in
             guard let weakSelf = self else { return }
             weakSelf.doSubmit()
         }

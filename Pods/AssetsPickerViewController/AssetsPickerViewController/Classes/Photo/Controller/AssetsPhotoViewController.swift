@@ -15,6 +15,10 @@ import Device
 // MARK: - AssetsPhotoViewController
 open class AssetsPhotoViewController: UIViewController {
     
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.pickerConfig?.statusBarStyle ?? .default
+    }
+    
     // MARK: Properties
     var pickerConfig: AssetsPickerConfig!
     fileprivate var previewing: UIViewControllerPreviewing?
@@ -363,7 +367,11 @@ extension AssetsPhotoViewController {
                 }
             }
             if AssetsManager.shared.assetArray.count > 0 {
-                collectionView.scrollToItem(at: IndexPath(row: AssetsManager.shared.assetArray.count - 1, section: 0), at: .bottom, animated: false)
+                if pickerConfig.assetsIsScrollToBottom == true {
+                    collectionView.scrollToItem(at: IndexPath(row: AssetsManager.shared.assetArray.count - 1, section: 0), at: .bottom, animated: false)
+                } else {
+                    collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .bottom, animated: false)
+                }
             }
         }
     }

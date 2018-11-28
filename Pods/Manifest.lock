@@ -1,112 +1,113 @@
 PODS:
-  - Alamofire (4.7.3)
-  - AssetsPickerViewController (2.5.2):
+  - Alamofire (4.8.0)
+  - AssetsPickerViewController (2.5.5):
     - Device
     - Dimmer
     - FadeView
+    - PureLayout
     - SnapKit
     - SwiftARGB
     - TinyLog
   - AutoInsetter (1.3.0)
   - BiometricAuthentication (2.1)
   - BTNavigationDropdownMenu (0.5)
-  - Charts (3.2.0):
-    - Charts/Core (= 3.2.0)
-  - Charts/Core (3.2.0)
-  - CountryPickerView (2.1.1)
+  - Charts (3.2.1):
+    - Charts/Core (= 3.2.1)
+  - Charts/Core (3.2.1)
+  - CountryPickerView (2.2.0)
   - Device (3.1.2)
-  - Dimmer (2.0.3):
+  - Dimmer (2.2.0):
     - FadeView (~> 2.0)
-    - PureLayout
-    - TinyLog (~> 2.0)
+    - SnapKit
     - UIViewKVO (~> 2.0)
-  - DropDown (2.3.6)
+  - DropDown (2.3.12)
   - DynamicBlurView (3.0.1)
   - EmptyDataSet-Swift (4.2.0)
   - FadeView (2.0.0)
   - FlexibleSteppedProgressBar (0.5.1)
-  - GrandTime (1.3.0)
+  - GrandTime (1.4.0)
   - HappyDNS (0.3.14)
   - Haptica (2.2.1)
   - HydraAsync (1.2.1)
   - IKEventSource (2.1.0)
-  - IQKeyboardManagerSwift (6.1.1)
-  - Kingfisher (4.10.0)
+  - IQKeyboardManagerSwift (6.2.0)
+  - Kingfisher (4.10.1)
   - KMNavigationBarTransition (1.1.5)
-  - MKRingProgressView (2.1.1)
+  - MKRingProgressView (2.2)
+  - MMPlayerView (4.1.6)
   - moa (10.0.0)
-  - mob_sharesdk (4.2.0):
-    - mob_sharesdk/ShareSDK (= 4.2.0)
+  - mob_sharesdk (4.2.1):
+    - mob_sharesdk/ShareSDK (= 4.2.1)
     - MOBFoundation
-  - mob_sharesdk/ShareSDK (4.2.0):
+  - mob_sharesdk/ShareSDK (4.2.1):
     - MOBFoundation
-  - mob_sharesdk/ShareSDKConfigFile (4.2.0):
+  - mob_sharesdk/ShareSDKConfigFile (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKExtension (4.2.0):
+  - mob_sharesdk/ShareSDKExtension (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKPlatforms/Facebook (4.2.0):
+  - mob_sharesdk/ShareSDKPlatforms/Facebook (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKPlatforms/Line (4.2.0):
+  - mob_sharesdk/ShareSDKPlatforms/Line (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKPlatforms/QQ (4.2.0):
+  - mob_sharesdk/ShareSDKPlatforms/QQ (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (4.2.0):
+  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKPlatforms/Telegram (4.2.0):
+  - mob_sharesdk/ShareSDKPlatforms/Telegram (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKPlatforms/Twitter (4.2.0):
+  - mob_sharesdk/ShareSDKPlatforms/Twitter (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKPlatforms/WeChat (4.2.0):
+  - mob_sharesdk/ShareSDKPlatforms/WeChat (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - mob_sharesdk/ShareSDKUI (4.2.0):
+  - mob_sharesdk/ShareSDKUI (4.2.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation
-  - MOBFoundation (3.1.9)
-  - Moya (11.0.2):
-    - Moya/Core (= 11.0.2)
-  - Moya/Core (11.0.2):
+  - MOBFoundation (3.2.0)
+  - Moya (12.0.1):
+    - Moya/Core (= 12.0.1)
+  - Moya/Core (12.0.1):
     - Alamofire (~> 4.1)
-    - Result (~> 3.0)
-  - ObjectMapper (3.3.0)
-  - Pageboy (2.6.0)
+    - Result (~> 4.0)
+  - ObjectMapper (3.4.1)
+  - Pageboy (2.6.1)
   - Pastel (0.5.1)
   - Peep (2.1.2)
-  - PhoneNumberKit (2.1.0):
-    - PhoneNumberKit/PhoneNumberKitCore (= 2.1.0)
-    - PhoneNumberKit/UIKit (= 2.1.0)
-  - PhoneNumberKit/PhoneNumberKitCore (2.1.0)
-  - PhoneNumberKit/UIKit (2.1.0):
+  - PhoneNumberKit (2.5.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 2.5.0)
+    - PhoneNumberKit/UIKit (= 2.5.0)
+  - PhoneNumberKit/PhoneNumberKitCore (2.5.0)
+  - PhoneNumberKit/UIKit (2.5.0):
     - PhoneNumberKit/PhoneNumberKitCore
-  - Presentr (1.3.2)
-  - PureLayout (3.1.2)
+  - Presentr (1.9)
+  - PureLayout (3.1.4)
   - Qiniu (7.2.5):
     - HappyDNS (~> 0.3)
-  - Result (3.2.4)
-  - Reusable (4.0.3):
-    - Reusable/Storyboard (= 4.0.3)
-    - Reusable/View (= 4.0.3)
-  - Reusable/Storyboard (4.0.3)
-  - Reusable/View (4.0.3)
+  - Result (4.0.0)
+  - Reusable (4.0.4):
+    - Reusable/Storyboard (= 4.0.4)
+    - Reusable/View (= 4.0.4)
+  - Reusable/Storyboard (4.0.4)
+  - Reusable/View (4.0.4)
   - Schedule (1.0.0)
-  - Siren (3.7.1)
+  - Siren (3.9.1)
   - SkeletonView (1.4.1)
-  - SnapKit (4.0.1)
+  - SnapKit (4.2.0)
   - SVProgressHUD (2.2.5)
   - SwiftARGB (2.0.0)
   - SwiftRater (1.3.0)
   - swiftScan (1.1.7)
   - SwiftyUserDefaults (4.0.0-alpha.1)
   - SwipeCellKit (2.5.0)
-  - Tabman (1.10.0):
+  - Tabman (1.10.2):
     - AutoInsetter (~> 1.3.0)
     - Pageboy (~> 2.6.0)
   - TinyLog (2.0.7)
@@ -116,7 +117,7 @@ PODS:
   - ZHRefresh (0.2.1)
 
 DEPENDENCIES:
-  - AssetsPickerViewController (from `https://github.com/DragonCherry/AssetsPickerViewController.git`, tag `2.5.2`)
+  - AssetsPickerViewController (from `https://github.com/DragonCherry/AssetsPickerViewController.git`, tag `2.5.5`)
   - BiometricAuthentication
   - BTNavigationDropdownMenu
   - Charts
@@ -133,6 +134,7 @@ DEPENDENCIES:
   - Kingfisher (~> 4.10)
   - KMNavigationBarTransition
   - MKRingProgressView
+  - MMPlayerView
   - moa (~> 10.0)
   - mob_sharesdk
   - mob_sharesdk/ShareSDKConfigFile
@@ -156,7 +158,7 @@ DEPENDENCIES:
   - Schedule (~> 1.0)
   - Siren
   - SkeletonView (from `https://github.com/tokenme/SkeletonView.git`, tag `1.4.1`)
-  - SnapKit
+  - SnapKit (~> 4.2.0)
   - SVProgressHUD
   - SwiftRater
   - swiftScan (from `https://github.com/tokenme/swiftScan.git`, tag `1.1.7`)
@@ -189,6 +191,7 @@ SPEC REPOS:
     - Kingfisher
     - KMNavigationBarTransition
     - MKRingProgressView
+    - MMPlayerView
     - moa
     - mob_sharesdk
     - MOBFoundation
@@ -218,7 +221,7 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   AssetsPickerViewController:
     :git: https://github.com/DragonCherry/AssetsPickerViewController.git
-    :tag: 2.5.2
+    :tag: 2.5.5
   FlexibleSteppedProgressBar:
     :git: https://github.com/tokenme/FlexibleSteppedProgressBar.git
     :tag: 0.5.1
@@ -244,7 +247,7 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   AssetsPickerViewController:
     :git: https://github.com/DragonCherry/AssetsPickerViewController.git
-    :tag: 2.5.2
+    :tag: 2.5.5
   FlexibleSteppedProgressBar:
     :git: https://github.com/tokenme/FlexibleSteppedProgressBar.git
     :tag: 0.5.1
@@ -268,60 +271,61 @@ CHECKOUT OPTIONS:
     :tag: 0.2.1
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AssetsPickerViewController: b1dc7c944ccbc1d9790fa718dce21cb5cda35288
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  AssetsPickerViewController: 3be5ccae49ef429d31de33fbdc2fd1e6cd63babe
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   BiometricAuthentication: 6928c01583bc707f92c11349f190d5ae052217d3
   BTNavigationDropdownMenu: ba3a26fdb6a56c4721c31df8a0875106c259663a
-  Charts: 680c8328bd5e90cb14f67e00d2176f3113d19141
-  CountryPickerView: 8b20263f2d4e1953045e608c2594b50e8a2ee65c
+  Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
+  CountryPickerView: 77177af9744802d0a61391508b37e0a08f630871
   Device: 62242076214c30fb5760174b3601cefafa70a481
-  Dimmer: 9908a0003f4882eca1b2e318e11f82d32280794e
-  DropDown: e8bfbce001b2e6b7e8abfdd42e12b565712d84f4
+  Dimmer: 55721e2f218f965474b8319d4457ed76e5e59ef0
+  DropDown: 0bcc278799ec11a3d34ce1aac9367fbbaf5423d9
   DynamicBlurView: b1df5415f9bd31897549e5d7077e5ec120a4d636
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   FadeView: 80197da2fbee5382b178127e8c5f988a35eef018
   FlexibleSteppedProgressBar: 7385d2cfa13265b37327098c2918d4b1fd2f8676
-  GrandTime: 6c01d45b9db217c9c77909b6ea7c9643d95e6fb0
+  GrandTime: 69143fc82e14bc2c22afd8d3cc6fffb65e4cb871
   HappyDNS: dc6a164ee81979093123c241c6353bcf0218add6
   Haptica: 754e5879991be64bd8d47b21cb1862d052624ec4
   HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
   IKEventSource: eeb589b05053ac0e1314dea015f5a8d3c3cb24ab
-  IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
-  Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
+  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
-  MKRingProgressView: 6142b3bc5d6a94c03c58dded51133e5579d8046f
+  MKRingProgressView: 6a8eb219f65d1f7ac27ad1986a4f42160b2f7640
+  MMPlayerView: 717d3fc576e3b8d0d9196857b5b93633a579e4b5
   moa: 95c863fd1059e6b5c7f6be30627823bb07ebca25
-  mob_sharesdk: fc8a9aab921c08e5e88a5b1f36229c6d406a2ff8
-  MOBFoundation: 11500153c10d83e4ac341f6ad6301b3998ce6db2
-  Moya: a725035953bc1c0eb1be505ab903984501d82440
-  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  Pageboy: 1a5535f0d5a321045971cc2ddc6bcb53302392cb
+  mob_sharesdk: e6a6f9b2b6edc29af57c31756a7f0b4143cba50c
+  MOBFoundation: ca11e6640e995875ff755faa56ea324eed260e70
+  Moya: cf730b3cd9e005401ef37a85143aa141a12fd38f
+  ObjectMapper: 5311bd50ca732930959e7ca1a2de43ab823a5ced
+  Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   Pastel: b3dd5b8d612dac06ae7c63c97c45c900829bc139
   Peep: adfea4fc564a121ec467bfa5f7edd2f9b3c4de27
-  PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
-  Presentr: 797ae6ec8904eaba4ec58a4c2065bd66e31569ea
-  PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
+  PhoneNumberKit: 32a1cd1e0aa9e950feb01886a22fd7386b8cf903
+  Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
+  PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
   Qiniu: 909b408ee489ea54827e9717be90b94bc9dfbc48
-  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
+  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  Reusable: 7fc772097df3e5fc86f59d8a7af9708e49b5ff55
   Schedule: 64f334e01daa6f80201ab147b59cb4f1e118ae74
-  Siren: ccfbb3e0556c5c49817214716a45be6910cacdb4
+  Siren: 22b68056e52c5b6707bcbfac09d2d16874ee098a
   SkeletonView: 60d6ce7edb0cb4c7758db33c74add50392b3c475
-  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftARGB: 8727cfcdcfe8709e707a2391f1d5802a7c40dcad
   SwiftRater: 035512c0c454c83bd4d96b483d8854606aeecccf
   swiftScan: a36a3aa9c8deed9502cbd76d8da47a94f12fbf69
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   SwipeCellKit: d8f2617538ce3021cb0a11d1b93856a06a2f2e20
-  Tabman: 1d8fef96c8e12d0f7919c8b5a5e2ed2955ee3cf5
+  Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   TinyLog: 073a9abfd44a944886d5d07aa49cbba5ef192335
   TMMSDK: b34e76aa25c9c83e98e56d4ae581c1eb01d62122
   UIViewKVO: 091f9e020d69e73c4bf5e5ef61cde7bff1c24bbf
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 93be4949b7f45f1af9a88b89d5b1bce979acbf49
+PODFILE CHECKSUM: 5d8e42501dcaf83c945725bd6312ec8bafd4f978
 
 COCOAPODS: 1.6.0.beta.1

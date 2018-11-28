@@ -92,10 +92,10 @@ class DeviceAppsViewController: UIViewController {
     private var loadingRedeemCdps = false
     private var makingCdpOfferId: UInt64 = 0
     
-    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -376,11 +376,9 @@ extension DeviceAppsViewController: UICollectionViewDelegate, UICollectionViewDa
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let msg = String(format: I18n.confirmRedeemPointsCdp.description, arguments: [formatter.string(from: cdp.points)!, cdp.grade!])
-        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: msg)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] alert in
+        let alertController = AlertViewController(title: I18n.alert.description, body: msg)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] in
             guard let weakSelf = self else { return }
             weakSelf.cdpOrderAdd(offerId: offerId)
         }
@@ -572,11 +570,9 @@ extension DeviceAppsViewController: TransactionDelegate {
         Peep.play(sound: AlertTone.complete)
         self.delegate?.shouldRefresh()
         let message = String(format: I18n.newTransactionDesc.description, receipt)
-        let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.viewTransaction.description, style: .destructive) {[weak self] alert in
+        let alertController = AlertViewController(title: I18n.newTransactionTitle.description, body: message)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.viewTransaction.description, style: .destructive) {[weak self] in
             guard let weakSelf = self else { return }
             let urlString = "https://etherscan.io/tx/\(receipt)"
             guard let url = URL(string: urlString) else { return }

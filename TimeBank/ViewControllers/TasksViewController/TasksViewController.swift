@@ -36,14 +36,15 @@ class TasksViewController: TabmanViewController {
     }()
     
     private let viewControllers = [
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.suggest.rawValue),
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.sociaty.rawValue),
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.finance.rawValue),
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.funny.rawValue),
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.entertainment.rawValue),
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.technology.rawValue),
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.fashion.rawValue),
-        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.blockchain.rawValue),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.suggest.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.suggest.rawValue, isVideo: true),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.sociaty.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.finance.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.funny.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.entertainment.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.technology.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.fashion.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.blockchain.rawValue, isVideo: false),
         //BlowupViewController.instantiate()
     ]
     
@@ -90,6 +91,7 @@ class TasksViewController: TabmanViewController {
         // configure the bar
         self.bar.items = [
             Item(title: APIArticleCategory.suggest.description),
+            Item(title: I18n.video.description),
             Item(title: APIArticleCategory.sociaty.description),
             Item(title: APIArticleCategory.finance.description),
             Item(title: APIArticleCategory.funny.description),
@@ -155,11 +157,9 @@ class TasksViewController: TabmanViewController {
                 vc.delegate = weakSelf
                 weakSelf.navigationController?.pushViewController(vc, animated: true)
                 */
-                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.submitAppTaskNotAvailable.description)
-                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                    //
-                }
-                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                let alertController = AlertViewController(title: I18n.alert.description, body: I18n.submitAppTaskNotAvailable.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] in
                     guard let weakSelf2 = weakSelf else { return }
                     let vc = FeedbackTableViewController.instantiate()
                     weakSelf2.navigationController?.pushViewController(vc, animated: true)

@@ -50,7 +50,7 @@ class MyOrderbooksTableViewController: UITableViewController {
     
     private var cancellingOrder = false
     
-    private var orderbookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var orderbookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -213,11 +213,9 @@ extension MyOrderbooksTableViewController: SwipeTableViewCellDelegate {
             let sendAction = SwipeAction(style: .default, title: I18n.cancel.description) {[weak self] action, indexPath in
                 guard let weakSelf = self else { return }
                 guard let tradeId = weakSelf.orders[indexPath.row].id else { return }
-                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmCancelOrder.description)
-                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                    //
-                }
-                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                let alertController = AlertViewController(title: I18n.alert.description, body: I18n.confirmCancelOrder.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] in
                     guard let weakSelf2 = weakSelf else { return }
                     weakSelf2.runCancelOrder(tradeId)
                 }

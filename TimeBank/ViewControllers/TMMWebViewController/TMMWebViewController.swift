@@ -275,8 +275,8 @@ class TMMWebViewController: UIViewController {
     
     fileprivate var progressView: UIProgressView!
     
-    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -412,11 +412,9 @@ class TMMWebViewController: UIViewController {
             let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
             let formattedMaxBonus: String = formatter.string(from: maxBonus)!
             let msg = String(format: I18n.toShareAlert.description, formatter.string(from: task.bonus)!, formattedMaxBonus)
-            let alertController = Presentr.alertViewController(title: I18n.alert.description, body: msg)
-            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                //
-            }
-            let okAction = AlertAction(title: I18n.toShare.description, style: .destructive) {[weak self] alert in
+            let alertController = AlertViewController(title: I18n.alert.description, body: msg)
+            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+            let okAction = AlertAction(title: I18n.toShare.description, style: .destructive) {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.showShareSheet()
             }

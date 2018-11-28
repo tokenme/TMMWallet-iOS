@@ -735,6 +735,88 @@
             </objects>
             <point key="canvasLocation" x="5989.6000000000004" y="417.8410794602699"/>
         </scene>
+        <!--Video Detail View Controller-->
+        <scene sceneID="3fC-tr-809">
+            <objects>
+                <viewController storyboardIdentifier="VideoDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bFd-Jf-HyN" customClass="VideoDetailViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7cL-lO-FQb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPk-b0-P32">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tli-QY-cfy">
+                                <rect key="frame" x="16" y="36" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tli-QY-cfy" secondAttribute="height" id="Q03-is-8Mm"/>
+                                    <constraint firstAttribute="height" constant="36" id="fy5-2y-H8H"/>
+                                </constraints>
+                                <state key="normal" image="ic_keyboard_arrow_left"/>
+                                <connections>
+                                    <action selector="dismiss" destination="bFd-Jf-HyN" eventType="touchUpInside" id="TvK-xm-rQR"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zV7-pz-6It">
+                                <rect key="frame" x="60" y="44" width="29" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.97999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fr1-5s-ywb">
+                                <rect key="frame" x="327" y="36" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fr1-5s-ywb" secondAttribute="height" id="Iba-QZ-6RU"/>
+                                    <constraint firstAttribute="height" constant="32" id="teq-ds-bY7"/>
+                                </constraints>
+                                <state key="normal" image="Share"/>
+                                <connections>
+                                    <action selector="showShare" destination="bFd-Jf-HyN" eventType="touchUpInside" id="4id-dO-Lgx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zV7-pz-6It" firstAttribute="leading" secondItem="tli-QY-cfy" secondAttribute="trailing" constant="8" id="5BA-m2-jHE"/>
+                            <constraint firstItem="tli-QY-cfy" firstAttribute="leading" secondItem="UzJ-C9-O6E" secondAttribute="leading" constant="16" id="TJV-zo-0hq"/>
+                            <constraint firstItem="fr1-5s-ywb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zV7-pz-6It" secondAttribute="trailing" constant="16" id="UzG-Co-jh4"/>
+                            <constraint firstItem="UzJ-C9-O6E" firstAttribute="top" secondItem="tli-QY-cfy" secondAttribute="top" constant="-16" id="YPD-7X-CXr"/>
+                            <constraint firstItem="UzJ-C9-O6E" firstAttribute="trailing" secondItem="fr1-5s-ywb" secondAttribute="trailing" constant="16" id="gur-hX-Qim"/>
+                            <constraint firstItem="BPk-b0-P32" firstAttribute="leading" secondItem="UzJ-C9-O6E" secondAttribute="leading" id="iev-rx-4ax"/>
+                            <constraint firstItem="fr1-5s-ywb" firstAttribute="top" secondItem="UzJ-C9-O6E" secondAttribute="top" constant="16" id="j2f-ek-DYR"/>
+                            <constraint firstItem="zV7-pz-6It" firstAttribute="centerY" secondItem="tli-QY-cfy" secondAttribute="centerY" id="ogO-X6-MQI"/>
+                            <constraint firstItem="UzJ-C9-O6E" firstAttribute="trailing" secondItem="BPk-b0-P32" secondAttribute="trailing" id="pwX-1w-ufR"/>
+                            <constraint firstItem="BPk-b0-P32" firstAttribute="top" secondItem="UzJ-C9-O6E" secondAttribute="top" id="q6H-wQ-mgc"/>
+                            <constraint firstItem="UzJ-C9-O6E" firstAttribute="bottom" secondItem="BPk-b0-P32" secondAttribute="bottom" id="tWY-yt-Ra2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="UzJ-C9-O6E"/>
+                    </view>
+                    <connections>
+                        <outlet property="playerContainer" destination="BPk-b0-P32" id="ihr-Rt-R3b"/>
+                        <outlet property="shareButton" destination="fr1-5s-ywb" id="UAs-bp-Kbg"/>
+                        <outlet property="titleLabel" destination="zV7-pz-6It" id="2uG-jE-Ycq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZTW-at-yBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6780" y="415.14242878560725"/>
+        </scene>
+        <!--Video Full Screen View Controller-->
+        <scene sceneID="WBf-gk-i58">
+            <objects>
+                <viewController storyboardIdentifier="VideoFullScreenViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tUl-Pt-vcB" customClass="VideoFullScreenViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cge-E7-NaZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="GMJ-Gn-mjF"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FAH-Ub-Anv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7432" y="415"/>
+        </scene>
         <!--App Tasks Table View Controller-->
         <scene sceneID="l2K-I3-qn0">
             <objects>
@@ -2158,7 +2240,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bMn-F6-6cV">
-                                                    <rect key="frame" x="16" y="-0.5" width="44" height="44.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="44" height="44"/>
                                                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="bMn-F6-6cV" secondAttribute="height" multiplier="1:1" id="dxA-GI-nEM"/>
@@ -2166,16 +2248,16 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="R8C-Mu-hXI">
-                                                    <rect key="frame" x="68" y="8" width="57.5" height="27.5"/>
+                                                    <rect key="frame" x="68" y="8" width="57.5" height="28"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7A-HR-qTd">
-                                                            <rect key="frame" x="0.0" y="0.0" width="57.5" height="1.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="57.5" height="2"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="42R-Xv-zjh">
-                                                            <rect key="frame" x="0.0" y="9.5" width="57.5" height="18"/>
+                                                            <rect key="frame" x="0.0" y="10" width="57.5" height="18"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZWE-pC-aKv">
                                                                     <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
@@ -3052,7 +3134,9 @@
         <image name="SelectCircle" width="18" height="18"/>
         <image name="SelectFill" width="18" height="18"/>
         <image name="SelectImage" width="66.5" height="66.5"/>
+        <image name="Share" width="30" height="30"/>
         <image name="Timer" width="30" height="30"/>
         <image name="Wallet" width="24" height="24"/>
+        <image name="ic_keyboard_arrow_left" width="36" height="36"/>
     </resources>
 </document>

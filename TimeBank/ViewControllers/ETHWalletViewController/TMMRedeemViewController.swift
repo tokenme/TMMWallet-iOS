@@ -62,7 +62,7 @@ class TMMRedeemViewController: UIViewController {
     
     private let currency = Defaults[.currency] ?? Currency.USD.rawValue
     
-    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -125,10 +125,9 @@ extension TMMRedeemViewController {
                     case .wechatOpenIdError:
                         let _ = Haptic.notification(.warning)
                         weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
-                        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
-                        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                        }
-                        let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] alert in
+                        let alertController = AlertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
+                        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                        let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] in
                             guard let weakSelf = self else { return }
                             weakSelf.showShareSheet()
                         }

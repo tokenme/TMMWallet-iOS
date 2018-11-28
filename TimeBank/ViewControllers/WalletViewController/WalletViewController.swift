@@ -95,9 +95,9 @@ class WalletViewController: UIViewController {
     private var gettingDailyBonusStatus = false
     private var committingDailyBonus = false
     
-    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -243,11 +243,9 @@ extension WalletViewController: SwipeTableViewCellDelegate {
             let sendAction = SwipeAction(style: .default, title: I18n.unbind.description) {[weak self] action, indexPath in
                 guard let weakSelf = self else { return }
                 guard let deviceId = weakSelf.devices[indexPath.row].id else { return }
-                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmUnbind.description)
-                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                    //
-                }
-                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                let alertController = AlertViewController(title: I18n.alert.description, body: I18n.confirmUnbind.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] in
                     guard let weakSelf2 = weakSelf else { return }
                     weakSelf2.runUnbindDevice(deviceId)
                 }
@@ -534,11 +532,9 @@ extension WalletViewController: ScanViewDelegate {
             self.navigationController?.pushViewController(vc, animated: true)
             return
         }
-        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: qrcode)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) { alert in
+        let alertController = AlertViewController(title: I18n.alert.description, body: qrcode)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) {
             let paste = UIPasteboard.general
             paste.string = qrcode
         }

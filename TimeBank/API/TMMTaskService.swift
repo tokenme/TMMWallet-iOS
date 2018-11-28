@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import Hydra
 
 enum TMMTaskService {
-    case shares(idfa: String, cid: UInt, page: UInt, pageSize: UInt, mineOnly: Bool)
+    case shares(idfa: String, cid: UInt, isVideo: Bool, page: UInt, pageSize: UInt, mineOnly: Bool)
     case apps(idfa: String, page: UInt, pageSize: UInt, mineOnly: Bool)
     case install(idfa: String, bundleId: String, taskId: UInt64, status: Int8)
     case appsCheck(idfa: String)
@@ -32,19 +32,19 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
     var baseURL: URL { return URL(string: kAPIBaseURL + "/task")! }
     var path: String {
         switch self {
-        case .shares(_, _, _, _, _):
+        case .shares:
             return "/shares"
-        case .apps(_, _, _, _):
+        case .apps:
             return "/apps"
-        case .install(_, _, _, _):
+        case .install:
             return "/app/install"
-        case .appsCheck(_):
+        case .appsCheck:
             return "/apps/check"
-        case .records(_, _):
+        case .records:
             return "/records"
-        case .shareAdd(_, _, _, _, _, _, _):
+        case .shareAdd:
             return "/share/add"
-        case .shareUpdate(_, _, _, _, _, _, _, _, _):
+        case .shareUpdate:
             return "/share/update"
         case .appAdd(_, _, _, _):
             return "/app/add"
@@ -60,9 +60,9 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
     }
     var params: [String: Any] {
         switch self {
-        case let .shares(idfa, cid, page, pageSize, mineOnly):
+        case let .shares(idfa, cid, isVideo, page, pageSize, mineOnly):
             let buildVersion = UInt(Bundle.main.infoDictionary!["CFBundleVersion"] as! String)
-            return ["idfa": idfa, "cid": cid, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "build": buildVersion ?? 0]
+            return ["idfa": idfa, "cid": cid, "is_video": isVideo, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly, "build": buildVersion ?? 0]
         case let .apps(idfa, page, pageSize, mineOnly):
             return ["idfa": idfa, "platform": APIPlatform.iOS.rawValue, "page": page, "page_size": pageSize, "mine_only": mineOnly]
         case let .install(idfa, bundleId, taskId, status):
@@ -141,10 +141,10 @@ extension TMMTaskService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
 
 extension TMMTaskService {
     
-    static func getShares(idfa: String, cid: UInt, page: UInt, pageSize: UInt, mineOnly: Bool, provider: MoyaProvider<TMMTaskService>) -> Promise<[APIShareTask]> {
+    static func getShares(idfa: String, cid: UInt, isVideo: Bool, page: UInt, pageSize: UInt, mineOnly: Bool, provider: MoyaProvider<TMMTaskService>) -> Promise<[APIShareTask]> {
         return Promise<[APIShareTask]> (in: .background, { resolve, reject, _ in
             provider.request(
-                .shares(idfa: idfa, cid: cid, page: page, pageSize: pageSize, mineOnly: mineOnly)
+                .shares(idfa: idfa, cid: cid, isVideo: isVideo, page: page, pageSize: pageSize, mineOnly: mineOnly)
             ){ result in
                 switch result {
                 case let .success(response):

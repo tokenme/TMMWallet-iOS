@@ -11,10 +11,8 @@ import UIKit
 
 class UCAlert {
     static public func showAlert(_ presenter: Presentr, title: String, desc: String, closeBtn: String, viewController: UIViewController? = nil) {
-        let alertController = Presentr.alertViewController(title: title, body: desc)
-        let cancelAction = AlertAction(title: closeBtn, style: .cancel) { alert in
-            //
-        }
+        let alertController = AlertViewController(title: title, body: desc)
+        let cancelAction = AlertAction(title: closeBtn, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         if let vc = viewController {
             vc.customPresentViewController(presenter, viewController: alertController, animated: true)

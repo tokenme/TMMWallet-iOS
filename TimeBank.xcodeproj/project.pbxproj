@@ -188,6 +188,11 @@
 		1D3E42F121A7C25C0014CEB1 /* TMMWithdrawRecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42EF21A7C25C0014CEB1 /* TMMWithdrawRecordTableViewCell.xib */; };
 		1D3E42F321ABC9E10014CEB1 /* UserLevelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42F221ABC9E10014CEB1 /* UserLevelTableViewController.swift */; };
 		1D3E42F521ABD2BF0014CEB1 /* APICreditLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42F421ABD2BF0014CEB1 /* APICreditLevel.swift */; };
+		1D3E42FB21AE718A0014CEB1 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42F921AE718A0014CEB1 /* CoverA.xib */; };
+		1D3E42FC21AE718A0014CEB1 /* CoverA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42FA21AE718A0014CEB1 /* CoverA.swift */; };
+		1D3E430021AE77FD0014CEB1 /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */; };
+		1D3E430221AE7C650014CEB1 /* VideoFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E430121AE7C650014CEB1 /* VideoFullScreenViewController.swift */; };
+		1D3E430421AEB3B80014CEB1 /* UINavigationController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -430,6 +435,11 @@
 		1D3E42EF21A7C25C0014CEB1 /* TMMWithdrawRecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TMMWithdrawRecordTableViewCell.xib; sourceTree = "<group>"; };
 		1D3E42F221ABC9E10014CEB1 /* UserLevelTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLevelTableViewController.swift; sourceTree = "<group>"; };
 		1D3E42F421ABD2BF0014CEB1 /* APICreditLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICreditLevel.swift; sourceTree = "<group>"; };
+		1D3E42F921AE718A0014CEB1 /* CoverA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverA.xib; sourceTree = "<group>"; };
+		1D3E42FA21AE718A0014CEB1 /* CoverA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverA.swift; sourceTree = "<group>"; };
+		1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
+		1D3E430121AE7C650014CEB1 /* VideoFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFullScreenViewController.swift; sourceTree = "<group>"; };
+		1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Utils.swift"; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -631,6 +641,9 @@
 				1DEC5446214FBB5B007A46D5 /* SubmitShareTaskTableViewController.swift */,
 				1DEC545221510676007A46D5 /* SubmitAppTaskTableViewController.swift */,
 				1D31FC58217850D00014712B /* BlowupViewController.swift */,
+				1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */,
+				1D3E430121AE7C650014CEB1 /* VideoFullScreenViewController.swift */,
+				1D3E42F821AE718A0014CEB1 /* CoverView */,
 				1D151EBC213E7585007C87DD /* Cell */,
 			);
 			path = ViewControllers;
@@ -937,6 +950,7 @@
 				1D31FC81217F3C460014712B /* UIView+Utils.swift */,
 				1DEC544E2150FF82007A46D5 /* UIImage+Utils.swift */,
 				1D3E42E821A6D01D0014CEB1 /* MD5.swift */,
+				1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */,
 				1DF019FA2161EF4400FDD467 /* ChartComponents */,
 				1D151ED0213FC1EE007C87DD /* AppTaskChecker */,
 			);
@@ -1021,6 +1035,15 @@
 				1D3E42DA21A3FFD00014CEB1 /* SGSecurityBody.framework */,
 			);
 			path = SG;
+			sourceTree = "<group>";
+		};
+		1D3E42F821AE718A0014CEB1 /* CoverView */ = {
+			isa = PBXGroup;
+			children = (
+				1D3E42F921AE718A0014CEB1 /* CoverA.xib */,
+				1D3E42FA21AE718A0014CEB1 /* CoverA.swift */,
+			);
+			path = CoverView;
 			sourceTree = "<group>";
 		};
 		1D5FF688215B7852001E69CD /* ScanViewController */ = {
@@ -1244,6 +1267,7 @@
 				1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */,
 				1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */,
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
+				1D3E42FB21AE718A0014CEB1 /* CoverA.xib in Resources */,
 				1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D31FCA1218826750014712B /* JSDOMParser.js in Resources */,
@@ -1344,6 +1368,7 @@
 				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MKRingProgressView/MKRingProgressView.framework",
+				"${BUILT_PRODUCTS_DIR}/MMPlayerView/MMPlayerView.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1397,6 +1422,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MKRingProgressView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMPlayerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1440,6 +1466,7 @@
 				1D3E42CF219C34EB0014CEB1 /* InviteImagePresentrViewController.swift in Sources */,
 				1D3441E4213CFA1C00B8E157 /* CGRect+Utils.swift in Sources */,
 				1D0370C72165E2E900E5E3CE /* TMMContactService.swift in Sources */,
+				1D3E430221AE7C650014CEB1 /* VideoFullScreenViewController.swift in Sources */,
 				1D31FC82217F3C460014712B /* UIView+Utils.swift in Sources */,
 				1D05B4F1219441CF008EE10D /* TMMGoodService.swift in Sources */,
 				1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */,
@@ -1483,6 +1510,7 @@
 				1D3E42E721A555250014CEB1 /* GoodLoadingCollectionViewCell.swift in Sources */,
 				1D31FC7E217F3B0E0014712B /* KeyboardTextField.swift in Sources */,
 				1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */,
+				1D3E430421AEB3B80014CEB1 /* UINavigationController+Utils.swift in Sources */,
 				1DEC5442214F9F0A007A46D5 /* ExchangeRecordTableViewCell.swift in Sources */,
 				1D5FF681215B5322001E69CD /* MyOrderbooksTableViewController.swift in Sources */,
 				1D3441F3213CFBA300B8E157 /* FontAnimation.swift in Sources */,
@@ -1530,8 +1558,10 @@
 				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
 				1D31FC59217850D00014712B /* BlowupViewController.swift in Sources */,
+				1D3E430021AE77FD0014CEB1 /* VideoDetailViewController.swift in Sources */,
 				1DA38F3D2175B63C0073DB8A /* APIDailyBonusStatus.swift in Sources */,
 				1D1D6FD921492D330001ED49 /* WalletQRCodeViewController.swift in Sources */,
+				1D3E42FC21AE718A0014CEB1 /* CoverA.swift in Sources */,
 				1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1DF019FE2161F07400FDD467 /* ChartBalloonMarker.swift in Sources */,

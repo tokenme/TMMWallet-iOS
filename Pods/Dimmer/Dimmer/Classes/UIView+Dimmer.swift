@@ -7,16 +7,14 @@
 //
 
 import UIKit
-import TinyLog
-import UIViewKVO
+import SnapKit
 import FadeView
-import PureLayout
 
+fileprivate let kDimmerViewKey                          = "kDimmerViewKey"
 fileprivate let kDimmerView                             = "kDimmerView"
 fileprivate let kDimmerViewRatio                        = "kDimmerViewRatio"
 fileprivate let kDimmerActivityIndicatorView            = "kDimmerActivityIndicatorView"
 
-fileprivate let kDimmerLayoutConstraints                = "kDimmerLayoutConstraints"
 fileprivate let kDimmerWidthConstraint                  = "kDimmerWidthConstraint"
 fileprivate let kDimmerHeightConstraint                 = "kDimmerHeightConstraint"
 
@@ -31,25 +29,14 @@ public enum DimmerEffectDirection {
 // MARK: - Internal Utilities
 extension UIView {
     
-    fileprivate var dimmerConstraints: NSArray? {
-        set { set(newValue, forKey: kDimmerLayoutConstraints) }
-        get { return get(kDimmerLayoutConstraints) as? NSArray }
-    }
-    
-    fileprivate var dimmerWidthConstraint: NSLayoutConstraint? {
+    fileprivate var dimmerWidthConstraint: LayoutConstraint? {
         set { set(newValue, forKey: kDimmerWidthConstraint) }
-        get { return get(kDimmerWidthConstraint) as? NSLayoutConstraint }
+        get { return get(kDimmerWidthConstraint) as? LayoutConstraint }
     }
     
-    fileprivate var dimmerHeightConstraint: NSLayoutConstraint? {
+    fileprivate var dimmerHeightConstraint: LayoutConstraint? {
         set { set(newValue, forKey: kDimmerHeightConstraint) }
-        get { return get(kDimmerHeightConstraint) as? NSLayoutConstraint }
-    }
-    
-    fileprivate func setupConstraints(constraints: NSArray?) {
-        dimmerConstraints?.autoRemoveConstraints()
-        constraints?.autoInstallConstraints()
-        dimmerConstraints = constraints
+        get { return get(kDimmerHeightConstraint) as? LayoutConstraint }
     }
     
     fileprivate func createDimmerView(color: UIColor = .black, alpha: CGFloat = 0.4) -> UIView {
@@ -64,7 +51,7 @@ extension UIView {
         return activityIndicator
     }
     
-    fileprivate func excludingEdge(with direction: DimmerEffectDirection) -> ALEdge {
+    fileprivate func excludingEdge(with direction: DimmerEffectDirection) -> UIRectEdge {
         switch direction {
         case .fromTop:
             return .bottom
@@ -84,11 +71,10 @@ extension UIView {
         dimmerView?.removeFromSuperview()
         dimmerActivityView?.removeFromSuperview()
         
-        dimmerConstraints = nil
         dimmerWidthConstraint = nil
         dimmerHeightConstraint = nil
         
-        set(nil, forKey: kDimmerView)
+        set(nil, forKey: dimmerKey ?? kDimmerView)
         set(nil, forKey: kDimmerActivityIndicatorView)
         set(nil, forKey: kDimmerViewRatio)
     }
@@ -147,6 +133,11 @@ extension UIView {
 // MARK: - Dimming
 extension UIView {
     
+    var dimmerKey: String? {
+        get { return get(kDimmerViewKey) as? String }
+        set { set(newValue, forKey: kDimmerViewKey) }
+    }
+    
     open var dimmingRatio: CGFloat {
         get { return CGFloat((get(kDimmerViewRatio) as? CGFloat) ?? 0) }
         set { set(newValue, forKey: kDimmerViewRatio) }
@@ -161,7 +152,7 @@ extension UIView {
     }
     
     open var dimmerView: UIView? {
-        get { return get(kDimmerView) as? UIView }
+        get { return get(dimmerKey ?? kDimmerView) as? UIView }
         set {
             if let newDimmerView = newValue {
                 if let oldDimmerView = dimmerView {
@@ -169,7 +160,7 @@ extension UIView {
                         clearKVO()
                     }
                 }
-                set(newDimmerView, forKey: kDimmerView)
+                set(newDimmerView, forKey: dimmerKey ?? kDimmerView)
             } else {
                 if let _ = dimmerView {
                     clearKVO()
@@ -202,9 +193,9 @@ extension UIView {
             if self.dimmingRatio != ratio {
                 switch direction {
                 case .fromTop, .fromBottom:
-                    self.dimmerHeightConstraint?.constant = self.frame.size.height * ratio
+                    self.dimmerHeightConstraint?.constant = ratio
                 case .fromLeft, .fromRight:
-                    self.dimmerWidthConstraint?.constant = self.frame.size.width * ratio
+                    self.dimmerWidthConstraint?.constant = ratio
                 default:
                     break
                 }
@@ -221,23 +212,45 @@ extension UIView {
             } else {
                 addSubview(dimmer)
             }
-            dimmerConstraints = NSLayoutConstraint.autoCreateConstraintsWithoutInstalling {
+            
+            dimmer.snp.remakeConstraints { (make) in
                 if direction == .solid {
-                    dimmer.autoPinEdgesToSuperviewEdges()
+                    make.edges.equalToSuperview()
                 } else {
-                    dimmer.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(), excludingEdge: self.excludingEdge(with: direction))
+                    let edge = self.excludingEdge(with: direction)
+                    switch edge {
+                    case .top:
+                        make.leading.equalToSuperview()
+                        make.bottom.equalToSuperview()
+                        make.trailing.equalToSuperview()
+                    case .left:
+                        make.top.equalToSuperview()
+                        make.bottom.equalToSuperview()
+                        make.trailing.equalToSuperview()
+                    case .bottom:
+                        make.top.equalToSuperview()
+                        make.leading.equalToSuperview()
+                        make.trailing.equalToSuperview()
+                    case .right:
+                        make.top.equalToSuperview()
+                        make.leading.equalToSuperview()
+                        make.bottom.equalToSuperview()
+                    default:
+                        break
+                    }
                     switch direction {
                     case .fromTop, .fromBottom:
-                        dimmerHeightConstraint = dimmer.autoSetDimension(.height, toSize: self.frame.size.height * ratio)
+                        let constraint = make.height.equalToSuperview().multipliedBy(ratio)
+                        dimmerHeightConstraint = constraint.constraint.layoutConstraints.first
                     case .fromLeft, .fromRight:
-                        dimmerWidthConstraint = dimmer.autoSetDimension(.width, toSize: self.frame.size.width * ratio)
+                        let constraint = make.width.equalToSuperview().multipliedBy(ratio)
+                        dimmerWidthConstraint = constraint.constraint.layoutConstraints.first
                     default:
                         break
                     }
                 }
-                } as NSArray
+            }
             dimmerView = dimmer
-            setupConstraints(constraints: dimmerConstraints)
             updateRatio()
         }
     }
@@ -275,7 +288,9 @@ extension UIView {
             } else {
                 addSubview(view)
             }
-            view.autoCenterInSuperview()
+            view.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+            }
             dimmerActivityView = view
         } else {
             let dimmerActivity = createDimmerActivityView(style: style)
@@ -284,7 +299,9 @@ extension UIView {
             } else {
                 addSubview(dimmerActivity)
             }
-            dimmerActivity.autoCenterInSuperview()
+            dimmerActivity.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+            }
             dimmerActivity.startAnimating()
             dimmerActivityView = dimmerActivity
         }
@@ -294,3 +311,5 @@ extension UIView {
         undim(animated: animated)
     }
 }
+
+

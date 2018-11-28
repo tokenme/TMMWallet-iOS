@@ -2,11 +2,7 @@
 
 ### Notify users when a new version of your app is available and prompt them to upgrade.
 
-[![Travis CI Status](https://travis-ci.org/ArtSabintsev/Siren.svg?branch=master)](https://travis-ci.org/ArtSabintsev/Siren)
-
-![Swift Support](https://img.shields.io/badge/Swift-4.2%2C%204.1%2C%203.2%2C%203.1%202.3-orange.svg) ![Documentation](https://github.com/ArtSabintsev/Siren/blob/master/docs/badge.svg)
-
-[![CocoaPods](https://img.shields.io/cocoapods/v/Siren.svg)](https://cocoapods.org/pods/Siren)  [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen.svg)](https://swift.org/package-manager/)
+[![Travis CI Status](https://travis-ci.org/ArtSabintsev/Siren.svg?branch=master)](https://travis-ci.org/ArtSabintsev/Siren) ![Swift Support](https://img.shields.io/badge/Swift-4.2%2C%204.1%2C%203.2%2C%203.1%202.3-orange.svg) ![Documentation](https://github.com/ArtSabintsev/Siren/blob/master/docs/badge.svg) [![CocoaPods](https://img.shields.io/cocoapods/v/Siren.svg)](https://cocoapods.org/pods/Siren)  [![Carthage Compatible](https://img.shields.io/badge/carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 
 ---
 
@@ -26,6 +22,7 @@
 - [Words of Caution](https://github.com/ArtSabintsev/Siren#words-of-caution)
 - [Ports](https://github.com/ArtSabintsev/Siren#ports)
 - [Attribution](https://github.com/ArtSabintsev/Siren#created-and-maintained-by)
+
 ---
 
 ## About
@@ -83,10 +80,10 @@ pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'sw
 ### Carthage
 ```swift
 github "ArtSabintsev/Siren" // Swift 4.2
-github "ArtSabintsev/Siren", "swift4.1" // Swift 4.1
-github "ArtSabintsev/Siren", "swift3.2" // Swift 3.2
-github "ArtSabintsev/Siren", "swift3.1" // Swift 3.1
-github "ArtSabintsev/Siren", "swift2.3" // Swift 2.3
+github "ArtSabintsev/Siren" "swift4.1" // Swift 4.1
+github "ArtSabintsev/Siren" "swift3.2" // Swift 3.2
+github "ArtSabintsev/Siren" "swift3.1" // Swift 3.1
+github "ArtSabintsev/Siren" "swift2.3" // Swift 2.3
 ```
 
 ### Swift Package Manager

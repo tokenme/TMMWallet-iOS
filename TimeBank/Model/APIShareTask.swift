@@ -47,6 +47,8 @@ public class APIShareTask: APIResponse {
     var summary: String = ""
     var link: String = ""
     var shareLink: String = ""
+    var videoLink: String = ""
+    var isVideo: UInt8 = 0
     var image: String?
     var points: NSDecimalNumber = 0
     var pointsLeft: NSDecimalNumber = 0
@@ -76,6 +78,8 @@ public class APIShareTask: APIResponse {
         summary <- map["summary"]
         link <- map["link"]
         shareLink <- map["share_link"]
+        videoLink <- map["video_link"]
+        isVideo <- map["is_video"]
         image <- map["image"]
         points <- (map["points"], decimalTransform)
         pointsLeft <- (map["points_left"], decimalTransform)

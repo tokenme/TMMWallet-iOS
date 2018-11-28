@@ -83,8 +83,8 @@ class MyInvestsViewController: UIViewController {
     private var redeemIds: [UInt64]?
     private var redeemCell: MyGoodInvestTableViewCell?
     
-    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var goodServiceProvider = MoyaProvider<TMMGoodService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var goodServiceProvider = MoyaProvider<TMMGoodService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -332,11 +332,9 @@ extension MyInvestsViewController {
     }
     
     @IBAction private func showRedeemAlert() {
-        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "确定要提现吗？")
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.withdraw.description, style: .destructive) {[weak self] alert in
+        let alertController = AlertViewController(title: I18n.alert.description, body: "确定要提现吗？")
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.withdraw.description, style: .destructive) {[weak self] in
             guard let weakSelf = self else { return }
             weakSelf.tryRedeem()
         }
@@ -385,13 +383,13 @@ extension MyInvestsViewController {
                     } else {
                         weakSelf.withdrawButton.stopAnimation(animationStyle: .normal, completion: nil)
                     }
-                    let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
-                    let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) {[weak weakSelf] alert in
+                    let alertController = AlertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
+                    let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) {[weak weakSelf] in
                         guard let weakSelf2 = weakSelf else { return }
                         weakSelf2.redeemIds = nil
                         weakSelf2.redeemCell = nil
                     }
-                    let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] alert in
+                    let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] in
                         guard let weakSelf = self else { return }
                         weakSelf.showShareSheet()
                     }
@@ -552,11 +550,9 @@ extension MyInvestsViewController: MyGoodInvestTableViewCellDelegate {
             UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: "该投资已撤回", closeBtn: I18n.close.description)
             return
         }
-        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: "撤回投资后该投资收益将被清空，确定撤回投资？")
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] alert in
+        let alertController = AlertViewController(title: I18n.alert.description, body: "撤回投资后该投资收益将被清空，确定撤回投资？")
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] in
             guard let weakSelf = self else { return }
             weakSelf.doWithdraw(goodId: invest.goodId!, cell: currentCell)
         }

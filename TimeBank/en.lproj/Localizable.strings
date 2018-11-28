@@ -179,6 +179,7 @@
 "ApproximateTime" = "Approximate %@ to read，get %@ Points bonus";
 "GetPointsReward" = "Got %@ Points";
 "ToShareAlert" = "You could get %@ points after share for every unique viewer, and you could get %@ points in maximum.";
+"Video" = "Video";
 
 // Account
 "Account" = "Account";

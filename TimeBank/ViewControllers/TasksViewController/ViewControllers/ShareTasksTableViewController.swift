@@ -18,10 +18,23 @@ import Kingfisher
 import EmptyDataSet_Swift
 import Presentr
 import SwipeCellKit
+import MMPlayerView
+import AVFoundation
 
 fileprivate let DefaultPageSize: UInt = 10
 
 class ShareTasksTableViewController: UITableViewController {
+    
+    var offsetObservation: NSKeyValueObservation?
+    lazy var mmPlayerLayer: MMPlayerLayer = {
+        let l = MMPlayerLayer()
+        
+        l.cacheType = .memory(count: 5)
+        l.coverFitType = .fitToPlayerView
+        l.videoGravity = AVLayerVideoGravity.resizeAspect
+        l.replace(cover: CoverA.instantiateFromNib())
+        return l
+    }()
     
     private var userInfo: APIUser? {
         get {
@@ -45,29 +58,70 @@ class ShareTasksTableViewController: UITableViewController {
     public var mineOnly: Bool = false
     
     private var cid: UInt = 0
+    private var isVideo: Bool = false
     private var currentPage: UInt = 1
     
     private var tasks: [APIShareTask] = []
     
     private var loadingTasks = false
     
-    private var taskServiceProvider = MoyaProvider<TMMTaskService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var taskServiceProvider = MoyaProvider<TMMTaskService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        offsetObservation?.invalidate()
+        offsetObservation = nil
+        print("ViewController deinit")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
+            
+        })
+        offsetObservation = tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
+            guard let self = self, self.presentedViewController == nil else {return}
+            self.updateByContentOffset()
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
+            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.3)
+        }
+        //playerCollect.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right:0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.updateByContentOffset()
+            self?.startLoading()
+        }
+        
+        mmPlayerLayer.getStatusBlock { [weak self] (status) in
+            guard let weakSelf = self else { return }
+            switch status {
+            case .failed(let err):
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: err.description, closeBtn: I18n.close.description)
+            case .ready:
+                print("Ready to Play")
+            case .playing:
+                print("Playing")
+            case .pause:
+                print("Pause")
+            case .end:
+                print("End")
+            default: break
+            }
+        }
         setupTableView()
         if userInfo != nil {
             refresh()
         }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: nil) { [unowned self] (_) in
+            self.landscapeAction()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     static func instantiate() -> ShareTasksTableViewController
@@ -75,11 +129,25 @@ class ShareTasksTableViewController: UITableViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShareTasksTableViewController") as! ShareTasksTableViewController
     }
     
-    static func instantiate(cid: UInt) -> ShareTasksTableViewController
+    static func instantiate(cid: UInt, isVideo: Bool) -> ShareTasksTableViewController
     {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShareTasksTableViewController") as! ShareTasksTableViewController
         vc.cid = cid
+        vc.isVideo = isVideo
         return vc
+    }
+    
+    fileprivate func landscapeAction() {
+        // just landscape when last result was finish
+        if self.tableView.isDragging || self.tableView.isTracking || self.presentedViewController != nil {
+            return
+        }
+        if UIDevice.current.orientation.isLandscape {
+            let vc = VideoFullScreenViewController.instantiate()
+            MMLandscapeWindow.shared.makeKey(root: vc, playLayer: self.mmPlayerLayer, completed: {
+                print("landscape completed")
+            })
+        }
     }
     
     private func setupTableView() {
@@ -111,6 +179,99 @@ class ShareTasksTableViewController: UITableViewController {
     
     public func refresh() {
         getTasks(true)
+    }
+}
+
+extension ShareTasksTableViewController: MMPlayerFromProtocol {
+    // when second controller pop or dismiss, this help to put player back to where you want
+    // original was player last view ex. it will be nil because of this view on reuse view
+    func backReplaceSuperView(original: UIView?) -> UIView? {
+        return original
+    }
+    
+    // add layer to temp view and pass to another controller
+    var passPlayer: MMPlayerLayer {
+        return self.mmPlayerLayer
+    }
+    // current playview is cell.image hide prevent ui error
+    func transitionWillStart() {
+        self.mmPlayerLayer.playView?.isHidden = true
+    }
+    // show cell.image
+    func transitionCompleted() {
+        self.mmPlayerLayer.playView?.isHidden = false
+    }
+    
+    func dismissViewFromGesture() {
+        mmPlayerLayer.thumbImageView.image = nil
+        self.updateByContentOffset()
+        self.startLoading()
+    }
+    
+    func presentedView(isShrinkVideo: Bool) {
+        self.tableView.visibleCells.forEach {
+            if let vc = $0 as? ShareTaskTableViewCell {
+                if vc.isVideo && vc.imgView.isHidden == true && isShrinkVideo {
+                    vc.imgView.isHidden = false
+                }
+            }
+        }
+    }
+    
+    fileprivate func updateByContentOffset() {
+        let p = CGPoint(x: tableView.frame.width/2, y: tableView.contentOffset.y + tableView.frame.width/2)
+        
+        if let path = tableView.indexPathForRow(at: p),
+            self.presentedViewController == nil {
+            self.updateCell(at: path)
+        }
+    }
+    
+    fileprivate func updateVideoDetail(at indexPath: IndexPath) {
+        let task = tasks[indexPath.row]
+        guard let detail = self.presentedViewController as? VideoDetailViewController,
+            let videoLink = URL(string:task.videoLink) else { return }
+        detail.data = task
+        if let img = task.image {
+            KingfisherManager.shared.retrieveImage(with: URL(string: img)!, options: nil, progressBlock: nil, completionHandler:{[weak self](_ image: UIImage?, _ error: NSError?, _ cacheType: CacheType?, _ url: URL?) in
+                guard let weakSelf = self else {return}
+                if image != nil {
+                    weakSelf.mmPlayerLayer.thumbImageView.image = image
+                }
+            })
+        }
+        self.mmPlayerLayer.set(url: videoLink)
+        self.mmPlayerLayer.resume()
+    }
+    
+    fileprivate func presentVideoDetail(at indexPath: IndexPath) {
+        self.updateCell(at: indexPath)
+        self.startLoading()
+        let vc = VideoDetailViewController.instantiate()
+        vc.data = tasks[indexPath.row]
+        vc.modalPresentationCapturesStatusBarAppearance = true
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    fileprivate func updateCell(at indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? ShareTaskTableViewCell, let videoLink = cell.videoLink {
+            // this thumb use when transition start and your video dosent start
+            mmPlayerLayer.thumbImageView.image = cell.imgView.image
+            // set video where to play
+            if !MMLandscapeWindow.shared.isKeyWindow {
+                mmPlayerLayer.playView = cell.imgView
+            }
+            mmPlayerLayer.set(url: URL(string: videoLink))
+        }
+    }
+    
+    @objc fileprivate func startLoading() {
+        if self.presentedViewController != nil {
+            return
+        }
+        // start loading video
+        mmPlayerLayer.resume()
+        self.landscapeAction()
     }
 }
 
@@ -147,6 +308,17 @@ extension ShareTasksTableViewController {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
         let task = tasks[indexPath.row]
+        if task.isVideo == 1 {
+            DispatchQueue.main.async { [unowned self] in
+                if self.presentedViewController != nil {
+                    tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
+                    self.updateVideoDetail(at: indexPath)
+                } else {
+                    self.presentVideoDetail(at: indexPath)
+                }
+            }
+            return
+        }
         if let imageURL = task.image {
             KingfisherManager.shared.retrieveImage(with: URL(string: imageURL)!, options: nil, progressBlock: nil, completionHandler:{[weak self](_ image: UIImage?, _ error: NSError?, _ cacheType: CacheType?, _ url: URL?) in
                 guard let weakSelf = self else {return}
@@ -206,11 +378,9 @@ extension ShareTasksTableViewController: SwipeTableViewCellDelegate {
         
         let cancelAction = SwipeAction(style: .default, title: I18n.cancel.description) {[weak self] action, indexPath in
             guard let weakSelf = self else { return }
-            let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmCancelTask.description)
-            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                //
-            }
-            let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+            let alertController = AlertViewController(title: I18n.alert.description, body: I18n.confirmCancelTask.description)
+            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler:nil)
+            let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] in
                 guard let weakSelf2 = weakSelf else { return }
                 weakSelf2.runUpdateTaskStatus(taskId, .canceled)
             }
@@ -223,11 +393,9 @@ extension ShareTasksTableViewController: SwipeTableViewCellDelegate {
         if task.onlineStatus == .running {
             let stopAction = SwipeAction(style: .default, title: I18n.stop.description) {[weak self] action, indexPath in
                 guard let weakSelf = self else { return }
-                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmStopTask.description)
-                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                    //
-                }
-                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                let alertController = AlertViewController(title: I18n.alert.description, body: I18n.confirmStopTask.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler:nil)
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] in
                     guard let weakSelf2 = weakSelf else { return }
                     weakSelf2.runUpdateTaskStatus(taskId, .stopped)
                 }
@@ -240,11 +408,9 @@ extension ShareTasksTableViewController: SwipeTableViewCellDelegate {
         } else {
             let startAction = SwipeAction(style: .default, title: I18n.start.description) {[weak self] action, indexPath in
                 guard let weakSelf = self else { return }
-                let alertController = Presentr.alertViewController(title: I18n.alert.description, body: I18n.confirmStartTask.description)
-                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-                    //
-                }
-                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] alert in
+                let alertController = AlertViewController(title: I18n.alert.description, body: I18n.confirmStartTask.description)
+                let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak weakSelf] in
                     guard let weakSelf2 = weakSelf else { return }
                     weakSelf2.runUpdateTaskStatus(taskId, .running)
                 }
@@ -347,6 +513,7 @@ extension ShareTasksTableViewController {
         TMMTaskService.getShares(
             idfa: TMMBeacon.shareInstance().deviceId(),
             cid: cid,
+            isVideo: isVideo,
             page: currentPage,
             pageSize: DefaultPageSize,
             mineOnly: self.mineOnly,

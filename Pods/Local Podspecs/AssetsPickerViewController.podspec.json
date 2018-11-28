@@ -1,6 +1,6 @@
 {
   "name": "AssetsPickerViewController",
-  "version": "2.5.2",
+  "version": "2.5.5",
   "summary": "Picker controller that supports multiple photos and videos written in Swift.",
   "description": "Select multiple photos and videos.\nFully customizable UI.",
   "homepage": "https://github.com/DragonCherry/AssetsPickerViewController",
@@ -17,7 +17,7 @@
   },
   "source": {
     "git": "https://github.com/DragonCherry/AssetsPickerViewController.git",
-    "tag": "2.5.2"
+    "tag": "2.5.5"
   },
   "social_media_url": "https://www.linkedin.com/in/jeongyong/",
   "platforms": {
@@ -30,6 +30,9 @@
     ]
   },
   "dependencies": {
+    "PureLayout": [
+
+    ],
     "SnapKit": [
 
     ],

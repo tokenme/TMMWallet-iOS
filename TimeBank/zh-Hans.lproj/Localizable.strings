@@ -179,6 +179,7 @@
 "ApproximateTime" = "全文阅读 %@，预计获得 %@ 积分";
 "GetPointsReward" = "赚 %@ 积分";
 "ToShareAlert" = "分享后每个用户浏览您可以获得 %@ 积分，本次分享最多获得 %@ 积分。";
+"Video" = "视频";
 
 // Account
 "Account" = "账户";

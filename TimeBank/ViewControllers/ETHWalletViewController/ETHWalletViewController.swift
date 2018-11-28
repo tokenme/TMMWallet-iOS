@@ -99,9 +99,9 @@ class ETHWalletViewController: UIViewController {
     private var bindingWechat = false
     private var gettingTMMRate = false
     
-    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure()), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -525,11 +525,9 @@ extension ETHWalletViewController: ScanViewDelegate {
             self.navigationController?.pushViewController(vc, animated: true)
             return
         }
-        let alertController = Presentr.alertViewController(title: I18n.alert.description, body: qrcode)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
-        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) { alert in
+        let alertController = AlertViewController(title: I18n.alert.description, body: qrcode)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.copy.description, style: .destructive) {
             let paste = UIPasteboard.general
             paste.string = qrcode
         }
@@ -548,10 +546,8 @@ extension ETHWalletViewController: RedeemDelegate {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let message = String(format: I18n.withdrawSuccessMsg.description, formatter.string(from: resp.tmm)!, formatter.string(from: resp.cash)!, resp.currency)
-        let alertController = Presentr.alertViewController(title: I18n.newTransactionTitle.description, body: message)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel) { alert in
-            //
-        }
+        let alertController = AlertViewController(title: I18n.newTransactionTitle.description, body: message)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         customPresentViewController(alertPresenter, viewController: alertController, animated: true)
     }
