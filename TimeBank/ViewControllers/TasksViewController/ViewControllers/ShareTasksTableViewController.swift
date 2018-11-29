@@ -76,9 +76,9 @@ class ShareTasksTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
+        /*self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
             
-        })
+        })*/
         offsetObservation = tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
             guard let self = self, self.presentedViewController == nil else {return}
             self.updateByContentOffset()
@@ -113,11 +113,9 @@ class ShareTasksTableViewController: UITableViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: nil) { [unowned self] (_) in
-            self.landscapeAction()
-        }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.mmPlayerLayer.player?.pause()
     }
     
     override func didReceiveMemoryWarning() {
@@ -135,19 +133,6 @@ class ShareTasksTableViewController: UITableViewController {
         vc.cid = cid
         vc.isVideo = isVideo
         return vc
-    }
-    
-    fileprivate func landscapeAction() {
-        // just landscape when last result was finish
-        if self.tableView.isDragging || self.tableView.isTracking || self.presentedViewController != nil {
-            return
-        }
-        if UIDevice.current.orientation.isLandscape {
-            let vc = VideoFullScreenViewController.instantiate()
-            MMLandscapeWindow.shared.makeKey(root: vc, playLayer: self.mmPlayerLayer, completed: {
-                print("landscape completed")
-            })
-        }
     }
     
     private func setupTableView() {
@@ -271,7 +256,6 @@ extension ShareTasksTableViewController: MMPlayerFromProtocol {
         }
         // start loading video
         mmPlayerLayer.resume()
-        self.landscapeAction()
     }
 }
 
@@ -309,12 +293,13 @@ extension ShareTasksTableViewController {
         cell?.isSelected = false
         let task = tasks[indexPath.row]
         if task.isVideo == 1 {
-            DispatchQueue.main.async { [unowned self] in
-                if self.presentedViewController != nil {
+            DispatchQueue.main.async { [weak self] in
+                guard let weakSelf = self else { return }
+                if weakSelf.presentedViewController != nil {
                     tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
-                    self.updateVideoDetail(at: indexPath)
+                    weakSelf.updateVideoDetail(at: indexPath)
                 } else {
-                    self.presentVideoDetail(at: indexPath)
+                    weakSelf.presentVideoDetail(at: indexPath)
                 }
             }
             return

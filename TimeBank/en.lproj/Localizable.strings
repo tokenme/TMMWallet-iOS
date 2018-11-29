@@ -90,6 +90,7 @@
 "EmptyWithdrawTMM" = "UC amount must be input";
 "WithdrawSuccessMsg" = "You have successfully withdraw %@UC to %@%@";
 "DailyReward" = "Daily Reward";
+"DailyRewarded" = "Today Rewarded";
 "XDay" = "%dd";
 "DailyBonusSuccessMsg" = "Congratulation! You just get %@ bonus points.";
 "MarketPrice" = "market price";
@@ -261,6 +262,10 @@
 "TechnologyCategory" = "Technology";
 "FashionCategory" = "Fashion";
 "BlockchainCategory" = "Blockchain";
+"MilitaryCategory" = "Military";
+"SportCategory" = "Sport";
+"HistoryCategory" = "History";
+"CultureCategory" = "Culture";
 
 // Mall
 "Mall" = "Mall";

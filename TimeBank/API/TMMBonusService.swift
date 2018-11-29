@@ -92,6 +92,7 @@ extension TMMBonusService {
                         if let errorCode = resp.code {
                             reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
                         } else {
+                            
                             resolve(resp)
                         }
                     } catch {
@@ -116,6 +117,7 @@ extension TMMBonusService {
                         if let errorCode = resp.code {
                             reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
                         } else {
+                            Defaults[.lastDailyBonus] = Date()
                             resolve(resp)
                         }
                     } catch {

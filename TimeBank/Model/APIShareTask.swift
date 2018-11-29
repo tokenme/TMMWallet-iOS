@@ -18,6 +18,10 @@ enum APIArticleCategory: UInt {
     case technology = 5
     case fashion = 6
     case blockchain = 7
+    case military = 8
+    case sport = 9
+    case history = 10
+    case culture = 11
     
     var description: String {
         switch self {
@@ -29,6 +33,10 @@ enum APIArticleCategory: UInt {
         case .technology: return NSLocalizedString("TechnologyCategory", comment: "TechnologyCategory")
         case .fashion: return NSLocalizedString("FashionCategory", comment: "FashionCategory")
         case .blockchain: return NSLocalizedString("BlockchainCategory", comment: "BlockchainCategory")
+        case .military: return NSLocalizedString("MilitaryCategory", comment: "MilitaryCategory")
+        case .sport: return NSLocalizedString("SportCategory", comment: "SportCategory")
+        case .history: return NSLocalizedString("HistoryCategory", comment: "HistoryCategory")
+        case .culture: return NSLocalizedString("CultureCategory", comment: "CultureCategory")
         }
     }
 }

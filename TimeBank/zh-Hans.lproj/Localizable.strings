@@ -90,6 +90,7 @@
 "EmptyWithdrawTMM" = "请输入 UC 数量";
 "WithdrawSuccessMsg" = "您已成功兑换 %@UC 为 %@%@";
 "DailyReward" = "每日签到";
+"DailyRewarded" = "今日已签到";
 "XDay" = "%d天";
 "DailyBonusSuccessMsg" = "恭喜！您刚刚获得 %@ 积分奖励。";
 "MarketPrice" = "市场价格";
@@ -261,6 +262,10 @@
 "TechnologyCategory" = "科技";
 "FashionCategory" = "时尚";
 "BlockchainCategory" = "区块链";
+"MilitaryCategory" = "军事";
+"SportCategory" = "体育";
+"HistoryCategory" = "历史";
+"CultureCategory" = "文化";
 
 // Mall
 "Mall" = "商城";

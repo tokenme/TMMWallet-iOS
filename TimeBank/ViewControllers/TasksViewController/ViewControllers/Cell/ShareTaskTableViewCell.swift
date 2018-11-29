@@ -178,12 +178,13 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                 if !task.showBonusHint {
                     rewardLabel.isHidden = true
                     rewardLabel.snp.removeConstraints()
-                    imgView.snp.remakeConstraints { (maker) -> Void in
+                    imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
                         maker.trailing.equalToSuperview()
                         maker.top.equalToSuperview()
                         maker.bottom.equalToSuperview()
                         maker.width.equalTo(80)
-                        maker.height.equalTo(80)
+                        guard let weakSelf = self else { return }
+                        maker.height.equalTo(weakSelf.imgView.snp.width).priority(750)
                     }
                     titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                         maker.leading.equalToSuperview()
@@ -200,11 +201,12 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                     }
                 } else {
                     rewardLabel.isHidden = false
-                    imgView.snp.remakeConstraints { (maker) -> Void in
+                    imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
                         maker.trailing.equalToSuperview()
                         maker.top.equalToSuperview()
                         maker.width.equalTo(80)
-                        maker.height.equalTo(80)
+                        guard let weakSelf = self else { return }
+                        maker.height.equalTo(weakSelf.imgView.snp.width).priority(750)
                     }
                     titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                         maker.leading.equalToSuperview()
@@ -229,9 +231,7 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                 self.imgView.isHidden = true
                 self.imgView.snp.removeConstraints()
                 titleLabel.snp.remakeConstraints { (maker) -> Void in
-                    maker.leading.equalToSuperview()
-                    maker.top.equalToSuperview()
-                    maker.trailing.equalToSuperview()
+                    maker.leading.top.trailing.equalToSuperview()
                 }
                 if !task.showBonusHint {
                     rewardLabel.isHidden = true

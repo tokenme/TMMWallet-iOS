@@ -45,6 +45,10 @@ class TasksViewController: TabmanViewController {
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.technology.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.fashion.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.blockchain.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.military.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.sport.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.history.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.culture.rawValue, isVideo: false),
         //BlowupViewController.instantiate()
     ]
     
@@ -66,7 +70,7 @@ class TasksViewController: TabmanViewController {
             navigationItem.leftBarButtonItem = recordButtonItem
             let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
             navigationItem.rightBarButtonItem = submitTaskButtonItem
-            
+            /*
             let menuItems = [I18n.discover.description, I18n.publishedByMe.description]
             let menuView = BTNavigationDropdownMenu(title: BTTitle.index(0), items: menuItems)
             menuView.cellSelectionColor = UIColor(white: 0.91, alpha: 1)
@@ -86,6 +90,7 @@ class TasksViewController: TabmanViewController {
                     weakSelf.navigationController?.pushViewController(vc, animated: true)
                 }
             }
+            */
         }
         
         // configure the bar
@@ -99,6 +104,10 @@ class TasksViewController: TabmanViewController {
             Item(title: APIArticleCategory.technology.description),
             Item(title: APIArticleCategory.fashion.description),
             Item(title: APIArticleCategory.blockchain.description),
+            Item(title: APIArticleCategory.military.description),
+            Item(title: APIArticleCategory.sport.description),
+            Item(title: APIArticleCategory.history.description),
+            Item(title: APIArticleCategory.culture.description),
             //Item(title: I18n.blowupGame.description)
         ]
         self.bar.style = .scrollingButtonBar
@@ -137,21 +146,21 @@ class TasksViewController: TabmanViewController {
     }
     
     @objc func addTaskAction(_ sender: UIBarButtonItem, event: UIEvent) {
-        let vc = SubmitShareTaskTableViewController.instantiate()
-        vc.delegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
-        return
         let dropDown = DropDown()
         dropDown.anchorView = sender
         dropDown.bottomOffset = CGPoint(x: 0, y: sender.plainView.bounds.height)
-        dropDown.dataSource = [I18n.submitNewShareTask.description, I18n.submitNewAppTask.description]
+        dropDown.dataSource = [I18n.publishedByMe.description, I18n.submitNewShareTask.description]
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let weakSelf = self else { return }
             if index == 0 {
+                let vc = ShareTasksTableViewController.instantiate()
+                vc.mineOnly = true
+                weakSelf.navigationController?.pushViewController(vc, animated: true)
+            } else if index == 1 {
                 let vc = SubmitShareTaskTableViewController.instantiate()
                 vc.delegate = weakSelf
                 weakSelf.navigationController?.pushViewController(vc, animated: true)
-            } else if index == 1 {
+            } else if index == 2 {
                 /*
                 let vc = SubmitAppTaskTableViewController.instantiate()
                 vc.delegate = weakSelf

@@ -191,7 +191,6 @@
 		1D3E42FB21AE718A0014CEB1 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E42F921AE718A0014CEB1 /* CoverA.xib */; };
 		1D3E42FC21AE718A0014CEB1 /* CoverA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42FA21AE718A0014CEB1 /* CoverA.swift */; };
 		1D3E430021AE77FD0014CEB1 /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */; };
-		1D3E430221AE7C650014CEB1 /* VideoFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E430121AE7C650014CEB1 /* VideoFullScreenViewController.swift */; };
 		1D3E430421AEB3B80014CEB1 /* UINavigationController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
@@ -438,7 +437,6 @@
 		1D3E42F921AE718A0014CEB1 /* CoverA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverA.xib; sourceTree = "<group>"; };
 		1D3E42FA21AE718A0014CEB1 /* CoverA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverA.swift; sourceTree = "<group>"; };
 		1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
-		1D3E430121AE7C650014CEB1 /* VideoFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFullScreenViewController.swift; sourceTree = "<group>"; };
 		1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Utils.swift"; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
@@ -642,7 +640,6 @@
 				1DEC545221510676007A46D5 /* SubmitAppTaskTableViewController.swift */,
 				1D31FC58217850D00014712B /* BlowupViewController.swift */,
 				1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */,
-				1D3E430121AE7C650014CEB1 /* VideoFullScreenViewController.swift */,
 				1D3E42F821AE718A0014CEB1 /* CoverView */,
 				1D151EBC213E7585007C87DD /* Cell */,
 			);
@@ -1466,7 +1463,6 @@
 				1D3E42CF219C34EB0014CEB1 /* InviteImagePresentrViewController.swift in Sources */,
 				1D3441E4213CFA1C00B8E157 /* CGRect+Utils.swift in Sources */,
 				1D0370C72165E2E900E5E3CE /* TMMContactService.swift in Sources */,
-				1D3E430221AE7C650014CEB1 /* VideoFullScreenViewController.swift in Sources */,
 				1D31FC82217F3C460014712B /* UIView+Utils.swift in Sources */,
 				1D05B4F1219441CF008EE10D /* TMMGoodService.swift in Sources */,
 				1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */,

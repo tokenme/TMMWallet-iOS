@@ -105,6 +105,7 @@ enum I18n: CustomStringConvertible {
     case emptyWithdrawTMM
     case withdrawSuccessMsg
     case dailyReward
+    case dailyRewarded
     case xDay
     case dailyBonusSuccessMsg
     case marketPrice
@@ -458,6 +459,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("WithdrawSuccessMsg", comment: "WithdrawSuccessMsg")
         case .dailyReward:
             return NSLocalizedString("DailyReward", comment: "DailyReward")
+        case .dailyRewarded:
+            return NSLocalizedString("DailyRewarded", comment: "DailyRewarded")
         case .xDay:
             return NSLocalizedString("XDay", comment: "XDay")
         case .dailyBonusSuccessMsg:

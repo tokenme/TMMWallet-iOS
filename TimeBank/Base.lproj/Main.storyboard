@@ -764,6 +764,17 @@
                                 <color key="textColor" white="0.97999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Lr-Gy-9Yh">
+                                <rect key="frame" x="287" y="38" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="ixM-gy-5pH"/>
+                                    <constraint firstAttribute="width" secondItem="7Lr-Gy-9Yh" secondAttribute="height" id="yG7-qR-3Wb"/>
+                                </constraints>
+                                <state key="normal" image="FullScreen"/>
+                                <connections>
+                                    <action selector="tranformView" destination="bFd-Jf-HyN" eventType="touchUpInside" id="dWm-Hq-F1W"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fr1-5s-ywb">
                                 <rect key="frame" x="327" y="36" width="32" height="32"/>
                                 <constraints>
@@ -779,21 +790,24 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="zV7-pz-6It" firstAttribute="leading" secondItem="tli-QY-cfy" secondAttribute="trailing" constant="8" id="5BA-m2-jHE"/>
+                            <constraint firstItem="7Lr-Gy-9Yh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zV7-pz-6It" secondAttribute="trailing" constant="16" id="8aG-rj-3cp"/>
                             <constraint firstItem="tli-QY-cfy" firstAttribute="leading" secondItem="UzJ-C9-O6E" secondAttribute="leading" constant="16" id="TJV-zo-0hq"/>
-                            <constraint firstItem="fr1-5s-ywb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zV7-pz-6It" secondAttribute="trailing" constant="16" id="UzG-Co-jh4"/>
                             <constraint firstItem="UzJ-C9-O6E" firstAttribute="top" secondItem="tli-QY-cfy" secondAttribute="top" constant="-16" id="YPD-7X-CXr"/>
                             <constraint firstItem="UzJ-C9-O6E" firstAttribute="trailing" secondItem="fr1-5s-ywb" secondAttribute="trailing" constant="16" id="gur-hX-Qim"/>
                             <constraint firstItem="BPk-b0-P32" firstAttribute="leading" secondItem="UzJ-C9-O6E" secondAttribute="leading" id="iev-rx-4ax"/>
                             <constraint firstItem="fr1-5s-ywb" firstAttribute="top" secondItem="UzJ-C9-O6E" secondAttribute="top" constant="16" id="j2f-ek-DYR"/>
+                            <constraint firstItem="7Lr-Gy-9Yh" firstAttribute="centerY" secondItem="tli-QY-cfy" secondAttribute="centerY" id="lTd-Xh-1L9"/>
                             <constraint firstItem="zV7-pz-6It" firstAttribute="centerY" secondItem="tli-QY-cfy" secondAttribute="centerY" id="ogO-X6-MQI"/>
                             <constraint firstItem="UzJ-C9-O6E" firstAttribute="trailing" secondItem="BPk-b0-P32" secondAttribute="trailing" id="pwX-1w-ufR"/>
                             <constraint firstItem="BPk-b0-P32" firstAttribute="top" secondItem="UzJ-C9-O6E" secondAttribute="top" id="q6H-wQ-mgc"/>
                             <constraint firstItem="UzJ-C9-O6E" firstAttribute="bottom" secondItem="BPk-b0-P32" secondAttribute="bottom" id="tWY-yt-Ra2"/>
+                            <constraint firstItem="fr1-5s-ywb" firstAttribute="leading" secondItem="7Lr-Gy-9Yh" secondAttribute="trailing" constant="8" id="uEj-B7-AMi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UzJ-C9-O6E"/>
                     </view>
                     <connections>
                         <outlet property="playerContainer" destination="BPk-b0-P32" id="ihr-Rt-R3b"/>
+                        <outlet property="rotateButton" destination="7Lr-Gy-9Yh" id="EBV-E2-Ndx"/>
                         <outlet property="shareButton" destination="fr1-5s-ywb" id="UAs-bp-Kbg"/>
                         <outlet property="titleLabel" destination="zV7-pz-6It" id="2uG-jE-Ycq"/>
                     </connections>
@@ -801,21 +815,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZTW-at-yBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6780" y="415.14242878560725"/>
-        </scene>
-        <!--Video Full Screen View Controller-->
-        <scene sceneID="WBf-gk-i58">
-            <objects>
-                <viewController storyboardIdentifier="VideoFullScreenViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tUl-Pt-vcB" customClass="VideoFullScreenViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="cge-E7-NaZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="GMJ-Gn-mjF"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FAH-Ub-Anv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7432" y="415"/>
         </scene>
         <!--App Tasks Table View Controller-->
         <scene sceneID="l2K-I3-qn0">
@@ -3126,6 +3125,7 @@
         <image name="Discover" width="28" height="28"/>
         <image name="Exchange" width="24" height="24"/>
         <image name="Flash" width="30" height="30"/>
+        <image name="FullScreen" width="66.5" height="66.5"/>
         <image name="Goods" width="28" height="28"/>
         <image name="InviteButton" width="252" height="58"/>
         <image name="InvitePageBg" width="254" height="453"/>

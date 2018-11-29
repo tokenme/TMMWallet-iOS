@@ -20,6 +20,11 @@ import SwipeCellKit
 import SwiftRater
 import FlexibleSteppedProgressBar
 
+fileprivate enum SectionType {
+    case tools
+    case devices
+}
+
 class WalletViewController: UIViewController {
     
     private var userInfo: APIUser? {
@@ -31,6 +36,16 @@ class WalletViewController: UIViewController {
                 return nil
             }
             return nil
+        }
+    }
+    
+    private var todayRewarded: Bool {
+        get {
+            if let lastRewardDate: Date = Defaults[.lastDailyBonus] {
+                let between = Calendar.current.dateComponents([.day], from: lastRewardDate)
+                return between.day ?? 0 < 1
+            }
+            return false
         }
     }
     
@@ -172,7 +187,11 @@ class WalletViewController: UIViewController {
                               UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
         
         summaryView.startAnimation()
-        dailyBonusButton.setTitle(I18n.dailyReward.description, for: .normal)
+        if todayRewarded {
+            dailyBonusButton.setTitle(I18n.dailyRewarded.description, for: .normal)
+        } else {
+            dailyBonusButton.setTitle(I18n.dailyReward.description, for: .normal)
+        }
         dailyBonusProgressBar.numberOfPoints = 7
         dailyBonusProgressBar.radius = 5
         dailyBonusProgressBar.lineHeight = 3

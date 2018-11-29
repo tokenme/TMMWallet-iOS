@@ -19,6 +19,7 @@ extension DefaultsKeys {
     static let accessToken = DefaultsKey<DefaultsAccessToken?>("accessToken")
     static let user = DefaultsKey<DefaultsUser?>("user")
     static let currency = DefaultsKey<String?>("currency")
+    static let lastDailyBonus = DefaultsKey<Date?>("lastDailyBonus")
 }
 
 final class DefaultsAccessToken: Codable, DefaultsSerializable {

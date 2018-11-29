@@ -15,9 +15,11 @@ class VideoDetailViewController: UIViewController {
 
     var data: APIShareTask?
     var cover: UIImage?
+    private var orientation: UIInterfaceOrientationMask = .portrait
     fileprivate var playerLayer: MMPlayerLayer?
     @IBOutlet weak var playerContainer: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var rotateButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     
     private let alertPresenter: Presentr = {
@@ -26,6 +28,41 @@ class VideoDetailViewController: UIViewController {
         presenter.dismissOnSwipe = true
         return presenter
     }()
+    
+    @IBAction private func tranformView() {
+        var rotateImage: UIImage?
+        if self.orientation == .landscape {
+            self.orientation = .portrait
+            rotateImage = UIImage(named: "FullScreen")
+        }else{
+            self.orientation = .landscape;
+            rotateImage = UIImage(named: "Shrink")
+        }
+        self.rotateButton.setImage(rotateImage?.withRenderingMode(.alwaysTemplate), for: .normal)
+        if orientation == .landscape {
+            self.isStatusBarHidden = true
+            UIView.animate(withDuration: 0.3, animations: {
+                
+                self.view.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi / 2))
+                self.view.bounds = CGRect(x:0,y:0,width:UIScreen.main.bounds.size.height, height:UIScreen.main.bounds.size.width);
+                self.viewWillLayoutSubviews();
+                self.view.layoutIfNeeded();
+            }) { (isFinish) in
+                
+            }
+        } else {
+            self.isStatusBarHidden = false
+            UIView.animate(withDuration: 0.3, animations: {
+                
+                self.view.transform = CGAffineTransform.init(rotationAngle: CGFloat(0))
+                self.view.bounds = CGRect(x:0,y:0,width:UIScreen.main.bounds.size.width, height:UIScreen.main.bounds.size.height);
+                self.viewWillLayoutSubviews();
+                self.view.layoutIfNeeded();
+            }) { (isFinish) in
+                
+            }
+        }
+    }
     
     lazy private var shareSheetItems: [SSUIPlatformItem] = {[weak self] in
         var items:[SSUIPlatformItem] = []
@@ -147,6 +184,9 @@ class VideoDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let rotateImage = UIImage(named:"FullScreen")?.withRenderingMode(.alwaysTemplate)
+        rotateButton.setImage(rotateImage, for: .normal)
+        rotateButton.tintColor = .white
         let shareImage = UIImage(named:"Share")?.withRenderingMode(.alwaysTemplate)
         shareButton.setImage(shareImage, for: .normal)
         shareButton.tintColor = .white
