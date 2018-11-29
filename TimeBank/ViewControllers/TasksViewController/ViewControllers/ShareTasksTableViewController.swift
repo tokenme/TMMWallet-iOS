@@ -69,8 +69,6 @@ class ShareTasksTableViewController: UITableViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-        offsetObservation?.invalidate()
-        offsetObservation = nil
         print("ViewController deinit")
     }
     
@@ -79,16 +77,10 @@ class ShareTasksTableViewController: UITableViewController {
         /*self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
             
         })*/
-        offsetObservation = tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
-            guard let self = self, self.presentedViewController == nil else {return}
-            self.updateByContentOffset()
-            NSObject.cancelPreviousPerformRequests(withTarget: self)
-            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.3)
-        }
-        //playerCollect.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right:0)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.updateByContentOffset()
-            self?.startLoading()
+            //self?.startLoading()
         }
         
         mmPlayerLayer.getStatusBlock { [weak self] (status) in
@@ -96,14 +88,23 @@ class ShareTasksTableViewController: UITableViewController {
             switch status {
             case .failed(let err):
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: err.description, closeBtn: I18n.close.description)
+                weakSelf.mmPlayerLayer.player?.pause()
             case .ready:
+                #if DEBUG
                 print("Ready to Play")
+                #endif
             case .playing:
+                #if DEBUG
                 print("Playing")
+                #endif
             case .pause:
+                #if DEBUG
                 print("Pause")
+                #endif
             case .end:
+                #if DEBUG
                 print("End")
+                #endif
             default: break
             }
         }
@@ -113,9 +114,20 @@ class ShareTasksTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        offsetObservation = tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
+            guard let self = self, self.presentedViewController == nil else {return}
+            self.updateByContentOffset()
+            //self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.3)
+        }
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
         self.mmPlayerLayer.player?.pause()
+        offsetObservation?.invalidate()
+        offsetObservation = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -190,13 +202,13 @@ extension ShareTasksTableViewController: MMPlayerFromProtocol {
     func dismissViewFromGesture() {
         mmPlayerLayer.thumbImageView.image = nil
         self.updateByContentOffset()
-        self.startLoading()
+        //self.startLoading()
     }
     
     func presentedView(isShrinkVideo: Bool) {
         self.tableView.visibleCells.forEach {
             if let vc = $0 as? ShareTaskTableViewCell {
-                if vc.isVideo && vc.imgView.isHidden == true && isShrinkVideo {
+                if vc.imgView.isHidden == true && isShrinkVideo {
                     vc.imgView.isHidden = false
                 }
             }
@@ -205,10 +217,22 @@ extension ShareTasksTableViewController: MMPlayerFromProtocol {
     
     fileprivate func updateByContentOffset() {
         let p = CGPoint(x: tableView.frame.width/2, y: tableView.contentOffset.y + tableView.frame.width/2)
-        
-        if let path = tableView.indexPathForRow(at: p),
+        guard let path = tableView.indexPathForRow(at: p) else { return }
+        if tasks.count <= path.row { return }
+        let task = tasks[path.row]
+        if task.isVideo == 1,
             self.presentedViewController == nil {
             self.updateCell(at: path)
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
+            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.3)
+        } else {
+            self.mmPlayerLayer.player?.pause()
+            guard let cell = tableView.cellForRow(at: path) as? ShareTaskTableViewCell else { return }
+            if let img = task.image {
+                cell.imgView.kf.setImage(with: URL(string: img))
+            } else {
+                cell.imgView.image = nil
+            }
         }
     }
     
@@ -231,22 +255,29 @@ extension ShareTasksTableViewController: MMPlayerFromProtocol {
     
     fileprivate func presentVideoDetail(at indexPath: IndexPath) {
         self.updateCell(at: indexPath)
-        self.startLoading()
         let vc = VideoDetailViewController.instantiate()
         vc.data = tasks[indexPath.row]
         vc.modalPresentationCapturesStatusBarAppearance = true
-        self.present(vc, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: {[weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.mmPlayerLayer.resume()
+        })
     }
     
     fileprivate func updateCell(at indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? ShareTaskTableViewCell, let videoLink = cell.videoLink {
+        guard let cell = tableView.cellForRow(at: indexPath) as? ShareTaskTableViewCell else { return }
+        if tasks.count <= indexPath.row { return }
+        let task = tasks[indexPath.row]
+        if task.isVideo == 1 {
             // this thumb use when transition start and your video dosent start
             mmPlayerLayer.thumbImageView.image = cell.imgView.image
             // set video where to play
             if !MMLandscapeWindow.shared.isKeyWindow {
                 mmPlayerLayer.playView = cell.imgView
             }
-            mmPlayerLayer.set(url: URL(string: videoLink))
+            mmPlayerLayer.set(url: URL(string: task.videoLink))
+        } else {
+            mmPlayerLayer.player?.pause()
         }
     }
     

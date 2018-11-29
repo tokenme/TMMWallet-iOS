@@ -22,9 +22,6 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
     private let bonusLabel = UILabel()
     private let pointsLeftLabel = UILabel()
     
-    public var isVideo: Bool = false
-    public var videoLink: String?
-    
     private lazy var containerView: UIView = {
         let containerView = UIView()
         containerView.clipsToBounds = true
@@ -131,8 +128,6 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
     public func fill(_ task: APIShareTask, showStats: Bool) {
         self.containerView.needsUpdateConstraints()
         if task.isVideo == 1 {
-            self.isVideo = true
-            self.videoLink = task.videoLink
             if let img = task.image {
                 imgView.kf.setImage(with: URL(string: img))
             } else {
@@ -169,8 +164,7 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                 }
             }
         } else {
-            self.isVideo = false
-            self.videoLink = nil
+            imgView.backgroundColor = .clear
             summaryTextView.isHidden = false
             if let image = task.image {
                 imgView.kf.setImage(with: URL(string: image))

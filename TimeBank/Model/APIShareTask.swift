@@ -22,6 +22,7 @@ enum APIArticleCategory: UInt {
     case sport = 9
     case history = 10
     case culture = 11
+    case life = 12
     
     var description: String {
         switch self {
@@ -37,6 +38,7 @@ enum APIArticleCategory: UInt {
         case .sport: return NSLocalizedString("SportCategory", comment: "SportCategory")
         case .history: return NSLocalizedString("HistoryCategory", comment: "HistoryCategory")
         case .culture: return NSLocalizedString("CultureCategory", comment: "CultureCategory")
+        case .life: return NSLocalizedString("LifeCategory", comment: "LifeCategory")
         }
     }
 }

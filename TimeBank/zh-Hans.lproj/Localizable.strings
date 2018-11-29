@@ -266,6 +266,7 @@
 "SportCategory" = "体育";
 "HistoryCategory" = "历史";
 "CultureCategory" = "文化";
+"LifeCategory" = "生活";
 
 // Mall
 "Mall" = "商城";

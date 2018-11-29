@@ -47,6 +47,7 @@ class TasksViewController: TabmanViewController {
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.blockchain.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.military.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.sport.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.life.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.history.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.culture.rawValue, isVideo: false),
         //BlowupViewController.instantiate()
@@ -106,6 +107,7 @@ class TasksViewController: TabmanViewController {
             Item(title: APIArticleCategory.blockchain.description),
             Item(title: APIArticleCategory.military.description),
             Item(title: APIArticleCategory.sport.description),
+            Item(title: APIArticleCategory.life.description),
             Item(title: APIArticleCategory.history.description),
             Item(title: APIArticleCategory.culture.description),
             //Item(title: I18n.blowupGame.description)
