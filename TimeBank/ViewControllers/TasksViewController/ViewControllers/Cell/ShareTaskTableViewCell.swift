@@ -10,9 +10,11 @@ import UIKit
 import Reusable
 import SnapKit
 import SwipeCellKit
+import Kingfisher
 
 class ShareTaskTableViewCell: UITableViewCell, Reusable {
-    public let imgView = UIImageView()
+    public let coverView = UIImageView()
+    private let imgView = UIImageView()
     private let playButton = UIButton(type: UIButton.ButtonType.custom)
     private let titleLabel = UILabel()
     private let summaryTextView = UITextView()
@@ -25,6 +27,11 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
     private lazy var containerView: UIView = {
         let containerView = UIView()
         containerView.clipsToBounds = true
+        coverView.backgroundColor = .black
+        containerView.addSubview(coverView)
+        coverView.contentMode = .scaleAspectFit
+        
+        imgView.backgroundColor = .clear
         containerView.addSubview(imgView)
         imgView.contentMode = .scaleAspectFit
         
@@ -128,13 +135,14 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
     public func fill(_ task: APIShareTask, showStats: Bool) {
         self.containerView.needsUpdateConstraints()
         if task.isVideo == 1 {
+            self.imgView.isHidden = true
+            self.imgView.snp.removeConstraints()
             if let img = task.image {
-                imgView.kf.setImage(with: URL(string: img))
+                coverView.kf.setImage(with: URL(string: img))
             } else {
-                imgView.image = nil
+                coverView.image = nil
             }
-            imgView.isHidden = false
-            imgView.backgroundColor = .black
+            coverView.isHidden = false
             titleLabel.snp.remakeConstraints { (maker) -> Void in
                 maker.top.leading.trailing.equalToSuperview()
             }
@@ -143,28 +151,29 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
             if !task.showBonusHint {
                 rewardLabel.isHidden = true
                 rewardLabel.snp.removeConstraints()
-                imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                coverView.snp.remakeConstraints {[weak self] (maker) -> Void in
                     maker.leading.trailing.bottom.equalToSuperview()
                     guard let weakSelf = self else { return }
                     maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                    maker.height.equalTo(weakSelf.imgView.snp.width).multipliedBy(9.0/16.0).priority(750)
+                    maker.height.equalTo(weakSelf.coverView.snp.width).multipliedBy(9.0/16.0).priority(750)
                 }
             } else {
                 rewardLabel.isHidden = false
-                imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                coverView.snp.remakeConstraints {[weak self] (maker) -> Void in
                     maker.leading.trailing.equalToSuperview()
                     maker.top.equalTo(titleLabel.snp.bottom).offset(8)
                     guard let weakSelf = self else { return }
-                    maker.height.equalTo(weakSelf.imgView.snp.width).multipliedBy(9.0/16.0).priority(750)
+                    maker.height.equalTo(weakSelf.coverView.snp.width).multipliedBy(9.0/16.0).priority(750)
                 }
                 rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                     maker.leading.trailing.bottom.equalToSuperview()
                     guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.imgView.snp.bottom).offset(8)
+                    maker.top.equalTo(weakSelf.coverView.snp.bottom).offset(8)
                 }
             }
         } else {
-            imgView.backgroundColor = .clear
+            self.coverView.isHidden = true
+            self.coverView.snp.removeConstraints()
             summaryTextView.isHidden = false
             if let image = task.image {
                 imgView.kf.setImage(with: URL(string: image))
@@ -172,13 +181,9 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                 if !task.showBonusHint {
                     rewardLabel.isHidden = true
                     rewardLabel.snp.removeConstraints()
-                    imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                        maker.trailing.equalToSuperview()
-                        maker.top.equalToSuperview()
-                        maker.bottom.equalToSuperview()
-                        maker.width.equalTo(80)
-                        guard let weakSelf = self else { return }
-                        maker.height.equalTo(weakSelf.imgView.snp.width).priority(750)
+                    imgView.snp.remakeConstraints { (maker) -> Void in
+                        maker.trailing.top.bottom.equalToSuperview()
+                        maker.width.height.equalTo(80)
                     }
                     titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                         maker.leading.equalToSuperview()
@@ -188,19 +193,17 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                     }
                     summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
                         maker.leading.equalToSuperview()
-                        maker.height.equalTo(40)
+                        //maker.height.equalTo(40).priority(ConstraintPriority.low)
                         guard let weakSelf = self else { return }
                         maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                        maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
+                        maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
+                        maker.bottom.lessThanOrEqualTo(weakSelf.imgView.snp.bottom)
                     }
                 } else {
                     rewardLabel.isHidden = false
-                    imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                        maker.trailing.equalToSuperview()
-                        maker.top.equalToSuperview()
-                        maker.width.equalTo(80)
-                        guard let weakSelf = self else { return }
-                        maker.height.equalTo(weakSelf.imgView.snp.width).priority(750)
+                    imgView.snp.remakeConstraints { (maker) -> Void in
+                        maker.trailing.top.equalToSuperview()
+                        maker.width.height.equalTo(80)
                     }
                     titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                         maker.leading.equalToSuperview()
@@ -212,7 +215,7 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                         maker.leading.equalToSuperview()
                         guard let weakSelf = self else { return }
                         maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                        maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
+                        maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
                         maker.bottom.lessThanOrEqualTo(weakSelf.imgView.snp.bottom)
                     }
                     rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in

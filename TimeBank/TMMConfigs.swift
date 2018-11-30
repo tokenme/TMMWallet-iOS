@@ -9,6 +9,8 @@
 import Foundation
 struct TMMConfigs {
     
+    static let helpLink = "https://tmm.tokenmama.io/help/"
+    
     struct TMMBeacon {
         static let key = "e515a8899e7a43944a68502969154e4cb87a03a3"
         static let secret = "47535bf74a8072c0b6246b4fb73508eeb12f5982"

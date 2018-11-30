@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Wallet-->
+        <!--UCoin-->
         <scene sceneID="ThT-0z-joV">
             <objects>
                 <navigationController id="rJP-es-wdb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Wallet" image="Wallet" id="3zn-JK-oKg"/>
+                    <tabBarItem key="tabBarItem" title="UCoin" image="LogoTab" id="3zn-JK-oKg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6OA-rO-6cN">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -422,7 +422,7 @@
             </objects>
             <point key="canvasLocation" x="3252" y="-953"/>
         </scene>
-        <!--Wallet-->
+        <!--Wallet View Controller-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController storyboardIdentifier="WalletViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="WalletViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
@@ -561,7 +561,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Wallet" image="Wallet" id="acW-dT-cKf"/>
                     <navigationItem key="navigationItem" id="vQk-hX-sMt"/>
                     <connections>
                         <outlet property="balanceLabel" destination="omi-yB-wom" id="AN1-nV-GNn"/>
@@ -1960,8 +1959,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRt-Ee-F1D">
-                                                    <rect key="frame" x="16" y="17" width="76" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRt-Ee-F1D">
+                                                    <rect key="frame" x="16" y="17" width="35.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1974,12 +1973,33 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="55" id="7Zn-nV-mGS">
+                                        <rect key="frame" x="0.0" y="646" width="375" height="55"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Zn-nV-mGS" id="Zjl-b7-yAd">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="54.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3XJ-mR-P2A">
+                                                    <rect key="frame" x="16" y="17" width="76" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3XJ-mR-P2A" firstAttribute="leading" secondItem="Zjl-b7-yAd" secondAttribute="leading" constant="16" id="0IS-Hb-1Ty"/>
+                                                <constraint firstItem="3XJ-mR-P2A" firstAttribute="centerY" secondItem="Zjl-b7-yAd" secondAttribute="centerY" id="Bhl-ir-vRs"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3XJ-mR-P2A" secondAttribute="trailing" constant="16" id="Jjx-Jf-1gz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="no2-76-L5p">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="iP9-z6-ULm">
-                                        <rect key="frame" x="0.0" y="682" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="737" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iP9-z6-ULm" id="qxK-WB-heM">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
@@ -2016,7 +2036,8 @@
                         <outlet property="contactActivityIndicatorWechat" destination="y6I-Qa-RAu" id="KVy-m9-F2f"/>
                         <outlet property="currencyTitleLabel" destination="lD8-5c-udA" id="goQ-I9-YdK"/>
                         <outlet property="currentCurrencyLabel" destination="xTq-uc-gh8" id="Xbw-SK-6Tj"/>
-                        <outlet property="feedbackLabel" destination="rRt-Ee-F1D" id="sQd-UI-jdo"/>
+                        <outlet property="feedbackLabel" destination="3XJ-mR-P2A" id="xWL-5g-fJK"/>
+                        <outlet property="helpLabel" destination="rRt-Ee-F1D" id="6Ip-Nr-Fea"/>
                         <outlet property="inviteCodeLabel" destination="GMn-Zu-lJx" id="6dV-ga-4S7"/>
                         <outlet property="inviteCodeTextField" destination="g9l-WR-MgG" id="Ims-V2-Iqf"/>
                         <outlet property="inviteIncomeLabel" destination="7va-d5-z4s" id="dkr-ax-Z0c"/>
@@ -2776,7 +2797,7 @@
         <scene sceneID="WS3-zS-Bc5">
             <objects>
                 <navigationController id="A4H-T6-yMc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Discover" image="Discover" id="yvo-pS-BZM"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="Money" id="yvo-pS-BZM"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vkw-fh-uox">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3122,7 +3143,6 @@
     </scenes>
     <resources>
         <image name="Account" width="30" height="30"/>
-        <image name="Discover" width="28" height="28"/>
         <image name="Exchange" width="24" height="24"/>
         <image name="Flash" width="30" height="30"/>
         <image name="FullScreen" width="66.5" height="66.5"/>
@@ -3130,6 +3150,8 @@
         <image name="InviteButton" width="252" height="58"/>
         <image name="InvitePageBg" width="254" height="453"/>
         <image name="InvitePageTitle" width="210" height="100"/>
+        <image name="LogoTab" width="28" height="28"/>
+        <image name="Money" width="28" height="28"/>
         <image name="RedPacket" width="210" height="242"/>
         <image name="SelectCircle" width="18" height="18"/>
         <image name="SelectFill" width="18" height="18"/>

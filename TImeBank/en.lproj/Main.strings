@@ -1,5 +1,5 @@
 /* Class = "UITabBarItem"; title = "Wallet"; ObjectID = "3zn-JK-oKg"; */
-"3zn-JK-oKg.title" = "Wallet";
+"3zn-JK-oKg.title" = "UCoin";
 
 /* Class = "UITabBarItem"; title = "Account"; ObjectID = "6ZI-vl-ziQ"; */
 "6ZI-vl-ziQ.title" = "Account";
@@ -7,7 +7,7 @@
 /* Class = "UITabBarItem"; title = "Market"; ObjectID = "7wD-NH-0kC"; */
 "7wD-NH-0kC.title" = "Market";
 
-"YY3-6c-bz8" = "Mall";
+"YY3-6c-bz8.title" = "Mall";
 
 /* Class = "UITabBarItem"; title = "Rewards"; ObjectID = "yvo-pS-BZM"; */
 "yvo-pS-BZM.title" = "Discover";

@@ -97,6 +97,10 @@
 "WithdrawRecords" = "Withdraw Records";
 "EmptyWithdrawRecordsTitle" = "No Withdraw Records?";
 "EmptyWithdrawRecordsDesc" = "Try to withdraw UCoin now!";
+"EarnByShare" = "Earn by Share";
+"EarnByInvite" = "Earn by Invite";
+"EarnByShopping" = "Earn by Shopping";
+"StrategyHelp" = "Help";
 
 // Apps
 "SDKApps" = "Minable Apps";
@@ -206,6 +210,7 @@
 "Member" = "Member";
 "NextLevelInvitesDesc" = "Invite %d more people to upgrade";
 "CreditLevelUpgradeDesc" = "Invite %d friends to upgrade to %@";
+"Help" = "Help";
 
 // Market
 "Buy" = "Buy";

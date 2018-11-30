@@ -22,3 +22,15 @@ extension UIViewController {
         return base
     }
 }
+
+public protocol ShouldPopDelegate
+{
+    func currentViewControllerShouldPop() -> Bool
+}
+
+extension UIViewController: ShouldPopDelegate
+{
+    @objc public func currentViewControllerShouldPop() -> Bool {
+        return true
+    }
+}

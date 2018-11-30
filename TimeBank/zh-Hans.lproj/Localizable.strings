@@ -97,6 +97,10 @@
 "WithdrawRecords" = "提现记录";
 "EmptyWithdrawRecordsTitle" = "还没有提现记录？";
 "EmptyWithdrawRecordsDesc" = "现在去试试提现吧！";
+"EarnByShare" = "分享赚";
+"EarnByInvite" = "邀请赚";
+"EarnByShopping" = "购物赚";
+"StrategyHelp" = "赚钱攻略";
 
 // Apps
 "SDKApps" = "可挖矿应用";
@@ -206,6 +210,7 @@
 "Member" = "会员";
 "NextLevelInvitesDesc" = "还差%d人升级";
 "CreditLevelUpgradeDesc" = "邀请%d好友即可升级%@";
+"Help" = "帮助";
 
 // Market
 "Buy" = "买入";

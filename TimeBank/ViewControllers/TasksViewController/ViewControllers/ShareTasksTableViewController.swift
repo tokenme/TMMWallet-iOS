@@ -208,8 +208,8 @@ extension ShareTasksTableViewController: MMPlayerFromProtocol {
     func presentedView(isShrinkVideo: Bool) {
         self.tableView.visibleCells.forEach {
             if let vc = $0 as? ShareTaskTableViewCell {
-                if vc.imgView.isHidden == true && isShrinkVideo {
-                    vc.imgView.isHidden = false
+                if vc.coverView.isHidden == true && isShrinkVideo {
+                    vc.coverView.isHidden = false
                 }
             }
         }
@@ -225,14 +225,8 @@ extension ShareTasksTableViewController: MMPlayerFromProtocol {
             self.updateCell(at: path)
             NSObject.cancelPreviousPerformRequests(withTarget: self)
             self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.3)
-        } else {
+        } else if task.isVideo == 0 {
             self.mmPlayerLayer.player?.pause()
-            guard let cell = tableView.cellForRow(at: path) as? ShareTaskTableViewCell else { return }
-            if let img = task.image {
-                cell.imgView.kf.setImage(with: URL(string: img))
-            } else {
-                cell.imgView.image = nil
-            }
         }
     }
     
@@ -270,10 +264,10 @@ extension ShareTasksTableViewController: MMPlayerFromProtocol {
         let task = tasks[indexPath.row]
         if task.isVideo == 1 {
             // this thumb use when transition start and your video dosent start
-            mmPlayerLayer.thumbImageView.image = cell.imgView.image
+            mmPlayerLayer.thumbImageView.image = cell.coverView.image
             // set video where to play
             if !MMLandscapeWindow.shared.isKeyWindow {
-                mmPlayerLayer.playView = cell.imgView
+                mmPlayerLayer.playView = cell.coverView
             }
             mmPlayerLayer.set(url: URL(string: task.videoLink))
         } else {

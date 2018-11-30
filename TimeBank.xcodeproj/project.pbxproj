@@ -192,6 +192,7 @@
 		1D3E42FC21AE718A0014CEB1 /* CoverA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42FA21AE718A0014CEB1 /* CoverA.swift */; };
 		1D3E430021AE77FD0014CEB1 /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */; };
 		1D3E430421AEB3B80014CEB1 /* UINavigationController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */; };
+		1D49E33E21B0FDE500475B85 /* IndexToolsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E33C21B0FDE500475B85 /* IndexToolsTableViewCell.swift */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -438,6 +439,7 @@
 		1D3E42FA21AE718A0014CEB1 /* CoverA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverA.swift; sourceTree = "<group>"; };
 		1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
 		1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Utils.swift"; sourceTree = "<group>"; };
+		1D49E33C21B0FDE500475B85 /* IndexToolsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexToolsTableViewCell.swift; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 				1D151E75213D463D007C87DD /* DeviceTableViewCell.xib */,
 				1DF802F5215367B80002E054 /* UnbindDeviceHeaderView.swift */,
 				1DF802F7215367EA0002E054 /* UnbindDeviceHeaderView.xib */,
+				1D49E33C21B0FDE500475B85 /* IndexToolsTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1600,6 +1603,7 @@
 				1D3441F1213CFBA300B8E157 /* TweeAttributedTextField.swift in Sources */,
 				1D36D9A1213CED5E0002EDBF /* WalletViewController.swift in Sources */,
 				1D1D6FE0214A7C760001ED49 /* TransferTableViewController.swift in Sources */,
+				1D49E33E21B0FDE500475B85 /* IndexToolsTableViewCell.swift in Sources */,
 				1D05B50021957719008EE10D /* InvestViewController.swift in Sources */,
 				1D151E6F213D3161007C87DD /* APIDevice.swift in Sources */,
 				1D3441FD213CFBB500B8E157 /* TransitionButton.swift in Sources */,

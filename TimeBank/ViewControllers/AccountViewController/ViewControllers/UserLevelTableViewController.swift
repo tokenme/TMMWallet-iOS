@@ -131,6 +131,8 @@ class UserLevelTableViewController: UITableViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = false
+            navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
+            navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
             navigationItem.title = I18n.userCreditLevelRights.description
         }
         setupTableView()
@@ -140,6 +142,18 @@ class UserLevelTableViewController: UITableViewController {
         setupLevelProcessBar()
         self.updateView()
         self.refresh()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let navigationController = self.navigationController {
+            if #available(iOS 11.0, *) {
+                navigationController.navigationBar.prefersLargeTitles = false
+                self.navigationItem.largeTitleDisplayMode = .automatic;
+            }
+            navigationController.navigationBar.isTranslucent = false
+            navigationController.setNavigationBarHidden(false, animated: animated)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -179,8 +193,8 @@ class UserLevelTableViewController: UITableViewController {
         levelProgressBar.progressRadius = 30
         levelProgressBar.progressLineHeight = 5
         levelProgressBar.stepAnimationDuration = 0
-        levelProgressBar.currentSelectedCenterColor = UIColor.midnightBlue
-        levelProgressBar.selectedBackgoundColor = UIColor.midnightBlue
+        levelProgressBar.currentSelectedCenterColor = UIColor.pinky
+        levelProgressBar.selectedBackgoundColor = UIColor.pinky
         levelProgressBar.selectedOuterCircleLineWidth = 0
         levelProgressBar.selectedOuterCircleStrokeColor = UIColor.white
         levelProgressBar.stepTextFont = UIFont.systemFont(ofSize: 8)

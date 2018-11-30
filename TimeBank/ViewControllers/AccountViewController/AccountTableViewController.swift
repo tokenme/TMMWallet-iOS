@@ -32,6 +32,7 @@ fileprivate enum AccountTableCellType {
     case telegramGroup
     case wechatGroup
     case feedback
+    case help
     case signout
 }
 
@@ -84,7 +85,7 @@ class AccountTableViewController: UITableViewController {
     
     private var contacts:[String:String] = [:]
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode, .inviteButton], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
+    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode, .inviteButton], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .help, .feedback], [.signout]]
     
     @IBOutlet private weak var avatarImageView : UIImageView!
     @IBOutlet private weak var mobileLabel: UILabel!
@@ -106,6 +107,7 @@ class AccountTableViewController: UITableViewController {
     @IBOutlet private weak var telegramGroupLabel: UILabel!
     @IBOutlet private weak var wechatGroupLabel: UILabel!
     @IBOutlet private weak var feedbackLabel: UILabel!
+    @IBOutlet private weak var helpLabel:UILabel!
     @IBOutlet private weak var signOutLabel: UILabel!
     @IBOutlet private weak var contactActivityIndicatorTelegram: UIActivityIndicatorView!
     @IBOutlet private weak var contactActivityIndicatorWechat: UIActivityIndicatorView!
@@ -153,6 +155,7 @@ class AccountTableViewController: UITableViewController {
         currentCurrencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
         telegramGroupLabel.text = I18n.telegramGroup.description
         wechatGroupLabel.text = I18n.wechatGroup.description
+        helpLabel.text = I18n.help.description
         feedbackLabel.text = I18n.feedback.description
         signOutLabel.text = I18n.signout.description
         
@@ -363,6 +366,10 @@ extension AccountTableViewController {
             self.showWechatCode()
         case .feedback:
             let vc = FeedbackTableViewController.instantiate()
+            self.navigationController?.pushViewController(vc, animated: true)
+        case .help:
+            let vc = TMMWebViewController.instantiate()
+            vc.request = URLRequest(url: URL(string: TMMConfigs.helpLink)!)
             self.navigationController?.pushViewController(vc, animated: true)
         case .signout:
             if let userInfo: DefaultsUser = Defaults[.user] {

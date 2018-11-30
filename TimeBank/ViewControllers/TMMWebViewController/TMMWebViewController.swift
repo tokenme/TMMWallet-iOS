@@ -343,6 +343,14 @@ class TMMWebViewController: UIViewController {
         webView.configuration.userContentController.removeAllUserScripts()
     }
     
+    override func currentViewControllerShouldPop() -> Bool {
+        if webView.canGoBack {
+            webView.goBack()
+            return false
+        }
+        return true
+    }
+    
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let keyPath = keyPath else {return}
         switch keyPath {

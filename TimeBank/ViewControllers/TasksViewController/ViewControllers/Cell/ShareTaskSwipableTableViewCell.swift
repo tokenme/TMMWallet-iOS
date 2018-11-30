@@ -10,9 +10,12 @@ import UIKit
 import Reusable
 import SnapKit
 import SwipeCellKit
+import Kingfisher
 
 class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
+    public let coverView = UIImageView()
     private let imgView = UIImageView()
+    private let playButton = UIButton(type: UIButton.ButtonType.custom)
     private let titleLabel = UILabel()
     private let summaryTextView = UITextView()
     private let rewardLabel = UILabelPadding()
@@ -24,13 +27,12 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
     private lazy var containerView: UIView = {
         let containerView = UIView()
         containerView.clipsToBounds = true
+        coverView.backgroundColor = .black
+        containerView.addSubview(coverView)
+        coverView.contentMode = .scaleAspectFit
+        
+        imgView.backgroundColor = .clear
         containerView.addSubview(imgView)
-        imgView.snp.remakeConstraints { (maker) -> Void in
-            maker.trailing.equalToSuperview()
-            maker.top.equalToSuperview()
-            maker.width.equalTo(80)
-            maker.height.equalTo(80)
-        }
         imgView.contentMode = .scaleAspectFit
         
         titleLabel.numberOfLines = 2
@@ -38,11 +40,6 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         titleLabel.font = UIFont.systemFont(ofSize: 17)
         titleLabel.textColor = UIColor.darkText
         containerView.addSubview(titleLabel)
-        titleLabel.snp.remakeConstraints { (maker) -> Void in
-            maker.leading.equalToSuperview()
-            maker.top.equalTo(imgView.snp.top)
-            maker.trailing.equalTo(imgView.snp.leading).offset(-8)
-        }
         
         summaryTextView.textContainer.lineFragmentPadding = 0
         summaryTextView.textContainerInset = UIEdgeInsets.zero
@@ -52,13 +49,6 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         summaryTextView.isSelectable = false
         summaryTextView.isUserInteractionEnabled = false
         containerView.addSubview(summaryTextView)
-        summaryTextView.snp.remakeConstraints { (maker) -> Void in
-            maker.leading.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(8)
-            maker.trailing.equalTo(titleLabel.snp.trailing)
-            maker.bottom.equalTo(imgView.snp.bottom)
-        }
-        
         rewardLabel.layer.cornerRadius = 5
         rewardLabel.clipsToBounds = true
         rewardLabel.paddingBottom = 4
@@ -69,21 +59,8 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         rewardLabel.backgroundColor = #colorLiteral(red: 0.801612651, green: 0.9045636618, blue: 0.941994863, alpha: 1)
         rewardLabel.font = UIFont.systemFont(ofSize: 12)
         containerView.addSubview(rewardLabel)
-        rewardLabel.snp.remakeConstraints { (maker) -> Void in
-            maker.leading.equalToSuperview()
-            maker.top.equalTo(summaryTextView.snp.bottom).offset(8)
-            maker.trailing.equalToSuperview()
-            maker.bottom.equalToSuperview()
-        }
         
         self.contentView.addSubview(containerView)
-        
-        containerView.snp.remakeConstraints { (maker) -> Void in
-            maker.leading.equalToSuperview().offset(16)
-            maker.trailing.equalToSuperview().offset(-16)
-            maker.top.equalToSuperview().offset(8)
-            maker.bottom.equalToSuperview().offset(-8)
-        }
         
         return containerView
     }()
@@ -157,87 +134,126 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
     
     public func fill(_ task: APIShareTask, showStats: Bool) {
         self.containerView.needsUpdateConstraints()
-        if let image = task.image {
-            imgView.kf.setImage(with: URL(string: image))
-            imgView.isHidden = false
-            if !task.showBonusHint {
-                rewardLabel.isHidden = true
-                rewardLabel.snp.removeConstraints()
-                imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.top.bottom.trailing.equalToSuperview()
-                    maker.width.equalTo(80)
-                    guard let weakSelf = self else { return }
-                    maker.height.equalTo(weakSelf.imgView.snp.width).priority(750)
-                }
-                titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.leading.equalToSuperview()
-                    guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.imgView.snp.top)
-                    maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
-                }
-                summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.leading.equalToSuperview()
-                    maker.height.equalTo(40)
-                    guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                    maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
-                    
-                }
-            } else {
-                rewardLabel.isHidden = false
-                imgView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.top.trailing.equalToSuperview()
-                    maker.width.equalTo(80)
-                    guard let weakSelf = self else { return }
-                    maker.height.equalTo(weakSelf.imgView.snp.width).priority(750)
-                }
-                titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.leading.equalToSuperview()
-                    guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.imgView.snp.top)
-                    maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
-                }
-                summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.leading.equalToSuperview()
-                    guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                    maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
-                    maker.bottom.lessThanOrEqualTo(weakSelf.imgView.snp.bottom)
-                }
-                rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.leading.trailing.bottom.equalToSuperview()
-                    guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.imgView.snp.bottom).offset(8)
-                }
-            }
-        } else {
+        if task.isVideo == 1 {
             self.imgView.isHidden = true
+            self.imgView.snp.removeConstraints()
+            if let img = task.image {
+                coverView.kf.setImage(with: URL(string: img))
+            } else {
+                coverView.image = nil
+            }
+            coverView.isHidden = false
             titleLabel.snp.remakeConstraints { (maker) -> Void in
                 maker.top.leading.trailing.equalToSuperview()
             }
+            summaryTextView.isHidden = true
+            summaryTextView.snp.removeConstraints()
             if !task.showBonusHint {
                 rewardLabel.isHidden = true
                 rewardLabel.snp.removeConstraints()
-                summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.leading.bottom.equalToSuperview()
-                    maker.height.lessThanOrEqualTo(40)
+                coverView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                    maker.leading.trailing.bottom.equalToSuperview()
                     guard let weakSelf = self else { return }
                     maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                    maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
+                    maker.height.equalTo(weakSelf.coverView.snp.width).multipliedBy(9.0/16.0).priority(750)
                 }
             } else {
                 rewardLabel.isHidden = false
-                summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                    maker.leading.equalToSuperview()
-                    maker.height.lessThanOrEqualTo(40)
+                coverView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                    maker.leading.trailing.equalToSuperview()
+                    maker.top.equalTo(titleLabel.snp.bottom).offset(8)
                     guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                    maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
+                    maker.height.equalTo(weakSelf.coverView.snp.width).multipliedBy(9.0/16.0).priority(750)
                 }
                 rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                     maker.leading.trailing.bottom.equalToSuperview()
                     guard let weakSelf = self else { return }
-                    maker.top.equalTo(weakSelf.summaryTextView.snp.bottom).offset(8)
+                    maker.top.equalTo(weakSelf.coverView.snp.bottom).offset(8)
+                }
+            }
+        } else {
+            self.coverView.isHidden = true
+            self.coverView.snp.removeConstraints()
+            summaryTextView.isHidden = false
+            if let image = task.image {
+                imgView.kf.setImage(with: URL(string: image))
+                imgView.isHidden = false
+                if !task.showBonusHint {
+                    rewardLabel.isHidden = true
+                    rewardLabel.snp.removeConstraints()
+                    imgView.snp.remakeConstraints { (maker) -> Void in
+                        maker.trailing.top.bottom.equalToSuperview()
+                        maker.width.height.equalTo(80)
+                    }
+                    titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.leading.equalToSuperview()
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.imgView.snp.top)
+                        maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
+                    }
+                    summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.leading.equalToSuperview()
+                        //maker.height.equalTo(40).priority(ConstraintPriority.low)
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
+                        maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
+                        maker.bottom.lessThanOrEqualTo(weakSelf.imgView.snp.bottom)
+                    }
+                } else {
+                    rewardLabel.isHidden = false
+                    imgView.snp.remakeConstraints { (maker) -> Void in
+                        maker.trailing.top.equalToSuperview()
+                        maker.width.height.equalTo(80)
+                    }
+                    titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.leading.equalToSuperview()
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.imgView.snp.top)
+                        maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
+                    }
+                    summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.leading.equalToSuperview()
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
+                        maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
+                        maker.bottom.lessThanOrEqualTo(weakSelf.imgView.snp.bottom)
+                    }
+                    rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.trailing.leading.bottom.equalToSuperview()
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.imgView.snp.bottom).offset(8)
+                    }
+                }
+            } else {
+                self.imgView.isHidden = true
+                self.imgView.snp.removeConstraints()
+                titleLabel.snp.remakeConstraints { (maker) -> Void in
+                    maker.leading.top.trailing.equalToSuperview()
+                }
+                if !task.showBonusHint {
+                    rewardLabel.isHidden = true
+                    rewardLabel.snp.removeConstraints()
+                    summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.leading.bottom.equalToSuperview()
+                        maker.height.lessThanOrEqualTo(40)
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
+                        maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
+                    }
+                } else {
+                    rewardLabel.isHidden = false
+                    summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.leading.equalToSuperview()
+                        maker.height.lessThanOrEqualTo(40)
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
+                        maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
+                    }
+                    rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
+                        maker.leading.trailing.bottom.equalToSuperview()
+                        guard let weakSelf = self else { return }
+                        maker.top.equalTo(weakSelf.summaryTextView.snp.bottom).offset(8)
+                    }
                 }
             }
         }

@@ -42,8 +42,9 @@ class WalletViewController: UIViewController {
     private var todayRewarded: Bool {
         get {
             if let lastRewardDate: Date = Defaults[.lastDailyBonus] {
-                let between = Calendar.current.dateComponents([.day], from: lastRewardDate)
-                return between.day ?? 0 < 1
+                let between = Date().daysBetweenDate(toDate: lastRewardDate)
+                print(between)
+                return between < 1
             }
             return false
         }
@@ -208,6 +209,7 @@ class WalletViewController: UIViewController {
     }
     
     private func setupTableView() {
+        tableView.register(cellType: IndexToolsTableViewCell.self)
         tableView.register(cellType: DeviceTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
@@ -258,6 +260,9 @@ extension WalletViewController: UIViewControllerTransitioningDelegate {
 
 extension WalletViewController: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        if indexPath.section == 0 {
+            return nil
+        }
         if orientation == .right {
             let sendAction = SwipeAction(style: .default, title: I18n.unbind.description) {[weak self] action, indexPath in
                 guard let weakSelf = self else { return }
@@ -292,14 +297,14 @@ extension WalletViewController: SwipeTableViewCellDelegate {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if self.currentDeviceIsBinded {
+        if section == 0 || self.currentDeviceIsBinded {
             return 0
         }
         return UnbindDeviceHeaderView.height
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if self.currentDeviceIsBinded {
+        if section == 0 || self.currentDeviceIsBinded {
             return nil
         }
         let view = UnbindDeviceHeaderView()
@@ -308,14 +313,23 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
         return self.devices.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(for: indexPath) as IndexToolsTableViewCell
+            cell.delegate = self
+            cell.show()
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(for: indexPath) as DeviceTableViewCell
         cell.delegate = self
         let device = self.devices[indexPath.row]
@@ -326,6 +340,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
+        if indexPath.section == 0 { return }
         if self.devices.count < indexPath.row + 1 { return }
         let device = self.devices[indexPath.row]
         let vc = DeviceAppsViewController.instantiate()
@@ -337,16 +352,17 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !self.loadingDevices
+        return indexPath.section == 1 && !self.loadingDevices
     }
 }
 
 extension WalletViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
-        return 1
+        return 2
     }
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 { return 0 }
         return 5
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
@@ -575,6 +591,27 @@ extension WalletViewController: FlexibleSteppedProgressBarDelegate {
             return String(format: I18n.xDay.description, index + 1)
         }
         return ""
+    }
+}
+
+extension WalletViewController: IndexToolsDelegate {
+    func gotoShareTasksView(_ index: Int) {
+        self.tabBarController?.selectedIndex = 1
+    }
+    
+    func gotoInviteView() {
+        let vc = UserLevelTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func gotoMallView() {
+        self.tabBarController?.selectedIndex = 2
+    }
+    
+    func gotoHelpView() {
+        let vc = TMMWebViewController.instantiate()
+        vc.request = URLRequest(url: URL(string: TMMConfigs.helpLink)!)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

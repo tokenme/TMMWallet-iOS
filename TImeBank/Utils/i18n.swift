@@ -112,6 +112,10 @@ enum I18n: CustomStringConvertible {
     case withdrawRecords
     case emptyWithdrawRecordsTitle
     case emptyWithdrawRecordsDesc
+    case earnByShare
+    case earnByInvite
+    case earnByShopping
+    case strategyHelp
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -195,6 +199,7 @@ enum I18n: CustomStringConvertible {
     case member
     case nextLevelInvitesDesc
     case creditLevelUpgradeDesc
+    case help
     case bindWechatAccount
     case binded
     case notbinded
@@ -473,6 +478,14 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("EmptyWithdrawRecordsTitle", comment: "EmptyWithdrawRecordsTitle")
         case .emptyWithdrawRecordsDesc:
             return NSLocalizedString("EmptyWithdrawRecordsDesc", comment: "EmptyWithdrawRecordsDesc")
+        case .earnByShare:
+            return NSLocalizedString("EarnByShare", comment: "Earn by Share")
+        case .earnByInvite:
+            return NSLocalizedString("EarnByInvite", comment: "Earn by Invite")
+        case .earnByShopping:
+            return NSLocalizedString("EarnByShopping", comment: "Earn by Shopping")
+        case .strategyHelp:
+            return NSLocalizedString("StrategyHelp", comment: "Help")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .discover:
@@ -615,6 +628,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NextLevelInvitesDesc", comment: "NextLevelInvitesDesc")
         case .creditLevelUpgradeDesc:
             return NSLocalizedString("CreditLevelUpgradeDesc", comment: "CreditLevelUpgradeDesc")
+        case .help:
+            return NSLocalizedString("Help", comment: "Help")
         case .bindWechatAccount:
             return NSLocalizedString("BindWechatAccount", comment: "Bind Wechat Account")
         case .binded:

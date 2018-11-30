@@ -1,5 +1,5 @@
 /* Class = "UITabBarItem"; title = "Wallet"; ObjectID = "3zn-JK-oKg"; */
-"3zn-JK-oKg.title" = "钱包";
+"3zn-JK-oKg.title" = "友币";
 
 /* Class = "UITabBarItem"; title = "Account"; ObjectID = "6ZI-vl-ziQ"; */
 "6ZI-vl-ziQ.title" = "账户";
@@ -7,10 +7,10 @@
 /* Class = "UITabBarItem"; title = "Market"; ObjectID = "7wD-NH-0kC"; */
 "7wD-NH-0kC.title" = "交易市场";
 
-"YY3-6c-bz8" = "商城";
+"YY3-6c-bz8.title" = "商城";
 
 /* Class = "UITabBarItem"; title = "Rewards"; ObjectID = "yvo-pS-BZM"; */
-"yvo-pS-BZM.title" = "发现";
+"yvo-pS-BZM.title" = "友赚";
 
 /* Class = "UILabel"; text = "Points"; ObjectID = "BhT-mn-xAa"; */
 "BhT-mn-xAa.text" = "积分";
