@@ -196,6 +196,7 @@
 		1D49E34F21B141C800475B85 /* libdatainsight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34121B141C800475B85 /* libdatainsight.a */; };
 		1D49E35421B141C800475B85 /* libfbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34921B141C800475B85 /* libfbi.a */; };
 		1D49E35521B141C800475B85 /* libcrashreporter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34D21B141C800475B85 /* libcrashreporter.a */; };
+		1D49E35821B143D900475B85 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E35721B143D900475B85 /* CoreLocation.framework */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -449,6 +450,7 @@
 		1D49E34A21B141C800475B85 /* FBI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBI.h; sourceTree = "<group>"; };
 		1D49E34C21B141C800475B85 /* MTACrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTACrashReporter.h; sourceTree = "<group>"; };
 		1D49E34D21B141C800475B85 /* libcrashreporter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrashreporter.a; sourceTree = "<group>"; };
+		1D49E35721B143D900475B85 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D49E35821B143D900475B85 /* CoreLocation.framework in Frameworks */,
 				1D31FC9E2187028E0014712B /* libmtasdk.a in Frameworks */,
 				1D3E42DC21A3FFD00014CEB1 /* SecurityGuardSDK.framework in Frameworks */,
 				1D31FC9C218702780014712B /* libXG-SDK.a in Frameworks */,
@@ -1183,6 +1186,7 @@
 		7B80D9EDE9EDDA13FC0B0936 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D49E35721B143D900475B85 /* CoreLocation.framework */,
 				1D31FC932186F0950014712B /* UserNotifications.framework */,
 				1D31FC912186E6400014712B /* SystemConfiguration.framework */,
 				1D31FC8F2186E6300014712B /* CFNetwork.framework */,
@@ -1874,6 +1878,7 @@
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/datainsight",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/fbi",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/crashreporter",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/adtracker",
 				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -2072,6 +2077,7 @@
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/datainsight",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/fbi",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/crashreporter",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/adtracker",
 				);
 				OTHER_CFLAGS = (
 					"$(inherited)",

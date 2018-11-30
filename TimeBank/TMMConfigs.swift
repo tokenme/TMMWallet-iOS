@@ -10,6 +10,7 @@ import Foundation
 struct TMMConfigs {
     
     static let helpLink = "https://tmm.tokenmama.io/help/"
+    static let downloadLink = "https://ucoin.io/app/download"
     
     struct TMMBeacon {
         static let key = "e515a8899e7a43944a68502969154e4cb87a03a3"
