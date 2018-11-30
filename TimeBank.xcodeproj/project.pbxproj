@@ -193,6 +193,9 @@
 		1D3E430021AE77FD0014CEB1 /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */; };
 		1D3E430421AEB3B80014CEB1 /* UINavigationController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */; };
 		1D49E33E21B0FDE500475B85 /* IndexToolsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E33C21B0FDE500475B85 /* IndexToolsTableViewCell.swift */; };
+		1D49E34F21B141C800475B85 /* libdatainsight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34121B141C800475B85 /* libdatainsight.a */; };
+		1D49E35421B141C800475B85 /* libfbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34921B141C800475B85 /* libfbi.a */; };
+		1D49E35521B141C800475B85 /* libcrashreporter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34D21B141C800475B85 /* libcrashreporter.a */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -440,6 +443,12 @@
 		1D3E42FF21AE77FD0014CEB1 /* VideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
 		1D3E430321AEB3B80014CEB1 /* UINavigationController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Utils.swift"; sourceTree = "<group>"; };
 		1D49E33C21B0FDE500475B85 /* IndexToolsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexToolsTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E34121B141C800475B85 /* libdatainsight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdatainsight.a; sourceTree = "<group>"; };
+		1D49E34321B141C800475B85 /* MTALBS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTALBS.h; sourceTree = "<group>"; };
+		1D49E34921B141C800475B85 /* libfbi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfbi.a; sourceTree = "<group>"; };
+		1D49E34A21B141C800475B85 /* FBI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBI.h; sourceTree = "<group>"; };
+		1D49E34C21B141C800475B85 /* MTACrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTACrashReporter.h; sourceTree = "<group>"; };
+		1D49E34D21B141C800475B85 /* libcrashreporter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrashreporter.a; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -500,6 +509,7 @@
 				1D31FC9E2187028E0014712B /* libmtasdk.a in Frameworks */,
 				1D3E42DC21A3FFD00014CEB1 /* SecurityGuardSDK.framework in Frameworks */,
 				1D31FC9C218702780014712B /* libXG-SDK.a in Frameworks */,
+				1D49E35421B141C800475B85 /* libfbi.a in Frameworks */,
 				1D31FC9D218702780014712B /* libxgidfa.a in Frameworks */,
 				1D3E42DB21A3FFD00014CEB1 /* ZipArchive.framework in Frameworks */,
 				1D31FC942186F0950014712B /* UserNotifications.framework in Frameworks */,
@@ -508,6 +518,8 @@
 				1D3E42E121A3FFD00014CEB1 /* SGSecurityBody.framework in Frameworks */,
 				1D31FC8E2186E6200014712B /* AdSupport.framework in Frameworks */,
 				1D3E42DE21A3FFD00014CEB1 /* SGMain.framework in Frameworks */,
+				1D49E35521B141C800475B85 /* libcrashreporter.a in Frameworks */,
+				1D49E34F21B141C800475B85 /* libdatainsight.a in Frameworks */,
 				1D31FC8C2186E6170014712B /* libsqlite3.tbd in Frameworks */,
 				1D31FC8A2186E6060014712B /* libz.tbd in Frameworks */,
 				1D3E42DF21A3FFD00014CEB1 /* SGNoCaptcha.framework in Frameworks */,
@@ -800,6 +812,9 @@
 				1D31FC852186E5E10014712B /* MTA.h */,
 				1D31FC862186E5E10014712B /* MTA+Account.h */,
 				1D31FC872186E5E10014712B /* MTAConfig.h */,
+				1D49E34B21B141C800475B85 /* crashreporter */,
+				1D49E34021B141C800475B85 /* datainsight */,
+				1D49E34421B141C800475B85 /* fbi */,
 			);
 			path = MTA;
 			sourceTree = "<group>";
@@ -1044,6 +1059,33 @@
 				1D3E42FA21AE718A0014CEB1 /* CoverA.swift */,
 			);
 			path = CoverView;
+			sourceTree = "<group>";
+		};
+		1D49E34021B141C800475B85 /* datainsight */ = {
+			isa = PBXGroup;
+			children = (
+				1D49E34121B141C800475B85 /* libdatainsight.a */,
+				1D49E34321B141C800475B85 /* MTALBS.h */,
+			);
+			path = datainsight;
+			sourceTree = "<group>";
+		};
+		1D49E34421B141C800475B85 /* fbi */ = {
+			isa = PBXGroup;
+			children = (
+				1D49E34921B141C800475B85 /* libfbi.a */,
+				1D49E34A21B141C800475B85 /* FBI.h */,
+			);
+			path = fbi;
+			sourceTree = "<group>";
+		};
+		1D49E34B21B141C800475B85 /* crashreporter */ = {
+			isa = PBXGroup;
+			children = (
+				1D49E34C21B141C800475B85 /* MTACrashReporter.h */,
+				1D49E34D21B141C800475B85 /* libcrashreporter.a */,
+			);
+			path = crashreporter;
 			sourceTree = "<group>";
 		};
 		1D5FF688215B7852001E69CD /* ScanViewController */ = {
@@ -1829,6 +1871,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/XG",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/datainsight",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/fbi",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/crashreporter",
 				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -2024,6 +2069,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/XG",
 					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/datainsight",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/fbi",
+					"$(PROJECT_DIR)/TimeBank/Dependencies/MTA/crashreporter",
 				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
