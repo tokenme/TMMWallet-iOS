@@ -58,6 +58,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
     var level: UInt8 = 0
     var levelName: String = "普通"
     var levelEnname: String = "normal"
+    var openId: String = ""
     var wxBinded: Bool = false
     
     enum CodingKeys: String, CodingKey {
@@ -74,10 +75,11 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         case level
         case levelName
         case levelEnname
+        case openId
         case wxBinded
     }
     
-    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String, exchangeEnabled: Bool, level: UInt8, levelName: String, levelEnname: String, wxBinded: Bool) {
+    required init(id: UInt64, countryCode: UInt, mobile: String, showName: String, avatar: String, wallet: String, canPay: UInt8, inviteCode: String, inviterCode: String, exchangeEnabled: Bool, level: UInt8, levelName: String, levelEnname: String, openId: String, wxBinded: Bool) {
         self.id = id
         self.countryCode = countryCode
         self.mobile = mobile
@@ -91,6 +93,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.level = level
         self.levelName = levelName
         self.levelEnname = levelEnname
+        self.openId = openId
         self.wxBinded = wxBinded
     }
     
@@ -110,6 +113,7 @@ final class DefaultsUser: Codable, DefaultsSerializable {
         self.levelName = try container.decode(String.self, forKey: .levelName)
         self.levelEnname = try container.decode(String.self, forKey: .levelEnname)
         self.avatar = try container.decode(String.self, forKey: .avatar)
+        self.openId = try container.decode(String.self, forKey: .openId)
         self.wxBinded = try container.decode(Bool.self, forKey: .wxBinded)
     }
     

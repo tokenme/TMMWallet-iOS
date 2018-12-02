@@ -201,6 +201,7 @@ extension TMMUserService {
                                 level: userInfo.level?.id ?? 0,
                                 levelName: userInfo.level?.name ?? "",
                                 levelEnname: userInfo.level?.enname ?? "",
+                                openId: userInfo.openId ?? "",
                                 wxBinded: userInfo.wxBinded
                             )
                             if Defaults[.currency] == nil || Defaults[.currency]!.isEmpty {

@@ -387,7 +387,15 @@ extension AccountTableViewController {
                 accountPhone.type = MTAAccountTypeExt.phone
                 accountPhone.account = "+\(userInfo.countryCode ?? 0)\(userInfo.mobile!)"
                 accountPhone.accountStatus = MTAAccountStatus.logout
-                MTA.reportAccountExt([account, accountPhone])
+                if userInfo.openId != "" {
+                    let openIdAccount = MTAAccountInfo.init()
+                    openIdAccount.type = MTAAccountTypeExt.weixin
+                    openIdAccount.account = userInfo.openId
+                    openIdAccount.accountStatus = MTAAccountStatus.logout
+                    MTA.reportAccountExt([account, accountPhone, openIdAccount])
+                } else {
+                    MTA.reportAccountExt([account, accountPhone])
+                }
             }
             Defaults.removeAll()
             Defaults.synchronize()

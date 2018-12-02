@@ -24,6 +24,7 @@ public class APIUser: APIResponse {
     var exchangeEnabled: Bool = false
     var level: APICreditLevel?
     var wxBinded: Bool = false
+    var openId: String?
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -49,6 +50,7 @@ public class APIUser: APIResponse {
             self.level = level
         }
         self.wxBinded = user.wxBinded
+        self.openId = user.openId
     }
     
     convenience init?() {
@@ -70,5 +72,6 @@ public class APIUser: APIResponse {
         exchangeEnabled <- map["exchange_enabled"]
         level <- map["level"]
         wxBinded <- map["wx_binded"]
+        openId <- map["open_id"]
     }
 }

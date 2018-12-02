@@ -251,7 +251,15 @@ class LoginViewController: UIViewController {
                 accountPhone.type = MTAAccountTypeExt.phone
                 accountPhone.account = "+\(userInfo.countryCode ?? 0)\(userInfo.mobile!)"
                 accountPhone.accountStatus = MTAAccountStatus.normal
-                MTA.reportAccountExt([account, accountPhone])
+                if userInfo.openId != "" {
+                    let openIdAccount = MTAAccountInfo.init()
+                    openIdAccount.type = MTAAccountTypeExt.weixin
+                    openIdAccount.account = userInfo.openId
+                    openIdAccount.accountStatus = MTAAccountStatus.normal
+                    MTA.reportAccountExt([account, accountPhone, openIdAccount])
+                } else {
+                    MTA.reportAccountExt([account, accountPhone])
+                }
             }
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.delegate?.loginSucceeded(token: nil)
