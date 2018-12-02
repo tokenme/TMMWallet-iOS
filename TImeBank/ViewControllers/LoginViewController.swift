@@ -260,6 +260,7 @@ class LoginViewController: UIViewController {
                 } else {
                     MTA.reportAccountExt([account, accountPhone])
                 }
+                MTA.setUserProperty([TMMConfigs.UserPropertyName.creditLevel: String(userInfo.level)])
             }
             weakSelf.loginButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.delegate?.loginSucceeded(token: nil)

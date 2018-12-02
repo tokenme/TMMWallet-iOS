@@ -128,7 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 MTA.reportAccountExt([account, accountPhone])
             }
-            MTA.setUserProperty(["CreditLevel": String(userInfo.level)])
+            MTA.setUserProperty([TMMConfigs.UserPropertyName.creditLevel: String(userInfo.level)])
         }
     }
     
