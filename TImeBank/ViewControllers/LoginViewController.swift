@@ -58,6 +58,16 @@ class LoginViewController: UIViewController {
         self.biometricLogin()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.login)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.login)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -202,6 +212,7 @@ class LoginViewController: UIViewController {
         }
         
         self.isLogining = true
+        MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.login, props: ["countryCode": authCountry])
         
         self.loginButton.startAnimation()
         async({[weak self] _ in
@@ -230,6 +241,7 @@ class LoginViewController: UIViewController {
                         Defaults.setValue(pass, forKey: "authKey")
                     } catch { }
                 }
+                MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.login, props: ["countryCode": userInfo.countryCode])
                 Defaults.synchronize()
                 let account = MTAAccountInfo.init()
                 account.type = MTAAccountTypeExt.custom

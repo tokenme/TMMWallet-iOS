@@ -203,6 +203,16 @@ class VideoDetailViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.video)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.video)
+    }
+    
     static func instantiate() -> VideoDetailViewController
     {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VideoDetailViewController") as! VideoDetailViewController

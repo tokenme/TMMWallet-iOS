@@ -112,6 +112,11 @@ class GoodViewController: UIViewController {
             navigationItem.title = good?.name
         }
         setupTableView()
+        if isValidatingBuild() {
+            shareButton.setTitle("分享", for: .normal)
+        } else {
+            shareButton.setTitle("分享赚", for: .normal)
+        }
         refresh()
     }
     
@@ -125,6 +130,12 @@ class GoodViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        MTA.trackPageViewBegin(TMMConfigs.PageName.good)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.good)
     }
     
     override func didReceiveMemoryWarning() {
@@ -184,7 +195,7 @@ class GoodViewController: UIViewController {
         shareButton.titleLabel?.minimumScaleFactor = 0.5
         shareButton.setAttributedTitle(attString, for: .normal)
         shareButton.backgroundColor = UIColor.pinky
-        if item.investPoints > 0 {
+        if item.investPoints > 0 && !isValidatingBuild() {
             let prefix = "已投资\n"
             let pointsStr = "\(formatter.string(from: item.investPoints)!)积分, 点击追加"
             let prefixAttributes = [NSAttributedString.Key.font:MainFont.medium.with(size: 12), NSAttributedString.Key.foregroundColor:UIColor.white]
@@ -321,7 +332,9 @@ extension GoodViewController {
             .then(in: .main, {[weak self] good in
                 guard let weakSelf = self else { return }
                 weakSelf.good = good
-                weakSelf.updateView()
+                if !isValidatingBuild() {
+                    weakSelf.updateView()
+                }
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)

@@ -77,8 +77,10 @@ class MallViewController: UIViewController {
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
             navigationItem.title = I18n.mall.description
-            let myInvestBarItem = UIBarButtonItem(title: I18n.myInvest.description, style: .plain, target: self, action: #selector(self.showMyInvestView))
-            navigationItem.rightBarButtonItem = myInvestBarItem
+            if !isValidatingBuild() {
+                let myInvestBarItem = UIBarButtonItem(title: I18n.myInvest.description, style: .plain, target: self, action: #selector(self.showMyInvestView))
+                navigationItem.rightBarButtonItem = myInvestBarItem
+            }
         }
         setupCollectionView()
         refresh()
@@ -94,6 +96,12 @@ class MallViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        MTA.trackPageViewBegin(TMMConfigs.PageName.mall)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.mall)
     }
     
     override func didReceiveMemoryWarning() {

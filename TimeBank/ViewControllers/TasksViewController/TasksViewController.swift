@@ -67,10 +67,12 @@ class TasksViewController: TabmanViewController {
             }
             navigationController.navigationBar.isTranslucent = true
             navigationItem.title = I18n.discover.description
-            let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showTaskRecords))
-            navigationItem.leftBarButtonItem = recordButtonItem
-            let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
-            navigationItem.rightBarButtonItem = submitTaskButtonItem
+            if !isValidatingBuild() {
+                let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showTaskRecords))
+                navigationItem.leftBarButtonItem = recordButtonItem
+                let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
+                navigationItem.rightBarButtonItem = submitTaskButtonItem
+            }
             /*
             let menuItems = [I18n.discover.description, I18n.publishedByMe.description]
             let menuView = BTNavigationDropdownMenu(title: BTTitle.index(0), items: menuItems)

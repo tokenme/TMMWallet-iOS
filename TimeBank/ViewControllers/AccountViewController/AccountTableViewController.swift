@@ -172,7 +172,13 @@ class AccountTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.userCenter)
         self.getContacts()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.userCenter)
     }
     
     override func viewDidAppear(_ animated: Bool) {

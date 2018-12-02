@@ -85,6 +85,12 @@ class TransactionsTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        MTA.trackPageViewBegin(TMMConfigs.PageName.transactions)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.transactions)
     }
     
     override func didReceiveMemoryWarning() {

@@ -49,6 +49,16 @@ class RegisterViewController: UIViewController {
         repasswordTextfield.tweePlaceholder = I18n.repassword.description
         verifyCodeTextField.tweePlaceholder = I18n.verifyCode.description
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.register)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.register)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -166,6 +176,7 @@ class RegisterViewController: UIViewController {
             let repasswd = self.repasswordTextfield.text
             else { return }
         self.registerButton.startAnimation()
+        MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.register, props: ["countryCode": country])
         async({[weak self] _ in
             guard let weakSelf = self else {
                 return
@@ -181,6 +192,7 @@ class RegisterViewController: UIViewController {
                 provider: weakSelf.userServiceProvider)
         }).then(in: .main, {[weak self] user in
             guard let weakSelf = self else { return }
+            MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.register, props: ["countryCode": country])
             weakSelf.registerButton.stopAnimation(animationStyle: .expand, completion: {
                 weakSelf.dismiss(animated: true, completion: nil)
             })

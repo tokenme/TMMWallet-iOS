@@ -149,6 +149,12 @@ class ETHWalletViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        MTA.trackPageViewBegin(TMMConfigs.PageName.ethWallet)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.ethWallet)
     }
     
     override func viewDidAppear(_ animated: Bool) {

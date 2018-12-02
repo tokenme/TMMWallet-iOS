@@ -11,6 +11,42 @@ struct TMMConfigs {
     
     static let helpLink = "https://tmm.tokenmama.io/help/"
     static let downloadLink = "https://ucoin.io/app/download"
+    static let validatingBuildKey = "validating_build"
+    
+    struct PageName {
+        static let login = "Login"
+        static let register = "Register"
+        static let resetPasswd = "ResetPasswd"
+        static let wallet = "Wallet"
+        static let shareTasks = "ShareTasks"
+        static let mall = "Mall"
+        static let userCenter = "UserCenter"
+        static let ethWallet = "ETHWaller"
+        static let good = "Good"
+        static let myInvests = "MyInvests"
+        static let article = "Article"
+        static let video = "Video"
+        static let creditLevel = "CreditLevel"
+        static let invite = "Invite"
+        static let scan = "Scan"
+        static let feedback = "Feedback"
+        static let device = "Device"
+        static let sdkApps = "SDKApps"
+        static let tmmWithdraw = "TMMWithdraw"
+        static let pointsToTMM = "PointsToTMM"
+        static let TMMToPoints = "TMMToPoints"
+        static let transactions = "Transactions"
+        static let transfer = "Transfer"
+        static let exchangeRecords = "ExchangeRecords"
+    }
+    
+    struct EventName {
+        static let login = "Login"
+        static let register = "Register"
+        static let tokenWithdraw = "TokenWithdraw"
+        static let pointsToToken = "PointsToToken"
+        static let tokenToPoints = "TokenToPoints"
+    }
     
     struct TMMBeacon {
         static let key = "e515a8899e7a43944a68502969154e4cb87a03a3"

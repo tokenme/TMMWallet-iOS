@@ -81,6 +81,12 @@ class SDKAppsTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        MTA.trackPageViewBegin(TMMConfigs.PageName.sdkApps)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.sdkApps)
     }
     
     override func viewDidAppear(_ animated: Bool) {

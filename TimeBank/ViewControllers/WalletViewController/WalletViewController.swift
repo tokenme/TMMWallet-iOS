@@ -130,8 +130,10 @@ class WalletViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
-            let ethWalletBarItem = UIBarButtonItem(title: I18n.ethWallet.description, style: .plain, target: self, action: #selector(self.showETHWalletView))
-            navigationItem.rightBarButtonItem = ethWalletBarItem
+            if !isValidatingBuild() {
+                let ethWalletBarItem = UIBarButtonItem(title: I18n.ethWallet.description, style: .plain, target: self, action: #selector(self.showETHWalletView))
+                navigationItem.rightBarButtonItem = ethWalletBarItem
+            }
             let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
             navigationItem.leftBarButtonItem = scanBarItem
         }
@@ -144,6 +146,7 @@ class WalletViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.wallet)
         if let navigationController = self.navigationController {
             if #available(iOS 11.0, *) {
                 navigationController.navigationBar.prefersLargeTitles = false
@@ -164,6 +167,11 @@ class WalletViewController: UIViewController {
         SwiftRater.check()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.wallet)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -260,7 +268,7 @@ extension WalletViewController: UIViewControllerTransitioningDelegate {
 
 extension WalletViewController: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        if indexPath.section == 0 {
+        if !isValidatingBuild() && indexPath.section == 0 {
             return nil
         }
         if orientation == .right {
@@ -297,14 +305,14 @@ extension WalletViewController: SwipeTableViewCellDelegate {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 || self.currentDeviceIsBinded {
+        if !isValidatingBuild() && section == 0 || self.currentDeviceIsBinded {
             return 0
         }
         return UnbindDeviceHeaderView.height
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 || self.currentDeviceIsBinded {
+        if !isValidatingBuild() && section == 0 || self.currentDeviceIsBinded {
             return nil
         }
         let view = UnbindDeviceHeaderView()
@@ -313,18 +321,18 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return isValidatingBuild() ? 1 : 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        if !isValidatingBuild() && section == 0 {
             return 1
         }
         return self.devices.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if !isValidatingBuild() && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(for: indexPath) as IndexToolsTableViewCell
             cell.delegate = self
             cell.show()
@@ -352,17 +360,17 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && !self.loadingDevices
+        return !isValidatingBuild() && indexPath.section == 1 && !self.loadingDevices
     }
 }
 
 extension WalletViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
-        return 2
+        return isValidatingBuild() ? 1 : 2
     }
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return 0 }
+        if !isValidatingBuild() && section == 0 { return 0 }
         return 5
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {

@@ -37,6 +37,24 @@ class PointsTMMExchangeViewController: UIViewController {
     
     private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if direction == .TMMIn {
+            MTA.trackPageViewBegin(TMMConfigs.PageName.pointsToTMM)
+        } else {
+            MTA.trackPageViewBegin(TMMConfigs.PageName.TMMToPoints)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if direction == .TMMIn {
+            MTA.trackPageViewEnd(TMMConfigs.PageName.pointsToTMM)
+        } else {
+            MTA.trackPageViewEnd(TMMConfigs.PageName.TMMToPoints)
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -125,6 +143,12 @@ extension PointsTMMExchangeViewController {
         
         self.isChanging = true
         changeButton.startAnimation()
+        let tmmAmount = changePoints * (changeRate?.rate ?? 0)
+        if direction == .TMMIn {
+            MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.pointsToToken, props: ["points": changePoints, "token": tmmAmount])
+        } else {
+            MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.tokenToPoints, props: ["points": changePoints, "token": tmmAmount])
+        }
         TMMExchangeService.changeTMM(
             deviceId: deviceId,
             points: changePoints,
@@ -132,6 +156,11 @@ extension PointsTMMExchangeViewController {
             provider: self.exchangeServiceProvider)
             .then(in: .main, {[weak self] tx in
                 guard let weakSelf = self else { return }
+                if direction == .TMMIn {
+                    MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.pointsToToken, props: ["points": changePoints, "token": tmmAmount])
+                } else {
+                    MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.tokenToPoints, props: ["points": changePoints, "token": tmmAmount])
+                }
                 weakSelf.dismiss(animated: true, completion: {[weak weakSelf] in
                     guard let weakSelf2 = weakSelf else { return }
                     weakSelf2.delegate?.newTransaction(tx: tx)

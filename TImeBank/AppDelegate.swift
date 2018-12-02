@@ -120,6 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             accountPhone.account = "+\(userInfo.countryCode ?? 0)\(userInfo.mobile!)"
             accountPhone.accountStatus = MTAAccountStatus.normal
             MTA.reportAccountExt([account, accountPhone])
+            MTA.setUserProperty(["CreditLevel": String(userInfo.level)])
         }
     }
     

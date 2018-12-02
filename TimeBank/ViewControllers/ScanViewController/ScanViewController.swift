@@ -72,14 +72,20 @@ class ScanViewController: LBXScanViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.scan)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        
         super.viewDidAppear(animated)
-        
         drawBottomItems()
     }
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.scan)
+    }
     
     override func handleCodeResult(arrayResult: [LBXScanResult]) {
         

@@ -121,13 +121,16 @@ class ShareTasksTableViewController: UITableViewController {
             self.updateByContentOffset()
             //self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.3)
         }
+        MTA.trackPageViewBegin(TMMConfigs.PageName.shareTasks)
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         self.mmPlayerLayer.player?.pause()
         offsetObservation?.invalidate()
         offsetObservation = nil
+        MTA.trackPageViewEnd(TMMConfigs.PageName.shareTasks)
     }
     
     override func didReceiveMemoryWarning() {
@@ -329,6 +332,7 @@ extension ShareTasksTableViewController {
             }
             return
         }
+        self.mmPlayerLayer.player?.pause()
         if let imageURL = task.image {
             KingfisherManager.shared.retrieveImage(with: URL(string: imageURL)!, options: nil, progressBlock: nil, completionHandler:{[weak self](_ image: UIImage?, _ error: NSError?, _ cacheType: CacheType?, _ url: URL?) in
                 guard let weakSelf = self else {return}

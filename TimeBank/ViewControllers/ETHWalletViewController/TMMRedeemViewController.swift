@@ -64,6 +64,16 @@ class TMMRedeemViewController: UIViewController {
     
     private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.tmmWithdraw)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.tmmWithdraw)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -107,6 +117,10 @@ extension TMMRedeemViewController {
         
         self.isChanging = true
         changeButton.startAnimation()
+        
+        let cashAmount = changePoints * (changeRate?.rate ?? 0)
+        
+        MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.tokenWithdraw, props: ["token": changePoints, "cash": cashAmount])
         TMMRedeemService.withdrawTMM(
             tmm: changePoints,
             currency: currency,
@@ -114,6 +128,7 @@ extension TMMRedeemViewController {
             .then(in: .main, {[weak self] resp in
                 guard let weakSelf = self else { return }
                 weakSelf.changeButton.stopAnimation(animationStyle: .normal, completion: nil)
+                MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.tokenWithdraw, props: ["token": changePoints, "cash": cashAmount])
                 weakSelf.dismiss(animated: true, completion: {[weak weakSelf] in
                     guard let weakSelf2 = weakSelf else { return }
                     weakSelf2.delegate?.redeemSuccess(resp: resp)

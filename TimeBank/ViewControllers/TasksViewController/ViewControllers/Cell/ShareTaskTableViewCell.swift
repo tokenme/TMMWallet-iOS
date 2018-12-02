@@ -148,7 +148,7 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
             }
             summaryTextView.isHidden = true
             summaryTextView.snp.removeConstraints()
-            if !task.showBonusHint {
+            if !task.showBonusHint || isValidatingBuild() {
                 rewardLabel.isHidden = true
                 rewardLabel.snp.removeConstraints()
                 coverView.snp.remakeConstraints {[weak self] (maker) -> Void in
@@ -178,7 +178,7 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
             if let image = task.image {
                 imgView.kf.setImage(with: URL(string: image))
                 imgView.isHidden = false
-                if !task.showBonusHint {
+                if !task.showBonusHint || isValidatingBuild() {
                     rewardLabel.isHidden = true
                     rewardLabel.snp.removeConstraints()
                     imgView.snp.remakeConstraints { (maker) -> Void in

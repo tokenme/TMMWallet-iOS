@@ -296,6 +296,9 @@ class TMMWebViewController: UIViewController {
                 let shareBtn: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share")?.kf.resize(to: CGSize(width: 24, height: 24), for: .aspectFit), style: .plain, target: self, action: #selector(showShareSheet))
                 navigationItem.rightBarButtonItem = shareBtn
                 navigationItem.title = shareItem?.title
+                if isValidatingBuild() {
+                    toolbarView.isHidden = true
+                }
                 toolbarView.setNeedsDisplay()
                 self.updateTimer()
                 self.timer = Plan.every(0.5.seconds).do(queue: .global()) {[weak self] in
@@ -324,12 +327,16 @@ class TMMWebViewController: UIViewController {
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
         self.tabBarController?.tabBar.isHidden = true
+        if self.shareItem != nil {
+            MTA.trackPageViewBegin(TMMConfigs.PageName.article)
+        }
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.savePoints()
         self.tabBarController?.tabBar.isHidden = false
+        MTA.trackPageViewEnd(TMMConfigs.PageName.article)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

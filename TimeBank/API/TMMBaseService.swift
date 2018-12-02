@@ -139,3 +139,13 @@ let MaxSchemeQuery: () -> UInt64 = {
     }
     return 0
 }
+
+let isValidatingBuild: () -> Bool = {
+    if let build = MTAConfig.getInstance()?.getCustomProperty(TMMConfigs.validatingBuildKey, default: "0") {
+        #if DEBUG
+        print("Validating Build: ", build)
+        #endif
+        return build == AppBuildClosure()
+    }
+    return false
+}

@@ -108,6 +108,12 @@ class InviteViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        MTA.trackPageViewBegin(TMMConfigs.PageName.invite)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.invite)
     }
     
     override func didReceiveMemoryWarning() {
