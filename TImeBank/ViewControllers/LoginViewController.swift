@@ -249,7 +249,7 @@ class LoginViewController: UIViewController {
                 account.accountStatus = MTAAccountStatus.normal
                 let accountPhone = MTAAccountInfo.init()
                 accountPhone.type = MTAAccountTypeExt.phone
-                accountPhone.account = "+\(userInfo.countryCode ?? 0)\(userInfo.mobile!)"
+                accountPhone.account = userInfo.mobile
                 accountPhone.accountStatus = MTAAccountStatus.normal
                 if userInfo.openId != "" {
                     let openIdAccount = MTAAccountInfo.init()
