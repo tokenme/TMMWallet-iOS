@@ -66,6 +66,7 @@ public class APIShareTask: APIResponse {
     var maxViewers: UInt = 0
     var viewers: UInt = 0
     var onlineStatus: APITaskOnlineStatus = .running
+    var creative: APICreative?
     var insertedAt: Date?
     var updatedAt: Date?
     var showBonusHint: Bool = false
@@ -97,6 +98,7 @@ public class APIShareTask: APIResponse {
         maxViewers <- map["max_viewers"]
         viewers <- map["viewers"]
         onlineStatus <- map["online_status"]
+        creative <- map["creative"]
         insertedAt <- (map["inserted_at"], dateTimeTransform)
         updatedAt <- (map["updated_at"], dateTimeTransform)
         showBonusHint <- map["show_bonus_hint"]

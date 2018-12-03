@@ -197,6 +197,8 @@
 		1D49E35421B141C800475B85 /* libfbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34921B141C800475B85 /* libfbi.a */; };
 		1D49E35521B141C800475B85 /* libcrashreporter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E34D21B141C800475B85 /* libcrashreporter.a */; };
 		1D49E35821B143D900475B85 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E35721B143D900475B85 /* CoreLocation.framework */; };
+		1D49E36021B50F4A00475B85 /* APIAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E35F21B50F4A00475B85 /* APIAd.swift */; };
+		1D49E36221B5170F00475B85 /* AdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E36121B5170F00475B85 /* AdTableViewCell.swift */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -451,6 +453,8 @@
 		1D49E34C21B141C800475B85 /* MTACrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTACrashReporter.h; sourceTree = "<group>"; };
 		1D49E34D21B141C800475B85 /* libcrashreporter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrashreporter.a; sourceTree = "<group>"; };
 		1D49E35721B143D900475B85 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1D49E35F21B50F4A00475B85 /* APIAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAd.swift; sourceTree = "<group>"; };
+		1D49E36121B5170F00475B85 /* AdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewCell.swift; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -674,6 +678,7 @@
 				1D151EC1213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift */,
 				1D151EC2213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib */,
 				1D31FC5C217993180014712B /* ShareTaskTableViewCell.swift */,
+				1D49E36121B5170F00475B85 /* AdTableViewCell.swift */,
 				1D297DAA2190316B001C7CF7 /* ShareTaskSwipableTableViewCell.swift */,
 				1D151ECA213F8F14007C87DD /* AppTaskTableViewCell.swift */,
 				1D151ECB213F8F14007C87DD /* AppTaskTableViewCell.xib */,
@@ -944,6 +949,7 @@
 				1D77AD372194370A004EBCBF /* APIGood.swift */,
 				1D05B4F421946800008EE10D /* APIGoodInvest.swift */,
 				1D3E42F421ABD2BF0014CEB1 /* APICreditLevel.swift */,
+				1D49E35F21B50F4A00475B85 /* APIAd.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1519,6 +1525,7 @@
 				1D5FF68E215B7E50001E69CD /* QRCodeResult.swift in Sources */,
 				1D022EA0216DC8CA0030E4CC /* ReCaptchaViewController.swift in Sources */,
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
+				1D49E36021B50F4A00475B85 /* APIAd.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
 				1D3E42F321ABC9E10014CEB1 /* UserLevelTableViewController.swift in Sources */,
 				1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */,
@@ -1652,6 +1659,7 @@
 				1D49E33E21B0FDE500475B85 /* IndexToolsTableViewCell.swift in Sources */,
 				1D05B50021957719008EE10D /* InvestViewController.swift in Sources */,
 				1D151E6F213D3161007C87DD /* APIDevice.swift in Sources */,
+				1D49E36221B5170F00475B85 /* AdTableViewCell.swift in Sources */,
 				1D3441FD213CFBB500B8E157 /* TransitionButton.swift in Sources */,
 				1D3441E0213CF9BD00B8E157 /* UIScreen+Utils.swift in Sources */,
 				1D1D6FC42147A5680001ED49 /* ETHWalletViewController.swift in Sources */,

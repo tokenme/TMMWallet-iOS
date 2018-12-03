@@ -87,7 +87,10 @@ class ShareTasksTableViewController: UITableViewController {
             guard let weakSelf = self else { return }
             switch status {
             case .failed(let err):
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: err.description, closeBtn: I18n.close.description)
+                #if DEBUG
+                print(err.debugDescription)
+                #endif
+                //UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: err.description, closeBtn: I18n.close.description)
                 weakSelf.mmPlayerLayer.player?.pause()
             case .ready:
                 #if DEBUG
@@ -154,6 +157,7 @@ class ShareTasksTableViewController: UITableViewController {
         tableView.register(cellType: ShareTaskTableViewCell.self)
         tableView.register(cellType: ShareTaskSwipableTableViewCell.self)
         tableView.register(cellType: LoadingShareTaskTableViewCell.self)
+        tableView.register(cellType: AdTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 88.0
@@ -303,7 +307,11 @@ extension ShareTasksTableViewController {
         if mineOnly, let _ = task.creator {
             showStats = true
         }
-        
+        if let creative = task.creative {
+            let cell = tableView.dequeueReusableCell(for: indexPath) as AdTableViewCell
+            cell.fill(creative, fullFill: indexPath.row==0)
+            return cell
+        }
         if mineOnly {
             let cell = tableView.dequeueReusableCell(for: indexPath) as ShareTaskSwipableTableViewCell
             cell.delegate = self
@@ -333,7 +341,13 @@ extension ShareTasksTableViewController {
             return
         }
         self.mmPlayerLayer.player?.pause()
-        if let imageURL = task.image {
+        if let creative = task.creative {
+            if let link = URL(string:creative.link) {
+                let vc = TMMWebViewController.instantiate()
+                vc.request = URLRequest(url: link)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        } else if let imageURL = task.image {
             KingfisherManager.shared.retrieveImage(with: URL(string: imageURL)!, options: nil, progressBlock: nil, completionHandler:{[weak self](_ image: UIImage?, _ error: NSError?, _ cacheType: CacheType?, _ url: URL?) in
                 guard let weakSelf = self else {return}
                 var shareItem: TMMShareItem?
@@ -367,6 +381,7 @@ extension ShareTasksTableViewController {
 extension ShareTasksTableViewController: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         let task = self.tasks[indexPath.row]
+        if task.creative != nil { return nil }
         guard let taskId = task.id else { return nil }
         guard let creator = task.creator else { return nil }
         guard let userId = self.userInfo?.id else { return nil }

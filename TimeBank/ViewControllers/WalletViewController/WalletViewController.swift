@@ -220,6 +220,7 @@ class WalletViewController: UIViewController {
         tableView.register(cellType: IndexToolsTableViewCell.self)
         tableView.register(cellType: DeviceTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
+        tableView.register(cellType: AdTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 66.0
@@ -269,6 +270,10 @@ extension WalletViewController: UIViewControllerTransitioningDelegate {
 extension WalletViewController: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         if !isValidatingBuild() && indexPath.section == 0 {
+            return nil
+        }
+        let device = self.devices[indexPath.row]
+        if device.creative != nil {
             return nil
         }
         if orientation == .right {
@@ -338,9 +343,14 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             cell.show()
             return cell
         }
+        let device = self.devices[indexPath.row]
+        if let creative = device.creative {
+            let cell = tableView.dequeueReusableCell(for: indexPath) as AdTableViewCell
+            cell.fill(creative, fullFill: true)
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(for: indexPath) as DeviceTableViewCell
         cell.delegate = self
-        let device = self.devices[indexPath.row]
         cell.fill(device)
         return cell
     }
@@ -348,9 +358,19 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
-        if indexPath.section == 0 { return }
+        if !isValidatingBuild() && indexPath.section == 0 { return }
         if self.devices.count < indexPath.row + 1 { return }
         let device = self.devices[indexPath.row]
+        
+        if let creative = device.creative {
+            if let link = URL(string:creative.link) {
+                let vc = TMMWebViewController.instantiate()
+                vc.request = URLRequest(url: link)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            return
+        }
+        
         let vc = DeviceAppsViewController.instantiate()
         vc.setDevice(device)
         vc.setTMM(self.tmm)
@@ -360,7 +380,8 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !isValidatingBuild() && indexPath.section == 1 && !self.loadingDevices
+        let isValidating = isValidatingBuild()
+        return (isValidating || !isValidating && indexPath.section == 0) && !self.loadingDevices
     }
 }
 

@@ -257,15 +257,27 @@ class TMMWebViewController: UIViewController {
         }
         let thumbnail = image?.kf.resize(to: CGSize(width: 300, height: 300))
         let params = NSMutableDictionary()
-        params.ssdkSetupShareParams(byText: shareItem?.description, images: image, url: shareItem?.link, title: shareItem?.title, type: .webPage)
-        params.ssdkSetupCopyParams(byText: shareItem?.description, images: image, url: shareItem?.link, type: .webPage)
-        params.ssdkSetupWeChatParams(byText: shareItem?.description, title: shareItem?.title, url: shareItem?.link, thumbImage: thumbnail, image: image, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .webPage, forPlatformSubType: .subTypeWechatSession)
-        params.ssdkSetupWeChatParams(byText: shareItem?.description, title: shareItem?.title, url: shareItem?.link, thumbImage: thumbnail, image: image, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .webPage, forPlatformSubType: .subTypeWechatTimeline)
-        params.ssdkSetupSinaWeiboShareParams(byText: shareItem?.description, title: shareItem?.title, images: image, video: nil, url: shareItem?.link, latitude: 0, longitude: 0, objectID: nil, isShareToStory: true, type: .webPage)
-        params.ssdkSetupFacebookParams(byText: shareItem?.description, image: image, url: shareItem?.link, urlTitle: shareItem?.title, urlName: TMMConfigs.Facebook.displayName, attachementUrl: nil, hashtag: "UCoin", quote: nil, type: .webPage)
+        var link: URL?
+        if let shareLink = shareItem?.link {
+            link = shareLink
+        } else if let webLink = webView.url {
+            link = webLink
+        }
+        var title: String?
+        if let shareTitle = shareItem?.title {
+            title = shareTitle
+        } else if let webTitle = webView.title {
+            title = webTitle
+        }
+        params.ssdkSetupShareParams(byText: shareItem?.description, images: image, url: link, title: title, type: .webPage)
+        params.ssdkSetupCopyParams(byText: shareItem?.description, images: image, url: link, type: .webPage)
+        params.ssdkSetupWeChatParams(byText: shareItem?.description, title: title, url: link, thumbImage: thumbnail, image: image, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .webPage, forPlatformSubType: .subTypeWechatSession)
+        params.ssdkSetupWeChatParams(byText: shareItem?.description, title: title, url: link, thumbImage: thumbnail, image: image, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, sourceFileExtension: nil, sourceFileData: nil, type: .webPage, forPlatformSubType: .subTypeWechatTimeline)
+        params.ssdkSetupSinaWeiboShareParams(byText: shareItem?.description, title: title, images: image, video: nil, url: shareItem?.link, latitude: 0, longitude: 0, objectID: nil, isShareToStory: true, type: .webPage)
+        params.ssdkSetupFacebookParams(byText: shareItem?.description, image: image, url: link, urlTitle: title, urlName: TMMConfigs.Facebook.displayName, attachementUrl: nil, hashtag: "UCoin", quote: nil, type: .webPage)
         params.ssdkSetupTwitterParams(byText: shareItem?.description, images: image, video: nil, latitude: 0, longitude: 0, type: .webPage)
-        params.ssdkSetupQQParams(byText: shareItem?.description, title: shareItem?.title, url: shareItem?.link, audioFlash: nil, videoFlash: nil, thumbImage: thumbnail, images: image, type: .webPage, forPlatformSubType: .subTypeQZone)
-        params.ssdkSetupQQParams(byText: shareItem?.description, title: shareItem?.title, url: shareItem?.link, audioFlash: nil, videoFlash: nil, thumbImage: thumbnail, images: image, type: .webPage, forPlatformSubType: .subTypeQQFriend)
+        params.ssdkSetupQQParams(byText: shareItem?.description, title: title, url: link, audioFlash: nil, videoFlash: nil, thumbImage: thumbnail, images: image, type: .webPage, forPlatformSubType: .subTypeQZone)
+        params.ssdkSetupQQParams(byText: shareItem?.description, title: title, url: link, audioFlash: nil, videoFlash: nil, thumbImage: thumbnail, images: image, type: .webPage, forPlatformSubType: .subTypeQQFriend)
         params.ssdkSetupTelegramParams(byText: shareItem?.description, image: image, audio: nil, video: nil, file: nil, menuDisplay: CGPoint.zero, type: .auto)
         return params
     }()
@@ -292,9 +304,9 @@ class TMMWebViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
+            let shareBtn: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share")?.kf.resize(to: CGSize(width: 24, height: 24), for: .aspectFit), style: .plain, target: self, action: #selector(showShareSheet))
+            navigationItem.rightBarButtonItem = shareBtn
             if self.shareItem != nil {
-                let shareBtn: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share")?.kf.resize(to: CGSize(width: 24, height: 24), for: .aspectFit), style: .plain, target: self, action: #selector(showShareSheet))
-                navigationItem.rightBarButtonItem = shareBtn
                 navigationItem.title = shareItem?.title
                 if isValidatingBuild() {
                     toolbarView.isHidden = true
@@ -538,6 +550,9 @@ class TMMWebViewController: UIViewController {
                 }
             }
         } else if let link = shareItem?.link {
+            let paste = UIPasteboard.general
+            paste.string = "\(link)"
+        } else if let link = webView.url {
             let paste = UIPasteboard.general
             paste.string = "\(link)"
         }

@@ -9,7 +9,6 @@
 import UIKit
 import Reusable
 import SnapKit
-import SwipeCellKit
 import Kingfisher
 
 class ShareTaskTableViewCell: UITableViewCell, Reusable {

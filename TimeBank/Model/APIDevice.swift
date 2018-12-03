@@ -29,6 +29,7 @@ public class APIDevice: APIResponse {
     var lastPingAt: Date?
     var insertedAt: Date?
     var updatedAt: Date?
+    var creative: APICreative?
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -56,5 +57,6 @@ public class APIDevice: APIResponse {
         lastPingAt <- (map["lastping_at"], dateTimeTransform)
         insertedAt <- (map["inserted_at"], dateTimeTransform)
         updatedAt <- (map["updated_at"], dateTimeTransform)
+        creative <- map["creative"]
     }
 }
