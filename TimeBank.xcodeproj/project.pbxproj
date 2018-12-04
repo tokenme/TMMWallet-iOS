@@ -199,6 +199,8 @@
 		1D49E35821B143D900475B85 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49E35721B143D900475B85 /* CoreLocation.framework */; };
 		1D49E36021B50F4A00475B85 /* APIAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E35F21B50F4A00475B85 /* APIAd.swift */; };
 		1D49E36221B5170F00475B85 /* AdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E36121B5170F00475B85 /* AdTableViewCell.swift */; };
+		1D49E36521B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E36321B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift */; };
+		1D49E36621B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D49E36421B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -455,6 +457,8 @@
 		1D49E35721B143D900475B85 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1D49E35F21B50F4A00475B85 /* APIAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAd.swift; sourceTree = "<group>"; };
 		1D49E36121B5170F00475B85 /* AdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E36321B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsTMMExchangeSelectorViewController.swift; sourceTree = "<group>"; };
+		1D49E36421B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointsTMMExchangeSelectorViewController.xib; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -594,6 +598,8 @@
 			isa = PBXGroup;
 			children = (
 				1D151E7D213D60FC007C87DD /* DeviceAppsViewController.swift */,
+				1D49E36321B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift */,
+				1D49E36421B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib */,
 				1D1D6FB8214645B10001ED49 /* PointsTMMExchangeViewController.swift */,
 				1D1D6FB9214645B20001ED49 /* PointsTMMExchangeViewController.xib */,
 				1D151E7F213D637D007C87DD /* Cell */,
@@ -1334,6 +1340,7 @@
 				1D1D6FB12140F5620001ED49 /* ShareTaskRecordTableViewCell.xib in Resources */,
 				1D151E86213D69A9007C87DD /* Login.storyboard in Resources */,
 				1D3E42CC219A94B00014CEB1 /* MyGoodInvestTableViewCell.xib in Resources */,
+				1D49E36621B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib in Resources */,
 				1D3E42E421A4008A0014CEB1 /* MSADefaultImages.bundle in Resources */,
 				1D36D9A6213CED5E0002EDBF /* Main.storyboard in Resources */,
 			);
@@ -1617,6 +1624,7 @@
 				1D5FF684215B560F001E69CD /* OrderbookTableViewCell.swift in Sources */,
 				1D3441CE213CF78000B8E157 /* APIAccessToken.swift in Sources */,
 				1DF019FE2161F07400FDD467 /* ChartBalloonMarker.swift in Sources */,
+				1D49E36521B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift in Sources */,
 				1DA38ECC21735BE60073DB8A /* TMMFeedbackService.swift in Sources */,
 				1D1D6FEC214EA3470001ED49 /* ExchangeRecordsViewController.swift in Sources */,
 				1D151EB5213E6E20007C87DD /* AppTasksTableViewController.swift in Sources */,

@@ -2941,7 +2941,7 @@
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.50980392159999999" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Change UC">
+                                        <state key="normal" title="Withdraw">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -2956,7 +2956,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="showExchangeTMM" destination="eF9-4j-LiV" eventType="touchUpInside" id="beE-lZ-35e"/>
+                                            <action selector="tryWithdraw" destination="eF9-4j-LiV" eventType="touchUpInside" id="Wpj-0C-QtB"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzX-YQ-7Xh" customClass="TransitionButton" customModule="TimeBank" customModuleProvider="target">
@@ -2979,7 +2979,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="showExchangePoint" destination="eF9-4j-LiV" eventType="touchUpInside" id="VBF-Wb-ii5"/>
+                                            <action selector="showExchangeSelector" destination="eF9-4j-LiV" eventType="touchUpInside" id="mWf-p5-rRo"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -3068,8 +3068,7 @@
                     <connections>
                         <outlet property="balanceLabel" destination="XVl-rc-PqY" id="nvu-SQ-dfJ"/>
                         <outlet property="collectionView" destination="QY7-xS-eiL" id="oXo-d6-udu"/>
-                        <outlet property="exchangePointButton" destination="qzX-YQ-7Xh" id="7XC-hB-5WF"/>
-                        <outlet property="exchangeTMMButton" destination="XDd-9q-PVU" id="e4K-eS-juu"/>
+                        <outlet property="exchangeButton" destination="qzX-YQ-7Xh" id="h2S-Nr-Kgt"/>
                         <outlet property="growthFactorImageView" destination="oN7-NE-sgx" id="SJW-Af-Qdo"/>
                         <outlet property="growthFactorLabel" destination="avF-Z5-ZNp" id="pYU-1D-fIL"/>
                         <outlet property="miningAppsLabel" destination="9sj-oV-vzw" id="eV4-7r-5B4"/>
@@ -3081,6 +3080,7 @@
                         <outlet property="tableView" destination="Xbf-s2-vU0" id="sU4-Lh-957"/>
                         <outlet property="tsImageView" destination="Woa-L1-ZVP" id="H8S-RR-soi"/>
                         <outlet property="tsLabel" destination="Vk7-zp-1k2" id="gew-fM-TpV"/>
+                        <outlet property="withdrawButton" destination="XDd-9q-PVU" id="hNz-Rm-cPk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mrT-Ke-jkn" userLabel="First Responder" sceneMemberID="firstResponder"/>

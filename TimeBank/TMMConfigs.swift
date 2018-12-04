@@ -33,6 +33,7 @@ struct TMMConfigs {
         static let device = "Device"
         static let sdkApps = "SDKApps"
         static let tmmWithdraw = "TMMWithdraw"
+        static let pointWithdraw = "PointWithdraw"
         static let pointsToTMM = "PointsToTMM"
         static let TMMToPoints = "TMMToPoints"
         static let transactions = "Transactions"
@@ -44,6 +45,7 @@ struct TMMConfigs {
         static let login = "Login"
         static let register = "Register"
         static let tokenWithdraw = "TokenWithdraw"
+        static let pointWithdraw = "PointWithdraw"
         static let pointsToToken = "PointsToToken"
         static let tokenToPoints = "TokenToPoints"
     }

@@ -569,8 +569,9 @@ extension AccountTableViewController {
             weakSelf.bindingWechat = true
             guard let rawInfo = user.rawData else { return }
             guard let openId = rawInfo["openid"] as? String else { return }
+            guard let unionId = rawInfo["unionid"] as? String else { return }
             TMMUserService.bindWechatInfo(
-                unionId: user.uid,
+                unionId: unionId,
                 openId: openId,
                 nick: user.nickname,
                 avatar: user.icon,

@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-enum APIExchangeDirection: Int8 {
+public enum APIExchangeDirection: Int8 {
     case TMMIn = 1
     case TMMOut = -1
 }

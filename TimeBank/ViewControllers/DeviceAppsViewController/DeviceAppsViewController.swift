@@ -39,8 +39,8 @@ class DeviceAppsViewController: UIViewController {
     private var tmm: APIToken?
     
     @IBOutlet private weak var summaryView: PastelView!
-    @IBOutlet private weak var exchangeTMMButton: TransitionButton!
-    @IBOutlet private weak var exchangePointButton: TransitionButton!
+    @IBOutlet private weak var withdrawButton: TransitionButton!
+    @IBOutlet private weak var exchangeButton: TransitionButton!
     @IBOutlet private weak var miningAppsLabel: UILabel!
     @IBOutlet private weak var moreAppsButton: UIButton!
     @IBOutlet private weak var redeemTitleLabel: UILabel!
@@ -74,6 +74,21 @@ class DeviceAppsViewController: UIViewController {
         return customPresenter
     }()
     
+    let exchangeSelectorPresenter: Presentr = {
+        let customPresenter = Presentr(presentationType: .bottomHalf)
+        customPresenter.transitionType = .coverVertical
+        customPresenter.dismissTransitionType = .crossDissolve
+        customPresenter.roundCorners = false
+        //customPresenter.blurBackground = true
+        customPresenter.blurStyle = UIBlurEffect.Style.light
+        //customPresenter.keyboardTranslationType = .moveUp
+        //customPresenter.backgroundColor = .green
+        customPresenter.backgroundOpacity = 0.5
+        customPresenter.dismissOnSwipe = true
+        customPresenter.dismissOnSwipeDirection = .bottom
+        return customPresenter
+    }()
+    
     let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
         presenter.transitionType = TransitionType.coverVerticalFromTop
@@ -86,12 +101,14 @@ class DeviceAppsViewController: UIViewController {
     private var cdps: [APIRedeemCdp] = []
     
     private var loadingApps = false
-    private var gettingTmmExchangeRate = false
     private var loadingBalance = false
     private var loadingDevice = false
     private var loadingRedeemCdps = false
+    private var gettingPointPrice = false
+    private var bindingWechat = false
     private var makingCdpOfferId: UInt64 = 0
     
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
@@ -115,8 +132,8 @@ class DeviceAppsViewController: UIViewController {
             let exchangeRecordsBarItem = UIBarButtonItem(title: I18n.exchangeRecords.description, style: .plain, target: self, action: #selector(self.showExchangeRecordsView))
             navigationItem.rightBarButtonItem = exchangeRecordsBarItem
         }
-        exchangeTMMButton.setTitle(I18n.exchangeTMM.description, for: .normal)
-        exchangePointButton.setTitle(I18n.exchangePoint.description, for: .normal)
+        withdrawButton.setTitle(I18n.pointsWithdraw.description, for: .normal)
+        exchangeButton.setTitle(I18n.changePoints.description, for: .normal)
         miningAppsLabel.text = I18n.miningApps.description
         moreAppsButton.setTitle(I18n.moreApps.description, for: .normal)
         redeemTitleLabel.text = I18n.redeemCdp.description
@@ -269,16 +286,6 @@ class DeviceAppsViewController: UIViewController {
         })
     }
     
-    @IBAction func showExchangeTMM() {
-        exchangeTMMButton.startAnimation()
-        getTmmExchangeRate(direction: .TMMIn)
-    }
-    
-    @IBAction func showExchangePoint() {
-        exchangePointButton.startAnimation()
-        getTmmExchangeRate(direction: .TMMOut)
-    }
-    
     @IBAction func showSDKApps() {
         let vc = SDKAppsTableViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -287,6 +294,12 @@ class DeviceAppsViewController: UIViewController {
     @objc func showExchangeRecordsView() {
         let vc = ExchangeRecordsViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func showExchangeSelector() {
+        let vc = PointsTMMExchangeSelectorViewController()
+        vc.delegate = self
+        customPresentViewController(exchangeSelectorPresenter, viewController: vc, animated: true, completion: nil)
     }
 }
 
@@ -427,32 +440,6 @@ extension DeviceAppsViewController {
         )
     }
     
-    private func getTmmExchangeRate(direction: APIExchangeDirection) {
-        if self.gettingTmmExchangeRate {
-            return
-        }
-        self.gettingTmmExchangeRate = true
-        TMMExchangeService.getTMMRate(
-            provider: self.exchangeServiceProvider)
-            .then(in: .main, {[weak self] rate in
-                guard let weakSelf = self else { return }
-                guard let points = weakSelf.device?.points else { return }
-                weakSelf.showExchangeForm(rate, points, direction)
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.gettingTmmExchangeRate = false
-                if direction == .TMMIn {
-                    weakSelf.exchangeTMMButton.stopAnimation(animationStyle: .normal, completion: nil)
-                } else {
-                    weakSelf.exchangePointButton.stopAnimation(animationStyle: .normal, completion: nil)
-                }
-            }
-        )
-    }
-    
     private func showExchangeForm(_ rate: APIExchangeRate, _ points: NSDecimalNumber, _ direction: APIExchangeDirection) {
         guard let device = self.device else { return }
         let vc = PointsTMMExchangeViewController(changeRate: rate, device: device, tmmBalance: self.tmm?.balance ?? 0, direction: direction)
@@ -567,6 +554,122 @@ extension DeviceAppsViewController {
             }
         )
     }
+    
+    @IBAction private func tryWithdraw() {
+        withdrawButton.startAnimation()
+        async({ _ -> APIExchangeRate in
+            if !ShareSDK.hasAuthorized(.typeWechat) {
+                let user = try ..self.authWechat()
+                let _ = try ..self.doBindWechat(user: user)
+            }
+            let exchangeRate = try ..self.getPointPrice()
+            return exchangeRate
+        }).then(in: .main, {[weak self] exchangeRate in
+            guard let weakSelf = self else { return }
+            weakSelf.withdrawButton.stopAnimation(animationStyle: .normal, completion: {[weak weakSelf] in
+                guard let weakSelf2 = weakSelf else { return }
+                guard let deviceId = weakSelf2.device?.id else { return }
+                let vc = TMMRedeemViewController(changeRate: exchangeRate)
+                vc.redeemType = .point
+                vc.deviceId = deviceId
+                vc.delegate = weakSelf2
+                weakSelf2.customPresentViewController(weakSelf2.exchangePresenter, viewController: vc, animated: true, completion: nil)
+            })
+        }).catch(in: .main, {[weak self] error in
+            guard let weakSelf = self else { return }
+            if let err = error as? TMMAPIError {
+                switch err {
+                case .ignore:
+                    weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
+                    return
+                default: break
+                }
+            }
+            weakSelf.withdrawButton.stopAnimation(animationStyle: .shake, completion: nil)
+            UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as? TMMAPIError)?.description ?? error.localizedDescription, closeBtn: I18n.close.description)
+        }).always(in: .main, body: {[weak self]  in
+            guard let weakSelf = self else { return }
+            weakSelf.bindingWechat = false
+            weakSelf.gettingPointPrice = false
+        })
+    }
+    
+    private func doBindWechat(user: SSDKUser) -> Promise<Void> {
+        return Promise<Void> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.bindingWechat {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.bindingWechat = true
+            guard let rawInfo = user.rawData else { return }
+            guard let openId = rawInfo["openid"] as? String else { return }
+            guard let unionId = rawInfo["unionid"] as? String else { return }
+            TMMUserService.bindWechatInfo(
+                unionId: unionId,
+                openId: openId,
+                nick: user.nickname,
+                avatar: user.icon,
+                gender: user.gender,
+                accessToken: user.credential.token,
+                expires: user.credential.expired,
+                provider: weakSelf.userServiceProvider)
+                .then(in: .background, { _ in
+                    resolve(())
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
+    
+    private func authWechat() -> Promise<SSDKUser> {
+        return Promise<SSDKUser> (in: .background, { resolve, reject, _ in
+            ShareSDK.authorize(.typeWechat, settings: nil) { (state: SSDKResponseState, user: SSDKUser?, error: Error?) in
+                switch state {
+                case .success:
+                    guard let userInfo = user else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    resolve(userInfo)
+                case .fail:
+                    guard let err = error else {
+                        reject(TMMAPIError.ignore)
+                        return
+                    }
+                    reject(err)
+                default:
+                    reject(TMMAPIError.ignore)
+                }
+            }
+        })
+    }
+    
+    private func getPointPrice() -> Promise<APIExchangeRate> {
+        return Promise<APIExchangeRate> (in: .background, {[weak self] resolve, reject, _ in
+            guard let weakSelf = self else {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            if weakSelf.gettingPointPrice {
+                reject(TMMAPIError.ignore)
+                return
+            }
+            weakSelf.gettingPointPrice = true
+            
+            TMMRedeemService.getPointPrice(
+                currency: Defaults[.currency] ?? Currency.USD.rawValue,
+                provider: weakSelf.redeemServiceProvider)
+                .then(in: .background, { rate  in
+                    resolve(rate)
+                }).catch(in: .background, { error in
+                    reject(error)
+                })
+        })
+    }
 }
 
 extension DeviceAppsViewController: TransactionDelegate {
@@ -590,6 +693,29 @@ extension DeviceAppsViewController: TransactionDelegate {
         alertController.addAction(okAction)
         customPresentViewController(alertPresenter, viewController: alertController, animated: true)
         self.refreshSummary()
+    }
+}
+
+extension DeviceAppsViewController: RedeemDelegate {
+    func redeemSuccess(resp: APITMMWithdraw) {
+        let _ = Haptic.notification(.success)
+        Peep.play(sound: AlertTone.complete)
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let message = String(format: I18n.withdrawSuccessMsg.description, formatter.string(from: resp.tmm)!, I18n.points.description, formatter.string(from: resp.cash)!, resp.currency)
+        let alertController = AlertViewController(title: I18n.newTransactionTitle.description, body: message)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        customPresentViewController(alertPresenter, viewController: alertController, animated: true)
+    }
+}
+
+extension DeviceAppsViewController: PointsTMMExchangeSelectorDelegate {
+    func exchangeDirectionSelected(rate: APIExchangeRate, direction: APIExchangeDirection) {
+        guard let points = self.device?.points else { return }
+        self.showExchangeForm(rate, points, direction)
     }
 }
 

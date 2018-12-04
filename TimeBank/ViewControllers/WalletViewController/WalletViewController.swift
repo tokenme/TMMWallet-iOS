@@ -381,7 +381,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         let isValidating = isValidatingBuild()
-        return (isValidating || !isValidating && indexPath.section == 0) && !self.loadingDevices
+        return (isValidating || !isValidating && indexPath.section == 1) && !self.loadingDevices
     }
 }
 
@@ -533,7 +533,8 @@ extension WalletViewController {
                     formatter.groupingSeparator = "";
                     formatter.numberStyle = NumberFormatter.Style.decimal
                     let pointsStr = formatter.string(from: status.points)!
-                    let msg: String = String(format: I18n.dailyBonusSuccessMsg.description, pointsStr)
+                    let interestsStr = formatter.string(from: status.interests)!
+                    let msg: String = String(format: I18n.dailyBonusSuccessMsg.description, pointsStr, interestsStr)
                     UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: msg, closeBtn: I18n.close.description)
                 }
             }).catch(in: .main, {[weak self] error in

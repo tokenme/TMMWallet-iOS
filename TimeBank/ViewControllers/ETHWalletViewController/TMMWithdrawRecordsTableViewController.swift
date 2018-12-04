@@ -40,6 +40,8 @@ class TMMWithdrawRecordsTableViewController: UITableViewController {
         return presenter
     }()
     
+    public var recordType: RedeemType = .tmm
+    
     private var currentPage: UInt = 1
     
     private var records: [APITMMWithdrawRecord] = []
@@ -149,13 +151,14 @@ extension TMMWithdrawRecordsTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let record = self.records[indexPath.row]
         let cell = tableView.dequeueReusableCell(for: indexPath) as TMMWithdrawRecordTableViewCell
-        cell.fill(record)
+        cell.fill(record, recordType: self.recordType)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
+        if self.recordType == .point { return }
         if self.records.count < indexPath.row + 1 { return }
         let record = self.records[indexPath.row]
         let urlString = "https://etherscan.io/tx/\(record.tx)"
@@ -166,7 +169,7 @@ extension TMMWithdrawRecordsTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !self.loadingRecords
+        return self.recordType == .tmm && !self.loadingRecords
     }
 }
 
@@ -220,49 +223,95 @@ extension TMMWithdrawRecordsTableViewController {
         if refresh {
             currentPage = 1
         }
-        
-        TMMRedeemService.getTMMWithdrawRecords(
-            page: currentPage,
-            pageSize: DefaultPageSize,
-            provider: self.redeemServiceProvider)
-            .then(in: .main, {[weak self] records in
-                guard let weakSelf = self else {
-                    return
-                }
-                if refresh {
-                    weakSelf.records = records
-                } else {
-                    weakSelf.records.append(contentsOf: records)
-                }
-                if records.count < DefaultPageSize {
-                    if weakSelf.records.count <= DefaultPageSize {
-                        weakSelf.tableView.footer?.isHidden = true
+        if recordType == .tmm {
+            TMMRedeemService.getTMMWithdrawRecords(
+                page: currentPage,
+                pageSize: DefaultPageSize,
+                provider: self.redeemServiceProvider)
+                .then(in: .main, {[weak self] records in
+                    guard let weakSelf = self else {
+                        return
+                    }
+                    if refresh {
+                        weakSelf.records = records
+                    } else {
+                        weakSelf.records.append(contentsOf: records)
+                    }
+                    if records.count < DefaultPageSize {
+                        if weakSelf.records.count <= DefaultPageSize {
+                            weakSelf.tableView.footer?.isHidden = true
+                        } else {
+                            weakSelf.tableView.footer?.isHidden = false
+                            weakSelf.tableView.footer?.endRefreshingWithNoMoreData()
+                        }
                     } else {
                         weakSelf.tableView.footer?.isHidden = false
-                        weakSelf.tableView.footer?.endRefreshingWithNoMoreData()
+                        weakSelf.tableView.footer?.endRefreshing()
+                        weakSelf.currentPage += 1
                     }
-                } else {
+                }).catch(in: .main, {[weak self] error in
+                    guard let weakSelf = self else { return }
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
                     weakSelf.tableView.footer?.isHidden = false
                     weakSelf.tableView.footer?.endRefreshing()
-                    weakSelf.currentPage += 1
+                }).always(in: .main, body: {[weak self] in
+                    guard let weakSelf = self else { return }
+                    weakSelf.loadingRecords = false
+                    weakSelf.tableView.header?.isHidden = false
+                    weakSelf.tableView.hideSkeleton()
+                    weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+                    weakSelf.tableView.header?.endRefreshing()
+                    if refresh {
+                        let zoomAnimation = AnimationType.zoom(scale: 0.2)
+                        UIView.animate(views: weakSelf.tableView.visibleCells, animations: [zoomAnimation], completion:nil)
+                    }
                 }
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-                weakSelf.tableView.footer?.isHidden = false
-                weakSelf.tableView.footer?.endRefreshing()
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.loadingRecords = false
-                weakSelf.tableView.header?.isHidden = false
-                weakSelf.tableView.hideSkeleton()
-                weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
-                weakSelf.tableView.header?.endRefreshing()
-                if refresh {
-                    let zoomAnimation = AnimationType.zoom(scale: 0.2)
-                    UIView.animate(views: weakSelf.tableView.visibleCells, animations: [zoomAnimation], completion:nil)
-                }
-                }
-        )
+            )
+        } else {
+            TMMRedeemService.getPointWithdrawRecords(
+                deviceId: "",
+                page: currentPage,
+                pageSize: DefaultPageSize,
+                provider: self.redeemServiceProvider)
+                .then(in: .main, {[weak self] records in
+                    guard let weakSelf = self else {
+                        return
+                    }
+                    if refresh {
+                        weakSelf.records = records
+                    } else {
+                        weakSelf.records.append(contentsOf: records)
+                    }
+                    if records.count < DefaultPageSize {
+                        if weakSelf.records.count <= DefaultPageSize {
+                            weakSelf.tableView.footer?.isHidden = true
+                        } else {
+                            weakSelf.tableView.footer?.isHidden = false
+                            weakSelf.tableView.footer?.endRefreshingWithNoMoreData()
+                        }
+                    } else {
+                        weakSelf.tableView.footer?.isHidden = false
+                        weakSelf.tableView.footer?.endRefreshing()
+                        weakSelf.currentPage += 1
+                    }
+                }).catch(in: .main, {[weak self] error in
+                    guard let weakSelf = self else { return }
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                    weakSelf.tableView.footer?.isHidden = false
+                    weakSelf.tableView.footer?.endRefreshing()
+                }).always(in: .main, body: {[weak self] in
+                    guard let weakSelf = self else { return }
+                    weakSelf.loadingRecords = false
+                    weakSelf.tableView.header?.isHidden = false
+                    weakSelf.tableView.hideSkeleton()
+                    weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+                    weakSelf.tableView.header?.endRefreshing()
+                    if refresh {
+                        let zoomAnimation = AnimationType.zoom(scale: 0.2)
+                        UIView.animate(views: weakSelf.tableView.visibleCells, animations: [zoomAnimation], completion:nil)
+                    }
+                    }
+            )
+        }
     }
 }

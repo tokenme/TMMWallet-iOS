@@ -12,6 +12,7 @@ import ObjectMapper
 public class APIDailyBonusStatus: APIResponse {
     var days: Int = 0
     var points: NSDecimalNumber = 0
+    var interests: NSDecimalNumber = 0
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -27,5 +28,6 @@ public class APIDailyBonusStatus: APIResponse {
         super.mapping(map: map)
         days <- map["days"]
         points <- (map["points"], decimalTransform)
+        interests <- (map["interests"], decimalTransform)
     }
 }

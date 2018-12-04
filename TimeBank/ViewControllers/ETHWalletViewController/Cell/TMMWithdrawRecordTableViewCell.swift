@@ -28,14 +28,18 @@ class TMMWithdrawRecordTableViewCell: UITableViewCell, NibReusable {
         super.setSelected(selected, animated: animated)
     }
     
-    func fill(_ record: APITMMWithdrawRecord) {
+    func fill(_ record: APITMMWithdrawRecord, recordType: RedeemType) {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let formattedTmm = formatter.string(from: record.tmm)!
         let formattedCash = formatter.string(from: record.cash)!
-        fromLabel.text = "\(formattedTmm) UC"
+        if recordType == .tmm {
+            fromLabel.text = "\(formattedTmm) UC"
+        } else {
+            fromLabel.text = "\(formattedTmm) \(I18n.points.description)"
+        }
         toLabel.text = "\(formattedCash) CNY"
         
         if let insertedAt = record.insertedAt {
@@ -47,16 +51,21 @@ class TMMWithdrawRecordTableViewCell: UITableViewCell, NibReusable {
         }
         var statusBackgroundColor: UIColor = .lightGray
         var statusText: String = I18n.txPending.description
-        switch record.withdrawStatus {
-        case .success:
+        if recordType == .point {
             statusBackgroundColor = UIColor.greenGrass
             statusText = I18n.txSuccess.description
-        case .failed:
-            statusBackgroundColor = UIColor.red
-            statusText = I18n.txFailed.description
-        case .pending:
-            statusBackgroundColor = .lightGray
-            statusText = I18n.txPending.description
+        } else {
+            switch record.withdrawStatus {
+            case .success:
+                statusBackgroundColor = UIColor.greenGrass
+                statusText = I18n.txSuccess.description
+            case .failed:
+                statusBackgroundColor = UIColor.red
+                statusText = I18n.txFailed.description
+            case .pending:
+                statusBackgroundColor = .lightGray
+                statusText = I18n.txPending.description
+            }
         }
         (statusLabel as UILabel).backgroundColor = statusBackgroundColor
         (statusLabel as UILabel).text = statusText

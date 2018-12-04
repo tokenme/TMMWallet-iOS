@@ -14,6 +14,11 @@ import TMMSDK
 import Presentr
 import Haptica
 
+enum RedeemType {
+    case tmm
+    case point
+}
+
 class TMMRedeemViewController: UIViewController {
     weak public var delegate: RedeemDelegate?
     
@@ -24,6 +29,9 @@ class TMMRedeemViewController: UIViewController {
     
     private var isChanging = false
     private var changeRate: APIExchangeRate?
+    public var deviceId: String = ""
+    
+    public var redeemType :RedeemType = .tmm
     
     lazy private var shareSheetItems: [SSUIPlatformItem] = {[weak self] in
         var items:[SSUIPlatformItem] = []
@@ -66,12 +74,20 @@ class TMMRedeemViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MTA.trackPageViewBegin(TMMConfigs.PageName.tmmWithdraw)
+        if redeemType == .tmm {
+            MTA.trackPageViewBegin(TMMConfigs.PageName.tmmWithdraw)
+        } else {
+            MTA.trackPageViewBegin(TMMConfigs.PageName.pointWithdraw)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        MTA.trackPageViewEnd(TMMConfigs.PageName.tmmWithdraw)
+        if redeemType == .tmm {
+            MTA.trackPageViewEnd(TMMConfigs.PageName.tmmWithdraw)
+        } else {
+            MTA.trackPageViewEnd(TMMConfigs.PageName.pointWithdraw)
+        }
     }
     
     deinit {
@@ -86,14 +102,24 @@ class TMMRedeemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let rate = changeRate?.rate else { return }
-        titleLabel.text = "UC \(I18n.withdraw.description)"
+        if redeemType == .tmm {
+            titleLabel.text = "UC \(I18n.withdraw.description)"
+        } else {
+            titleLabel.text = "积分 \(I18n.withdraw.description)"
+        }
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         let rateStr = formatter.string(from: rate)!
-        exchangeRateLabel.text = String(format: I18n.currentTMMRedeemRate.description, rateStr, currency)
-        amountTextField.tweePlaceholder = I18n.TMMAmount.description
+        if redeemType == .tmm {
+            exchangeRateLabel.text = String(format: I18n.currentTMMRedeemRate.description, rateStr, currency)
+            amountTextField.tweePlaceholder = I18n.TMMAmount.description
+        } else {
+            exchangeRateLabel.text = String(format: I18n.currentPointRedeemPrice.description, rateStr, currency)
+            amountTextField.tweePlaceholder = I18n.pointsAmount.description
+        }
+        
         changeButton.setTitle(I18n.withdraw.description, for: .normal)
         amountTextField.becomeFirstResponder()
     }
@@ -120,46 +146,92 @@ extension TMMRedeemViewController {
         
         let cashAmount = changePoints * (changeRate?.rate ?? 0)
         
-        MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.tokenWithdraw, props: ["token": changePoints, "cash": cashAmount])
-        TMMRedeemService.withdrawTMM(
-            tmm: changePoints,
-            currency: currency,
-            provider: self.redeemServiceProvider)
-            .then(in: .main, {[weak self] resp in
-                guard let weakSelf = self else { return }
-                weakSelf.changeButton.stopAnimation(animationStyle: .normal, completion: nil)
-                MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.tokenWithdraw, props: ["token": changePoints, "cash": cashAmount])
-                weakSelf.dismiss(animated: true, completion: {[weak weakSelf] in
-                    guard let weakSelf2 = weakSelf else { return }
-                    weakSelf2.delegate?.redeemSuccess(resp: resp)
-                })
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                if let err = error as? TMMAPIError {
-                    switch err {
-                    case .wechatOpenIdError:
-                        let _ = Haptic.notification(.warning)
-                        weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
-                        let alertController = AlertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
-                        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
-                        let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] in
-                            guard let weakSelf = self else { return }
-                            weakSelf.showShareSheet()
+        if redeemType == .tmm {
+            MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.tokenWithdraw, props: ["token": changePoints, "cash": cashAmount])
+            TMMRedeemService.withdrawTMM(
+                tmm: changePoints,
+                currency: currency,
+                provider: self.redeemServiceProvider)
+                .then(in: .main, {[weak self] resp in
+                    guard let weakSelf = self else { return }
+                    weakSelf.changeButton.stopAnimation(animationStyle: .normal, completion: nil)
+                    MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.tokenWithdraw, props: ["token": changePoints, "cash": cashAmount])
+                    weakSelf.dismiss(animated: true, completion: {[weak weakSelf] in
+                        guard let weakSelf2 = weakSelf else { return }
+                        weakSelf2.delegate?.redeemSuccess(resp: resp)
+                    })
+                }).catch(in: .main, {[weak self] error in
+                    guard let weakSelf = self else { return }
+                    weakSelf.amountTextField.resignFirstResponder()
+                    if let err = error as? TMMAPIError {
+                        switch err {
+                        case .wechatOpenIdError:
+                            let _ = Haptic.notification(.warning)
+                            weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
+                            let alertController = AlertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
+                            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                            let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] in
+                                guard let weakSelf = self else { return }
+                                weakSelf.showShareSheet()
+                            }
+                            alertController.addAction(cancelAction)
+                            alertController.addAction(okAction)
+                            weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+                            return
+                        default: break
                         }
-                        alertController.addAction(cancelAction)
-                        alertController.addAction(okAction)
-                        weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
-                        return
-                    default: break
                     }
+                    weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                }).always(in: .main, body: {[weak self] in
+                    guard let weakSelf = self else { return }
+                    weakSelf.isChanging = false
                 }
-                weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.isChanging = false
-            }
-        )
+            )
+        } else {
+            MTA.trackCustomKeyValueEventBegin(TMMConfigs.EventName.pointWithdraw, props: ["points": changePoints, "cash": cashAmount])
+            TMMRedeemService.withdrawPoints(
+                deviceId: self.deviceId,
+                points: changePoints,
+                currency: currency,
+                provider: self.redeemServiceProvider)
+                .then(in: .main, {[weak self] resp in
+                    guard let weakSelf = self else { return }
+                    weakSelf.changeButton.stopAnimation(animationStyle: .normal, completion: nil)
+                    MTA.trackCustomKeyValueEventEnd(TMMConfigs.EventName.pointWithdraw, props: ["points": changePoints, "cash": cashAmount])
+                    weakSelf.dismiss(animated: true, completion: {[weak weakSelf] in
+                        guard let weakSelf2 = weakSelf else { return }
+                        weakSelf2.delegate?.redeemSuccess(resp: resp)
+                    })
+                }).catch(in: .main, {[weak self] error in
+                    guard let weakSelf = self else { return }
+                    weakSelf.amountTextField.resignFirstResponder()
+                    if let err = error as? TMMAPIError {
+                        switch err {
+                        case .wechatOpenIdError:
+                            let _ = Haptic.notification(.warning)
+                            weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
+                            let alertController = AlertViewController(title: I18n.alert.description, body: "请在微信内打开页面完成微信授权，以便打款。")
+                            let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+                            let okAction = AlertAction(title: "分享页面至微信", style: .destructive) {[weak self] in
+                                guard let weakSelf = self else { return }
+                                weakSelf.showShareSheet()
+                            }
+                            alertController.addAction(cancelAction)
+                            alertController.addAction(okAction)
+                            weakSelf.customPresentViewController(weakSelf.alertPresenter, viewController: alertController, animated: true)
+                            return
+                        default: break
+                        }
+                    }
+                    weakSelf.changeButton.stopAnimation(animationStyle: .shake, completion: nil)
+                    UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+                }).always(in: .main, body: {[weak self] in
+                    guard let weakSelf = self else { return }
+                    weakSelf.isChanging = false
+                }
+            )
+        }
     }
 }
 
@@ -214,7 +286,11 @@ extension TMMRedeemViewController {
     private func verifyPoints() -> Bool {
         let changePoints = NSDecimalNumber.init(string: amountTextField.text)
         if changePoints <= 0 {
-            self.amountTextField.showInfo(I18n.emptyWithdrawTMM.description)
+            if redeemType == .tmm {
+                self.amountTextField.showInfo(I18n.emptyWithdrawTMM.description)
+            } else {
+                self.amountTextField.showInfo(I18n.emptyWithdrawPoints.description)
+            }
             return false
         }
         guard let minPoints = self.changeRate?.minPoints else { return false }
@@ -224,8 +300,13 @@ extension TMMRedeemViewController {
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
             let minPointsStr = formatter.string(from: minPoints)!
-            let message = String(format: I18n.invalidMinTMMError.description, minPointsStr)
-            self.amountTextField.showInfo(message)
+            if redeemType == .tmm {
+                let message = String(format: I18n.invalidMinTMMError.description, minPointsStr)
+                self.amountTextField.showInfo(message)
+            } else {
+                let message = String(format: I18n.invalidMinPointsError.description, minPointsStr)
+                self.amountTextField.showInfo(message)
+            }
             return false
         }
         return true

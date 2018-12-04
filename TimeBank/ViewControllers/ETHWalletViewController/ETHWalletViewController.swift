@@ -431,8 +431,9 @@ extension ETHWalletViewController {
             weakSelf.bindingWechat = true
             guard let rawInfo = user.rawData else { return }
             guard let openId = rawInfo["openid"] as? String else { return }
+            guard let unionId = rawInfo["unionid"] as? String else { return }
             TMMUserService.bindWechatInfo(
-                unionId: user.uid,
+                unionId: unionId,
                 openId: openId,
                 nick: user.nickname,
                 avatar: user.icon,
@@ -551,7 +552,7 @@ extension ETHWalletViewController: RedeemDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
-        let message = String(format: I18n.withdrawSuccessMsg.description, formatter.string(from: resp.tmm)!, formatter.string(from: resp.cash)!, resp.currency)
+        let message = String(format: I18n.withdrawSuccessMsg.description, formatter.string(from: resp.tmm)!, "UC",  formatter.string(from: resp.cash)!, resp.currency)
         let alertController = AlertViewController(title: I18n.newTransactionTitle.description, body: message)
         let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)

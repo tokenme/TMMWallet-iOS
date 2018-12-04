@@ -99,10 +99,14 @@ enum I18n: CustomStringConvertible {
     case unbind
     case confirmUnbind
     case withdraw
+    case pointsWithdraw
+    case changePoints
     case currentTMMRedeemRate
+    case currentPointRedeemPrice
     case TMMAmount
     case TMMWithdrawAmount
     case emptyWithdrawTMM
+    case emptyWithdrawPoints
     case withdrawSuccessMsg
     case dailyReward
     case dailyRewarded
@@ -396,8 +400,6 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ExchangeTMM", comment: "Exchange TMM")
         case .exchangePoint:
             return NSLocalizedString("ExchangePoint", comment: "Exchange Points")
-        case .pointsAmount:
-            return NSLocalizedString("PointsAmount", comment: "Points Amount")
         case .currentPointsTMMExchangeRate:
             return NSLocalizedString("CurrentPointsTMMExchangeRate", comment: "CurrentPointsTMMExchangeRate")
         case .emptyChangePoints:
@@ -452,14 +454,24 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ConfirmUnbind", comment: "ConfirmUnbind")
         case .withdraw:
             return NSLocalizedString("Withdraw", comment: "Withdraw")
+        case .pointsWithdraw:
+            return NSLocalizedString("PointsWithdraw", comment: "PointsWithdraw")
+        case .changePoints:
+            return NSLocalizedString("ChangePoints", comment: "ChangePoints")
         case .currentTMMRedeemRate:
             return NSLocalizedString("CurrentTMMRedeemRate", comment: "CurrentTMMRedeemRate")
+        case .currentPointRedeemPrice:
+            return NSLocalizedString("CurrentPointRedeemPrice", comment: "CurrentPointRedeemPrice")
         case .TMMAmount:
             return NSLocalizedString("TMMAmount", comment: "TMMAmount")
+        case .pointsAmount:
+            return NSLocalizedString("PointsAmount", comment: "PointsAmount")
         case .TMMWithdrawAmount:
             return NSLocalizedString("TMMWithdrawAmount", comment: "TMMWithdrawAmount")
         case .emptyWithdrawTMM:
             return NSLocalizedString("EmptyWithdrawTMM", comment: "emptyWithdrawTMM")
+        case .emptyWithdrawPoints:
+            return NSLocalizedString("EmptyWithdrawPoints", comment: "emptyWithdrawPoints")
         case .withdrawSuccessMsg:
             return NSLocalizedString("WithdrawSuccessMsg", comment: "WithdrawSuccessMsg")
         case .dailyReward:
