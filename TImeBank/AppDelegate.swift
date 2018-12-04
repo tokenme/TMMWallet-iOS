@@ -8,6 +8,7 @@
 
 import UIKit
 import TMMSDK
+import WebKit
 import Moya
 import SwiftyUserDefaults
 import Siren
@@ -45,6 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         setupShareSDK()
         
+        let webView = UIWebView(frame: .zero)
+        if let ua = webView.stringByEvaluatingJavaScript(from: "navigator.userAgent") {
+            let newUserAgent = "\(ua) UCoin/\(AppBuildClosure())"
+            print(newUserAgent)
+            Defaults[.userAgent] = newUserAgent
+            Defaults.synchronize()
+        }
         return true
     }
 

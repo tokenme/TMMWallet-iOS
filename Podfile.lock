@@ -10,6 +10,7 @@ PODS:
     - TinyLog
   - AutoInsetter (1.3.0)
   - BiometricAuthentication (2.1)
+  - BrowserActivity (1.3.1)
   - BTNavigationDropdownMenu (0.5)
   - Charts (3.2.1):
     - Charts/Core (= 3.2.1)
@@ -119,6 +120,7 @@ PODS:
 DEPENDENCIES:
   - AssetsPickerViewController (from `https://github.com/DragonCherry/AssetsPickerViewController.git`, tag `2.5.5`)
   - BiometricAuthentication
+  - BrowserActivity (from `https://github.com/tokenme/BrowserActivity.git`, tag `1.4`)
   - BTNavigationDropdownMenu
   - Charts
   - CountryPickerView
@@ -222,6 +224,9 @@ EXTERNAL SOURCES:
   AssetsPickerViewController:
     :git: https://github.com/DragonCherry/AssetsPickerViewController.git
     :tag: 2.5.5
+  BrowserActivity:
+    :git: https://github.com/tokenme/BrowserActivity.git
+    :tag: '1.4'
   FlexibleSteppedProgressBar:
     :git: https://github.com/tokenme/FlexibleSteppedProgressBar.git
     :tag: 0.5.1
@@ -248,6 +253,9 @@ CHECKOUT OPTIONS:
   AssetsPickerViewController:
     :git: https://github.com/DragonCherry/AssetsPickerViewController.git
     :tag: 2.5.5
+  BrowserActivity:
+    :git: https://github.com/tokenme/BrowserActivity.git
+    :tag: '1.4'
   FlexibleSteppedProgressBar:
     :git: https://github.com/tokenme/FlexibleSteppedProgressBar.git
     :tag: 0.5.1
@@ -275,6 +283,7 @@ SPEC CHECKSUMS:
   AssetsPickerViewController: 3be5ccae49ef429d31de33fbdc2fd1e6cd63babe
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   BiometricAuthentication: 6928c01583bc707f92c11349f190d5ae052217d3
+  BrowserActivity: 54ed5b3aa021bcf838dab9c908d2a4e1a10c7e22
   BTNavigationDropdownMenu: ba3a26fdb6a56c4721c31df8a0875106c259663a
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
   CountryPickerView: 77177af9744802d0a61391508b37e0a08f630871
@@ -326,6 +335,6 @@ SPEC CHECKSUMS:
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
 
-PODFILE CHECKSUM: 5d8e42501dcaf83c945725bd6312ec8bafd4f978
+PODFILE CHECKSUM: 428e79856ae1117b4489e26fed2d19f5037b7944
 
 COCOAPODS: 1.6.0.beta.1

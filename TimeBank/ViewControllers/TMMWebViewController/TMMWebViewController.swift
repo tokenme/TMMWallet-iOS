@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import SwiftyUserDefaults
 import Moya
 import Hydra
 import ZHRefresh
@@ -17,6 +18,7 @@ import DynamicBlurView
 import Schedule
 import MKRingProgressView
 import TMMSDK
+import BrowserActivity
 
 fileprivate let DefaultSleepTime: Double = 15
 
@@ -32,6 +34,9 @@ class TMMWebViewController: UIViewController {
         tmpWebView.uiDelegate = self
         tmpWebView.navigationDelegate = self
         tmpWebView.scrollView.delegate = self
+        if let ua = Defaults[.userAgent] {
+            tmpWebView.customUserAgent = ua
+        }
         self?.view = tmpWebView
         return tmpWebView
     }()
@@ -235,13 +240,19 @@ class TMMWebViewController: UIViewController {
                 break
             }
         }
-        
-        items.append(SSUIPlatformItem(platformType: SSDKPlatformType.typeCopy))
-        let moreItem = SSUIPlatformItem(platformType: SSDKPlatformType.typeAny)
-        moreItem?.iconNormal = UIImage(named: "More")
-        moreItem?.iconSimple = UIImage(named: "More")
-        moreItem?.platformName = I18n.more.description
-        items.append(moreItem!)
+        if self?.shareItem == nil {
+            items.append(SSUIPlatformItem(platformType: SSDKPlatformType.typeCopy))
+            let safariItem = SSUIPlatformItem(platformType: SSDKPlatformType.typeAny)
+            safariItem?.iconNormal = UIImage(named: "icon_safari")
+            safariItem?.iconSimple = UIImage(named: "icon_safari")
+            safariItem?.platformName = "Safari"
+            items.append(safariItem!)
+            let moreItem = SSUIPlatformItem(platformType: SSDKPlatformType.typeAny)
+            moreItem?.iconNormal = UIImage(named: "More")
+            moreItem?.iconSimple = UIImage(named: "More")
+            moreItem?.platformName = I18n.more.description
+            items.append(moreItem!)
+        }
         for item in items {
             item.addTarget(self, action: #selector(shareItemClicked))
         }
@@ -307,6 +318,7 @@ class TMMWebViewController: UIViewController {
             let shareBtn: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share")?.kf.resize(to: CGSize(width: 24, height: 24), for: .aspectFit), style: .plain, target: self, action: #selector(showShareSheet))
             navigationItem.rightBarButtonItem = shareBtn
             if self.shareItem != nil {
+                getPointsRate()
                 navigationItem.title = shareItem?.title
                 if isValidatingBuild() {
                     toolbarView.isHidden = true
@@ -319,7 +331,6 @@ class TMMWebViewController: UIViewController {
                 }
             }
         }
-        getPointsRate()
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         webView.scrollView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
@@ -346,7 +357,9 @@ class TMMWebViewController: UIViewController {
     
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.savePoints()
+        if self.shareItem != nil {
+            self.savePoints()
+        }
         self.tabBarController?.tabBar.isHidden = false
         MTA.trackPageViewEnd(TMMConfigs.PageName.article)
     }
@@ -499,6 +512,13 @@ class TMMWebViewController: UIViewController {
         case SSUIPlatformItem(platformType: .typeTelegram)?.platformName:
             platform = .typeTelegram
             break
+        case "Safari":
+            if let link = shareItem?.link {
+                UIApplication.shared.open(link, options: [:], completionHandler: nil)
+            } else if let link = webView.url {
+                UIApplication.shared.open(link, options: [:], completionHandler: nil)
+            }
+            return
         case I18n.more.description:
             platform = .typeAny
         case SSUIPlatformItem(platformType: .typeCopy)?.platformName:
@@ -526,7 +546,7 @@ class TMMWebViewController: UIViewController {
                     }
                 }
                 
-                let activityController: UIActivityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                let activityController: UIActivityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: BrowserActivity.compatibleActivities)
                 activityController.excludedActivityTypes = [
                     UIActivity.ActivityType.print,
                     UIActivity.ActivityType.copyToPasteboard,
@@ -667,7 +687,8 @@ extension TMMWebViewController: WKNavigationDelegate {
 
 extension TMMWebViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if let msg = message.body as? [AnyHashable: Any] {
+        if let msg = message.body as? [AnyHashable: Any],
+            self.shareItem != nil {
             var totalTs: Int = 0
             if let imageTs = msg["imgTS"] as? Int {
                 totalTs += imageTs
@@ -682,6 +703,7 @@ extension TMMWebViewController: WKScriptMessageHandler {
 
 extension TMMWebViewController: UIScrollViewDelegate {
     private func updateTimer() {
+        if self.shareItem == nil { return }
         let now = Date()
         let du = now.timeIntervalSince1970 - self.lastTime.timeIntervalSince1970
         if du >= DefaultSleepTime {
@@ -700,6 +722,7 @@ extension TMMWebViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.shareItem == nil { return }
         self.lastScrollTime = Date()
         if let suspensions = self.timer?.suspensions, suspensions > 0 {
             self.lastTime = Date()

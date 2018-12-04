@@ -43,6 +43,7 @@ target 'TimeBank' do
   pod 'Peep'
   pod 'MMPlayerView'
   pod 'SVProgressHUD'
+  pod 'BrowserActivity', :git=>'https://github.com/tokenme/BrowserActivity.git', :tag=>'1.4'
   pod 'mob_sharesdk'
   pod 'mob_sharesdk/ShareSDKUI'
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'

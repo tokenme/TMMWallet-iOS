@@ -122,18 +122,19 @@ class VideoDetailViewController: UIViewController {
                 break
             }
         }
-        
+        /*
         items.append(SSUIPlatformItem(platformType: SSDKPlatformType.typeCopy))
         let moreItem = SSUIPlatformItem(platformType: SSDKPlatformType.typeAny)
         moreItem?.iconNormal = UIImage(named: "More")
         moreItem?.iconSimple = UIImage(named: "More")
         moreItem?.platformName = I18n.more.description
         items.append(moreItem!)
+        */
         for item in items {
             item.addTarget(self, action: #selector(shareItemClicked))
         }
         return items
-        }()
+    }()
     
     lazy var shareParams: NSMutableDictionary = {
         var image: UIImage?
