@@ -39,6 +39,7 @@ struct TMMConfigs {
         static let transactions = "Transactions"
         static let transfer = "Transfer"
         static let exchangeRecords = "ExchangeRecords"
+        static let myInvites = "MyInvites"
     }
     
     struct EventName {

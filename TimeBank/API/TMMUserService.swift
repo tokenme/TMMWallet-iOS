@@ -18,6 +18,7 @@ enum TMMUserService {
     case bindWechat(unionId: String, openId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval)
     case inviteSummary()
     case creditLevels()
+    case invites(page: UInt, pageSize: UInt)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -43,6 +44,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return "/info"
         case .inviteSummary():
             return "/invite/summary"
+        case .invites:
+            return "/invites"
         case .creditLevels:
             return "/credit/levels"
         }
@@ -51,7 +54,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
         switch self {
         case .create, .update, .resetPassword, .bindWechat:
             return .post
-        case .info, .inviteSummary, .creditLevels:
+        case .info, .inviteSummary, .invites, .creditLevels:
             return .get
         }
     }
@@ -82,6 +85,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return ["refresh": refresh]
         case .inviteSummary:
             return [:]
+        case let .invites(page, pageSize):
+            return ["page": page, "page_size": pageSize]
         case .creditLevels:
             return [:]
         }
@@ -100,6 +105,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         case .inviteSummary:
             return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
+        case .invites:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         case .creditLevels:
             return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         }
@@ -116,7 +123,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return "ok".utf8Encoded
         case .info(_), .inviteSummary():
             return "{}".utf8Encoded
-        case .creditLevels:
+        case .creditLevels, .invites:
             return "[]".utf8Encoded
         }
     }
@@ -308,6 +315,39 @@ extension TMMUserService {
                     do {
                         let levels: [APICreditLevel] = try response.mapArray(APICreditLevel.self)
                         resolve(levels)
+                    } catch {
+                        do {
+                            let err = try response.mapObject(APIResponse.self)
+                            if let errorCode = err.code {
+                                reject(TMMAPIError.error(code: errorCode, msg: err.message ?? I18n.unknownError.description))
+                            } else {
+                                reject(TMMAPIError.error(code: 0, msg: I18n.unknownError.description))
+                            }
+                        } catch {
+                            if response.statusCode == 200 {
+                                resolve([])
+                            } else {
+                                reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                            }
+                        }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+        
+    static func getInviteList(page: UInt, pageSize: UInt, provider: MoyaProvider<TMMUserService>) -> Promise<[APIUser]> {
+        return Promise<[APIUser]> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .invites(page: page, pageSize: pageSize)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let users: [APIUser] = try response.mapArray(APIUser.self)
+                        resolve(users)
                     } catch {
                         do {
                             let err = try response.mapObject(APIResponse.self)

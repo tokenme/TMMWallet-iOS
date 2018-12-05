@@ -198,6 +198,10 @@ enum I18n: CustomStringConvertible {
     case inviteUsers
     case inviteIncome
     case inviteFriends
+    case inviteFriendsContribute
+    case myInvites
+    case emptyInvitesTitle
+    case emptyInvitesDesc
     case userCreditLevelRights
     case userCreditLevelRules
     case member
@@ -630,6 +634,14 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("InviteIncome", comment: "Invite Income")
         case .inviteFriends:
             return NSLocalizedString("InviteFriends", comment: "Invite Friends")
+        case .inviteFriendsContribute:
+            return NSLocalizedString("InviteFriendsContribute", comment: "Friends Contribute")
+        case .myInvites:
+            return NSLocalizedString("MyInvites", comment: "MyInvites")
+        case .emptyInvitesTitle:
+            return NSLocalizedString("EmptyInvitesTitle", comment: "EmptyInvitesTitle")
+        case .emptyInvitesDesc:
+            return NSLocalizedString("EmptyInvitesDesc", comment: "EmptyInvitesDesc")
         case .userCreditLevelRights:
             return NSLocalizedString("UserCreditLevelRights", comment: "UserCreditLevelRights")
         case .userCreditLevelRules:

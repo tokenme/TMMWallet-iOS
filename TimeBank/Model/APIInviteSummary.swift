@@ -12,6 +12,7 @@ import ObjectMapper
 public class APIInviteSummary: APIResponse {
     var invites: UInt = 0
     var points: NSDecimalNumber = 0
+    var friendsContribute: NSDecimalNumber = 0
     var nextLevelInvites: UInt = 0
     var users: [APIUser] = []
     
@@ -30,6 +31,7 @@ public class APIInviteSummary: APIResponse {
         invites <- map["invites"]
         nextLevelInvites <- map["next_level_invites"]
         points <- (map["points"], decimalTransform)
+        friendsContribute <- (map["friends_contribute"], decimalTransform)
         users <- map["users"]
     }
 }

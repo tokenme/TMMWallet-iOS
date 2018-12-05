@@ -209,6 +209,10 @@
 "InviteUsers" = "邀请人数";
 "InviteIncome" = "邀请收入";
 "InviteFriends" = "邀请好友";
+"InviteFriendsContribute" = "好友贡献";
+"MyInvites" = "我邀请的好友";
+"EmptyInvitesTitle" = "还没有邀请好友";
+"EmptyInvitesDesc" = "马上去邀请好友得红包";
 "UserCreditLevelRights" = "会员权益";
 "UserCreditLevelRules" = "会员规则";
 "Member" = "会员";

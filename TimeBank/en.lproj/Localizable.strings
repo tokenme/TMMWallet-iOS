@@ -209,6 +209,10 @@
 "InviteUsers" = "Invite Users";
 "InviteIncome" = "Invite Income";
 "InviteFriends" = "Invite Friends";
+"InviteFriendsContribute" = "Friends Contribute";
+"MyInvites" = "Invited Friends";
+"EmptyInvitesTitle" = "No Friends Yet?";
+"EmptyInvitesDesc" = "Invite friends to get more bonus, now!";
 "UserCreditLevelRights" = "Credit Rights";
 "UserCreditLevelRules" = "Credit Level Rules";
 "Member" = "Member";

@@ -87,31 +87,6 @@ class AccountTableViewController: UITableViewController {
     
     private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode, .inviteButton], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .help, .feedback], [.signout]]
     
-    @IBOutlet private weak var avatarImageView : UIImageView!
-    @IBOutlet private weak var mobileLabel: UILabel!
-    @IBOutlet private weak var levelImageView: UIImageView!
-    @IBOutlet private weak var levelNameLabel: UILabel!
-    @IBOutlet private weak var nextLevelInvitesLabel: UILabel!
-    
-    @IBOutlet private weak var myInviteCodeLabel: UILabel!
-    @IBOutlet private weak var inviteUsersLabel: UILabel!
-    @IBOutlet private weak var inviteIncomeLabel: UILabel!
-    @IBOutlet private weak var inviteUsersTitleLabel: UILabel!
-    @IBOutlet private weak var inviteIncomeTitleLabel: UILabel!
-    @IBOutlet private weak var inviteCodeLabel: UILabel!
-    @IBOutlet private weak var inviteCodeTextField: UITextField!
-    @IBOutlet private weak var bindWechatAccountLabel: UILabel!
-    @IBOutlet private weak var bindWechatStatusLabel: UILabelPadding!
-    @IBOutlet private weak var currencyTitleLabel: UILabel!
-    @IBOutlet private weak var currentCurrencyLabel: UILabel!
-    @IBOutlet private weak var telegramGroupLabel: UILabel!
-    @IBOutlet private weak var wechatGroupLabel: UILabel!
-    @IBOutlet private weak var feedbackLabel: UILabel!
-    @IBOutlet private weak var helpLabel:UILabel!
-    @IBOutlet private weak var signOutLabel: UILabel!
-    @IBOutlet private weak var contactActivityIndicatorTelegram: UIActivityIndicatorView!
-    @IBOutlet private weak var contactActivityIndicatorWechat: UIActivityIndicatorView!
-    
     private var isUpdating: Bool = false
     private var loadingUserInfo: Bool = false
     private var loadingInviteSummary: Bool = false
@@ -134,39 +109,13 @@ class AccountTableViewController: UITableViewController {
             navigationItem.title = I18n.account.description
         }
         setupTableView()
-        avatarImageView.layer.cornerRadius = 22
-        avatarImageView.layer.borderWidth = 0.0
-        avatarImageView.clipsToBounds = true
-        
-        inviteUsersTitleLabel.text = I18n.inviteUsers.description
-        inviteIncomeTitleLabel.text = I18n.inviteIncome.description
-        myInviteCodeLabel.text = I18n.myInviteCode.description
-        inviteCodeLabel.text = I18n.inviteCode.description
-        inviteCodeTextField.attributedPlaceholder = NSAttributedString(string: I18n.inviteCodePlaceholder.description, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:15), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
-        bindWechatAccountLabel.text = I18n.bindWechatAccount.description
-        bindWechatStatusLabel.layer.cornerRadius = 5;
-        bindWechatStatusLabel.clipsToBounds = true
-        bindWechatStatusLabel.paddingTop = 2
-        bindWechatStatusLabel.paddingBottom = 2
-        bindWechatStatusLabel.paddingLeft = 4
-        bindWechatStatusLabel.paddingRight = 4
-        
-        currencyTitleLabel.text = I18n.currency.description
-        currentCurrencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
-        telegramGroupLabel.text = I18n.telegramGroup.description
-        wechatGroupLabel.text = I18n.wechatGroup.description
-        helpLabel.text = I18n.help.description
-        feedbackLabel.text = I18n.feedback.description
-        signOutLabel.text = I18n.signout.description
-        
         let versionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30))
         let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-        versionLabel.text = "\(I18n.currentVersion.description): \(currentVersion)"
+        versionLabel.text = "\(I18n.currentVersion.description): \(currentVersion)b\(AppBuildClosure())"
         versionLabel.textAlignment = .center
         versionLabel.textColor = UIColor.lightGray
         versionLabel.font = MainFont.light.with(size: 12)
         tableView.tableFooterView = versionLabel
-        self.updateView()
         self.refresh()
     }
     
@@ -200,6 +149,11 @@ class AccountTableViewController: UITableViewController {
     
     private func setupTableView() {
         //self.tableView.separatorStyle = .none
+        tableView.register(cellType: SimpleTableViewCell.self)
+        tableView.register(cellType: SimpleImageTableViewCell.self)
+        tableView.register(cellType: UserInfoTableViewCell.self)
+        tableView.register(cellType: InputTableViewCell.self)
+        tableView.register(cellType: InviteStatsTableViewCell.self)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 55.0
         tableView.rowHeight = UITableView.automaticDimension
@@ -212,10 +166,7 @@ class AccountTableViewController: UITableViewController {
     }
     
     public func refresh() {
-        self.getUserInfo().then(in: .main, {[weak self] _ in
-            guard let weakSelf = self else { return }
-            weakSelf.updateView()
-        }).catch(in: .main, {[weak self] error in
+        self.getUserInfo().catch(in: .main, {[weak self] error in
             switch error as! TMMAPIError {
             case .ignore:
                 return
@@ -223,54 +174,12 @@ class AccountTableViewController: UITableViewController {
             }
             guard let weakSelf = self else { return  }
             UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-        }).always(in: .background, body: {[weak self]  in
+        }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.loadingUserInfo = false
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
         self.getInviteSummary()
-    }
-    
-    private func updateView() {
-        guard let userInfo = self.userInfo else { return }
-        if let showName = userInfo.showName {
-            mobileLabel.text = showName
-        } else {
-            mobileLabel.text = "+\(userInfo.countryCode!)\(userInfo.mobile!)"
-        }
-        if let avatar = userInfo.avatar {
-            avatarImageView.kf.setImage(with: URL(string: avatar))
-        }
-        
-        levelImageView.tintColor = userInfo.level?.color() ?? APICreditLevel()!.color()
-        levelNameLabel.text = userInfo.level?.showName(true) ?? APICreditLevel()!.showName(true)
-        let levelImage = UIImage(named: "CreditLevel")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
-        levelImageView.image = levelImage
-        if let summary = self.inviteSummary {
-            nextLevelInvitesLabel.text = String(format: I18n.nextLevelInvitesDesc.description, summary.nextLevelInvites)
-            inviteUsersLabel.text = String(summary.invites)
-            let formatter = NumberFormatter()
-            formatter.maximumFractionDigits = 4
-            formatter.groupingSeparator = "";
-            formatter.numberStyle = NumberFormatter.Style.decimal
-            inviteIncomeLabel.text = formatter.string(from: summary.points)
-        }
-        let inviterCode = userInfo.inviterCode ?? ""
-        inviteCodeTextField.text = inviterCode
-        if !inviterCode.isEmpty {
-            inviteCodeTextField.isEnabled = false
-        } else {
-            inviteCodeTextField.isEnabled = true
-        }
-        
-        if ShareSDK.hasAuthorized(.typeWechat) || userInfo.wxBinded {
-            bindWechatStatusLabel.backgroundColor = UIColor.greenGrass
-            bindWechatStatusLabel.text = I18n.binded.description
-            bindWechatStatusLabel.textColor = .white
-        } else {
-            bindWechatStatusLabel.backgroundColor = UIColor(white: 0.9, alpha: 1)
-            bindWechatStatusLabel.text = I18n.notbinded.description
-            bindWechatStatusLabel.textColor = .darkGray
-        }
     }
     
     private func showMyInviteCode() {
@@ -290,27 +199,27 @@ class AccountTableViewController: UITableViewController {
         let usdAction = UIAlertAction(title: Currency.USD.rawValue, style: .default, handler: {[weak self](_) in
             guard let weakSelf = self else { return }
             Defaults[.currency] = Currency.USD.rawValue
-            weakSelf.currentCurrencyLabel.text = Currency.USD.rawValue
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
         let cnyAction = UIAlertAction(title: Currency.CNY.rawValue, style: .default, handler: {[weak self](_) in
             guard let weakSelf = self else { return }
             Defaults[.currency] = Currency.CNY.rawValue
-            weakSelf.currentCurrencyLabel.text = Currency.CNY.rawValue
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
         let eurAction = UIAlertAction(title: Currency.EUR.rawValue, style: .default, handler: {[weak self](_) in
             guard let weakSelf = self else { return }
             Defaults[.currency] = Currency.EUR.rawValue
-            weakSelf.currentCurrencyLabel.text = Currency.EUR.rawValue
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
         let krwAction = UIAlertAction(title: Currency.KRW.rawValue, style: .default, handler: {[weak self](_) in
             guard let weakSelf = self else { return }
             Defaults[.currency] = Currency.KRW.rawValue
-            weakSelf.currentCurrencyLabel.text = Currency.KRW.rawValue
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
         let jpyAction = UIAlertAction(title: Currency.JPY.rawValue, style: .default, handler: {[weak self](_) in
             guard let weakSelf = self else { return }
             Defaults[.currency] = Currency.JPY.rawValue
-            weakSelf.currentCurrencyLabel.text = Currency.JPY.rawValue
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
         let cancelAction = UIAlertAction(title: I18n.cancel.description, style: UIAlertAction.Style.cancel, handler: nil)
         sheet.addAction(usdAction)
@@ -342,18 +251,120 @@ extension AccountTableViewController: UIViewControllerTransitioningDelegate {
 
 // MARK: - Table view data source
 extension AccountTableViewController {
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.sections.count < section + 1 { return 0 }
+        return sections[section].count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch self.sections[indexPath.section][indexPath.row] {
+        case .accountInfo:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as UserInfoTableViewCell
+            cell.fill(userInfo, inviteSummary: inviteSummary)
+            return cell
+        case .inviteSummary:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as InviteStatsTableViewCell
+            cell.fill(inviteSummary)
+            return cell
+        case .myInviteCode:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.myInviteCode.description)
+            cell.accessoryType = .detailButton
+            return cell
+        case .inviteCode:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as InputTableViewCell
+            cell.fill(I18n.inviteCode.description, placeholder: I18n.inviteCodePlaceholder.description, value: userInfo?.inviteCode)
+            cell.delegate = self
+            return cell
+        case .inviteButton:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleImageTableViewCell
+            cell.fill(UIImage(named:"InviteButton")!, ratio: 28/121)
+            return cell
+        case .bindWechatAccount:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.bindWechatAccount.description)
+            if ShareSDK.hasAuthorized(.typeWechat) || userInfo?.wxBinded ?? false {
+                cell.setStatus(I18n.binded.description, statusColor: .white, statusBgColor: .greenGrass)
+            } else {
+                cell.setStatus(I18n.notbinded.description, statusColor: .darkGray, statusBgColor: UIColor(white: 0.9, alpha: 1))
+            }
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        case .currency:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.currency.description)
+            cell.setBadge(Defaults[.currency] ?? Currency.USD.rawValue)
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        case .telegramGroup:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.telegramGroup.description)
+            if self.gettingContacts {
+                cell.showLoader()
+            } else {
+                cell.hideLoader()
+            }
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        case .wechatGroup:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.wechatGroup.description)
+            if self.gettingContacts {
+                cell.showLoader()
+            } else {
+                cell.hideLoader()
+            }
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        case .feedback:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.feedback.description)
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        case .help:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.help.description)
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        case .signout:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.signout.description)
+            cell.setTitleColor(UIColor.red)
+            cell.accessoryType = .none
+            return cell
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
         if self.sections.count < indexPath.section + 1 { return }
         if self.sections[indexPath.section].count < indexPath.row + 1 { return }
+        if self.sections[indexPath.section][indexPath.row] != .inviteCode {
+            let idxPath = IndexPath(row: 2, section: 1)
+            if let inviteCodeCell = tableView.cellForRow(at: idxPath) as? InputTableViewCell {
+                inviteCodeCell.hideKeyboard()
+            }
+        }
         switch self.sections[indexPath.section][indexPath.row] {
         case .accountInfo:
             let vc = UserLevelTableViewController.instantiate()
             vc.inviteSummary = self.inviteSummary
             self.navigationController?.pushViewController(vc, animated: true)
+        case .inviteSummary:
+            let vc = MyInvitesTableViewController.instantiate()
+            self.navigationController?.pushViewController(vc, animated: true)
         case .myInviteCode:
             self.showMyInviteCode()
+        case .inviteCode:
+            if let inputCell = cell as? InputTableViewCell {
+                inputCell.showKeyboard()
+            }
         case .inviteButton:
             self.showInvitePage()
         case .bindWechatAccount:
@@ -403,8 +414,35 @@ extension AccountTableViewController {
             vc.delegate = self
             self.present(vc, animated: true, completion: nil)
             return
-        default:
-            return
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        switch self.sections[indexPath.section][indexPath.row] {
+        case .accountInfo:
+            return true
+        case .inviteSummary:
+            return true
+        case .myInviteCode:
+            return true
+        case .inviteCode:
+            return true
+        case .inviteButton:
+            return true
+        case .bindWechatAccount:
+            return true
+        case .currency:
+            return true
+        case .telegramGroup:
+            return true
+        case .wechatGroup:
+            return true
+        case .feedback:
+            return true
+        case .help:
+            return true
+        case .signout:
+            return true
         }
     }
 }
@@ -418,9 +456,6 @@ extension AccountTableViewController {
             guard let weakSelf = self else { return }
             let _ = try ..weakSelf.updateUserInfo(userInfo)
             let _ = try ..weakSelf.getUserInfo()
-        }).then(in: .main, {[weak self] _ in
-            guard let weakSelf = self else { return }
-            weakSelf.updateView()
         }).catch(in: .main, {[weak self] error in
             switch error as! TMMAPIError {
             case .ignore:
@@ -428,12 +463,13 @@ extension AccountTableViewController {
             default: break
             }
             guard let weakSelf = self else { return  }
-            weakSelf.inviteCodeTextField.text = ""
+            userInfo.inviterCode = ""
             UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-        }).always(in: .background, body: {[weak self]  in
+        }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.isUpdating = false
             weakSelf.loadingUserInfo = false
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
     }
     
@@ -492,7 +528,6 @@ extension AccountTableViewController {
             .then(in: .main, {[weak self] summary in
                 guard let weakSelf = self else { return }
                 weakSelf.inviteSummary = summary
-                weakSelf.updateView()
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
@@ -500,6 +535,7 @@ extension AccountTableViewController {
                 guard let weakSelf = self else { return }
                 weakSelf.loadingInviteSummary = false
                 weakSelf.tableView.header?.endRefreshing()
+                weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
             }
         )
     }
@@ -509,7 +545,7 @@ extension AccountTableViewController {
             return
         }
         self.gettingContacts = true
-        
+        self.tableView.reloadDataWithAutoSizingCellWorkAround()
         TMMContactService.getContacts(
             provider: self.contactServiceProvider)
             .then(in: .main, {[weak self] contacts in
@@ -517,8 +553,6 @@ extension AccountTableViewController {
                 for contact in contacts {
                     weakSelf.contacts[contact.name] = contact.value
                 }
-                weakSelf.contactActivityIndicatorTelegram.isHidden = true
-                weakSelf.contactActivityIndicatorWechat.isHidden = true
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
@@ -526,7 +560,8 @@ extension AccountTableViewController {
                 guard let weakSelf = self else { return }
                 weakSelf.gettingContacts = false
                 weakSelf.tableView.header?.endRefreshing()
-                }
+                weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+            }
         )
     }
     
@@ -536,9 +571,6 @@ extension AccountTableViewController {
             let user = try ..weakSelf.authWechat()
             let _ = try ..weakSelf.doBindWechat(user: user)
             let _ = try ..weakSelf.getUserInfo()
-        }).then(in: .main, {[weak self] _ in
-            guard let weakSelf = self else { return }
-            weakSelf.updateView()
         }).catch(in: .main, {[weak self] error in
             if let err = error as? TMMAPIError {
                 switch err {
@@ -553,6 +585,7 @@ extension AccountTableViewController {
             guard let weakSelf = self else { return }
             weakSelf.loadingUserInfo = false
             weakSelf.bindingWechat = false
+            weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
     }
     
@@ -657,17 +690,12 @@ extension AccountTableViewController {
     }
 }
 
-extension AccountTableViewController: UITextFieldDelegate {
+extension AccountTableViewController: InputTableViewCellDelegate {
     
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == self.inviteCodeTextField {
-            let inviteCode = textField.text ?? ""
-            if !inviteCode.isEmpty {
-                self.setInviterCode(inviteCode)
-            }
+    public func textUpdated(_ text: String) {
+        if text != userInfo?.inviterCode {
+            self.setInviterCode(text)
         }
-        textField.resignFirstResponder()
-        return true
     }
 }
 

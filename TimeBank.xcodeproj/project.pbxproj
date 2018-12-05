@@ -201,6 +201,16 @@
 		1D49E36221B5170F00475B85 /* AdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E36121B5170F00475B85 /* AdTableViewCell.swift */; };
 		1D49E36521B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E36321B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift */; };
 		1D49E36621B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D49E36421B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib */; };
+		1D49E36E21B79C7800475B85 /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E36C21B79C7800475B85 /* SimpleTableViewCell.swift */; };
+		1D49E37121B7A43800475B85 /* SimpleImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37021B7A43800475B85 /* SimpleImageTableViewCell.swift */; };
+		1D49E37321B7A82100475B85 /* InputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37221B7A82100475B85 /* InputTableViewCell.swift */; };
+		1D49E37621B7AA8A00475B85 /* InviteStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37421B7AA8A00475B85 /* InviteStatsTableViewCell.swift */; };
+		1D49E37721B7AA8A00475B85 /* InviteStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D49E37521B7AA8A00475B85 /* InviteStatsTableViewCell.xib */; };
+		1D49E37A21B7AB7000475B85 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37821B7AB7000475B85 /* UserInfoTableViewCell.swift */; };
+		1D49E37B21B7AB7000475B85 /* UserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D49E37921B7AB7000475B85 /* UserInfoTableViewCell.xib */; };
+		1D49E37D21B7ED4300475B85 /* MyInvitesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37C21B7ED4300475B85 /* MyInvitesTableViewController.swift */; };
+		1D49E38021B7EF0B00475B85 /* MyInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37E21B7EF0B00475B85 /* MyInviteTableViewCell.swift */; };
+		1D49E38121B7EF0B00475B85 /* MyInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D49E37F21B7EF0B00475B85 /* MyInviteTableViewCell.xib */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -459,6 +469,16 @@
 		1D49E36121B5170F00475B85 /* AdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewCell.swift; sourceTree = "<group>"; };
 		1D49E36321B6578000475B85 /* PointsTMMExchangeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsTMMExchangeSelectorViewController.swift; sourceTree = "<group>"; };
 		1D49E36421B6578000475B85 /* PointsTMMExchangeSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointsTMMExchangeSelectorViewController.xib; sourceTree = "<group>"; };
+		1D49E36C21B79C7800475B85 /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E37021B7A43800475B85 /* SimpleImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleImageTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E37221B7A82100475B85 /* InputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E37421B7AA8A00475B85 /* InviteStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteStatsTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E37521B7AA8A00475B85 /* InviteStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteStatsTableViewCell.xib; sourceTree = "<group>"; };
+		1D49E37821B7AB7000475B85 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E37921B7AB7000475B85 /* UserInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserInfoTableViewCell.xib; sourceTree = "<group>"; };
+		1D49E37C21B7ED4300475B85 /* MyInvitesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvitesTableViewController.swift; sourceTree = "<group>"; };
+		1D49E37E21B7EF0B00475B85 /* MyInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInviteTableViewCell.swift; sourceTree = "<group>"; };
+		1D49E37F21B7EF0B00475B85 /* MyInviteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyInviteTableViewCell.xib; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -1103,6 +1123,22 @@
 			path = crashreporter;
 			sourceTree = "<group>";
 		};
+		1D49E36721B79B9D00475B85 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D49E37E21B7EF0B00475B85 /* MyInviteTableViewCell.swift */,
+				1D49E37F21B7EF0B00475B85 /* MyInviteTableViewCell.xib */,
+				1D49E37821B7AB7000475B85 /* UserInfoTableViewCell.swift */,
+				1D49E37921B7AB7000475B85 /* UserInfoTableViewCell.xib */,
+				1D49E36C21B79C7800475B85 /* SimpleTableViewCell.swift */,
+				1D49E37021B7A43800475B85 /* SimpleImageTableViewCell.swift */,
+				1D49E37221B7A82100475B85 /* InputTableViewCell.swift */,
+				1D49E37421B7AA8A00475B85 /* InviteStatsTableViewCell.swift */,
+				1D49E37521B7AA8A00475B85 /* InviteStatsTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		1D5FF688215B7852001E69CD /* ScanViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1167,6 +1203,7 @@
 			isa = PBXGroup;
 			children = (
 				1DEC54612151285E007A46D5 /* AccountTableViewController.swift */,
+				1D49E36721B79B9D00475B85 /* Cell */,
 				1DF802EE215249200002E054 /* ViewControllers */,
 			);
 			path = AccountViewController;
@@ -1186,6 +1223,7 @@
 			isa = PBXGroup;
 			children = (
 				1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */,
+				1D49E37C21B7ED4300475B85 /* MyInvitesTableViewController.swift */,
 				1D3E42F221ABC9E10014CEB1 /* UserLevelTableViewController.swift */,
 				1D0370C82165E7D300E5E3CE /* WechatQRCodeViewController.swift */,
 				1D297DAC21919465001C7CF7 /* InviteViewController.swift */,
@@ -1298,6 +1336,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D49E37721B7AA8A00475B85 /* InviteStatsTableViewCell.xib in Resources */,
 				1D151E94213E2FCA007C87DD /* LoadingTableViewCell.xib in Resources */,
 				1D05B4F9219469AC008EE10D /* GoodInfoTableViewCell.xib in Resources */,
 				1D151E9C213E392C007C87DD /* SDKAppTableViewCell.xib in Resources */,
@@ -1315,6 +1354,7 @@
 				1D1D6FBB214645B20001ED49 /* PointsTMMExchangeViewController.xib in Resources */,
 				1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */,
 				1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */,
+				1D49E38121B7EF0B00475B85 /* MyInviteTableViewCell.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
 				1D3E42D2219D591A0014CEB1 /* InviteImagePresentrViewController.xib in Resources */,
@@ -1329,6 +1369,7 @@
 				1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D31FCA1218826750014712B /* JSDOMParser.js in Resources */,
+				1D49E37B21B7AB7000475B85 /* UserInfoTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
 				1D3E42F121A7C25C0014CEB1 /* TMMWithdrawRecordTableViewCell.xib in Resources */,
@@ -1528,6 +1569,7 @@
 				1D3441E4213CFA1C00B8E157 /* CGRect+Utils.swift in Sources */,
 				1D0370C72165E2E900E5E3CE /* TMMContactService.swift in Sources */,
 				1D31FC82217F3C460014712B /* UIView+Utils.swift in Sources */,
+				1D49E37A21B7AB7000475B85 /* UserInfoTableViewCell.swift in Sources */,
 				1D05B4F1219441CF008EE10D /* TMMGoodService.swift in Sources */,
 				1D0370AB2163CE8900E5E3CE /* Reachability.swift in Sources */,
 				1D151E64213D03FC007C87DD /* i18n.swift in Sources */,
@@ -1545,6 +1587,7 @@
 				1D0370E8216B5C2F00E5E3CE /* TMMShareItem.swift in Sources */,
 				1D28DE5C2156214F00FCF6F6 /* TMMOrderBookService.swift in Sources */,
 				1D77AD36219436A1004EBCBF /* MallViewController.swift in Sources */,
+				1D49E37D21B7ED4300475B85 /* MyInvitesTableViewController.swift in Sources */,
 				1DEC544C2150F5A9007A46D5 /* TMMQiniuService.swift in Sources */,
 				1D0370C121649AF400E5E3CE /* FeedbackTableViewController.swift in Sources */,
 				1D151E79213D5434007C87DD /* Time+Utils.swift in Sources */,
@@ -1557,6 +1600,7 @@
 				1D151ED2213FC206007C87DD /* AppTaskFetcher.swift in Sources */,
 				1D1D6FD62148CB1B0001ED49 /* TransactionTableViewCell.swift in Sources */,
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
+				1D49E36E21B79C7800475B85 /* SimpleTableViewCell.swift in Sources */,
 				1D0370E6216B59CF00E5E3CE /* TMMWebViewController.swift in Sources */,
 				1DEC545321510676007A46D5 /* SubmitAppTaskTableViewController.swift in Sources */,
 				1D3441C5213CF74800B8E157 /* TMMError.swift in Sources */,
@@ -1596,6 +1640,7 @@
 				1D1D6FA52140F2270001ED49 /* APITaskRecord.swift in Sources */,
 				1D36D99F213CED5E0002EDBF /* AppDelegate.swift in Sources */,
 				1D31FC612179E5C40014712B /* APIBlowupBid.swift in Sources */,
+				1D49E37621B7AA8A00475B85 /* InviteStatsTableViewCell.swift in Sources */,
 				1D31FC7A217F18D20014712B /* FeedbackReplyTableViewCell.swift in Sources */,
 				1D151EC3213E98AF007C87DD /* LoadingShareTaskTableViewCell.swift in Sources */,
 				1DEC5447214FBB5B007A46D5 /* SubmitShareTaskTableViewController.swift in Sources */,
@@ -1617,6 +1662,7 @@
 				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
 				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
+				1D49E37321B7A82100475B85 /* InputTableViewCell.swift in Sources */,
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
 				1D31FC59217850D00014712B /* BlowupViewController.swift in Sources */,
 				1D3E430021AE77FD0014CEB1 /* VideoDetailViewController.swift in Sources */,
@@ -1673,6 +1719,7 @@
 				1D3441FD213CFBB500B8E157 /* TransitionButton.swift in Sources */,
 				1D3441E0213CF9BD00B8E157 /* UIScreen+Utils.swift in Sources */,
 				1D1D6FC42147A5680001ED49 /* ETHWalletViewController.swift in Sources */,
+				1D49E38021B7EF0B00475B85 /* MyInviteTableViewCell.swift in Sources */,
 				1D05B4FC219469F7008EE10D /* GoodInvestTableViewCell.swift in Sources */,
 				1D151E71213D3995007C87DD /* NSDecimalNumber+Utils.swift in Sources */,
 				1D3441FB213CFBB500B8E157 /* CustomTransitionViewController.swift in Sources */,
@@ -1685,6 +1732,7 @@
 				1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */,
 				1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
+				1D49E37121B7A43800475B85 /* SimpleImageTableViewCell.swift in Sources */,
 				1D1D6FB02140F5620001ED49 /* ShareTaskRecordTableViewCell.swift in Sources */,
 				1DA38EC72170753F0073DB8A /* TMMRedeemViewController.swift in Sources */,
 				1D1D6FB521412A850001ED49 /* TMMExchangeService.swift in Sources */,

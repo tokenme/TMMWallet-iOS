@@ -129,10 +129,13 @@ class ShareTasksTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
-        self.mmPlayerLayer.player?.pause()
-        offsetObservation?.invalidate()
-        offsetObservation = nil
+        DispatchQueue.main.async {[weak self] in
+            guard let weakSelf = self else { return }
+            NSObject.cancelPreviousPerformRequests(withTarget: weakSelf)
+            weakSelf.mmPlayerLayer.player?.pause()
+            weakSelf.offsetObservation?.invalidate()
+            weakSelf.offsetObservation = nil
+        }
         MTA.trackPageViewEnd(TMMConfigs.PageName.shareTasks)
     }
     

@@ -131,6 +131,16 @@ class TasksViewController: TabmanViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        DispatchQueue.main.async {[weak self] in
+            guard let weakSelf = self else { return }
+            for vc in weakSelf.viewControllers {
+                vc.mmPlayerLayer.player?.pause()
+            }
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if userInfo == nil {

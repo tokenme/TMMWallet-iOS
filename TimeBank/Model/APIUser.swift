@@ -25,6 +25,8 @@ public class APIUser: APIResponse {
     var level: APICreditLevel?
     var wxBinded: Bool = false
     var openId: String?
+    var directFriend: Bool = false
+    var contribute: NSDecimalNumber = 0
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -73,5 +75,7 @@ public class APIUser: APIResponse {
         level <- map["level"]
         wxBinded <- map["wx_binded"]
         openId <- map["open_id"]
+        directFriend <- map["direct_friend"]
+        contribute <- (map["contribute"], decimalTransform)
     }
 }
