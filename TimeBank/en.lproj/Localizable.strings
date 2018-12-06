@@ -213,6 +213,7 @@
 "MyInvites" = "Invited Friends";
 "EmptyInvitesTitle" = "No Friends Yet?";
 "EmptyInvitesDesc" = "Invite friends to get more bonus, now!";
+"InviteSimpleInto" = "Your could get %@CNY bonus for each invited user,\n and %@ bonus in addition when each task completed by the invited users.";
 "UserCreditLevelRights" = "Credit Rights";
 "UserCreditLevelRules" = "Credit Level Rules";
 "Member" = "Member";

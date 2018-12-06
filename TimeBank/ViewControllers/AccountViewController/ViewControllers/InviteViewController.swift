@@ -12,6 +12,8 @@ import SnapKit
 import swiftScan
 import Kingfisher
 import SwiftyUserDefaults
+import Moya
+import Hydra
 
 class InviteViewController: UIViewController {
     
@@ -27,7 +29,15 @@ class InviteViewController: UIViewController {
         }
     }
     
-    @IBOutlet private weak var inviteLabel: UILabel!
+    public var inviteSummary: APIInviteSummary?
+    
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var subTitle: UILabel!
+    @IBOutlet private weak var avatarView: UIImageView!
+    @IBOutlet private weak var inviteCodeLabel: UILabel!
+    @IBOutlet private weak var copyButton: UIButton!
+    @IBOutlet private weak var inviteCodeSubTitle: UILabel!
+    @IBOutlet private weak var qrcodeView: UIImageView!
     @IBOutlet private weak var inviteButton: UIButton!
     
     let invitePresenter: Presentr = {
@@ -73,6 +83,10 @@ class InviteViewController: UIViewController {
         return image!.kf.scaled(to: 5.0)
     }()
     
+    private var loadingInviteSummary = false
+    
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -87,15 +101,32 @@ class InviteViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
-            self.title = I18n.inviteFriends.description
+            //self.title = I18n.inviteFriends.description
         }
-        inviteLabel.text = "邀请1位好友\n既得88红包"
+        if inviteSummary == nil {
+            getInviteSummary()
+        }
+        avatarView.layer.cornerRadius = 20
+        avatarView.layer.borderWidth = 0.0
+        avatarView.clipsToBounds = true
+        
+        closeButton.layer.cornerRadius = 5
+        closeButton.layer.borderWidth = 0
+        closeButton.clipsToBounds = true
+        
+        copyButton.layer.cornerRadius = 10
+        copyButton.layer.borderWidth = 1.0
+        copyButton.layer.borderColor = UIColor.orange.cgColor
+        copyButton.clipsToBounds = true
+        
         inviteButton.layer.cornerRadius = 18
         inviteButton.layer.borderWidth = 0
         inviteButton.layer.shadowOffset =  CGSize(width: 0, height: 0)
         inviteButton.layer.shadowOpacity = 0.42
         inviteButton.layer.shadowRadius = 6
-        inviteButton.layer.shadowColor = UIColor.black.cgColor
+        inviteButton.layer.shadowColor = UIColor.white.cgColor
+        
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,6 +154,36 @@ class InviteViewController: UIViewController {
     static func instantiate() -> InviteViewController
     {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InviteViewController") as! InviteViewController
+    }
+    
+    private func setupView() {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        subTitle.text = String(format: "邀请1位好友奖励%@元现金", formatter.string(from: inviteSummary?.inviterCashBonus ?? 0)!)
+        
+        if let avatar = URL(string: userInfo?.avatar ?? "") {
+            avatarView.kf.setImage(with: avatar)
+        }
+        
+        inviteCodeLabel.text = userInfo?.inviteCode
+        inviteCodeSubTitle.text = String(format: "已邀请%d位好友", inviteSummary?.invites ?? 0)
+        
+        let qrcodeLink = String(format: "https://tmm.tokenmama.io/invite/%@", userInfo?.inviteCode ?? "emptycode")
+        let qrImg = LBXScanWrapper.createCode(codeType: "CIQRCodeGenerator",codeString: qrcodeLink, size:
+            CGSize(width: 200, height: 200), qrColor: UIColor.black, bkColor: UIColor.white)!
+        qrcodeView.image = qrImg
+    }
+    
+    @IBAction func copyCode() {
+        guard let userInfo = self.userInfo else { return }
+        let paste = UIPasteboard.general
+        paste.string = userInfo.inviteCode
+    }
+    
+    @IBAction func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction private func showShareImage() {
@@ -278,5 +339,31 @@ extension InviteViewController {
                 weakSelf.inviteImagePresentr.dismiss(animated: true, completion: nil)
             }
         }
+    }
+}
+
+extension InviteViewController {
+    
+    private func getInviteSummary() {
+        if self.loadingInviteSummary {
+            return
+        }
+        self.loadingInviteSummary = true
+        
+        TMMUserService.getInviteSummary(
+            withUserList: false,
+            provider: self.userServiceProvider)
+            .then(in: .background, {[weak self] summary in
+                guard let weakSelf = self else { return }
+                weakSelf.inviteSummary = summary
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.loadingInviteSummary = false
+                weakSelf.setupView()
+            }
+        )
     }
 }

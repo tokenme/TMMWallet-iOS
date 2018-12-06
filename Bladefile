@@ -106,9 +106,8 @@ blades:
   - source: images/invite-page-bg.png
     mount: TimeBank/Assets.xcassets/InvitePageBg.imageset
     contents: true
-  - source: images/invite-page-title.png
-    mount: TimeBank/Assets.xcassets/InvitePageTitle.imageset
-    contents: true
+  - source: images/invite-page-line.png
+    mount: TimeBank/Assets.xcassets/InvitePageLine.imageset
   - source: images/redpacket.png
     mount: TimeBank/Assets.xcassets/RedPacket.imageset
     contents: true

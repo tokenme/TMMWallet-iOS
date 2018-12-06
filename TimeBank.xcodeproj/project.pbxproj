@@ -211,6 +211,7 @@
 		1D49E37D21B7ED4300475B85 /* MyInvitesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37C21B7ED4300475B85 /* MyInvitesTableViewController.swift */; };
 		1D49E38021B7EF0B00475B85 /* MyInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E37E21B7EF0B00475B85 /* MyInviteTableViewCell.swift */; };
 		1D49E38121B7EF0B00475B85 /* MyInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D49E37F21B7EF0B00475B85 /* MyInviteTableViewCell.xib */; };
+		1D49E38321B8DCC900475B85 /* InviteIntroTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D49E38221B8DCC900475B85 /* InviteIntroTableViewCell.swift */; };
 		1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */; };
 		1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */; };
 		1D5FF67C215B4138001E69CD /* MarketNavHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */; };
@@ -479,6 +480,7 @@
 		1D49E37C21B7ED4300475B85 /* MyInvitesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvitesTableViewController.swift; sourceTree = "<group>"; };
 		1D49E37E21B7EF0B00475B85 /* MyInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInviteTableViewCell.swift; sourceTree = "<group>"; };
 		1D49E37F21B7EF0B00475B85 /* MyInviteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyInviteTableViewCell.xib; sourceTree = "<group>"; };
+		1D49E38221B8DCC900475B85 /* InviteIntroTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteIntroTableViewCell.swift; sourceTree = "<group>"; };
 		1D5FF677215B3E93001E69CD /* MarketTopTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketTopTableViewHeader.xib; sourceTree = "<group>"; };
 		1D5FF679215B3F62001E69CD /* MarketTopTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTopTableViewHeader.swift; sourceTree = "<group>"; };
 		1D5FF67B215B4138001E69CD /* MarketNavHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketNavHeaderView.xib; sourceTree = "<group>"; };
@@ -1126,6 +1128,7 @@
 		1D49E36721B79B9D00475B85 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				1D49E38221B8DCC900475B85 /* InviteIntroTableViewCell.swift */,
 				1D49E37E21B7EF0B00475B85 /* MyInviteTableViewCell.swift */,
 				1D49E37F21B7EF0B00475B85 /* MyInviteTableViewCell.xib */,
 				1D49E37821B7AB7000475B85 /* UserInfoTableViewCell.swift */,
@@ -1722,6 +1725,7 @@
 				1D49E38021B7EF0B00475B85 /* MyInviteTableViewCell.swift in Sources */,
 				1D05B4FC219469F7008EE10D /* GoodInvestTableViewCell.swift in Sources */,
 				1D151E71213D3995007C87DD /* NSDecimalNumber+Utils.swift in Sources */,
+				1D49E38321B8DCC900475B85 /* InviteIntroTableViewCell.swift in Sources */,
 				1D3441FB213CFBB500B8E157 /* CustomTransitionViewController.swift in Sources */,
 				1D3E42ED21A7C0C60014CEB1 /* TMMWithdrawRecordsTableViewController.swift in Sources */,
 				1D3441E2213CFA0600B8E157 /* UIColor+Utils.swift in Sources */,

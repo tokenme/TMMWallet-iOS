@@ -26,7 +26,6 @@ fileprivate enum AccountTableCellType {
     case inviteSummary
     case myInviteCode
     case inviteCode
-    case inviteButton
     case bindWechatAccount
     case currency
     case telegramGroup
@@ -85,7 +84,7 @@ class AccountTableViewController: UITableViewController {
     
     private var contacts:[String:String] = [:]
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode, .inviteButton], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .help, .feedback], [.signout]]
+    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .help, .feedback], [.signout]]
     
     private var isUpdating: Bool = false
     private var loadingUserInfo: Bool = false
@@ -233,7 +232,9 @@ class AccountTableViewController: UITableViewController {
     
     private func showInvitePage() {
         let vc = InviteViewController.instantiate()
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.inviteSummary = inviteSummary
+        self.present(vc, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -278,12 +279,8 @@ extension AccountTableViewController {
             return cell
         case .inviteCode:
             let cell = tableView.dequeueReusableCell(for: indexPath) as InputTableViewCell
-            cell.fill(I18n.inviteCode.description, placeholder: I18n.inviteCodePlaceholder.description, value: userInfo?.inviteCode)
+            cell.fill(I18n.inviteCode.description, placeholder: I18n.inviteCodePlaceholder.description, value: userInfo?.inviterCode)
             cell.delegate = self
-            return cell
-        case .inviteButton:
-            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleImageTableViewCell
-            cell.fill(UIImage(named:"InviteButton")!, ratio: 28/121)
             return cell
         case .bindWechatAccount:
             let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
@@ -360,13 +357,11 @@ extension AccountTableViewController {
             let vc = MyInvitesTableViewController.instantiate()
             self.navigationController?.pushViewController(vc, animated: true)
         case .myInviteCode:
-            self.showMyInviteCode()
+            self.showInvitePage()
         case .inviteCode:
             if let inputCell = cell as? InputTableViewCell {
                 inputCell.showKeyboard()
             }
-        case .inviteButton:
-            self.showInvitePage()
         case .bindWechatAccount:
             if ShareSDK.hasAuthorized(.typeWechat) {
                 self.getWechatInfo()
@@ -426,8 +421,6 @@ extension AccountTableViewController {
         case .myInviteCode:
             return true
         case .inviteCode:
-            return true
-        case .inviteButton:
             return true
         case .bindWechatAccount:
             return true
@@ -524,6 +517,7 @@ extension AccountTableViewController {
         self.loadingInviteSummary = true
         
         TMMUserService.getInviteSummary(
+            withUserList: false,
             provider: self.userServiceProvider)
             .then(in: .main, {[weak self] summary in
                 guard let weakSelf = self else { return }

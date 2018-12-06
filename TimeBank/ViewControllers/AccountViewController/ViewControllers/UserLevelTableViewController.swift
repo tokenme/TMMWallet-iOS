@@ -355,7 +355,6 @@ extension UserLevelTableViewController {
             }).always(in: .background, body: {[weak self]  in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingUserInfo = false
-                weakSelf.tableView.header?.endRefreshing()
             })
     }
     
@@ -381,6 +380,7 @@ extension UserLevelTableViewController {
                     weakSelf.activityIndicator.removeFromSuperview()
                 }
                 weakSelf.levelsStackView.needsUpdateConstraints()
+                weakSelf.tableView.header?.endRefreshing()
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
             })
     }
@@ -390,6 +390,7 @@ extension UserLevelTableViewController {
         self.loadingInviteSummary = true
         
         TMMUserService.getInviteSummary(
+            withUserList: true,
             provider: self.userServiceProvider)
             .then(in: .main, {[weak self] summary in
                 guard let weakSelf = self else { return }
@@ -398,10 +399,9 @@ extension UserLevelTableViewController {
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
+            }).always(in: .background, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingInviteSummary = false
-                weakSelf.tableView.header?.endRefreshing()
             }
         )
     }

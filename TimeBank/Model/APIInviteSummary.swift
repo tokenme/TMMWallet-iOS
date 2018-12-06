@@ -13,6 +13,11 @@ public class APIInviteSummary: APIResponse {
     var invites: UInt = 0
     var points: NSDecimalNumber = 0
     var friendsContribute: NSDecimalNumber = 0
+    var inviteBonusRate: NSDecimalNumber = 0
+    var inviteBonus: NSDecimalNumber = 0
+    var inviterBonus: NSDecimalNumber = 0
+    var inviteCashBonus: NSDecimalNumber = 0
+    var inviterCashBonus: NSDecimalNumber = 0
     var nextLevelInvites: UInt = 0
     var users: [APIUser] = []
     
@@ -32,6 +37,11 @@ public class APIInviteSummary: APIResponse {
         nextLevelInvites <- map["next_level_invites"]
         points <- (map["points"], decimalTransform)
         friendsContribute <- (map["friends_contribute"], decimalTransform)
+        inviteBonusRate <- (map["invite_bonus_rate"], decimalTransform)
+        inviteBonus <- (map["invite_bonus"], decimalTransform)
+        inviterBonus <- (map["inviter_bonus"], decimalTransform)
+        inviteCashBonus <- (map["invite_cash_bonus"], decimalTransform)
+        inviterCashBonus <- (map["inviter_cash_bonus"], decimalTransform)
         users <- map["users"]
     }
 }

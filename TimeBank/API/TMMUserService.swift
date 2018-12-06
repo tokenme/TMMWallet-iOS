@@ -16,7 +16,7 @@ enum TMMUserService {
     case update(user: APIUser)
     case info(refresh: Bool)
     case bindWechat(unionId: String, openId: String, nick: String, avatar: String, gender: Int, accessToken: String, expires: TimeInterval)
-    case inviteSummary()
+    case inviteSummary(withUserList: Bool)
     case creditLevels()
     case invites(page: UInt, pageSize: UInt)
 }
@@ -38,11 +38,11 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return "/reset-password"
         case .update(_):
             return "/update"
-        case .bindWechat(_, _, _, _, _, _, _):
+        case .bindWechat:
             return "/update"
-        case .info(_):
+        case .info:
             return "/info"
-        case .inviteSummary():
+        case .inviteSummary:
             return "/invite/summary"
         case .invites:
             return "/invites"
@@ -83,8 +83,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return ["wx_union_id": unionId, "wx_open_id": openId, "wx_nick": nick, "wx_avatar": avatar, "wx_gender": gender, "wx_token": accessToken, "wx_expires": Int64(expires)]
         case let .info(refresh):
             return ["refresh": refresh]
-        case .inviteSummary:
-            return [:]
+        case let .inviteSummary(withUserList):
+            return ["with_user_list": withUserList]
         case let .invites(page, pageSize):
             return ["page": page, "page_size": pageSize]
         case .creditLevels:
@@ -121,7 +121,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return "ok".utf8Encoded
         case .bindWechat:
             return "ok".utf8Encoded
-        case .info(_), .inviteSummary():
+        case .info, .inviteSummary:
             return "{}".utf8Encoded
         case .creditLevels, .invites:
             return "[]".utf8Encoded
@@ -281,10 +281,10 @@ extension TMMUserService {
         })
     }
     
-    static func getInviteSummary(provider: MoyaProvider<TMMUserService>) -> Promise<APIInviteSummary> {
+    static func getInviteSummary(withUserList:Bool, provider: MoyaProvider<TMMUserService>) -> Promise<APIInviteSummary> {
         return Promise<APIInviteSummary> (in: .background, { resolve, reject, _ in
             provider.request(
-                .inviteSummary()
+                .inviteSummary(withUserList: withUserList)
             ){ result in
                 switch result {
                 case let .success(response):

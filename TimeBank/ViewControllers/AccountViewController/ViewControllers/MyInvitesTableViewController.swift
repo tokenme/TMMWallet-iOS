@@ -42,9 +42,11 @@ class MyInvitesTableViewController: UITableViewController {
     
     private var currentPage: UInt = 1
     
+    private var inviteSummary: APIInviteSummary?
     private var friends: [APIUser] = []
     
     private var loadingFriends = false
+    private var loadingInviteSummary = false
     
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
@@ -104,12 +106,15 @@ class MyInvitesTableViewController: UITableViewController {
     
     private func setupTableView() {
         tableView.register(cellType: MyInviteTableViewCell.self)
+        tableView.register(cellType: InviteStatsTableViewCell.self)
+        tableView.register(cellType: InviteIntroTableViewCell.self)
         tableView.register(cellType: LoadingTableViewCell.self)
         //self.tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 55.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: CGFloat.leastNormalMagnitude))
         
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
@@ -130,6 +135,7 @@ class MyInvitesTableViewController: UITableViewController {
     }
     
     func refresh() {
+        getInviteSummary()
         getInvites(true)
     }
     
@@ -154,14 +160,27 @@ extension MyInvitesTableViewController: UIViewControllerTransitioningDelegate {
 
 extension MyInvitesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 2
+        }
         return friends.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(for: indexPath) as InviteIntroTableViewCell
+                cell.fill(inviteSummary)
+                return cell
+            }
+            let cell = tableView.dequeueReusableCell(for: indexPath) as InviteStatsTableViewCell
+            cell.fill(inviteSummary)
+            return cell
+        }
         let u = self.friends[indexPath.row]
         let cell = tableView.dequeueReusableCell(for: indexPath) as MyInviteTableViewCell
         cell.fill(u)
@@ -203,9 +222,12 @@ extension MyInvitesTableViewController: EmptyDataSetSource, EmptyDataSetDelegate
 extension MyInvitesTableViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
-        return 1
+        return 2
     }
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 2
+        }
         return 6
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
@@ -214,6 +236,28 @@ extension MyInvitesTableViewController: SkeletonTableViewDataSource {
 }
 
 extension MyInvitesTableViewController {
+    
+    private func getInviteSummary() {
+        if self.loadingInviteSummary {
+            return
+        }
+        self.loadingInviteSummary = true
+        
+        TMMUserService.getInviteSummary(
+            withUserList: false,
+            provider: self.userServiceProvider)
+            .then(in: .background, {[weak self] summary in
+                guard let weakSelf = self else { return }
+                weakSelf.inviteSummary = summary
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .background, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.loadingInviteSummary = false
+            }
+        )
+    }
     
     private func getInvites(_ refresh: Bool) {
         if self.loadingFriends {
