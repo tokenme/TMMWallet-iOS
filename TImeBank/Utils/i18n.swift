@@ -100,6 +100,7 @@ enum I18n: CustomStringConvertible {
     case confirmUnbind
     case withdraw
     case pointsWithdraw
+    case tokenWithdraw
     case changePoints
     case currentTMMRedeemRate
     case currentPointRedeemPrice
@@ -461,6 +462,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Withdraw", comment: "Withdraw")
         case .pointsWithdraw:
             return NSLocalizedString("PointsWithdraw", comment: "PointsWithdraw")
+        case .tokenWithdraw:
+            return NSLocalizedString("TokenWithdraw", comment: "TokenWithdraw")
         case .changePoints:
             return NSLocalizedString("ChangePoints", comment: "ChangePoints")
         case .currentTMMRedeemRate:

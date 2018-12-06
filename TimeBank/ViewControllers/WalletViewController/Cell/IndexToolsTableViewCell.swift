@@ -32,6 +32,7 @@ class IndexToolsTableViewCell: UITableViewCell, Reusable {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
+        stackView.spacing = 16
         
         let shareBtn = toolButton(title: I18n.earnByShare.description, image: UIImage(named: "ShareBtn"))
         shareBtn.addTarget(self, action: #selector(gotoShareTask), for: .touchUpInside)
@@ -47,6 +48,21 @@ class IndexToolsTableViewCell: UITableViewCell, Reusable {
         sv.distribution = .fillEqually
         
         stackView.addArrangedSubview(sv)
+        
+        let walletBtn = toolButton(title: I18n.assets.description, image: UIImage(named: "Wallet"))
+        walletBtn.addTarget(self, action: #selector(gotoETHWallet), for: .touchUpInside)
+        let exchangeRecordsBtn = toolButton(title: I18n.exchangeRecords.description, image: UIImage(named: "Records"))
+        exchangeRecordsBtn.addTarget(self, action: #selector(gotoExchangeRecordsView), for: .touchUpInside)
+        let withdrawBtn = toolButton(title: I18n.withdraw.description, image: UIImage(named: "Withdraw"))
+        withdrawBtn.addTarget(self, action: #selector(gotoWithdraw), for: .touchUpInside)
+        let inviteIncomeBtn = toolButton(title: I18n.inviteIncome.description, image: UIImage(named: "Friends"))
+        inviteIncomeBtn.addTarget(self, action: #selector(gotoMyInvites), for: .touchUpInside)
+        
+        let sv2 = UIStackView(arrangedSubviews: [walletBtn, exchangeRecordsBtn, withdrawBtn, inviteIncomeBtn])
+        sv2.axis = .horizontal
+        sv2.distribution = .fillEqually
+        stackView.addArrangedSubview(sv2)
+        
         contentView.addSubview(stackView)
         stackView.snp.remakeConstraints {[weak self] (maker) -> Void in
             maker.leading.top.equalToSuperview().offset(16)
@@ -78,6 +94,26 @@ class IndexToolsTableViewCell: UITableViewCell, Reusable {
         guard let delegate = self.delegate else { return }
         delegate.gotoMallView()
     }
+    
+    @objc func gotoETHWallet() {
+        guard let delegate = self.delegate else { return }
+        delegate.gotoETHWallet()
+    }
+    
+    @objc func gotoExchangeRecordsView() {
+        guard let delegate = self.delegate else { return }
+        delegate.gotoExchangeRecordsView()
+    }
+    
+    @objc func gotoWithdraw() {
+        guard let delegate = self.delegate else { return }
+        delegate.gotoWithdraw()
+    }
+    
+    @objc func gotoMyInvites() {
+        guard let delegate = self.delegate else { return }
+        delegate.gotoMyInvites()
+    }
 }
 
 public protocol IndexToolsDelegate: NSObjectProtocol {
@@ -85,4 +121,8 @@ public protocol IndexToolsDelegate: NSObjectProtocol {
     func gotoInviteView()
     func gotoMallView()
     func gotoHelpView()
+    func gotoETHWallet()
+    func gotoExchangeRecordsView()
+    func gotoWithdraw()
+    func gotoMyInvites()
 }

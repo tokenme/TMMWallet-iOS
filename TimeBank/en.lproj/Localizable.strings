@@ -85,6 +85,7 @@
 "ConfirmUnbind" = "Do you want to unbind this device?";
 "Withdraw" = "Withdraw";
 "PointsWithdraw" = "Points Withdraw";
+"TokenWithdraw" = "UC Withdraw";
 "ChangePoints" = "Change Points";
 "CurrentTMMRedeemRate" = "Current Exchange Rate: 1 UC = %@ %@";
 "CurrentPointRedeemPrice" = "Current Exchange Rate: 1 Point = %@ %@";

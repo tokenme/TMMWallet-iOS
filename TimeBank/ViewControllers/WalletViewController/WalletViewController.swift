@@ -630,8 +630,8 @@ extension WalletViewController: IndexToolsDelegate {
     }
     
     func gotoInviteView() {
-        let vc = UserLevelTableViewController.instantiate()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = InviteViewController.instantiate()
+        self.present(vc, animated: true, completion: nil)
     }
     
     func gotoMallView() {
@@ -641,6 +641,39 @@ extension WalletViewController: IndexToolsDelegate {
     func gotoHelpView() {
         let vc = TMMWebViewController.instantiate()
         vc.request = URLRequest(url: URL(string: TMMConfigs.helpLink)!)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func gotoETHWallet() {
+        self.showETHWalletView()
+    }
+    
+    func gotoExchangeRecordsView() {
+        let vc = ExchangeRecordsViewController.instantiate()
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func gotoWithdraw() {
+        guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
+        for device in self.devices {
+            if device.idfa == deviceId {
+                let vc = DeviceAppsViewController.instantiate()
+                vc.setDevice(device)
+                vc.setTMM(self.tmm)
+                vc.delegate = self
+                vc.showWithdrawForm = true
+                self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
+                break
+            }
+        }
+    }
+    
+    func gotoMyInvites() {
+        let vc = MyInvitesTableViewController.instantiate()
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

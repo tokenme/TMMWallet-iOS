@@ -16,6 +16,7 @@ public class APICreditLevel: APIResponse {
     var desc: String = ""
     var endesc: String = ""
     var invites: UInt = 0
+    var taskBonusRate: NSDecimalNumber = 100
     
     // MARK: JSON
     required public init?(map: Map) {
@@ -35,6 +36,7 @@ public class APICreditLevel: APIResponse {
         desc <- map["desc"]
         endesc <- map["endesc"]
         invites <- map["invites"]
+        taskBonusRate <- map["task_bonus_rate"]
     }
     
     public func showName(_ full: Bool = false) -> String {
@@ -61,12 +63,12 @@ public class APICreditLevel: APIResponse {
     
     public func color() -> UIColor {
         switch id {
-        case 1: return UIColor.lightGray
-        case 2: return UIColor.pinky
-        case 3: return  UIColor.purple
-        case 4: return UIColor.black
+        case 1: return UIColor(rgb: 0xbfbfbf)
+        case 2: return UIColor(rgb: 0xeec123)
+        case 3: return  UIColor(rgb: 0xd49359)
+        case 4: return UIColor(rgb: 0xff6757)
         default:
-            return UIColor(white: 0.96, alpha: 1)
+            return UIColor(rgb: 0x8d97b5)
         }
     }
 }

@@ -27,6 +27,7 @@ class ExchangeRecordsViewController: TabmanViewController {
     
     private let viewControllers = [
         TMMWithdrawRecordsTableViewController.instantiate(),
+        TMMWithdrawRecordsTableViewController.instantiate(),
         ExchangeRecordsTableViewController.instantiate(),
         ExchangeRecordsTableViewController.instantiate(),
         ExchangeRecordsTableViewController.instantiate(),
@@ -47,16 +48,18 @@ class ExchangeRecordsViewController: TabmanViewController {
             navigationItem.title = I18n.exchangeRecords.description
         }
         (viewControllers[0] as? TMMWithdrawRecordsTableViewController)?.recordType = .point
-        (viewControllers[1] as? ExchangeRecordsTableViewController)?.direction = .TMMIn
-        (viewControllers[2] as? ExchangeRecordsTableViewController)?.direction = .TMMOut
-        (viewControllers[3] as? ExchangeRecordsTableViewController)?.recordType = 1
+        (viewControllers[1] as? TMMWithdrawRecordsTableViewController)?.recordType = .tmm
+        (viewControllers[2] as? ExchangeRecordsTableViewController)?.direction = .TMMIn
+        (viewControllers[3] as? ExchangeRecordsTableViewController)?.direction = .TMMOut
+        (viewControllers[4] as? ExchangeRecordsTableViewController)?.recordType = 1
         
         // configure the bar
         self.bar.items = [Item(title: I18n.pointsWithdraw.description),
+                          Item(title: I18n.tokenWithdraw.description),
                           Item(title: I18n.toTBC.description),
                           Item(title: I18n.toPoints.description),
                           Item(title: I18n.toMobileData.description)]
-        self.bar.style = .buttonBar
+        self.bar.style = .scrollingButtonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self
     }

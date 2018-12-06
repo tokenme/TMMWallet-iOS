@@ -23,6 +23,7 @@ fileprivate enum AccountTableSectionType {
 
 fileprivate enum AccountTableCellType {
     case accountInfo
+    case creditLevelBanner
     case inviteSummary
     case myInviteCode
     case inviteCode
@@ -84,13 +85,16 @@ class AccountTableViewController: UITableViewController {
     
     private var contacts:[String:String] = [:]
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .help, .feedback], [.signout]]
+    private var creditLevels: [APICreditLevel] = []
+    
+    private let sections: [[AccountTableCellType]] = [[.accountInfo, .creditLevelBanner], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .help, .feedback], [.signout]]
     
     private var isUpdating: Bool = false
     private var loadingUserInfo: Bool = false
     private var loadingInviteSummary: Bool = false
     private var gettingContacts: Bool = false
     private var bindingWechat: Bool = false
+    private var loadingCreditLevels: Bool = false
     
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
@@ -153,6 +157,7 @@ class AccountTableViewController: UITableViewController {
         tableView.register(cellType: UserInfoTableViewCell.self)
         tableView.register(cellType: InputTableViewCell.self)
         tableView.register(cellType: InviteStatsTableViewCell.self)
+        tableView.register(cellType: CreditLevelBannerTableViewCell.self)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 55.0
         tableView.rowHeight = UITableView.automaticDimension
@@ -179,6 +184,7 @@ class AccountTableViewController: UITableViewController {
             weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
         })
         self.getInviteSummary()
+        self.getCreditLevels()
     }
     
     private func showMyInviteCode() {
@@ -268,6 +274,10 @@ extension AccountTableViewController {
             let cell = tableView.dequeueReusableCell(for: indexPath) as UserInfoTableViewCell
             cell.fill(userInfo, inviteSummary: inviteSummary)
             return cell
+        case .creditLevelBanner:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as CreditLevelBannerTableViewCell
+            cell.fill(userInfo?.level?.id ?? 0, inviteSummary: inviteSummary, levels: creditLevels)
+            return cell
         case .inviteSummary:
             let cell = tableView.dequeueReusableCell(for: indexPath) as InviteStatsTableViewCell
             cell.fill(inviteSummary)
@@ -353,8 +363,11 @@ extension AccountTableViewController {
             let vc = UserLevelTableViewController.instantiate()
             vc.inviteSummary = self.inviteSummary
             self.navigationController?.pushViewController(vc, animated: true)
+        case .creditLevelBanner:
+            self.showInvitePage()
         case .inviteSummary:
             let vc = MyInvitesTableViewController.instantiate()
+            vc.inviteSummary = inviteSummary
             self.navigationController?.pushViewController(vc, animated: true)
         case .myInviteCode:
             self.showInvitePage()
@@ -415,6 +428,8 @@ extension AccountTableViewController {
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         switch self.sections[indexPath.section][indexPath.row] {
         case .accountInfo:
+            return true
+        case .creditLevelBanner:
             return true
         case .inviteSummary:
             return true
@@ -681,6 +696,24 @@ extension AccountTableViewController {
                 }
             }
         })
+    }
+    
+    private func getCreditLevels() {
+        if self.loadingCreditLevels { return }
+        self.loadingCreditLevels = true
+        TMMUserService.getCreditLevels(
+            provider: self.userServiceProvider)
+            .then(in: .main, {[weak self] levels in
+                guard let weakSelf = self else { return }
+                weakSelf.creditLevels = levels
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self]  in
+                guard let weakSelf = self else { return }
+                weakSelf.loadingCreditLevels = false
+                weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+            })
     }
 }
 

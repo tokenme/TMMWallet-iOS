@@ -278,11 +278,14 @@ class UserLevelTableViewController: UITableViewController {
                 idx += 1
             }
         }
+        tableView.header?.endRefreshing()
+        tableView.reloadDataWithAutoSizingCellWorkAround()
     }
     
     private func showInvitePage() {
         let vc = InviteViewController.instantiate()
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.inviteSummary = inviteSummary
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -346,15 +349,15 @@ extension UserLevelTableViewController {
             provider: self.userServiceProvider)
             .then(in: .main, {[weak self] user in
                 guard let weakSelf = self else { return }
-                weakSelf.updateView()
                 weakSelf.levelProgressBar.currentIndex = Int(user.level?.id ?? 0)
                 weakSelf.levelProgressBar.completedTillIndex = Int(user.level?.id ?? 0)
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .background, body: {[weak self]  in
+            }).always(in: .main, body: {[weak self]  in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingUserInfo = false
+                weakSelf.updateView()
             })
     }
     
@@ -367,7 +370,6 @@ extension UserLevelTableViewController {
                 guard let weakSelf = self else { return }
                 weakSelf.creditLevels = levels
                 weakSelf.levelProgressBar.numberOfPoints = levels.count
-                weakSelf.updateView()
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
@@ -380,8 +382,7 @@ extension UserLevelTableViewController {
                     weakSelf.activityIndicator.removeFromSuperview()
                 }
                 weakSelf.levelsStackView.needsUpdateConstraints()
-                weakSelf.tableView.header?.endRefreshing()
-                weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
+                weakSelf.updateView()
             })
     }
     
@@ -395,13 +396,13 @@ extension UserLevelTableViewController {
             .then(in: .main, {[weak self] summary in
                 guard let weakSelf = self else { return }
                 weakSelf.inviteSummary = summary
-                weakSelf.updateView()
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .background, body: {[weak self] in
+            }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingInviteSummary = false
+                weakSelf.updateView()
             }
         )
     }

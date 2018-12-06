@@ -33,6 +33,7 @@ class InviteViewController: UIViewController {
     
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var subTitle: UILabel!
+    @IBOutlet private weak var contentWrapper: UIView!
     @IBOutlet private weak var avatarView: UIImageView!
     @IBOutlet private weak var inviteCodeLabel: UILabel!
     @IBOutlet private weak var copyButton: UIButton!
@@ -106,6 +107,7 @@ class InviteViewController: UIViewController {
         if inviteSummary == nil {
             getInviteSummary()
         }
+        
         avatarView.layer.cornerRadius = 20
         avatarView.layer.borderWidth = 0.0
         avatarView.clipsToBounds = true
@@ -170,8 +172,7 @@ class InviteViewController: UIViewController {
         inviteCodeLabel.text = userInfo?.inviteCode
         inviteCodeSubTitle.text = String(format: "已邀请%d位好友", inviteSummary?.invites ?? 0)
         
-        let qrcodeLink = String(format: "https://tmm.tokenmama.io/invite/%@", userInfo?.inviteCode ?? "emptycode")
-        let qrImg = LBXScanWrapper.createCode(codeType: "CIQRCodeGenerator",codeString: qrcodeLink, size:
+        let qrImg = LBXScanWrapper.createCode(codeType: "CIQRCodeGenerator",codeString: userInfo?.inviteCode ?? "", size:
             CGSize(width: 200, height: 200), qrColor: UIColor.black, bkColor: UIColor.white)!
         qrcodeView.image = qrImg
     }

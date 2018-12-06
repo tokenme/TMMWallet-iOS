@@ -42,7 +42,7 @@ class MyInvitesTableViewController: UITableViewController {
     
     private var currentPage: UInt = 1
     
-    private var inviteSummary: APIInviteSummary?
+    public var inviteSummary: APIInviteSummary?
     private var friends: [APIUser] = []
     
     private var loadingFriends = false
@@ -141,7 +141,8 @@ class MyInvitesTableViewController: UITableViewController {
     
     @objc private func showInvitePage() {
         let vc = InviteViewController.instantiate()
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.inviteSummary = inviteSummary
+        self.present(vc, animated: true, completion: nil)
     }
     
 }

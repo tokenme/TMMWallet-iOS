@@ -141,6 +141,12 @@ blades:
   - source: images/money.png
     mount: TimeBank/Assets.xcassets/Money.imageset
     contents: true
+  - source: images/withdraw.png
+    mount: TimeBank/Assets.xcassets/Withdraw.imageset
+    contents: true
+  - source: images/friends.png
+    mount: TimeBank/Assets.xcassets/Friends.imageset
+    contents: true
   - source: images/logo_tab.png
     mount: TimeBank/Assets.xcassets/LogoTab.imageset
     contents: true

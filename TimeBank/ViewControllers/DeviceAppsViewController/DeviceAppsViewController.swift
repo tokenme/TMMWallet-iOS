@@ -108,6 +108,8 @@ class DeviceAppsViewController: UIViewController {
     private var bindingWechat = false
     private var makingCdpOfferId: UInt64 = 0
     
+    public var showWithdrawForm = false
+    
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
@@ -145,6 +147,9 @@ class DeviceAppsViewController: UIViewController {
         setupTableView()
         if userInfo != nil {
             refresh(false)
+        }
+        if showWithdrawForm {
+            tryWithdraw()
         }
     }
 

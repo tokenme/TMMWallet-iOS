@@ -1912,6 +1912,7 @@
                     <connections>
                         <outlet property="avatarView" destination="6un-GZ-u0N" id="GSI-Zg-z6K"/>
                         <outlet property="closeButton" destination="hB2-BL-dot" id="bE1-w7-Tfb"/>
+                        <outlet property="contentWrapper" destination="rc7-64-BaN" id="NsX-ca-WWT"/>
                         <outlet property="copyButton" destination="gP3-t5-1PL" id="Shc-bh-ZGl"/>
                         <outlet property="inviteButton" destination="bUq-Mm-5mf" id="jRy-zR-nyx"/>
                         <outlet property="inviteCodeLabel" destination="pZf-Hn-r0h" id="4w8-2Y-9OX"/>

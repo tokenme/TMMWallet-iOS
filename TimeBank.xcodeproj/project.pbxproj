@@ -232,6 +232,8 @@
 		1DA38ECE21738EB70073DB8A /* APIFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38ECD21738EB70073DB8A /* APIFeedback.swift */; };
 		1DA38F3D2175B63C0073DB8A /* APIDailyBonusStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38F3C2175B63C0073DB8A /* APIDailyBonusStatus.swift */; };
 		1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38F3E2175B6730073DB8A /* TMMBonusService.swift */; };
+		1DAA635321B916F6000B3AC4 /* CreditLevelBannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAA635121B916F6000B3AC4 /* CreditLevelBannerTableViewCell.swift */; };
+		1DAA635421B916F6000B3AC4 /* CreditLevelBannerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DAA635221B916F6000B3AC4 /* CreditLevelBannerTableViewCell.xib */; };
 		1DB432942155048C0034B810 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB432932155048C0034B810 /* ExchangeViewController.swift */; };
 		1DEC543C214F9BEF007A46D5 /* APIExchangeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */; };
 		1DEC543E214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */; };
@@ -501,6 +503,8 @@
 		1DA38ECD21738EB70073DB8A /* APIFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFeedback.swift; sourceTree = "<group>"; };
 		1DA38F3C2175B63C0073DB8A /* APIDailyBonusStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDailyBonusStatus.swift; sourceTree = "<group>"; };
 		1DA38F3E2175B6730073DB8A /* TMMBonusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMBonusService.swift; sourceTree = "<group>"; };
+		1DAA635121B916F6000B3AC4 /* CreditLevelBannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditLevelBannerTableViewCell.swift; sourceTree = "<group>"; };
+		1DAA635221B916F6000B3AC4 /* CreditLevelBannerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditLevelBannerTableViewCell.xib; sourceTree = "<group>"; };
 		1DB432932155048C0034B810 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		1DEC543B214F9BEF007A46D5 /* APIExchangeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExchangeRecord.swift; sourceTree = "<group>"; };
 		1DEC543D214F9D21007A46D5 /* ExchangeRecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRecordsTableViewController.swift; sourceTree = "<group>"; };
@@ -1129,6 +1133,8 @@
 			isa = PBXGroup;
 			children = (
 				1D49E38221B8DCC900475B85 /* InviteIntroTableViewCell.swift */,
+				1DAA635121B916F6000B3AC4 /* CreditLevelBannerTableViewCell.swift */,
+				1DAA635221B916F6000B3AC4 /* CreditLevelBannerTableViewCell.xib */,
 				1D49E37E21B7EF0B00475B85 /* MyInviteTableViewCell.swift */,
 				1D49E37F21B7EF0B00475B85 /* MyInviteTableViewCell.xib */,
 				1D49E37821B7AB7000475B85 /* UserInfoTableViewCell.swift */,
@@ -1365,6 +1371,7 @@
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */,
 				1DEC5443214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib in Resources */,
+				1DAA635421B916F6000B3AC4 /* CreditLevelBannerTableViewCell.xib in Resources */,
 				1D5FF678215B3E93001E69CD /* MarketTopTableViewHeader.xib in Resources */,
 				1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */,
 				1D1D6FCB2147B9440001ED49 /* SimpleHeaderView.xib in Resources */,
@@ -1663,6 +1670,7 @@
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
 				1D28DE5A2155F98200FCF6F6 /* APIOrderBook.swift in Sources */,
 				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
+				1DAA635321B916F6000B3AC4 /* CreditLevelBannerTableViewCell.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
 				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
 				1D49E37321B7A82100475B85 /* InputTableViewCell.swift in Sources */,
