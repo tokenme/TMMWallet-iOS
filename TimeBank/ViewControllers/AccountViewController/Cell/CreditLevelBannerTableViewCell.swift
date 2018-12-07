@@ -70,8 +70,8 @@ class CreditLevelBannerTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
-        let bonusRate = formatter.string(from: cLevel.taskBonusRate/100)
-        let nextBonusRate = formatter.string(from: nLevel.taskBonusRate/100)
+        let bonusRate = formatter.string(from: cLevel.taskBonusRate/100.0)
+        let nextBonusRate = formatter.string(from: nLevel.taskBonusRate/100.0)
         titleLabel.text = String(format: "升级为%@会员, 可以拿%@倍积分", nLevel.showName(false), nextBonusRate!)
         currentLevelName.text = cLevel.showName(false)
         currentLevelSubTitleLabel.text = String(format: "%@倍积分", bonusRate!)

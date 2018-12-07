@@ -36,7 +36,7 @@ public class APICreditLevel: APIResponse {
         desc <- map["desc"]
         endesc <- map["endesc"]
         invites <- map["invites"]
-        taskBonusRate <- map["task_bonus_rate"]
+        taskBonusRate <- (map["task_bonus_rate"], decimalTransform)
     }
     
     public func showName(_ full: Bool = false) -> String {
