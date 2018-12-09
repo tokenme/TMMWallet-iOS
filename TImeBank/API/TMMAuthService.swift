@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import Hydra
 
 enum TMMAuthService {
-    case sendCode(country: UInt, mobile: String)
+    case sendCode(afsSession: String, country: UInt, mobile: String)
     case login(country: UInt, mobile: String, password: String, biometric: Bool, captcha: String, afsSession: String)
     case refresh()
 }
@@ -45,8 +45,8 @@ extension TMMAuthService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
     }
     var params: [String: Any] {
         switch self {
-        case let .sendCode(country, mobile):
-            return ["country": country, "mobile": mobile]
+        case let .sendCode(afsSession, country, mobile):
+            return ["afs_session":afsSession, "country": country, "mobile": mobile]
         case let .login(country, mobile, password, biometric, captcha, afsSession):
             return ["country_code": country, "mobile": mobile, "password": password, "biometric": biometric, "captcha": captcha, "afs_session":afsSession]
         case .refresh:

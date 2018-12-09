@@ -13,6 +13,11 @@ import Moya
 import Hydra
 import Presentr
 
+fileprivate enum InHumanCheckStep {
+    case sendCode
+    case register
+}
+
 class RegisterViewController: UIViewController {
     
     @IBOutlet private weak var telephoneTextField: TweeAttributedTextField!
@@ -21,6 +26,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet private weak var repasswordTextfield: TweeAttributedTextField!
     @IBOutlet private weak var countdownButton: RNCountdownButton!
     @IBOutlet private weak var registerButton: TransitionButton!
+    
+    private var inHumanCheckStep: InHumanCheckStep = .sendCode
     
     private let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
@@ -88,9 +95,31 @@ class RegisterViewController: UIViewController {
     // MARK: IBActions
     //================
     @IBAction private func sendVerifyCode() {
+        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
+            else { return }
+        var lang = "zh_CN"
+        if country != 86 {
+            lang = "en"
+        }
+        if let vc = MSAuthVCFactory.simapleVerify(with: MSAuthTypeSlide, language: lang, delegate: self, authCode: "0335", appKey: nil) {
+            let navigationController = UINavigationController(rootViewController: vc)
+            let backBtn = UIBarButtonItem(title: I18n.close.description, style: .plain, target: nil, action: nil)
+            navigationController.navigationItem.leftBarButtonItem = backBtn;
+            navigationController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            navigationController.preferredContentSize  = CGSize(width: 400, height: 800)
+            self.present(navigationController, animated: true, completion: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.inHumanCheckStep = .sendCode
+            })
+        }
+    }
+    
+    private func doSendVerifyCode(afsSession: String) {
         let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
         self.authServiceProvider.request(
             .sendCode(
+                afsSession: afsSession,
                 country:country!,
                 mobile: self.telephoneTextField.text!
             )
@@ -153,7 +182,10 @@ class RegisterViewController: UIViewController {
             navigationController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
             navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
             navigationController.preferredContentSize  = CGSize(width: 400, height: 800)
-            self.present(navigationController, animated: true, completion: nil)
+            self.present(navigationController, animated: true, completion: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.inHumanCheckStep = .register
+            })
         }
         /*
         if self.isRegistering {
@@ -224,8 +256,14 @@ extension RegisterViewController: MSAuthProtocol {
             }
             return
         }
-        self.dismiss(animated: true, completion: nil)
-        self.doRegister(recaptcha: "", afsSession: sessionId)
+        self.dismiss(animated: true, completion: {[weak self] in
+            guard let weakSelf = self else { return }
+            if weakSelf.inHumanCheckStep == .sendCode {
+                weakSelf.doSendVerifyCode(afsSession: sessionId)
+            } else if weakSelf.inHumanCheckStep == .register {
+                weakSelf.doRegister(recaptcha: "", afsSession: sessionId)
+            }
+        })
     }
 }
 

@@ -88,9 +88,28 @@ class ResetPasswordViewController: UIViewController {
     // MARK: IBActions
     //================
     @IBAction private func sendVerifyCode() {
+        guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
+            else { return }
+        var lang = "zh_CN"
+        if country != 86 {
+            lang = "en"
+        }
+        if let vc = MSAuthVCFactory.simapleVerify(with: MSAuthTypeSlide, language: lang, delegate: self, authCode: "0335", appKey: nil) {
+            let navigationController = UINavigationController(rootViewController: vc)
+            let backBtn = UIBarButtonItem(title: I18n.close.description, style: .plain, target: nil, action: nil)
+            navigationController.navigationItem.leftBarButtonItem = backBtn;
+            navigationController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            navigationController.preferredContentSize  = CGSize(width: 400, height: 800)
+            self.present(navigationController, animated: true, completion: nil)
+        }
+    }
+    
+    private func doSendVerifyCode(afsSession: String) {
         let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
         self.authServiceProvider.request(
             .sendCode(
+                afsSession: afsSession,
                 country:country!,
                 mobile: self.telephoneTextField.text!
             )
@@ -185,6 +204,21 @@ class ResetPasswordViewController: UIViewController {
         }).always(in: .main, body: {[weak self]  in
             guard let weakSelf = self else { return }
             weakSelf.isResetting = false
+        })
+    }
+}
+
+extension ResetPasswordViewController: MSAuthProtocol {
+    func verifyDidFinished(withResult code: t_verify_reuslt, error: Error!, sessionId: String!) {
+        if error != nil {
+            DispatchQueue.main.async {
+                UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: error.localizedDescription, closeBtn: I18n.close.description)
+            }
+            return
+        }
+        self.dismiss(animated: true, completion: {[weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.doSendVerifyCode(afsSession: sessionId)
         })
     }
 }
