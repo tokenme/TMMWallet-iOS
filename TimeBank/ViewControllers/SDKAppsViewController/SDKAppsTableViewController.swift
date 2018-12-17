@@ -86,6 +86,8 @@ class SDKAppsTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tableView.header?.removeObservers()
+        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.sdkApps)
     }
     
@@ -115,7 +117,6 @@ class SDKAppsTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 66.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.refresh()

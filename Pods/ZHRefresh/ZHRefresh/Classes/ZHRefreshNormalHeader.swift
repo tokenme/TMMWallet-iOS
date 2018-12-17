@@ -32,7 +32,7 @@ public class ZHRefreshNormalHeader: ZHRefreshStateHeader {
     private var _arrowView: UIImageView?
     private var _loadingView: UIActivityIndicatorView?
     /// 默认`.gray`
-    public var activityStyle: UIActivityIndicatorView.Style = .gray {
+    public var activityStyle: UIActivityIndicatorViewStyle = .gray {
         didSet {
             self._loadingView = nil
             self.setNeedsLayout()
@@ -50,7 +50,7 @@ public class ZHRefreshNormalHeader: ZHRefreshStateHeader {
     /// 菊花
     public var loadingView: UIActivityIndicatorView! {
         if _loadingView == nil {
-            _loadingView = UIActivityIndicatorView(style: activityStyle)
+            _loadingView = UIActivityIndicatorView(activityIndicatorStyle: activityStyle)
             self.addSubview(_loadingView!)
         }
         return _loadingView

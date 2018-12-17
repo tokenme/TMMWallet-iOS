@@ -7,7 +7,7 @@ target 'TimeBank' do
   pod 'Pastel', :git=>'https://github.com/cruisediary/Pastel.git', :tag=>'0.5.1'
   pod 'Schedule', '~> 1.0'
   pod 'GrandTime'
-  pod 'ZHRefresh', :git=>'https://github.com/tokenme/ZHRefresh.git', :tag=>'0.2.1'
+  pod 'ZHRefresh', :git=>'https://github.com/tokenme/ZHRefresh.git', :tag=>'0.2.2'
   pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
   pod 'Moya'
   pod 'PhoneNumberKit'

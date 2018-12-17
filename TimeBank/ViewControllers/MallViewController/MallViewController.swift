@@ -104,6 +104,10 @@ class MallViewController: UIViewController {
         MTA.trackPageViewEnd(TMMConfigs.PageName.mall)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -137,6 +141,7 @@ class MallViewController: UIViewController {
         }
         collectionView.header?.isHidden = true
         collectionView.footer?.isHidden = true
+        
         self.view.addSubview(collectionView)
         collectionView.snp.remakeConstraints { (maker) -> Void in
             maker.leading.equalToSuperview()

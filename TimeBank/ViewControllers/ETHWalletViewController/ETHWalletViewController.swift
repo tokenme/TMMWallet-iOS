@@ -154,6 +154,8 @@ class ETHWalletViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tableView.header?.removeObservers()
+        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.ethWallet)
     }
     
@@ -201,12 +203,10 @@ class ETHWalletViewController: UIViewController {
         tableView.estimatedRowHeight = 60.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.refresh()
         }
-        
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }

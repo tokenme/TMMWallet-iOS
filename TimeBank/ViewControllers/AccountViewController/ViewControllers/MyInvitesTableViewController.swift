@@ -92,6 +92,8 @@ class MyInvitesTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tableView.header?.removeObservers()
+        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.myInvites)
     }
     
@@ -130,6 +132,7 @@ class MyInvitesTableViewController: UITableViewController {
         }
         tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
+        
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }

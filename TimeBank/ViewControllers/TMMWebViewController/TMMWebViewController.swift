@@ -192,55 +192,54 @@ class TMMWebViewController: UIViewController {
                 break
             }
         }
-        
-        for scheme in TMMConfigs.QQ.schemes {
-            guard let url = URL(string: "\(scheme)://") else { continue}
-            if UIApplication.shared.canOpenURL(url) {
-                items.append(SSUIPlatformItem(platformType: .subTypeQQFriend))
-                items.append(SSUIPlatformItem(platformType: .subTypeQZone))
-                break
-            }
-        }
-        
-        for scheme in TMMConfigs.Weibo.schemes {
-            guard let url = URL(string: "\(scheme)://") else { continue}
-            if UIApplication.shared.canOpenURL(url) {
-                items.append(SSUIPlatformItem(platformType: .typeSinaWeibo))
-                break
-            }
-        }
-        
-        for scheme in TMMConfigs.Line.schemes {
-            guard let url = URL(string: "\(scheme)://") else { continue}
-            if UIApplication.shared.canOpenURL(url) {
-                items.append(SSUIPlatformItem(platformType: .typeLine))
-                break
-            }
-        }
-        
-        for scheme in TMMConfigs.Facebook.schemes {
-            guard let url = URL(string: "\(scheme)://") else { continue}
-            if UIApplication.shared.canOpenURL(url) {
-                items.append(SSUIPlatformItem(platformType: .typeFacebook))
-                break
-            }
-        }
-        
-        for scheme in TMMConfigs.Twitter.schemes {
-            guard let url = URL(string: "\(scheme)://") else { continue}
-            if UIApplication.shared.canOpenURL(url) {
-                items.append(SSUIPlatformItem(platformType: .typeTwitter))
-                break
-            }
-        }
-        for scheme in TMMConfigs.Telegram.schemes {
-            guard let url = URL(string: "\(scheme)://") else { continue}
-            if UIApplication.shared.canOpenURL(url) {
-                items.append(SSUIPlatformItem(platformType: .typeTelegram))
-                break
-            }
-        }
         if self?.shareItem == nil {
+            for scheme in TMMConfigs.QQ.schemes {
+                guard let url = URL(string: "\(scheme)://") else { continue}
+                if UIApplication.shared.canOpenURL(url) {
+                    items.append(SSUIPlatformItem(platformType: .subTypeQQFriend))
+                    items.append(SSUIPlatformItem(platformType: .subTypeQZone))
+                    break
+                }
+            }
+            
+            for scheme in TMMConfigs.Weibo.schemes {
+                guard let url = URL(string: "\(scheme)://") else { continue}
+                if UIApplication.shared.canOpenURL(url) {
+                    items.append(SSUIPlatformItem(platformType: .typeSinaWeibo))
+                    break
+                }
+            }
+            
+            for scheme in TMMConfigs.Line.schemes {
+                guard let url = URL(string: "\(scheme)://") else { continue}
+                if UIApplication.shared.canOpenURL(url) {
+                    items.append(SSUIPlatformItem(platformType: .typeLine))
+                    break
+                }
+            }
+            
+            for scheme in TMMConfigs.Facebook.schemes {
+                guard let url = URL(string: "\(scheme)://") else { continue}
+                if UIApplication.shared.canOpenURL(url) {
+                    items.append(SSUIPlatformItem(platformType: .typeFacebook))
+                    break
+                }
+            }
+            
+            for scheme in TMMConfigs.Twitter.schemes {
+                guard let url = URL(string: "\(scheme)://") else { continue}
+                if UIApplication.shared.canOpenURL(url) {
+                    items.append(SSUIPlatformItem(platformType: .typeTwitter))
+                    break
+                }
+            }
+            for scheme in TMMConfigs.Telegram.schemes {
+                guard let url = URL(string: "\(scheme)://") else { continue}
+                if UIApplication.shared.canOpenURL(url) {
+                    items.append(SSUIPlatformItem(platformType: .typeTelegram))
+                    break
+                }
+            }
             items.append(SSUIPlatformItem(platformType: SSDKPlatformType.typeCopy))
             let safariItem = SSUIPlatformItem(platformType: SSDKPlatformType.typeAny)
             safariItem?.iconNormal = UIImage(named: "icon_safari")
@@ -336,7 +335,6 @@ class TMMWebViewController: UIViewController {
             guard let weakSelf = self else { return }
             weakSelf.webView.reload()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -361,6 +359,7 @@ class TMMWebViewController: UIViewController {
             self.savePoints()
         }
         self.tabBarController?.tabBar.isHidden = false
+        webView.scrollView.header?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.article)
     }
     
@@ -373,6 +372,7 @@ class TMMWebViewController: UIViewController {
         webView.scrollView.delegate = nil
         webView.removeObserver(self, forKeyPath: "estimatedProgress")
         webView.configuration.userContentController.removeAllUserScripts()
+        
     }
     
     override func currentViewControllerShouldPop() -> Bool {

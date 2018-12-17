@@ -142,6 +142,10 @@ class AccountTableViewController: UITableViewController {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -162,7 +166,6 @@ class AccountTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 55.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: CGFloat.leastNormalMagnitude))
-        
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.refresh()

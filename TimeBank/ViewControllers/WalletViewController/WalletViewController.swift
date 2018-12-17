@@ -172,6 +172,10 @@ class WalletViewController: UIViewController {
         MTA.trackPageViewEnd(TMMConfigs.PageName.wallet)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -226,12 +230,10 @@ class WalletViewController: UIViewController {
         tableView.estimatedRowHeight = 66.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
         tableView.header = ZHRefreshNormalHeader.headerWithRefreshing { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.refresh()
         }
-        
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }

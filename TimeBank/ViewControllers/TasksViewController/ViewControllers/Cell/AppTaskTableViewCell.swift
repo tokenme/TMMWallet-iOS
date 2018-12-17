@@ -37,6 +37,8 @@ class AppTaskTableViewCell: SwipeTableViewCell, NibReusable {
     func fill(_ app: APIAppTask, installed: Bool) {
         if let icon = app.icon {
             iconImageView.kf.setImage(with: URL(string: icon))
+        } else {
+            iconImageView.image = nil
         }
         nameLabel.text = app.name
         let formatter = NumberFormatter()

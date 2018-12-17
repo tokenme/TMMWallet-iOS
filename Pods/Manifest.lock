@@ -115,7 +115,7 @@ PODS:
   - TMMSDK (0.5.0)
   - UIViewKVO (2.0.0)
   - ViewAnimator (2.2.0)
-  - ZHRefresh (0.2.1)
+  - ZHRefresh (0.1.9)
 
 DEPENDENCIES:
   - AssetsPickerViewController (from `https://github.com/DragonCherry/AssetsPickerViewController.git`, tag `2.5.5`)
@@ -169,7 +169,7 @@ DEPENDENCIES:
   - Tabman (~> 1.10)
   - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.5.0`)
   - ViewAnimator (~> 2.2)
-  - ZHRefresh (from `https://github.com/tokenme/ZHRefresh.git`, tag `0.2.1`)
+  - ZHRefresh (from `https://github.com/tokenme/ZHRefresh.git`, tag `0.2.2`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -247,7 +247,7 @@ EXTERNAL SOURCES:
     :tag: 0.5.0
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
-    :tag: 0.2.1
+    :tag: 0.2.2
 
 CHECKOUT OPTIONS:
   AssetsPickerViewController:
@@ -276,7 +276,7 @@ CHECKOUT OPTIONS:
     :tag: 0.5.0
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
-    :tag: 0.2.1
+    :tag: 0.2.2
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -333,8 +333,8 @@ SPEC CHECKSUMS:
   TMMSDK: b34e76aa25c9c83e98e56d4ae581c1eb01d62122
   UIViewKVO: 091f9e020d69e73c4bf5e5ef61cde7bff1c24bbf
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
-  ZHRefresh: f9e959e34c47887fb814c95eee3962ae3ba73a97
+  ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: 428e79856ae1117b4489e26fed2d19f5037b7944
+PODFILE CHECKSUM: 272c3f66dafe764a9a30193be07e214df5edb72b
 
 COCOAPODS: 1.6.0.beta.1

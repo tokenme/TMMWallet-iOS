@@ -171,6 +171,8 @@ class DeviceAppsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tableView.header?.removeObservers()
+        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.device)
     }
     

@@ -87,6 +87,12 @@ class MyOrderbooksTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tableView.header?.removeObservers()
+        tableView.footer?.removeObservers()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -119,6 +125,7 @@ class MyOrderbooksTableViewController: UITableViewController {
         }
         tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
+        
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }

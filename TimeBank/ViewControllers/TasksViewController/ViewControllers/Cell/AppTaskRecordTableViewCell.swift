@@ -30,6 +30,8 @@ class AppTaskRecordTableViewCell: UITableViewCell, NibReusable {
     func fill(_ task: APITaskRecord) {
         if let icon = task.image {
             imgView.kf.setImage(with: URL(string: icon))
+        } else {
+            imgView.image = nil
         }
         titleLabel.text = task.title
         let formatter = NumberFormatter()

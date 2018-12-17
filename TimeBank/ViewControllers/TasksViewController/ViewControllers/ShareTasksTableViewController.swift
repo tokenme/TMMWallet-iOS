@@ -69,7 +69,6 @@ class ShareTasksTableViewController: UITableViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-        print("ViewController deinit")
     }
     
     override func viewDidLoad() {
@@ -139,6 +138,10 @@ class ShareTasksTableViewController: UITableViewController {
         MTA.trackPageViewEnd(TMMConfigs.PageName.shareTasks)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super .viewDidDisappear(animated)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -180,6 +183,7 @@ class ShareTasksTableViewController: UITableViewController {
         }
         tableView.header?.isHidden = true
         tableView.footer?.isHidden = true
+        
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }

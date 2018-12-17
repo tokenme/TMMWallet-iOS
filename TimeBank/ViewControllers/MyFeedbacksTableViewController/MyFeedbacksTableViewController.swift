@@ -84,6 +84,13 @@ class MyFeedbacksTableViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        tableView.header?.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tableView.header?.removeObservers()
+        tableView.footer?.removeObservers()
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,8 +118,6 @@ class MyFeedbacksTableViewController: UIViewController {
             guard let weakSelf = self else { return }
             weakSelf.refresh()
         }
-        
-        tableView.header?.isHidden = true
         SkeletonAppearance.default.multilineHeight = 10
         tableView.showAnimatedSkeleton()
     }

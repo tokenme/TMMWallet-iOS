@@ -130,11 +130,14 @@ class GoodViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
+        
         MTA.trackPageViewBegin(TMMConfigs.PageName.good)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tableView.header?.removeObservers()
+        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.good)
     }
     
