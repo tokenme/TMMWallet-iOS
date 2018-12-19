@@ -10,6 +10,24 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Chest Table View Controller-->
+        <scene sceneID="r7C-1n-KMs">
+            <objects>
+                <tableViewController storyboardIdentifier="ChestTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tIH-D0-6zQ" customClass="ChestTableViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="G05-WL-7bi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="tIH-D0-6zQ" id="IIT-ZQ-yY0"/>
+                            <outlet property="delegate" destination="tIH-D0-6zQ" id="kk2-hA-Bzi"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7HD-10-fEV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-79" y="-894"/>
+        </scene>
         <!--UCoin-->
         <scene sceneID="ThT-0z-joV">
             <objects>
@@ -545,13 +563,26 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="ILj-GB-cd2"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSX-iN-hR1">
+                                <rect key="frame" x="279" y="478" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="Gxh-gT-bbT"/>
+                                    <constraint firstAttribute="width" secondItem="mSX-iN-hR1" secondAttribute="height" multiplier="1:1" id="thH-ln-a7o"/>
+                                </constraints>
+                                <state key="normal" image="Chest"/>
+                                <connections>
+                                    <action selector="showChestView" destination="9pv-A4-QxB" eventType="touchUpInside" id="oIB-TG-GBz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Nw5-u5-v2H" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" id="H8L-60-WV5"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="mSX-iN-hR1" secondAttribute="trailing" constant="16" id="HBM-Mk-x4B"/>
                             <constraint firstItem="ePp-bM-lLL" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="10" id="LAO-FR-3NI"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="ePp-bM-lLL" secondAttribute="trailing" constant="20" id="NjN-ca-ilv"/>
                             <constraint firstItem="Mya-kY-y37" firstAttribute="leading" secondItem="ePp-bM-lLL" secondAttribute="leading" id="Tv2-X3-cau"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="mSX-iN-hR1" secondAttribute="bottom" constant="60" id="YAt-1a-ur3"/>
                             <constraint firstItem="Mya-kY-y37" firstAttribute="trailing" secondItem="ePp-bM-lLL" secondAttribute="trailing" id="ecT-IX-vPg"/>
                             <constraint firstItem="ePp-bM-lLL" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="20" id="hoT-oW-fKP"/>
                             <constraint firstItem="Nw5-u5-v2H" firstAttribute="top" secondItem="Mya-kY-y37" secondAttribute="bottom" constant="10" id="jpg-Sv-ieG"/>
@@ -1265,6 +1296,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lpU-Qt-3Xy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4460" y="415"/>
+        </scene>
+        <!--Goods View Controller-->
+        <scene sceneID="ECg-ss-JCd">
+            <objects>
+                <viewController storyboardIdentifier="GoodsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tzg-vZ-wEq" customClass="GoodsViewController" customModule="TimeBank" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="L1T-7g-9Y7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Zlp-Kv-YwZ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uca-s7-C1X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1977" y="108"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="AnO-Ur-EaK">
@@ -2869,6 +2915,7 @@
     </scenes>
     <resources>
         <image name="Account" width="30" height="30"/>
+        <image name="Chest" width="85" height="64"/>
         <image name="Exchange" width="24" height="24"/>
         <image name="Flash" width="30" height="30"/>
         <image name="FullScreen" width="66.5" height="66.5"/>

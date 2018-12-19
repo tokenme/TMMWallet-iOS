@@ -159,9 +159,7 @@ class UserLevelTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
-        MTA.trackPageViewEnd(TMMConfigs.PageName.video)
+        MTA.trackPageViewEnd(TMMConfigs.PageName.creditLevel)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -178,6 +176,8 @@ class UserLevelTableViewController: UITableViewController {
     }
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     

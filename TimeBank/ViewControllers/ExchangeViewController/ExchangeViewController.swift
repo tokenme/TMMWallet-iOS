@@ -99,6 +99,8 @@ class ExchangeViewController: UIViewController {
     private var orderBookServiceProvider = MoyaProvider<TMMOrderBookService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -179,8 +181,6 @@ class ExchangeViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
     }
     
     override func didReceiveMemoryWarning() {

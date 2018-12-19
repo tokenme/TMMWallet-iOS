@@ -117,6 +117,8 @@ class DeviceAppsViewController: UIViewController {
     private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -171,8 +173,6 @@ class DeviceAppsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.device)
     }
     

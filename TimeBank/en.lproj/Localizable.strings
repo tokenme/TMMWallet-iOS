@@ -220,6 +220,7 @@
 "Member" = "Member";
 "NextLevelInvitesDesc" = "Invite %d more people to upgrade";
 "CreditLevelUpgradeDesc" = "Invite %d friends to upgrade to %@";
+"ReleaseNote" = "Release Note";
 "Help" = "Help";
 
 // Market
@@ -286,3 +287,5 @@
 // Mall
 "Mall" = "Mall";
 "MyInvest" = "My Invest";
+"InvestGoods" = "Invest Goods";
+"RedeemMobileData" = "Redeem Mobile Data";

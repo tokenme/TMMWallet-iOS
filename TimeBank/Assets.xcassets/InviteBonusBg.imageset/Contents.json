@@ -1,0 +1,26 @@
+{
+  "images": [
+    {
+      "filename": "invite-bonus-bg-universal-170@1x.png",
+      "idiom": "universal",
+      "scale": "1x",
+      "size": "170.66666666666666x199.33333333333331"
+    },
+    {
+      "filename": "invite-bonus-bg-universal-170@2x.png",
+      "idiom": "universal",
+      "scale": "2x",
+      "size": "170.66666666666666x199.33333333333331"
+    },
+    {
+      "filename": "invite-bonus-bg-universal-170@3x.png",
+      "idiom": "universal",
+      "scale": "3x",
+      "size": "170.66666666666666x199.33333333333334"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

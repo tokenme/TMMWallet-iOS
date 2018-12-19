@@ -210,6 +210,7 @@ enum I18n: CustomStringConvertible {
     case nextLevelInvitesDesc
     case creditLevelUpgradeDesc
     case help
+    case releaseNote
     case bindWechatAccount
     case binded
     case notbinded
@@ -255,6 +256,8 @@ enum I18n: CustomStringConvertible {
     case operatorName
     case mall
     case myInvest
+    case investGoods
+    case redeemMobileData
     
     var description : String {
         switch self {
@@ -658,6 +661,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("NextLevelInvitesDesc", comment: "NextLevelInvitesDesc")
         case .creditLevelUpgradeDesc:
             return NSLocalizedString("CreditLevelUpgradeDesc", comment: "CreditLevelUpgradeDesc")
+        case .releaseNote:
+            return NSLocalizedString("ReleaseNote", comment: "ReleaseNote")
         case .help:
             return NSLocalizedString("Help", comment: "Help")
         case .bindWechatAccount:
@@ -750,6 +755,10 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("Mall", comment: "Mall")
         case .myInvest:
             return NSLocalizedString("MyInvest", comment: "My Invest")
+        case .investGoods:
+            return NSLocalizedString("InvestGoods", comment: "Invest Goods")
+        case .redeemMobileData:
+            return NSLocalizedString("RedeemMobileData", comment: "Redeem Mobile Data")
         }
     }
 }

@@ -225,6 +225,12 @@
 		1D77AD36219436A1004EBCBF /* MallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D77AD35219436A1004EBCBF /* MallViewController.swift */; };
 		1D77AD382194370A004EBCBF /* APIGood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D77AD372194370A004EBCBF /* APIGood.swift */; };
 		1D77AD3D21943A6C004EBCBF /* GoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D77AD3B21943A6C004EBCBF /* GoodCollectionViewCell.swift */; };
+		1D8081B821C8CD160099A9ED /* DailyInviteSummaryAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081B621C8CD160099A9ED /* DailyInviteSummaryAlertViewController.swift */; };
+		1D8081B921C8CD160099A9ED /* DailyInviteSummaryAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8081B721C8CD160099A9ED /* DailyInviteSummaryAlertViewController.xib */; };
+		1D8081BB21C90BCB0099A9ED /* ChestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081BA21C90BCB0099A9ED /* ChestTableViewController.swift */; };
+		1D8081BE21C90E830099A9ED /* ChestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081BC21C90E830099A9ED /* ChestTableViewCell.swift */; };
+		1D8081BF21C90E830099A9ED /* ChestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8081BD21C90E830099A9ED /* ChestTableViewCell.xib */; };
+		1D8081C121CA10FC0099A9ED /* GoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081C021CA10FC0099A9ED /* GoodsViewController.swift */; };
 		1DA38EC72170753F0073DB8A /* TMMRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */; };
 		1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */; };
 		1DA38ECA217084380073DB8A /* APITMMWithdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */; };
@@ -496,6 +502,12 @@
 		1D77AD35219436A1004EBCBF /* MallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallViewController.swift; sourceTree = "<group>"; };
 		1D77AD372194370A004EBCBF /* APIGood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIGood.swift; sourceTree = "<group>"; };
 		1D77AD3B21943A6C004EBCBF /* GoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodCollectionViewCell.swift; sourceTree = "<group>"; };
+		1D8081B621C8CD160099A9ED /* DailyInviteSummaryAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInviteSummaryAlertViewController.swift; sourceTree = "<group>"; };
+		1D8081B721C8CD160099A9ED /* DailyInviteSummaryAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyInviteSummaryAlertViewController.xib; sourceTree = "<group>"; };
+		1D8081BA21C90BCB0099A9ED /* ChestTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChestTableViewController.swift; sourceTree = "<group>"; };
+		1D8081BC21C90E830099A9ED /* ChestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChestTableViewCell.swift; sourceTree = "<group>"; };
+		1D8081BD21C90E830099A9ED /* ChestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChestTableViewCell.xib; sourceTree = "<group>"; };
+		1D8081C021CA10FC0099A9ED /* GoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsViewController.swift; sourceTree = "<group>"; };
 		1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMRedeemViewController.swift; sourceTree = "<group>"; };
 		1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TMMRedeemViewController.xib; sourceTree = "<group>"; };
 		1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITMMWithdraw.swift; sourceTree = "<group>"; };
@@ -601,6 +613,8 @@
 			isa = PBXGroup;
 			children = (
 				1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */,
+				1D8081B621C8CD160099A9ED /* DailyInviteSummaryAlertViewController.swift */,
+				1D8081B721C8CD160099A9ED /* DailyInviteSummaryAlertViewController.xib */,
 				1D151E73213D4623007C87DD /* Cell */,
 			);
 			path = WalletViewController;
@@ -1144,6 +1158,8 @@
 				1D49E37221B7A82100475B85 /* InputTableViewCell.swift */,
 				1D49E37421B7AA8A00475B85 /* InviteStatsTableViewCell.swift */,
 				1D49E37521B7AA8A00475B85 /* InviteStatsTableViewCell.xib */,
+				1D8081BC21C90E830099A9ED /* ChestTableViewCell.swift */,
+				1D8081BD21C90E830099A9ED /* ChestTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1160,6 +1176,7 @@
 			isa = PBXGroup;
 			children = (
 				1D77AD35219436A1004EBCBF /* MallViewController.swift */,
+				1D8081C021CA10FC0099A9ED /* GoodsViewController.swift */,
 				1D05B4F2219465E4008EE10D /* GoodViewController.swift */,
 				1D05B4FE21957719008EE10D /* InvestViewController.swift */,
 				1D05B4FF21957719008EE10D /* InvestViewController.xib */,
@@ -1232,6 +1249,7 @@
 			isa = PBXGroup;
 			children = (
 				1DF802EF2152495B0002E054 /* MyInviteCodeViewController.swift */,
+				1D8081BA21C90BCB0099A9ED /* ChestTableViewController.swift */,
 				1D49E37C21B7ED4300475B85 /* MyInvitesTableViewController.swift */,
 				1D3E42F221ABC9E10014CEB1 /* UserLevelTableViewController.swift */,
 				1D0370C82165E7D300E5E3CE /* WechatQRCodeViewController.swift */,
@@ -1366,8 +1384,10 @@
 				1D49E38121B7EF0B00475B85 /* MyInviteTableViewCell.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
+				1D8081B921C8CD160099A9ED /* DailyInviteSummaryAlertViewController.xib in Resources */,
 				1D3E42D2219D591A0014CEB1 /* InviteImagePresentrViewController.xib in Resources */,
 				1D3E42C62195B90B0014CEB1 /* GoodInvestTableHeaderView.xib in Resources */,
+				1D8081BF21C90E830099A9ED /* ChestTableViewCell.xib in Resources */,
 				1D151EC4213E98AF007C87DD /* LoadingShareTaskTableViewCell.xib in Resources */,
 				1DEC545A215121F5007A46D5 /* InfoPlist.strings in Resources */,
 				1DEC5443214F9F0A007A46D5 /* ExchangeRecordTableViewCell.xib in Resources */,
@@ -1588,6 +1608,7 @@
 				1D3441BF213CF68500B8E157 /* LoginViewController.swift in Sources */,
 				1D49E36021B50F4A00475B85 /* APIAd.swift in Sources */,
 				1D3441CD213CF78000B8E157 /* APIUser.swift in Sources */,
+				1D8081BB21C90BCB0099A9ED /* ChestTableViewController.swift in Sources */,
 				1D3E42F321ABC9E10014CEB1 /* UserLevelTableViewController.swift in Sources */,
 				1D5FF67A215B3F62001E69CD /* MarketTopTableViewHeader.swift in Sources */,
 				1D31FC5B2178A1FD0014712B /* APIBlowupEvent.swift in Sources */,
@@ -1669,9 +1690,11 @@
 				1D3E42C42195B8280014CEB1 /* GoodInvestTableHeaderView.swift in Sources */,
 				1D3441C6213CF74800B8E157 /* TMMUserService.swift in Sources */,
 				1D28DE5A2155F98200FCF6F6 /* APIOrderBook.swift in Sources */,
+				1D8081C121CA10FC0099A9ED /* GoodsViewController.swift in Sources */,
 				1D1D6FBF214689760001ED49 /* APIToken.swift in Sources */,
 				1DAA635321B916F6000B3AC4 /* CreditLevelBannerTableViewCell.swift in Sources */,
 				1D3441CF213CF78000B8E157 /* APIResponse.swift in Sources */,
+				1D8081B821C8CD160099A9ED /* DailyInviteSummaryAlertViewController.swift in Sources */,
 				1D1D6FC92147B9250001ED49 /* SimpleHeaderView.swift in Sources */,
 				1D49E37321B7A82100475B85 /* InputTableViewCell.swift in Sources */,
 				1D151EC9213F8CE2007C87DD /* APIAppTask.swift in Sources */,
@@ -1696,6 +1719,7 @@
 				1DA38ECE21738EB70073DB8A /* APIFeedback.swift in Sources */,
 				1D151EAF213E67BD007C87DD /* NSData+Base64.m in Sources */,
 				1D28DE6021563FBE00FCF6F6 /* MarketTopTableViewCell.swift in Sources */,
+				1D8081BE21C90E830099A9ED /* ChestTableViewCell.swift in Sources */,
 				1D1D6FA92140F3F00001ED49 /* TaskRecordsTableViewController.swift in Sources */,
 				1D0370D021661C1200E5E3CE /* RedeemCdpCollectionViewCell.swift in Sources */,
 				1D3441F0213CFBA300B8E157 /* TweeBorderedTextField.swift in Sources */,

@@ -87,6 +87,8 @@ class MyInvestsViewController: UIViewController {
     private var goodServiceProvider = MoyaProvider<TMMGoodService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -126,8 +128,6 @@ class MyInvestsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.myInvests)
     }
     

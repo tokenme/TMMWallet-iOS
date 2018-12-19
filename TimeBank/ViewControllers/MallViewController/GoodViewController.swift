@@ -96,6 +96,8 @@ class GoodViewController: UIViewController {
     
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -136,8 +138,6 @@ class GoodViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.good)
     }
     

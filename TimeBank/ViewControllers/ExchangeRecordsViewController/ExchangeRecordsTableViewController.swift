@@ -52,6 +52,8 @@ class ExchangeRecordsTableViewController: UITableViewController {
     private var exchangeServiceProvider = MoyaProvider<TMMExchangeService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -63,10 +65,14 @@ class ExchangeRecordsTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MTA.trackPageViewBegin(TMMConfigs.PageName.exchangeRecords)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
+        MTA.trackPageViewEnd(TMMConfigs.PageName.exchangeRecords)
     }
     
     override func didReceiveMemoryWarning() {

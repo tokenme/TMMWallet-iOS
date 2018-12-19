@@ -10,6 +10,7 @@ import Foundation
 struct TMMConfigs {
     
     static let helpLink = "https://tmm.tokenmama.io/help/"
+    static let releaseNoteLink = "https://tmm.tokenmama.io/help/release-note/ios/"
     static let downloadLink = "https://ucoin.io/app/download"
     static let validatingBuildKey = "validating_build"
     
@@ -30,6 +31,7 @@ struct TMMConfigs {
         static let invite = "Invite"
         static let scan = "Scan"
         static let feedback = "Feedback"
+        static let myFeedback = "MyFeedback"
         static let device = "Device"
         static let sdkApps = "SDKApps"
         static let tmmWithdraw = "TMMWithdraw"
@@ -40,6 +42,9 @@ struct TMMConfigs {
         static let transfer = "Transfer"
         static let exchangeRecords = "ExchangeRecords"
         static let myInvites = "MyInvites"
+        static let chestView = "ChestView"
+        static let investGoods = "InvestGoods"
+        static let redeemMobileData = "RedeemMobileData"
     }
     
     struct EventName {

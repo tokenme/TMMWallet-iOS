@@ -359,7 +359,6 @@ class TMMWebViewController: UIViewController {
             self.savePoints()
         }
         self.tabBarController?.tabBar.isHidden = false
-        webView.scrollView.header?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.article)
     }
     
@@ -369,6 +368,7 @@ class TMMWebViewController: UIViewController {
         webView.stopLoading()
         webView.uiDelegate = nil
         webView.navigationDelegate = nil
+        webView.scrollView.header?.removeObservers()
         webView.scrollView.delegate = nil
         webView.removeObserver(self, forKeyPath: "estimatedProgress")
         webView.configuration.userContentController.removeAllUserScripts()

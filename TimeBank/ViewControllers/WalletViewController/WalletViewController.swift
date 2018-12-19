@@ -42,9 +42,20 @@ class WalletViewController: UIViewController {
     private var todayRewarded: Bool {
         get {
             if let lastRewardDate: Date = Defaults[.lastDailyBonus] {
-                let between = Date().daysBetweenDate(toDate: lastRewardDate)
-                print(between)
-                return between < 1
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                return dateFormatter.string(from: lastRewardDate) == dateFormatter.string(from: Date())
+            }
+            return false
+        }
+    }
+    
+    private var todayInviteSumaryAlerted: Bool {
+        get {
+            if let lastDate: Date = Defaults[.lastDailyInviteSummary] {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                return dateFormatter.string(from: lastDate) == dateFormatter.string(from: Date())
             }
             return false
         }
@@ -56,6 +67,8 @@ class WalletViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var pointsLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
+    
+    private let dailyInviteSummaryAlertViewController = DailyInviteSummaryAlertViewController()
     
     private var devices: [APIDevice] = [] {
         didSet {
@@ -105,13 +118,22 @@ class WalletViewController: UIViewController {
         return presenter
     }()
     
+    private let inviteSummaryPresenter: Presentr = {
+        let presenter = Presentr(presentationType: .fullScreen)
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.dismissOnSwipe = true
+        return presenter
+    }()
+    
     private var loadingDevices = false
     private var loadingBalance = false
     private var unbindingDevice = false
     private var gettingDailyBonusStatus = false
     private var committingDailyBonus = false
+    private var gettingDailyInviteSummary = false
     
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var tokenServiceProvider = MoyaProvider<TMMTokenService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var bonusServiceProvider = MoyaProvider<TMMBonusService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
@@ -163,6 +185,8 @@ class WalletViewController: UIViewController {
             let vc = LoginViewController.instantiate()
             vc.delegate = self
             self.present(vc, animated: true, completion: nil)
+        } else if !todayInviteSumaryAlerted {
+            getDailyInviteSummary()
         }
         SwiftRater.check()
     }
@@ -254,6 +278,11 @@ class WalletViewController: UIViewController {
         let vc = ScanViewController()
         vc.scanDelegate = self
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func showChestView() {
+        let vc = ChestTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -516,6 +545,31 @@ extension WalletViewController {
         )
     }
     
+    private func getDailyInviteSummary() {
+        if self.gettingDailyInviteSummary { return }
+        self.gettingDailyInviteSummary = true
+        TMMUserService.getDailyInviteSummary(
+            currency: Defaults[.currency] ?? Currency.USD.rawValue,
+            provider: self.userServiceProvider)
+            .then(in: .main, {[weak self] summary in
+                guard let weakSelf = self else { return }
+                Defaults[.lastDailyInviteSummary] = Date()
+                if summary.contribute == 0 {
+                    return
+                }
+                weakSelf.dailyInviteSummaryAlertViewController.summary = summary
+                weakSelf.dailyInviteSummaryAlertViewController.delegate = self
+                weakSelf.customPresentViewController(weakSelf.inviteSummaryPresenter, viewController: weakSelf.dailyInviteSummaryAlertViewController, animated: true)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .background, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.gettingDailyInviteSummary = false
+            }
+        )
+    }
+    
     @IBAction private func commitDailyBonus() {
         guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
         if self.committingDailyBonus {
@@ -676,6 +730,13 @@ extension WalletViewController: IndexToolsDelegate {
     func gotoMyInvites() {
         let vc = MyInvitesTableViewController.instantiate()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension WalletViewController: DailyInviteSummaryAlertDelegate {
+    func gotoInviteSummaryPage() {
+        let vc = MyInvitesTableViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

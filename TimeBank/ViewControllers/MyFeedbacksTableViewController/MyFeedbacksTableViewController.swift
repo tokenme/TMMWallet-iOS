@@ -52,6 +52,8 @@ class MyFeedbacksTableViewController: UIViewController {
     private var feedbackServiceProvider = MoyaProvider<TMMFeedbackService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -85,14 +87,13 @@ class MyFeedbacksTableViewController: UIViewController {
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
         tableView.header?.isHidden = true
+        MTA.trackPageViewBegin(TMMConfigs.PageName.myFeedback)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
+        MTA.trackPageViewEnd(TMMConfigs.PageName.myFeedback)
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

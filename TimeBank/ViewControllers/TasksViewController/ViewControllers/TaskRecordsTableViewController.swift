@@ -49,6 +49,8 @@ class TaskRecordsTableViewController: UITableViewController {
     private var taskServiceProvider = MoyaProvider<TMMTaskService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -81,12 +83,6 @@ class TaskRecordsTableViewController: UITableViewController {
             navigationController.navigationBar.isTranslucent = false
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
     }
     
     override func didReceiveMemoryWarning() {

@@ -32,6 +32,7 @@ fileprivate enum AccountTableCellType {
     case telegramGroup
     case wechatGroup
     case feedback
+    case releaseNote
     case help
     case signout
 }
@@ -87,7 +88,7 @@ class AccountTableViewController: UITableViewController {
     
     private var creditLevels: [APICreditLevel] = []
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo, .creditLevelBanner], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .help, .feedback], [.signout]]
+    private let sections: [[AccountTableCellType]] = [[.accountInfo, .creditLevelBanner], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .releaseNote, .help, .feedback], [.signout]]
     
     private var isUpdating: Bool = false
     private var loadingUserInfo: Bool = false
@@ -140,10 +141,6 @@ class AccountTableViewController: UITableViewController {
             vc.delegate = self
             self.present(vc, animated: true, completion: nil)
         }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -331,6 +328,11 @@ extension AccountTableViewController {
             }
             cell.accessoryType = .disclosureIndicator
             return cell
+        case .releaseNote:
+            let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
+            cell.fill(I18n.releaseNote.description)
+            cell.accessoryType = .disclosureIndicator
+            return cell
         case .feedback:
             let cell = tableView.dequeueReusableCell(for: indexPath) as SimpleTableViewCell
             cell.fill(I18n.feedback.description)
@@ -395,6 +397,10 @@ extension AccountTableViewController {
         case .feedback:
             let vc = FeedbackTableViewController.instantiate()
             self.navigationController?.pushViewController(vc, animated: true)
+        case .releaseNote:
+            let vc = TMMWebViewController.instantiate()
+            vc.request = URLRequest(url: URL(string: TMMConfigs.releaseNoteLink)!)
+            self.navigationController?.pushViewController(vc, animated: true)
         case .help:
             let vc = TMMWebViewController.instantiate()
             vc.request = URLRequest(url: URL(string: TMMConfigs.helpLink)!)
@@ -449,6 +455,8 @@ extension AccountTableViewController {
         case .wechatGroup:
             return true
         case .feedback:
+            return true
+        case .releaseNote:
             return true
         case .help:
             return true

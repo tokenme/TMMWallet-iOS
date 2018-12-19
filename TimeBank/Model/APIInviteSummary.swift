@@ -45,3 +45,24 @@ public class APIInviteSummary: APIResponse {
         users <- map["users"]
     }
 }
+
+public class APIDailyInviteSummary: APIResponse {
+    var cny: NSDecimalNumber = 0
+    var contribute: NSDecimalNumber = 0
+    
+    // MARK: JSON
+    required public init?(map: Map) {
+        super.init(map: map)
+    }
+    
+    convenience init?() {
+        self.init(map: Map.init(mappingType: MappingType.fromJSON, JSON: [:]))
+    }
+    
+    // Mappable
+    override public func mapping(map: Map) {
+        super.mapping(map: map)
+        cny <- (map["cny"], decimalTransform)
+        contribute <- (map["contribute"], decimalTransform)
+    }
+}

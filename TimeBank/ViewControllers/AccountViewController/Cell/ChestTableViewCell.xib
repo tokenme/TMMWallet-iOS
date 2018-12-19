@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ChestTableViewCell" customModule="TimeBank" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Vd-oZ-7m2">
+                        <rect key="frame" x="16" y="8" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="GM5-wZ-aOt"/>
+                            <constraint firstAttribute="width" secondItem="1Vd-oZ-7m2" secondAttribute="height" multiplier="1:1" id="KjY-a5-ljr"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VFp-r9-gSu">
+                        <rect key="frame" x="48" y="8" width="33.5" height="23.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" horizontalCompressionResistancePriority="250" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TDx-wP-SRi">
+                        <rect key="frame" x="48" y="39.5" width="50" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cqk-rV-ITY">
+                        <rect key="frame" x="229" y="19" width="75" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="75" id="erb-oW-7Os"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="tintColor" name="systemPinkColor" catalog="System" colorSpace="catalog"/>
+                        <inset key="titleEdgeInsets" minX="8" minY="4" maxX="8" maxY="4"/>
+                        <state key="normal" title="去升级"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Cqk-rV-ITY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VFp-r9-gSu" secondAttribute="trailing" constant="16" id="0kY-5Y-b3s"/>
+                    <constraint firstAttribute="trailing" secondItem="Cqk-rV-ITY" secondAttribute="trailing" constant="16" id="A8R-df-ECh"/>
+                    <constraint firstItem="Cqk-rV-ITY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TDx-wP-SRi" secondAttribute="trailing" constant="16" id="EKA-nB-ple"/>
+                    <constraint firstItem="TDx-wP-SRi" firstAttribute="top" secondItem="VFp-r9-gSu" secondAttribute="bottom" constant="8" id="FNW-nH-Tpe"/>
+                    <constraint firstItem="Cqk-rV-ITY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HT6-ym-1vm"/>
+                    <constraint firstItem="VFp-r9-gSu" firstAttribute="leading" secondItem="1Vd-oZ-7m2" secondAttribute="trailing" constant="8" id="PgN-RB-Xdr"/>
+                    <constraint firstAttribute="bottom" secondItem="TDx-wP-SRi" secondAttribute="bottom" constant="8" id="Phc-4O-8FV"/>
+                    <constraint firstItem="VFp-r9-gSu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Rml-ZG-s46"/>
+                    <constraint firstItem="TDx-wP-SRi" firstAttribute="leading" secondItem="VFp-r9-gSu" secondAttribute="leading" id="a0h-fB-w2n"/>
+                    <constraint firstItem="1Vd-oZ-7m2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="lNL-oQ-rmJ"/>
+                    <constraint firstItem="1Vd-oZ-7m2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="wvk-Gv-esd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="button" destination="Cqk-rV-ITY" id="Q4f-bD-f6C"/>
+                <outlet property="iconView" destination="1Vd-oZ-7m2" id="gWO-rO-A35"/>
+                <outlet property="subtitleLabel" destination="TDx-wP-SRi" id="sR1-GQ-GWK"/>
+                <outlet property="titleLabel" destination="VFp-r9-gSu" id="fNN-jY-kCI"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="163.26836581709148"/>
+        </tableViewCell>
+    </objects>
+</document>

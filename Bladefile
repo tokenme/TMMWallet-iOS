@@ -150,6 +150,30 @@ blades:
   - source: images/logo_tab.png
     mount: TimeBank/Assets.xcassets/LogoTab.imageset
     contents: true
+  - source: images/invite-bonus-bg.png
+    mount: TimeBank/Assets.xcassets/InviteBonusBg.imageset
+    contents: true
+  - source: images/chest.png
+    mount: TimeBank/Assets.xcassets/Chest.imageset
+    contents: true
+  - source: images/invite-banner.png
+    mount: TimeBank/Assets.xcassets/InviteBanner.imageset
+    contents: true
+  - source: images/invite-bonus-icon.png
+    mount: TimeBank/Assets.xcassets/InviteBonusIcon.imageset
+    contents: true
+  - source: images/invite-icon.png
+    mount: TimeBank/Assets.xcassets/InviteIcon.imageset
+    contents: true
+  - source: images/push-reading-icon.png
+    mount: TimeBank/Assets.xcassets/PushReadingIcon.imageset
+    contents: true
+  - source: images/reading-icon.png
+    mount: TimeBank/Assets.xcassets/ReadingIcon.imageset
+    contents: true
+  - source: images/share-icon.png
+    mount: TimeBank/Assets.xcassets/ShareIcon.imageset
+    contents: true
 #  - source: iTunesArtwork@2x.png
 #    template: templates/iphone-appicon.json # use a template if you want to batch build catalogs regardless of an xcode project (e.g. as part of a CI process)
 #    out: out/newiphone

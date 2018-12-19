@@ -51,6 +51,8 @@ class MyInvitesTableViewController: UITableViewController {
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
+        tableView?.header?.removeObservers()
+        tableView?.footer?.removeObservers()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -92,8 +94,6 @@ class MyInvitesTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tableView.header?.removeObservers()
-        tableView.footer?.removeObservers()
         MTA.trackPageViewEnd(TMMConfigs.PageName.myInvites)
     }
     
@@ -242,9 +242,7 @@ extension MyInvitesTableViewController: SkeletonTableViewDataSource {
 extension MyInvitesTableViewController {
     
     private func getInviteSummary() {
-        if self.loadingInviteSummary {
-            return
-        }
+        if self.loadingInviteSummary { return }
         self.loadingInviteSummary = true
         
         TMMUserService.getInviteSummary(
@@ -256,9 +254,10 @@ extension MyInvitesTableViewController {
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .background, body: {[weak self] in
+            }).always(in: .main, body: {[weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.loadingInviteSummary = false
+                weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
             }
         )
     }

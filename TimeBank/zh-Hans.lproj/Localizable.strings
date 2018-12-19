@@ -220,6 +220,7 @@
 "Member" = "会员";
 "NextLevelInvitesDesc" = "还差%d人升级";
 "CreditLevelUpgradeDesc" = "邀请%d好友即可升级%@";
+"ReleaseNote" = "更新说明";
 "Help" = "帮助";
 
 // Market
@@ -286,3 +287,5 @@
 // Mall
 "Mall" = "商城";
 "MyInvest" = "我的投资";
+"InvestGoods" = "投资商品";
+"RedeemMobileData" = "兑换流量";
