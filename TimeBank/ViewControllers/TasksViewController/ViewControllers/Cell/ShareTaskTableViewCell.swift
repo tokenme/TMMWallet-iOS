@@ -145,18 +145,25 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
         return statsStackView
     }()
     
-    private func updateTitelConstraints(_ isTask: Bool, haveImage: Bool) {
+    private func updateTitelConstraints(_ isTask: Bool, showRewardHint: Bool, haveImage: Bool) {
         if haveImage {
             imgView.isHidden = false
-            imgView.snp.remakeConstraints { (maker) -> Void in
-                maker.trailing.top.equalToSuperview()
-                maker.width.height.equalTo(80)
+            if showRewardHint {
+                imgView.snp.remakeConstraints { (maker) -> Void in
+                    maker.trailing.top.equalToSuperview()
+                    maker.width.height.equalTo(80)
+                }
+            } else {
+                imgView.snp.remakeConstraints { (maker) -> Void in
+                    maker.trailing.top.bottom.equalToSuperview()
+                    maker.width.height.equalTo(80)
+                }
             }
-            imgView.setContentHuggingPriority(UILayoutPriority(rawValue: 2000), for: .horizontal)
-            imgView.setContentHuggingPriority(UILayoutPriority(rawValue: 2000), for: .vertical)
-            imgView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 2000), for: .horizontal)
-            imgView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 2000), for: .vertical)
-            if isTask {
+            imgView.setContentHuggingPriority(UILayoutPriority(rawValue: 200), for: .horizontal)
+            imgView.setContentHuggingPriority(UILayoutPriority(rawValue: 200), for: .vertical)
+            imgView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 200), for: .horizontal)
+            imgView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 200), for: .vertical)
+            if isTask && showRewardHint {
                 zhuanLabel.isHidden = false
                 zhuanLabel.snp.remakeConstraints { (maker) -> Void in
                     maker.top.leading.equalToSuperview()
@@ -183,13 +190,13 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
         }
         self.imgView.isHidden = true
         self.imgView.snp.removeConstraints()
-        if isTask {
+        if isTask && showRewardHint {
             zhuanLabel.isHidden = false
             zhuanLabel.snp.remakeConstraints { (maker) -> Void in
                 maker.top.leading.equalToSuperview()
             }
-            zhuanLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 2000), for: .horizontal)
-            zhuanLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 2000), for: .horizontal)
+            zhuanLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+            zhuanLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                 maker.top.trailing.equalToSuperview()
                 guard let weakSelf=self else { return }
@@ -226,7 +233,6 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                 rewardLabel.snp.removeConstraints()
                 summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
                     maker.leading.equalToSuperview()
-                    //maker.height.equalTo(40).priority(ConstraintPriority.low)
                     guard let weakSelf = self else { return }
                     maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
                     maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
@@ -288,6 +294,7 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
     
     public func fill(_ task: APIShareTask, showStats: Bool) {
         self.containerView.needsUpdateConstraints()
+        let showRewardHint = task.showBonusHint && !isValidatingBuild()
         if task.isVideo == 1 {
             self.imgView.isHidden = true
             self.imgView.snp.removeConstraints()
@@ -297,21 +304,21 @@ class ShareTaskTableViewCell: UITableViewCell, Reusable {
                 coverView.image = nil
             }
             coverView.isHidden = false
-            updateTitelConstraints(task.isTask, haveImage: false)
+            updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: false)
             summaryTextView.isHidden = true
             summaryTextView.snp.removeConstraints()
-            updateCoverViewConstraint(task.showBonusHint && !isValidatingBuild())
+            updateCoverViewConstraint(showRewardHint)
         } else {
             self.coverView.isHidden = true
             self.coverView.snp.removeConstraints()
             summaryTextView.isHidden = false
             if let image = task.image {
                 imgView.kf.setImage(with: URL(string: image))
-                updateTitelConstraints(task.isTask, haveImage: true)
-                updateSummaryViewConstraints(task.showBonusHint && !isValidatingBuild(), haveImage: true)
+                updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: true)
+                updateSummaryViewConstraints(showRewardHint, haveImage: true)
             } else {
-                updateTitelConstraints(task.isTask, haveImage: false)
-                updateSummaryViewConstraints(task.showBonusHint && !isValidatingBuild(), haveImage: false)
+                updateTitelConstraints(task.isTask, showRewardHint:showRewardHint, haveImage: false)
+                updateSummaryViewConstraints(showRewardHint, haveImage: false)
             }
         }
         

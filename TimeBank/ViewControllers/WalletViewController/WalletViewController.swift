@@ -67,6 +67,7 @@ class WalletViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var pointsLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
+    @IBOutlet private weak var chestButton: UIButton!
     
     private let dailyInviteSummaryAlertViewController = DailyInviteSummaryAlertViewController()
     
@@ -155,6 +156,8 @@ class WalletViewController: UIViewController {
             if !isValidatingBuild() {
                 let ethWalletBarItem = UIBarButtonItem(title: I18n.ethWallet.description, style: .plain, target: self, action: #selector(self.showETHWalletView))
                 navigationItem.rightBarButtonItem = ethWalletBarItem
+            } else {
+                chestButton.isHidden = true
             }
             let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
             navigationItem.leftBarButtonItem = scanBarItem

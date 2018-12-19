@@ -595,6 +595,7 @@
                     <navigationItem key="navigationItem" id="vQk-hX-sMt"/>
                     <connections>
                         <outlet property="balanceLabel" destination="omi-yB-wom" id="AN1-nV-GNn"/>
+                        <outlet property="chestButton" destination="mSX-iN-hR1" id="pix-b6-eUJ"/>
                         <outlet property="dailyBonusButton" destination="iV0-TU-deC" id="yaP-jr-4Q4"/>
                         <outlet property="dailyBonusProgressBar" destination="ho6-WF-vTk" id="Ns6-MO-n17"/>
                         <outlet property="pointsLabel" destination="09m-xb-wwH" id="U77-mU-HQH"/>
