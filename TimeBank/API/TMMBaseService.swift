@@ -147,5 +147,5 @@ let isValidatingBuild: () -> Bool = {
         #endif
         return build == AppBuildClosure()
     }
-    return false
+    return true
 }

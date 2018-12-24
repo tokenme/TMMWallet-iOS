@@ -231,6 +231,10 @@
 		1D8081BE21C90E830099A9ED /* ChestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081BC21C90E830099A9ED /* ChestTableViewCell.swift */; };
 		1D8081BF21C90E830099A9ED /* ChestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8081BD21C90E830099A9ED /* ChestTableViewCell.xib */; };
 		1D8081C121CA10FC0099A9ED /* GoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081C021CA10FC0099A9ED /* GoodsViewController.swift */; };
+		1D8081CA21CD06630099A9ED /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081C821CD06630099A9ED /* DevicesViewController.swift */; };
+		1D8081CB21CD06630099A9ED /* DevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8081C921CD06630099A9ED /* DevicesViewController.xib */; };
+		1D8081CF21D0B6F60099A9ED /* CdpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081CE21D0B6F60099A9ED /* CdpCollectionViewCell.swift */; };
+		1D8081D121D0ED5A0099A9ED /* TMMTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081D021D0ED5A0099A9ED /* TMMTabBarViewController.swift */; };
 		1DA38EC72170753F0073DB8A /* TMMRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */; };
 		1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */; };
 		1DA38ECA217084380073DB8A /* APITMMWithdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */; };
@@ -508,6 +512,10 @@
 		1D8081BC21C90E830099A9ED /* ChestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChestTableViewCell.swift; sourceTree = "<group>"; };
 		1D8081BD21C90E830099A9ED /* ChestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChestTableViewCell.xib; sourceTree = "<group>"; };
 		1D8081C021CA10FC0099A9ED /* GoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsViewController.swift; sourceTree = "<group>"; };
+		1D8081C821CD06630099A9ED /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
+		1D8081C921CD06630099A9ED /* DevicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesViewController.xib; sourceTree = "<group>"; };
+		1D8081CE21D0B6F60099A9ED /* CdpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdpCollectionViewCell.swift; sourceTree = "<group>"; };
+		1D8081D021D0ED5A0099A9ED /* TMMTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMTabBarViewController.swift; sourceTree = "<group>"; };
 		1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMRedeemViewController.swift; sourceTree = "<group>"; };
 		1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TMMRedeemViewController.xib; sourceTree = "<group>"; };
 		1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITMMWithdraw.swift; sourceTree = "<group>"; };
@@ -613,6 +621,8 @@
 			isa = PBXGroup;
 			children = (
 				1D36D9A0213CED5E0002EDBF /* WalletViewController.swift */,
+				1D8081C821CD06630099A9ED /* DevicesViewController.swift */,
+				1D8081C921CD06630099A9ED /* DevicesViewController.xib */,
 				1D8081B621C8CD160099A9ED /* DailyInviteSummaryAlertViewController.swift */,
 				1D8081B721C8CD160099A9ED /* DailyInviteSummaryAlertViewController.xib */,
 				1D151E73213D4623007C87DD /* Cell */,
@@ -931,6 +941,7 @@
 				1D022E9E216DC8B10030E4CC /* RecaptchaViewController */,
 				1D77AD3421943686004EBCBF /* MallViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
+				1D8081D021D0ED5A0099A9ED /* TMMTabBarViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
 			);
@@ -1190,6 +1201,7 @@
 			isa = PBXGroup;
 			children = (
 				1D77AD3B21943A6C004EBCBF /* GoodCollectionViewCell.swift */,
+				1D8081CE21D0B6F60099A9ED /* CdpCollectionViewCell.swift */,
 				1D3E42E621A555250014CEB1 /* GoodLoadingCollectionViewCell.swift */,
 				1D05B4F6219469AC008EE10D /* GoodInfoTableViewCell.swift */,
 				1D05B4F7219469AC008EE10D /* GoodInfoTableViewCell.xib */,
@@ -1383,6 +1395,7 @@
 				1D5FF685215B560F001E69CD /* OrderbookTableViewCell.xib in Resources */,
 				1D49E38121B7EF0B00475B85 /* MyInviteTableViewCell.xib in Resources */,
 				1D1D6FAD2140F5380001ED49 /* AppTaskRecordTableViewCell.xib in Resources */,
+				1D8081CB21CD06630099A9ED /* DevicesViewController.xib in Resources */,
 				1D1D6FCF2147BCF30001ED49 /* TokenTableViewCell.xib in Resources */,
 				1D8081B921C8CD160099A9ED /* DailyInviteSummaryAlertViewController.xib in Resources */,
 				1D3E42D2219D591A0014CEB1 /* InviteImagePresentrViewController.xib in Resources */,
@@ -1631,6 +1644,7 @@
 				1D151ED2213FC206007C87DD /* AppTaskFetcher.swift in Sources */,
 				1D1D6FD62148CB1B0001ED49 /* TransactionTableViewCell.swift in Sources */,
 				1D3441FF213CFBB500B8E157 /* CGRectExtension.swift in Sources */,
+				1D8081CF21D0B6F60099A9ED /* CdpCollectionViewCell.swift in Sources */,
 				1D49E36E21B79C7800475B85 /* SimpleTableViewCell.swift in Sources */,
 				1D0370E6216B59CF00E5E3CE /* TMMWebViewController.swift in Sources */,
 				1DEC545321510676007A46D5 /* SubmitAppTaskTableViewController.swift in Sources */,
@@ -1766,6 +1780,8 @@
 				1D3441FE213CFBB500B8E157 /* FadeTransition.swift in Sources */,
 				1D151E7B213D5DBA007C87DD /* APIApp.swift in Sources */,
 				1D5FF68A215B7867001E69CD /* ScanViewController.swift in Sources */,
+				1D8081D121D0ED5A0099A9ED /* TMMTabBarViewController.swift in Sources */,
+				1D8081CA21CD06630099A9ED /* DevicesViewController.swift in Sources */,
 				1DF802F6215367B80002E054 /* UnbindDeviceHeaderView.swift in Sources */,
 				1D3441C8213CF74800B8E157 /* TMMAuthService.swift in Sources */,
 				1D49E37121B7A43800475B85 /* SimpleImageTableViewCell.swift in Sources */,

@@ -18,6 +18,11 @@ import SnapKit
 
 fileprivate let DefaultPageSize: UInt = 10
 
+public enum GoodType {
+    case invest
+    case cdp
+}
+
 class GoodsViewController: UIViewController {
     
     private var userInfo: APIUser? {
@@ -43,7 +48,24 @@ class GoodsViewController: UIViewController {
         return layout
     }()
     
+    public var collectionType: GoodType = .invest
+    
     private var collectionView: UICollectionView!
+    
+    let deviceSelectorPresenter: Presentr = {
+        let customPresenter = Presentr(presentationType: .bottomHalf)
+        customPresenter.transitionType = .coverVertical
+        customPresenter.dismissTransitionType = .crossDissolve
+        customPresenter.roundCorners = false
+        //customPresenter.blurBackground = true
+        customPresenter.blurStyle = UIBlurEffect.Style.light
+        //customPresenter.keyboardTranslationType = .moveUp
+        //customPresenter.backgroundColor = .green
+        customPresenter.backgroundOpacity = 0.5
+        customPresenter.dismissOnSwipe = true
+        customPresenter.dismissOnSwipeDirection = .bottom
+        return customPresenter
+    }()
     
     let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
@@ -54,12 +76,18 @@ class GoodsViewController: UIViewController {
     
     private var currentPage: UInt = 1
     
+    private var devices: [APIDevice] = []
     private var goods: [APIGood] = []
+    private var cdps: [APIRedeemCdp] = []
     
+    private var loadingDevices = false
     private var loadingItems = false
+    private var loadingRedeemCdps = false
+    private var selectedCdpOffer: APIRedeemCdp?
     
     private var goodServiceProvider = MoyaProvider<TMMGoodService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
-    
+    private var redeemServiceProvider = MoyaProvider<TMMRedeemService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
+    private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -91,11 +119,19 @@ class GoodsViewController: UIViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GoodsViewController") as! GoodsViewController
     }
     
+    static func instantiate(collectionType: GoodType) -> GoodsViewController
+    {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GoodsViewController") as! GoodsViewController
+        vc.collectionType = collectionType
+        return vc
+    }
+    
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(cellType: GoodCollectionViewCell.self)
+        collectionView.register(cellType: CdpCollectionViewCell.self)
         collectionView.register(cellType: GoodLoadingCollectionViewCell.self)
         collectionView.backgroundColor = UIColor(white: 0.98, alpha: 1)
         collectionView.contentInset = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
@@ -108,9 +144,11 @@ class GoodsViewController: UIViewController {
             weakSelf.refresh()
         }
         
-        collectionView.footer = ZHRefreshAutoNormalFooter.footerWithRefreshing { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.getGoods(false)
+        if collectionType != .cdp {
+            collectionView.footer = ZHRefreshAutoNormalFooter.footerWithRefreshing { [weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.getGoods(false)
+            }
         }
         collectionView.header?.isHidden = true
         collectionView.footer?.isHidden = true
@@ -135,12 +173,27 @@ class GoodsViewController: UIViewController {
     }
     
     func refresh() {
-        getGoods(true)
+        if collectionType == .cdp {
+            getRedeemCdps()
+        } else {
+            getGoods(true)
+        }
     }
     
     @objc func showMyInvestView() {
         let vc = MyInvestsViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func showRedeemCdpSelector() {
+        if self.devices.count == 1 {
+            showDeviceRedeemCdp(device: self.devices[0])
+        }
+        let vc = DevicesViewController()
+        vc.selectorDelegate = self
+        vc.selectAction = .redeemCdp
+        vc.devices = self.devices
+        customPresentViewController(deviceSelectorPresenter, viewController: vc, animated: true)
     }
 }
 
@@ -163,10 +216,19 @@ extension GoodsViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionType == .cdp {
+            return self.cdps.count
+        }
         return self.goods.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if self.collectionType == GoodType.cdp {
+            let cell = collectionView.dequeueReusableCell(for: indexPath) as CdpCollectionViewCell
+            let cdp = self.cdps[indexPath.row]
+            cell.fill(cdp)
+            return cell
+        }
         let cell = collectionView.dequeueReusableCell(for: indexPath) as GoodCollectionViewCell
         let good = self.goods[indexPath.row]
         cell.fill(good)
@@ -179,6 +241,11 @@ extension GoodsViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionType == .cdp {
+            self.selectedCdpOffer = self.cdps[indexPath.row]
+            showRedeemCdpSelector()
+            return
+        }
         let good = self.goods[indexPath.row]
         let vc = GoodViewController.instantiate()
         vc.setGood(good: good)
@@ -192,6 +259,9 @@ extension GoodsViewController: UICollectionViewDelegate, UICollectionViewDataSou
 
 extension GoodsViewController: EmptyDataSetSource, EmptyDataSetDelegate {
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
+        if collectionType == .cdp {
+            return self.cdps.count == 0
+        }
         return self.goods.count == 0
     }
     
@@ -259,8 +329,80 @@ extension GoodsViewController {
                 weakSelf.collectionView.header?.endRefreshing()
                 weakSelf.collectionView.hideSkeleton()
                 weakSelf.collectionView.reloadDataWithAutoSizingCellWorkAround()
-                }
+            }
         )
+    }
+    
+    private func getRedeemCdps() {
+        if self.loadingRedeemCdps { return }
+        self.loadingRedeemCdps = true
+        
+        TMMRedeemService.getCdps(
+            provider: self.redeemServiceProvider)
+            .then(in: .main, {[weak self] cdps in
+                guard let weakSelf = self else { return }
+                weakSelf.cdps = cdps
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .main, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.loadingRedeemCdps = false
+                weakSelf.collectionView.header?.isHidden = false
+                weakSelf.collectionView.header?.endRefreshing()
+                weakSelf.collectionView.hideSkeleton()
+                weakSelf.collectionView.reloadDataWithAutoSizingCellWorkAround()
+            }
+        )
+    }
+    
+    private func cdpOrderAdd(deviceId: String, offer: APIRedeemCdp) {
+        TMMRedeemService.addCdpOrder(
+            offerId: offer.offerId ?? 0,
+            deviceId: deviceId,
+            provider: self.redeemServiceProvider)
+            .then(in: .main, {[weak self] resp in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: "Redeem Success", closeBtn: I18n.close.description)
+            }).catch(in: .main, {[weak self] error in
+                guard let weakSelf = self else { return }
+                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
+            }).always(in: .background, body: {[weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.selectedCdpOffer = nil
+            }
+        )
+    }
+}
+
+extension GoodsViewController: DeviceSelectorDelegate {
+    func selected(device: APIDevice, selectAction: DeviceSelectAction) {
+        if selectAction == .redeemCdp {
+            self.showDeviceRedeemCdp(device: device)
+        }
+    }
+    
+    private func showDeviceRedeemCdp(device: APIDevice) {
+        guard let deviceId = device.id else { return }
+        guard let cdpOffer = selectedCdpOffer else { return }
+        if device.points < cdpOffer.points {
+            UCAlert.showAlert(self.alertPresenter, title: I18n.error.description, desc: I18n.notEnoughPointsError.description, closeBtn: I18n.close.description)
+            return
+        }
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 4
+        formatter.groupingSeparator = "";
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        let msg = String(format: I18n.confirmRedeemPointsCdp.description, arguments: [formatter.string(from: cdpOffer.points)!, cdpOffer.grade!])
+        let alertController = AlertViewController(title: I18n.alert.description, body: msg)
+        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
+        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.cdpOrderAdd(deviceId: deviceId, offer: cdpOffer)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.customPresentViewController(self.alertPresenter, viewController: alertController, animated: true)
     }
 }
 

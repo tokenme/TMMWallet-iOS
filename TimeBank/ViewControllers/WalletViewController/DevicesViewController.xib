@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DevicesViewController" customModule="TimeBank" customModuleProvider="target">
+            <connections>
+                <outlet property="selectDeviceLabel" destination="Fgi-Ln-vmc" id="29Q-cf-dPT"/>
+                <outlet property="tableView" destination="bKw-1x-kfT" id="ltb-zu-OEu"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RRm-e3-VXs">
+                    <rect key="frame" x="0.0" y="420" width="375" height="37"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Devices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fgi-Ln-vmc">
+                            <rect key="frame" x="143.5" y="8" width="88.5" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="Fgi-Ln-vmc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RRm-e3-VXs" secondAttribute="leading" constant="16" id="2CW-hz-AZy"/>
+                        <constraint firstItem="Fgi-Ln-vmc" firstAttribute="centerX" secondItem="RRm-e3-VXs" secondAttribute="centerX" id="WQL-Bj-Oav"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Fgi-Ln-vmc" secondAttribute="trailing" constant="16" id="Wlg-kq-uQk"/>
+                        <constraint firstAttribute="bottom" secondItem="Fgi-Ln-vmc" secondAttribute="bottom" constant="8" id="ev9-7j-k1P"/>
+                        <constraint firstItem="Fgi-Ln-vmc" firstAttribute="top" secondItem="RRm-e3-VXs" secondAttribute="top" constant="8" id="l49-s9-K3T"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bKw-1x-kfT">
+                    <rect key="frame" x="0.0" y="457" width="375" height="210"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="210" id="3m8-HK-iX8"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="g4e-Md-qZ5"/>
+                        <outlet property="delegate" destination="-1" id="Ocf-VI-95t"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="bKw-1x-kfT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="J8b-Kf-qzR"/>
+                <constraint firstItem="bKw-1x-kfT" firstAttribute="top" secondItem="RRm-e3-VXs" secondAttribute="bottom" id="Ppx-aN-ZYG"/>
+                <constraint firstItem="RRm-e3-VXs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fhI-u9-IaC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bKw-1x-kfT" secondAttribute="trailing" id="mqb-AE-SbW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RRm-e3-VXs" secondAttribute="trailing" id="vDJ-Sz-vYz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bKw-1x-kfT" secondAttribute="bottom" id="ywc-2s-7oU"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="138.40000000000001" y="152.47376311844079"/>
+        </view>
+    </objects>
+</document>

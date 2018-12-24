@@ -46,6 +46,8 @@
 "ShareSuccess" = "分享成功";
 "More" = "更多";
 
+"UEarn" = "友赚";
+
 // Login
 "Password" = "密码";
 "Repassword" = "重复密码";
@@ -106,10 +108,12 @@
 "EarnByInvite" = "邀请赚";
 "EarnByShopping" = "购物赚";
 "StrategyHelp" = "赚钱攻略";
+"SelectDevice" = "选择设备";
 
 // Apps
 "SDKApps" = "可挖矿应用";
 "MiningApps" = "挖矿应用";
+"MyApps" = "我的应用";
 "MoreApps" = "更多应用";
 "ExchangeRecords" = "兑换记录";
 "Install" = "安装";

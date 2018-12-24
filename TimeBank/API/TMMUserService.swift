@@ -20,6 +20,7 @@ enum TMMUserService {
     case creditLevels()
     case invites(page: UInt, pageSize: UInt)
     case dailyInviteSummary(currency: String)
+    case balance(currency: String)
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -51,13 +52,15 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return "/credit/levels"
         case .dailyInviteSummary:
             return "/invite/lastday-contribute"
+        case .balance:
+            return "/balance"
         }
     }
     var method: Moya.Method {
         switch self {
         case .create, .update, .resetPassword, .bindWechat:
             return .post
-        case .info, .inviteSummary, .invites, .creditLevels, .dailyInviteSummary:
+        case .info, .inviteSummary, .invites, .creditLevels, .dailyInviteSummary, .balance:
             return .get
         }
     }
@@ -94,6 +97,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return [:]
         case let .dailyInviteSummary(currency):
             return ["currency": currency]
+        case let .balance(currency):
+            return ["currency": currency]
         }
     }
     var task: Task {
@@ -116,6 +121,8 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         case .dailyInviteSummary:
             return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
+        case .balance:
+            return .requestParameters(parameters: self.params, encoding: URLEncoding.queryString)
         }
     }
     var sampleData: Data {
@@ -128,7 +135,7 @@ extension TMMUserService: TargetType, AccessTokenAuthorizable, SignatureTargetTy
             return "ok".utf8Encoded
         case .bindWechat:
             return "ok".utf8Encoded
-        case .info, .inviteSummary, .dailyInviteSummary:
+        case .info, .inviteSummary, .dailyInviteSummary, .balance:
             return "{}".utf8Encoded
         case .creditLevels, .invites:
             return "[]".utf8Encoded
@@ -325,6 +332,30 @@ extension TMMUserService {
                             reject(TMMAPIError.error(code: errorCode, msg: summary.message ?? I18n.unknownError.description))
                         } else {
                             resolve(summary)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getBalance(currency:String, provider: MoyaProvider<TMMUserService>) -> Promise<APIUserBalance> {
+        return Promise<APIUserBalance> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .balance(currency: currency)
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let balance = try response.mapObject(APIUserBalance.self)
+                        if let errorCode = balance.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: balance.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(balance)
                         }
                     } catch {
                         reject(TMMAPIError.error(code: response.statusCode, msg: response.description))

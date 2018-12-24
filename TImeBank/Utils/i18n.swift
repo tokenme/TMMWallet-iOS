@@ -16,6 +16,7 @@ enum I18n: CustomStringConvertible {
     case close
     case shareSuccess
     case more
+    case uEarn
     case toShare
     case unknownError
     case notFoundError
@@ -77,6 +78,7 @@ enum I18n: CustomStringConvertible {
     case submit
     case sdkApps
     case miningApps
+    case myApps
     case moreApps
     case exchangeRecords
     case install
@@ -121,6 +123,7 @@ enum I18n: CustomStringConvertible {
     case earnByInvite
     case earnByShopping
     case strategyHelp
+    case selectDevice
     case pointsAmount
     case currentPointsTMMExchangeRate
     case emptyChangePoints
@@ -275,6 +278,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("ShareSuccess", comment: "Share Success")
         case .more:
             return NSLocalizedString("More", comment: "More")
+        case .uEarn:
+            return NSLocalizedString("UEarn", comment: "UEarn")
         case .toShare:
             return NSLocalizedString("ToShare", comment: "To Share")
         case .unknownError:
@@ -397,6 +402,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("SDKApps", comment: "Minable Apps")
         case .miningApps:
             return NSLocalizedString("MiningApps", comment: "Mining Apps")
+        case .myApps:
+            return NSLocalizedString("MyApps", comment: "MyApps")
         case .moreApps:
             return NSLocalizedString("MoreApps", comment: "More Apps")
         case .exchangeRecords:
@@ -509,6 +516,8 @@ enum I18n: CustomStringConvertible {
             return NSLocalizedString("EarnByShopping", comment: "Earn by Shopping")
         case .strategyHelp:
             return NSLocalizedString("StrategyHelp", comment: "Help")
+        case .selectDevice:
+            return NSLocalizedString("SelectDevice", comment: "SelectDevice")
         case .earnPointsTasks:
             return NSLocalizedString("EarnPointsTasks", comment: "EarnPointsTasks")
         case .discover:

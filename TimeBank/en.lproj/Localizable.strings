@@ -46,6 +46,8 @@
 "ShareSuccess" = "Share Success";
 "More" = "More";
 
+"UEarn" = "UEarn";
+
 // Login
 "Password" = "Password";
 "Repassword" = "Repassword";
@@ -106,10 +108,12 @@
 "EarnByInvite" = "Earn by Invite";
 "EarnByShopping" = "Earn by Shopping";
 "StrategyHelp" = "Help";
+"SelectDevice" = "Select Device";
 
 // Apps
 "SDKApps" = "Minable Apps";
 "MiningApps" = "Mining Apps";
+"MyApps" = "My Apps";
 "MoreApps" = "More Apps";
 "ExchangeRecords" = "Change Records";
 "Install" = "Install";

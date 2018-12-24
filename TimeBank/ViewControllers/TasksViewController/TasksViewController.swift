@@ -72,6 +72,9 @@ class TasksViewController: TabmanViewController {
                 navigationItem.leftBarButtonItem = recordButtonItem
                 let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
                 navigationItem.rightBarButtonItem = submitTaskButtonItem
+                self.title = I18n.uEarn.description
+            } else {
+                self.title = I18n.discover.description
             }
             /*
             let menuItems = [I18n.discover.description, I18n.publishedByMe.description]

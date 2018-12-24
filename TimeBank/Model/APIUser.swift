@@ -79,3 +79,26 @@ public class APIUser: APIResponse {
         contribute <- (map["contribute"], decimalTransform)
     }
 }
+
+public class APIUserBalance: APIResponse {
+    var points: NSDecimalNumber = 0
+    var tmm: NSDecimalNumber = 0
+    var cash: NSDecimalNumber = 0
+    
+    // MARK: JSON
+    required public init?(map: Map) {
+        super.init(map: map)
+    }
+    
+    convenience init?() {
+        self.init(map: Map.init(mappingType: MappingType.fromJSON, JSON: [:]))
+    }
+    
+    // Mappable
+    override public func mapping(map: Map) {
+        super.mapping(map: map)
+        points <- (map["points"], decimalTransform)
+        tmm <- (map["tmm"], decimalTransform)
+        cash <- (map["cash"], decimalTransform)
+    }
+}

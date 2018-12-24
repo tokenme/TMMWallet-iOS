@@ -19,6 +19,7 @@ struct TMMConfigs {
         static let register = "Register"
         static let resetPasswd = "ResetPasswd"
         static let wallet = "Wallet"
+        static let devices = "Devices"
         static let shareTasks = "ShareTasks"
         static let mall = "Mall"
         static let userCenter = "UserCenter"

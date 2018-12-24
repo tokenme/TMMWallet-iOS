@@ -146,24 +146,38 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         return statsStackView
     }()
     
-    private func updateTitelConstraints(_ isTask: Bool, haveImage: Bool) {
+    private func updateTitelConstraints(_ isTask: Bool, showRewardHint: Bool, haveImage: Bool) {
         if haveImage {
             imgView.isHidden = false
-            imgView.snp.remakeConstraints { (maker) -> Void in
-                maker.trailing.top.equalToSuperview()
-                maker.width.height.equalTo(80)
+            if showRewardHint {
+                imgView.snp.remakeConstraints { (maker) -> Void in
+                    maker.trailing.top.equalToSuperview()
+                    maker.width.height.equalTo(80)
+                }
+            } else {
+                imgView.snp.remakeConstraints { (maker) -> Void in
+                    maker.trailing.top.bottom.equalToSuperview()
+                    maker.width.height.equalTo(80)
+                }
             }
-            if isTask {
+            imgView.setContentHuggingPriority(UILayoutPriority(rawValue: 200), for: .horizontal)
+            imgView.setContentHuggingPriority(UILayoutPriority(rawValue: 200), for: .vertical)
+            imgView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 200), for: .horizontal)
+            imgView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 200), for: .vertical)
+            if isTask && showRewardHint {
                 zhuanLabel.isHidden = false
                 zhuanLabel.snp.remakeConstraints { (maker) -> Void in
                     maker.top.leading.equalToSuperview()
                 }
+                zhuanLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 2000), for: .horizontal)
+                zhuanLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 2000), for: .horizontal)
                 titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                     maker.top.equalToSuperview()
                     guard let weakSelf = self else { return }
                     maker.leading.equalTo(weakSelf.zhuanLabel.snp.trailing).offset(8)
                     maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
                 }
+                titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
             } else {
                 zhuanLabel.isHidden = true
                 zhuanLabel.snp.removeConstraints()
@@ -177,23 +191,24 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         }
         self.imgView.isHidden = true
         self.imgView.snp.removeConstraints()
-        if isTask {
+        if isTask && showRewardHint {
             zhuanLabel.isHidden = false
             zhuanLabel.snp.remakeConstraints { (maker) -> Void in
                 maker.top.leading.equalToSuperview()
             }
+            zhuanLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+            zhuanLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
-                maker.top.equalToSuperview()
-                maker.trailing.lessThanOrEqualToSuperview()
+                maker.top.trailing.equalToSuperview()
                 guard let weakSelf=self else { return }
                 maker.leading.equalTo(weakSelf.zhuanLabel.snp.trailing).offset(8)
             }
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
         } else {
             zhuanLabel.isHidden = true
             zhuanLabel.snp.removeConstraints()
             titleLabel.snp.remakeConstraints { (maker) -> Void in
-                maker.top.leading.equalToSuperview()
-                maker.trailing.lessThanOrEqualToSuperview()
+                maker.top.leading.trailing.equalToSuperview()
             }
         }
     }
@@ -219,7 +234,6 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
                 rewardLabel.snp.removeConstraints()
                 summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
                     maker.leading.equalToSuperview()
-                    //maker.height.equalTo(40).priority(ConstraintPriority.low)
                     guard let weakSelf = self else { return }
                     maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
                     maker.trailing.equalTo(weakSelf.imgView.snp.leading).offset(-8)
@@ -231,11 +245,10 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         if showRewardHint {
             rewardLabel.isHidden = false
             summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                maker.leading.equalToSuperview()
+                maker.leading.trailing.equalToSuperview()
                 maker.height.lessThanOrEqualTo(40)
                 guard let weakSelf = self else { return }
                 maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
             }
             rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
                 maker.leading.trailing.bottom.equalToSuperview()
@@ -246,11 +259,10 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
             rewardLabel.isHidden = true
             rewardLabel.snp.removeConstraints()
             summaryTextView.snp.remakeConstraints {[weak self] (maker) -> Void in
-                maker.leading.bottom.equalToSuperview()
+                maker.leading.bottom.trailing.equalToSuperview()
                 maker.height.lessThanOrEqualTo(40)
                 guard let weakSelf = self else { return }
                 maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
-                maker.trailing.equalTo(weakSelf.titleLabel.snp.trailing)
             }
         }
     }
@@ -283,6 +295,7 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
     
     public func fill(_ task: APIShareTask, showStats: Bool) {
         self.containerView.needsUpdateConstraints()
+        let showRewardHint = task.showBonusHint && !isValidatingBuild()
         if task.isVideo == 1 {
             self.imgView.isHidden = true
             self.imgView.snp.removeConstraints()
@@ -292,21 +305,21 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
                 coverView.image = nil
             }
             coverView.isHidden = false
-            updateTitelConstraints(task.isTask, haveImage: false)
+            updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: false)
             summaryTextView.isHidden = true
             summaryTextView.snp.removeConstraints()
-            updateCoverViewConstraint(task.showBonusHint && !isValidatingBuild())
+            updateCoverViewConstraint(showRewardHint)
         } else {
             self.coverView.isHidden = true
             self.coverView.snp.removeConstraints()
             summaryTextView.isHidden = false
             if let image = task.image {
                 imgView.kf.setImage(with: URL(string: image))
-                updateTitelConstraints(task.isTask, haveImage: true)
-                updateSummaryViewConstraints(task.showBonusHint && !isValidatingBuild(), haveImage: true)
+                updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: true)
+                updateSummaryViewConstraints(showRewardHint, haveImage: true)
             } else {
-                updateTitelConstraints(task.isTask, haveImage: false)
-                updateSummaryViewConstraints(task.showBonusHint && !isValidatingBuild(), haveImage: false)
+                updateTitelConstraints(task.isTask, showRewardHint:showRewardHint, haveImage: false)
+                updateSummaryViewConstraints(showRewardHint, haveImage: false)
             }
         }
         
@@ -359,7 +372,8 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
             statsStackView.snp.removeConstraints()
             statsStackView.isHidden = true
         }
-        self.containerView.setNeedsLayout()
-        self.containerView.layoutIfNeeded()
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
 }

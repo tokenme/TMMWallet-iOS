@@ -20,10 +20,7 @@ class MallViewController: TabmanViewController {
         return presenter
     }()
     
-    private let viewControllers = [
-        GoodsViewController.instantiate()
-    ]
-    
+    private var viewControllers: [UIViewController] = []
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -46,9 +43,23 @@ class MallViewController: TabmanViewController {
             }
         }
         
-        self.bar.items = [
-            Item(title: I18n.investGoods.description)
-        ]
+        if isValidatingBuild() {
+            self.viewControllers = [
+                GoodsViewController.instantiate(collectionType: .cdp)
+            ]
+            self.bar.items = [
+                Item(title: I18n.redeemMobileData.description)
+            ]
+        } else {
+            self.viewControllers = [
+                GoodsViewController.instantiate(collectionType: .invest),
+                GoodsViewController.instantiate(collectionType: .cdp)
+            ]
+            self.bar.items = [
+                Item(title: I18n.investGoods.description),
+                Item(title: I18n.redeemMobileData.description)
+            ]
+        }
         self.bar.style = .buttonBar
         self.automaticallyAdjustsChildViewInsets = true
         self.dataSource = self

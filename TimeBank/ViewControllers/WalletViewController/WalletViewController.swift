@@ -18,6 +18,7 @@ import Presentr
 import TMMSDK
 import SwipeCellKit
 import SwiftRater
+import SnapKit
 import FlexibleSteppedProgressBar
 
 fileprivate enum SectionType {
@@ -62,6 +63,11 @@ class WalletViewController: UIViewController {
     }
     
     @IBOutlet private weak var summaryView: PastelView!
+    @IBOutlet private weak var summaryContainerView: UIView!
+    @IBOutlet private weak var cashLabel: UILabel!
+    @IBOutlet private weak var currencyLabel: UILabel!
+    @IBOutlet private weak var withdrawButton: UIButton!
+    @IBOutlet private weak var exchangeButton: UIButton!
     @IBOutlet private weak var dailyBonusProgressBar: FlexibleSteppedProgressBar!
     @IBOutlet private weak var dailyBonusButton: TransitionButton!
     @IBOutlet private weak var tableView: UITableView!
@@ -71,27 +77,18 @@ class WalletViewController: UIViewController {
     
     private let dailyInviteSummaryAlertViewController = DailyInviteSummaryAlertViewController()
     
-    private var devices: [APIDevice] = [] {
-        didSet {
-            var totalPoints: NSDecimalNumber = 0
-            for device in devices {
-                totalPoints += device.points
-            }
-            let formatter = NumberFormatter()
-            formatter.maximumFractionDigits = 4
-            formatter.groupingSeparator = "";
-            formatter.numberStyle = NumberFormatter.Style.decimal
-            pointsLabel.text = formatter.string(from: totalPoints)
-        }
-    }
+    private var devices: [APIDevice] = []
     
-    private var tmm: APIToken? {
+    private var balance: APIUserBalance? {
         didSet {
             let formatter = NumberFormatter()
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
-            balanceLabel.text = formatter.string(from: tmm?.balance ?? 0)
+            cashLabel.text = formatter.string(from: balance?.cash ?? 0)
+            balanceLabel.text = formatter.string(from: balance?.tmm ?? 0)
+            pointsLabel.text = formatter.string(from: balance?.points ?? 0)
+            currencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
         }
     }
     
@@ -111,6 +108,21 @@ class WalletViewController: UIViewController {
             return false
         }
     }
+    
+    let deviceSelectorPresenter: Presentr = {
+        let customPresenter = Presentr(presentationType: .bottomHalf)
+        customPresenter.transitionType = .coverVertical
+        customPresenter.dismissTransitionType = .crossDissolve
+        customPresenter.roundCorners = false
+        //customPresenter.blurBackground = true
+        customPresenter.blurStyle = UIBlurEffect.Style.light
+        //customPresenter.keyboardTranslationType = .moveUp
+        //customPresenter.backgroundColor = .green
+        customPresenter.backgroundOpacity = 0.5
+        customPresenter.dismissOnSwipe = true
+        customPresenter.dismissOnSwipeDirection = .bottom
+        return customPresenter
+    }()
     
     private let alertPresenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
@@ -132,6 +144,7 @@ class WalletViewController: UIViewController {
     private var gettingDailyBonusStatus = false
     private var committingDailyBonus = false
     private var gettingDailyInviteSummary = false
+    private var gettingBalance = false
     
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
@@ -156,8 +169,6 @@ class WalletViewController: UIViewController {
             if !isValidatingBuild() {
                 let ethWalletBarItem = UIBarButtonItem(title: I18n.ethWallet.description, style: .plain, target: self, action: #selector(self.showETHWalletView))
                 navigationItem.rightBarButtonItem = ethWalletBarItem
-            } else {
-                chestButton.isHidden = true
             }
             let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
             navigationItem.leftBarButtonItem = scanBarItem
@@ -227,6 +238,40 @@ class WalletViewController: UIViewController {
                               UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
         
         summaryView.startAnimation()
+        
+        withdrawButton.setTitle(I18n.pointsWithdraw.description, for: .normal)
+        exchangeButton.setTitle(I18n.changePoints.description, for: .normal)
+        withdrawButton.layer.borderColor = UIColor.white.cgColor
+        withdrawButton.layer.borderWidth = 0.5
+        withdrawButton.layer.cornerRadius = 8.0
+        exchangeButton.layer.borderColor = UIColor.white.cgColor
+        exchangeButton.layer.borderWidth = 0.5
+        exchangeButton.layer.cornerRadius = 8.0
+        
+        currencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
+        
+        if isValidatingBuild() {
+            summaryContainerView.isHidden = true
+            chestButton.isHidden = true
+            let stackView = UIStackView()
+            stackView.axis = .vertical
+            stackView.alignment = .center
+            stackView.distribution = .fillProportionally
+            stackView.spacing = 4
+            summaryView.addSubview(stackView)
+            stackView.snp.makeConstraints { (maker) in
+                maker.leading.top.equalToSuperview().offset(16)
+                maker.trailing.bottom.equalToSuperview().offset(-16)
+            }
+            let nameLabel = UILabel()
+            nameLabel.text = I18n.points.description
+            nameLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.light)
+            nameLabel.textColor = .white
+            stackView.addArrangedSubview(nameLabel)
+            stackView.addArrangedSubview(pointsLabel)
+            pointsLabel.font = MainFont.condensedBold.with(size: 32)
+        }
+        
         if todayRewarded {
             dailyBonusButton.setTitle(I18n.dailyRewarded.description, for: .normal)
         } else {
@@ -286,6 +331,27 @@ class WalletViewController: UIViewController {
     @IBAction func showChestView() {
         let vc = ChestTableViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func showWithdraw() {
+        if self.devices.count == 1 {
+            showDeviceWithdraw(device: self.devices[0])
+        }
+        let vc = DevicesViewController()
+        vc.selectorDelegate = self
+        vc.selectAction = .withdraw
+        customPresentViewController(deviceSelectorPresenter, viewController: vc, animated: true)
+    }
+    
+    @IBAction func showChangeSelector() {
+        if self.devices.count == 1 {
+            showDeviceChangeSelector(device: self.devices[0])
+        }
+        let vc = DevicesViewController()
+        vc.selectorDelegate = self
+        vc.selectAction = .change
+        vc.devices = self.devices
+        customPresentViewController(deviceSelectorPresenter, viewController: vc, animated: true)
     }
 }
 
@@ -407,7 +473,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         
         let vc = DeviceAppsViewController.instantiate()
         vc.setDevice(device)
-        vc.setTMM(self.tmm)
+        vc.setTMMBalance(self.balance?.tmm ?? 0)
         vc.delegate = self
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
@@ -487,11 +553,12 @@ extension WalletViewController {
             return
         }
         self.loadingBalance = true
-        TMMTokenService.getTMMBalance(
-            provider: self.tokenServiceProvider)
-            .then(in: .main, {[weak self] token in
+        TMMUserService.getBalance(
+            currency: Defaults[.currency] ?? Currency.USD.rawValue,
+            provider: self.userServiceProvider)
+            .then(in: .main, {[weak self] balance in
                 guard let weakSelf = self else { return }
-                weakSelf.tmm = token
+                weakSelf.balance = balance
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
@@ -715,19 +782,7 @@ extension WalletViewController: IndexToolsDelegate {
     }
     
     func gotoWithdraw() {
-        guard let deviceId = TMMBeacon.shareInstance()?.deviceId() else { return }
-        for device in self.devices {
-            if device.idfa == deviceId {
-                let vc = DeviceAppsViewController.instantiate()
-                vc.setDevice(device)
-                vc.setTMM(self.tmm)
-                vc.delegate = self
-                vc.showWithdrawForm = true
-                self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-            }
-        }
+        self.showWithdraw()
     }
     
     func gotoMyInvites() {
@@ -740,6 +795,36 @@ extension WalletViewController: IndexToolsDelegate {
 extension WalletViewController: DailyInviteSummaryAlertDelegate {
     func gotoInviteSummaryPage() {
         let vc = MyInvitesTableViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension WalletViewController: DeviceSelectorDelegate {
+    func selected(device: APIDevice, selectAction: DeviceSelectAction) {
+        if selectAction == .withdraw {
+            self.showDeviceWithdraw(device: device)
+        } else if selectAction == .change {
+            self.showDeviceChangeSelector(device: device)
+        }
+    }
+    
+    private func showDeviceWithdraw(device: APIDevice) {
+        let vc = DeviceAppsViewController.instantiate()
+        vc.setDevice(device)
+        vc.setTMMBalance(self.balance?.tmm ?? 0)
+        vc.delegate = self
+        vc.showWithdrawForm = true
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func showDeviceChangeSelector(device: APIDevice) {
+        let vc = DeviceAppsViewController.instantiate()
+        vc.setDevice(device)
+        vc.setTMMBalance(self.balance?.tmm ?? 0)
+        vc.delegate = self
+        vc.showChangeSelector = true
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

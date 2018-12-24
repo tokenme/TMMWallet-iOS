@@ -155,23 +155,23 @@ class LoginViewController: UIViewController {
     // MARK: IBActions
     //================
     @IBAction private func login() {
-        if isLogining {
-            return
-        }
+        if isLogining { return }
         var valid: Bool = true
         valid = self.verifyTelephone()
         if !self.verifyPassword() {
             valid = false
         }
-        if !valid {
-            return
-        }
+        if !valid { return }
         guard let country = UInt(self.countryCode.trimmingCharacters(in: CharacterSet(charactersIn: "+")))
             else { return }
         var lang = "zh_CN"
         if country != 86 {
             lang = "en"
         }
+        #if DEBUG
+            doLogin(recaptcha: "", afsSession: "", biometricAuthentication: nil)
+            return
+        #else
         if let vc = MSAuthVCFactory.simapleVerify(with: MSAuthTypeSlide, language: lang, delegate: self, authCode: "0335", appKey: nil) {
             let navigationController = UINavigationController(rootViewController: vc)
             let backBtn = UIBarButtonItem(title: I18n.close.description, style: .plain, target: nil, action: nil)
@@ -181,16 +181,14 @@ class LoginViewController: UIViewController {
             navigationController.preferredContentSize  = CGSize(width: 400, height: 800)
             self.present(navigationController, animated: true, completion: nil)
         }
-        
+        #endif
         //let vc = ReCaptchaViewController()
         //vc.delegate = self
         
     }
     
     private func doLogin(recaptcha: String, afsSession: String, biometricAuthentication: String?) {
-        if isLogining {
-            return
-        }
+        if isLogining { return }
         var authCountry: UInt = 0
         var authMobile: String = ""
         var authPasswd: String = ""

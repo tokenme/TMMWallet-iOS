@@ -36,16 +36,17 @@ class DeviceAppsViewController: UIViewController {
     
     private var device: APIDevice?
     
-    private var tmm: APIToken?
+    private var tmmBalance: NSDecimalNumber = 0
     
     @IBOutlet private weak var summaryView: PastelView!
+    @IBOutlet private weak var summaryContainerView: UIStackView!
+    @IBOutlet private weak var summarySubContainerView: UIStackView!
+    @IBOutlet private weak var withdrawWrapper: UIStackView!
     @IBOutlet private weak var withdrawButton: TransitionButton!
     @IBOutlet private weak var exchangeButton: TransitionButton!
+    @IBOutlet private weak var tableHeaderView: UIView!
     @IBOutlet private weak var miningAppsLabel: UILabel!
     @IBOutlet private weak var moreAppsButton: UIButton!
-    @IBOutlet private weak var redeemTitleLabel: UILabel!
-    @IBOutlet private weak var redeemLoader: UIActivityIndicatorView!
-    @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var pointsLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -98,17 +99,14 @@ class DeviceAppsViewController: UIViewController {
     
     private var apps: [APIApp] = []
     
-    private var cdps: [APIRedeemCdp] = []
-    
     private var loadingApps = false
     private var loadingBalance = false
     private var loadingDevice = false
-    private var loadingRedeemCdps = false
     private var gettingPointPrice = false
     private var bindingWechat = false
-    private var makingCdpOfferId: UInt64 = 0
     
     public var showWithdrawForm = false
+    public var showChangeSelector = false
     
     private var userServiceProvider = MoyaProvider<TMMUserService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
     private var deviceServiceProvider = MoyaProvider<TMMDeviceService>(plugins: [networkActivityPlugin, AccessTokenPlugin(tokenClosure: AccessTokenClosure), SignaturePlugin(appKeyClosure: AppKeyClosure, secretClosure: SecretClosure, appBuildClosure: AppBuildClosure)])
@@ -133,25 +131,28 @@ class DeviceAppsViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
-            let exchangeRecordsBarItem = UIBarButtonItem(title: I18n.exchangeRecords.description, style: .plain, target: self, action: #selector(self.showExchangeRecordsView))
-            navigationItem.rightBarButtonItem = exchangeRecordsBarItem
+            if !isValidatingBuild() {
+                let exchangeRecordsBarItem = UIBarButtonItem(title: I18n.exchangeRecords.description, style: .plain, target: self, action: #selector(self.showExchangeRecordsView))
+                navigationItem.rightBarButtonItem = exchangeRecordsBarItem
+            }
         }
         withdrawButton.setTitle(I18n.pointsWithdraw.description, for: .normal)
         exchangeButton.setTitle(I18n.changePoints.description, for: .normal)
         miningAppsLabel.text = I18n.miningApps.description
         moreAppsButton.setTitle(I18n.moreApps.description, for: .normal)
-        redeemTitleLabel.text = I18n.redeemCdp.description
         guard let _ = self.device else { return }
         setupSummaryView()
         SkeletonAppearance.default.multilineHeight = 10
         
-        setupCollectionView()
         setupTableView()
         if userInfo != nil {
             refresh(false)
         }
         if showWithdrawForm {
             tryWithdraw()
+        }
+        if showChangeSelector {
+            showExchangeSelector()
         }
     }
 
@@ -166,9 +167,6 @@ class DeviceAppsViewController: UIViewController {
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
         MTA.trackPageViewBegin(TMMConfigs.PageName.device)
-        if userInfo != nil {
-            getRedeemCdps()
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -199,8 +197,8 @@ class DeviceAppsViewController: UIViewController {
         self.device = device
     }
     
-    public func setTMM(_ token: APIToken?) {
-        self.tmm = token
+    public func setTMMBalance(_ balance: NSDecimalNumber) {
+        self.tmmBalance = balance
     }
     
     private func setupSummaryView() {
@@ -223,6 +221,39 @@ class DeviceAppsViewController: UIViewController {
         
         summaryView.startAnimation()
         
+        if isValidatingBuild() {
+            summaryContainerView.isHidden = true
+            let stackView = UIStackView()
+            stackView.axis = .vertical
+            stackView.alignment = .center
+            stackView.distribution = .fillProportionally
+            stackView.spacing = 4
+            summaryView.addSubview(stackView)
+            stackView.snp.makeConstraints {[weak self] (maker) in
+                maker.leading.top.equalToSuperview().offset(16)
+                maker.trailing.equalToSuperview().offset(-16)
+                guard let weakSelf = self else { return }
+                maker.bottom.equalTo(weakSelf.summarySubContainerView.snp.top).offset(-8)
+            }
+            let nameLabel = UILabel()
+            nameLabel.text = I18n.points.description
+            nameLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.light)
+            nameLabel.textColor = .white
+            stackView.addArrangedSubview(nameLabel)
+            stackView.addArrangedSubview(pointsLabel)
+            
+            withdrawWrapper.isHidden = true
+            tableHeaderView.snp.remakeConstraints {[weak self] (maker) in
+                maker.leading.equalToSuperview().offset(20)
+                maker.trailing.equalToSuperview().offset(-20)
+                guard let weakSelf = self else { return }
+                maker.top.equalTo(weakSelf.summaryView.snp.bottom).offset(16)
+                maker.bottom.equalTo(weakSelf.tableView.snp.top).offset(-8)
+            }
+            miningAppsLabel.text = I18n.myApps.description
+            moreAppsButton.isHidden = true
+        }
+        
         let tsImage = UIImage(named:"Timer")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         tsImageView.image = tsImage
         
@@ -240,7 +271,7 @@ class DeviceAppsViewController: UIViewController {
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
         pointsLabel.text = formatter.string(from: device.points)
-        balanceLabel.text = formatter.string(from: tmm?.balance ?? 0)
+        balanceLabel.text = formatter.string(from: self.tmmBalance)
         tsLabel.text = device.totalTs.timeSpan()
         
         let formatterGs = NumberFormatter()
@@ -264,11 +295,6 @@ class DeviceAppsViewController: UIViewController {
             weakSelf.refresh(true)
         }
         tableView.showAnimatedSkeleton()
-    }
-    
-    private func setupCollectionView() {
-        collectionView.register(cellType: RedeemCdpCollectionViewCell.self)
-        collectionView.backgroundColor = UIColor.white
     }
     
     private func refresh(_ refresh: Bool=false) {
@@ -370,58 +396,11 @@ extension DeviceAppsViewController: SkeletonTableViewDataSource {
     }
 }
 
-extension DeviceAppsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.cdps.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(for: indexPath) as RedeemCdpCollectionViewCell
-        let cdp = self.cdps[indexPath.row]
-        cell.fill(cdp)
-        return cell
-    }
-    
-    // MARK: UICollectionViewDelegate
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cdp = self.cdps[indexPath.row]
-        guard let offerId = cdp.offerId else { return }
-        let cell = collectionView.dequeueReusableCell(for: indexPath) as RedeemCdpCollectionViewCell
-        cell.isSelected = false
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 4
-        formatter.groupingSeparator = "";
-        formatter.numberStyle = NumberFormatter.Style.decimal
-        let msg = String(format: I18n.confirmRedeemPointsCdp.description, arguments: [formatter.string(from: cdp.points)!, cdp.grade!])
-        let alertController = AlertViewController(title: I18n.alert.description, body: msg)
-        let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)
-        let okAction = AlertAction(title: I18n.confirm.description, style: .destructive) {[weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.cdpOrderAdd(offerId: offerId)
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        self.customPresentViewController(self.alertPresenter, viewController: alertController, animated: true)
-    }
-    
-}
-
 
 extension DeviceAppsViewController {
     
     private func getApps() {
-        if self.loadingApps {
-            return
-        }
+        if self.loadingApps { return }
         self.loadingApps = true
         
         guard let deviceId = self.device?.id else {return}
@@ -449,7 +428,7 @@ extension DeviceAppsViewController {
     
     private func showExchangeForm(_ rate: APIExchangeRate, _ points: NSDecimalNumber, _ direction: APIExchangeDirection) {
         guard let device = self.device else { return }
-        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device, tmmBalance: self.tmm?.balance ?? 0, direction: direction)
+        let vc = PointsTMMExchangeViewController(changeRate: rate, device: device, tmmBalance: self.tmmBalance, direction: direction)
         vc.delegate = self
         customPresentViewController(exchangePresenter, viewController: vc, animated: true, completion: nil)
     }
@@ -469,7 +448,7 @@ extension DeviceAppsViewController {
                 provider: weakSelf.tokenServiceProvider)
                 .then(in: .main, {[weak weakSelf] token in
                     guard let weakSelf2 = weakSelf else { return }
-                    weakSelf2.tmm = token
+                    weakSelf2.tmmBalance = token.balance
                     resolve(())
                 }).catch(in: .main, { error in
                     reject(error)
@@ -511,55 +490,6 @@ extension DeviceAppsViewController {
                 }
             )
         })
-    }
-    
-    private func getRedeemCdps() {
-        if self.loadingRedeemCdps {
-            return
-        }
-        self.loadingRedeemCdps = true
-        
-        TMMRedeemService.getCdps(
-            provider: self.redeemServiceProvider)
-            .then(in: .main, {[weak self] cdps in
-                guard let weakSelf = self else { return }
-                weakSelf.cdps = cdps
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .main, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.loadingRedeemCdps = false
-                weakSelf.redeemLoader.isHidden = true
-                weakSelf.collectionView.reloadData()
-                weakSelf.collectionView.header?.endRefreshing()
-                let fromAnimation = AnimationType.from(direction: .bottom, offset: 30.0)
-                UIView.animate(views: weakSelf.collectionView.visibleCells, animations: [fromAnimation], completion:nil)
-            }
-        )
-    }
-    
-    private func cdpOrderAdd(offerId: UInt64) {
-        guard let deviceId = self.device?.id else { return }
-        if self.makingCdpOfferId > 0 {
-            return
-        }
-        self.makingCdpOfferId = offerId
-        TMMRedeemService.addCdpOrder(
-            offerId: offerId,
-            deviceId: deviceId,
-            provider: self.redeemServiceProvider)
-            .then(in: .main, {[weak self] resp in
-                guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: "Redeem Success", closeBtn: I18n.close.description)
-            }).catch(in: .main, {[weak self] error in
-                guard let weakSelf = self else { return }
-                UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
-            }).always(in: .background, body: {[weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.makingCdpOfferId = 0
-            }
-        )
     }
     
     @IBAction private func tryWithdraw() {
@@ -729,6 +659,5 @@ extension DeviceAppsViewController: PointsTMMExchangeSelectorDelegate {
 extension DeviceAppsViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
         self.refresh(true)
-        self.getRedeemCdps()
     }
 }
