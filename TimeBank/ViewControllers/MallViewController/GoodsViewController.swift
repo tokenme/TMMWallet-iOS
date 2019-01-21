@@ -393,6 +393,7 @@ extension GoodsViewController: DeviceSelectorDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let msg = String(format: I18n.confirmRedeemPointsCdp.description, arguments: [formatter.string(from: cdpOffer.points)!, cdpOffer.grade!])
         let alertController = AlertViewController(title: I18n.alert.description, body: msg)
         let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)

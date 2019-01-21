@@ -85,6 +85,7 @@ class WalletViewController: UIViewController {
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             cashLabel.text = formatter.string(from: balance?.cash ?? 0)
             balanceLabel.text = formatter.string(from: balance?.tmm ?? 0)
             pointsLabel.text = formatter.string(from: balance?.points ?? 0)
@@ -106,6 +107,12 @@ class WalletViewController: UIViewController {
                 }
             }
             return false
+        }
+    }
+    
+    private var isValidatingBuild: Bool {
+        get {
+            return CheckVersionStatus() == .validating
         }
     }
     
@@ -166,14 +173,20 @@ class WalletViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
-            if !isValidatingBuild() {
+            if CheckVersionStatus() == .beta {
                 let ethWalletBarItem = UIBarButtonItem(title: I18n.ethWallet.description, style: .plain, target: self, action: #selector(self.showETHWalletView))
                 navigationItem.rightBarButtonItem = ethWalletBarItem
             }
             let scanBarItem = UIBarButtonItem(image: UIImage(named: "Scan"), style: .plain, target: self, action: #selector(self.showScanView))
             navigationItem.leftBarButtonItem = scanBarItem
         }
-        setupSummaryView()
+        if CheckVersionStatus() != .unknown {
+            setupSummaryView()
+        } else {
+            let vc = VersionStatusLoaderViewController()
+            vc.delegate = self
+            self.present(vc, animated: false, completion: nil)
+        }
         setupTableView()
         if userInfo != nil {
             refresh()
@@ -249,10 +262,9 @@ class WalletViewController: UIViewController {
         exchangeButton.layer.cornerRadius = 8.0
         
         currencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
-        
-        if isValidatingBuild() {
+        chestButton.isHidden = true
+        if CheckVersionStatus() == .validating {
             summaryContainerView.isHidden = true
-            chestButton.isHidden = true
             let stackView = UIStackView()
             stackView.axis = .vertical
             stackView.alignment = .center
@@ -369,7 +381,7 @@ extension WalletViewController: UIViewControllerTransitioningDelegate {
 
 extension WalletViewController: SwipeTableViewCellDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        if !isValidatingBuild() && indexPath.section == 0 {
+        if !isValidatingBuild && indexPath.section == 0 {
             return nil
         }
         let device = self.devices[indexPath.row]
@@ -410,14 +422,14 @@ extension WalletViewController: SwipeTableViewCellDelegate {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if !isValidatingBuild() && section == 0 || self.currentDeviceIsBinded {
+        if !isValidatingBuild && section == 0 || self.currentDeviceIsBinded {
             return 0
         }
         return UnbindDeviceHeaderView.height
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if !isValidatingBuild() && section == 0 || self.currentDeviceIsBinded {
+        if !isValidatingBuild && section == 0 || self.currentDeviceIsBinded {
             return nil
         }
         let view = UnbindDeviceHeaderView()
@@ -426,18 +438,18 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return isValidatingBuild() ? 1 : 2
+        return isValidatingBuild ? 1 : 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !isValidatingBuild() && section == 0 {
+        if !isValidatingBuild && section == 0 {
             return 1
         }
         return self.devices.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !isValidatingBuild() && indexPath.section == 0 {
+        if !isValidatingBuild && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(for: indexPath) as IndexToolsTableViewCell
             cell.delegate = self
             cell.show()
@@ -458,7 +470,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.isSelected = false
-        if !isValidatingBuild() && indexPath.section == 0 { return }
+        if !isValidatingBuild && indexPath.section == 0 { return }
         if self.devices.count < indexPath.row + 1 { return }
         let device = self.devices[indexPath.row]
         
@@ -480,7 +492,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        let isValidating = isValidatingBuild()
+        let isValidating = isValidatingBuild
         return (isValidating || !isValidating && indexPath.section == 1) && !self.loadingDevices
     }
 }
@@ -488,10 +500,10 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 extension WalletViewController: SkeletonTableViewDataSource {
     
     func numSections(in collectionSkeletonView: UITableView) -> Int {
-        return isValidatingBuild() ? 1 : 2
+        return isValidatingBuild ? 1 : 2
     }
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !isValidatingBuild() && section == 0 { return 0 }
+        if !isValidatingBuild && section == 0 { return 0 }
         return 5
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
@@ -658,6 +670,7 @@ extension WalletViewController {
                     formatter.maximumFractionDigits = 4
                     formatter.groupingSeparator = "";
                     formatter.numberStyle = NumberFormatter.Style.decimal
+                    formatter.roundingMode = .floor
                     let pointsStr = formatter.string(from: status.points)!
                     let interestsStr = formatter.string(from: status.interests)!
                     let msg: String = String(format: I18n.dailyBonusSuccessMsg.description, pointsStr, interestsStr)
@@ -826,6 +839,20 @@ extension WalletViewController: DeviceSelectorDelegate {
         vc.showChangeSelector = true
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: device.name, style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension WalletViewController: VersionStatusLoaderViewControllerDelegate {
+    func success() {
+        self.setupSummaryView()
+        self.tableView.reloadDataWithAutoSizingCellWorkAround()
+        if CheckVersionStatus() == .beta {
+            let ethWalletBarItem = UIBarButtonItem(title: I18n.ethWallet.description, style: .plain, target: self, action: #selector(self.showETHWalletView))
+            navigationItem.rightBarButtonItem = ethWalletBarItem
+        }
+        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? TMMTabBarViewController {
+            tabBarController.updateView()
+        }
     }
 }
 

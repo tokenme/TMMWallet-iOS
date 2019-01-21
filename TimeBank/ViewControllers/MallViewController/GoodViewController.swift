@@ -114,10 +114,14 @@ class GoodViewController: UIViewController {
             navigationItem.title = good?.name
         }
         setupTableView()
-        if isValidatingBuild() {
+        if CheckVersionStatus() == .validating {
             shareButton.setTitle("分享", for: .normal)
-        } else {
+        } else if CheckVersionStatus() == .beta {
             shareButton.setTitle("分享赚", for: .normal)
+        } else {
+            let vc = VersionStatusLoaderViewController()
+            vc.delegate = self
+            self.present(vc, animated: false, completion: nil)
         }
         refresh()
     }
@@ -179,10 +183,12 @@ class GoodViewController: UIViewController {
     
     func updateView() {
         guard let item = good else { return }
+        if CheckVersionStatus() != .beta { return }
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let prefix = "分享赚\n"
         let priceStr = "¥\(formatter.string(from: item.commissionPrice)!)"
         let pointsStr = "\(formatter.string(from: item.commissionPoints)!)积分"
@@ -198,7 +204,7 @@ class GoodViewController: UIViewController {
         shareButton.titleLabel?.minimumScaleFactor = 0.5
         shareButton.setAttributedTitle(attString, for: .normal)
         shareButton.backgroundColor = UIColor.pinky
-        if item.investPoints > 0 && !isValidatingBuild() {
+        if item.investPoints > 0 {
             let prefix = "已投资\n"
             let pointsStr = "\(formatter.string(from: item.investPoints)!)积分, 点击追加"
             let prefixAttributes = [NSAttributedString.Key.font:MainFont.medium.with(size: 12), NSAttributedString.Key.foregroundColor:UIColor.white]
@@ -335,9 +341,7 @@ extension GoodViewController {
             .then(in: .main, {[weak self] good in
                 guard let weakSelf = self else { return }
                 weakSelf.good = good
-                if !isValidatingBuild() {
-                    weakSelf.updateView()
-                }
+                weakSelf.updateView()
             }).catch(in: .main, {[weak self] error in
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
@@ -396,6 +400,20 @@ extension GoodViewController {
                 weakSelf.tableView.reloadDataWithAutoSizingCellWorkAround()
             }
         )
+    }
+}
+
+extension GoodViewController: VersionStatusLoaderViewControllerDelegate {
+    func success() {
+        if CheckVersionStatus() == .validating {
+            shareButton.setTitle("分享", for: .normal)
+        } else if CheckVersionStatus() == .beta {
+            shareButton.setTitle("分享赚", for: .normal)
+        }
+        updateView()
+        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? TMMTabBarViewController {
+            tabBarController.updateView()
+        }
     }
 }
 

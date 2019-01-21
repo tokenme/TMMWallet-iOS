@@ -30,6 +30,7 @@ class MarketNavHeaderView: UIView, NibOwnerLoadable {
         formatter.minimumFractionDigits = 5
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         
         let changeRate: NSDecimalNumber = rate?.changeRate ?? 0
         var rateColor: UIColor = UIColor.lightGray

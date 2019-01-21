@@ -42,6 +42,7 @@ class TransactionTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedValue = formatter.string(from: tx.value)!
         valueLabel.text = "\(suffix)\(formattedValue)"
         if let insertedAt = tx.insertedAt {

@@ -38,6 +38,7 @@ class InviteIntroTableViewCell: UITableViewCell, Reusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedRate = String(format: "%@%%", formatter.string(from: summary.inviteBonusRate)!)
         let formattedBonus = String(format: "%@", formatter.string(from: summary.inviterCashBonus)!)
         titleLabel.text = String(format: I18n.inviteSimpleInto.description, formattedBonus, formattedRate)

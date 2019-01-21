@@ -33,6 +33,7 @@ class ExchangeRecordTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedTmm = formatter.string(from: record.tmm)!
         let formattedPoints = formatter.string(from: record.points)!
         let tmmTxt = "\(formattedTmm) UC"

@@ -111,6 +111,7 @@ class TMMRedeemViewController: UIViewController {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let rateStr = formatter.string(from: rate)!
         if redeemType == .tmm {
             exchangeRateLabel.text = String(format: I18n.currentTMMRedeemRate.description, rateStr, currency)
@@ -299,6 +300,7 @@ extension TMMRedeemViewController {
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             let minPointsStr = formatter.string(from: minPoints)!
             if redeemType == .tmm {
                 let message = String(format: I18n.invalidMinTMMError.description, minPointsStr)
@@ -327,6 +329,7 @@ extension TMMRedeemViewController: UITextFieldDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let cashAmountStr = formatter.string(from: cashAmount)
         let msg = String(format: I18n.TMMWithdrawAmount.description, cashAmountStr ?? "-", currency)
         self.amountTextField.showInfo(msg)
@@ -341,6 +344,7 @@ extension TMMRedeemViewController: UITextFieldDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let cashAmountStr = formatter.string(from: cashAmount)!
         let msg = String(format: I18n.TMMWithdrawAmount.description, cashAmountStr, currency)
         self.amountTextField.showInfo(msg)

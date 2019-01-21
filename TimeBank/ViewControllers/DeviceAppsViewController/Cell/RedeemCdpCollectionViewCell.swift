@@ -28,6 +28,7 @@ class RedeemCdpCollectionViewCell: UICollectionViewCell, NibReusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         priceLabel.text = "¥\(formatter.string(from: cdp.price)!)"
         formatter.maximumFractionDigits = 4
         pointsLabel.text = formatter.string(from: cdp.points)

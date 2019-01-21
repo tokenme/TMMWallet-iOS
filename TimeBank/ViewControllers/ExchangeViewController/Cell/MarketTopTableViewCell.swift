@@ -34,6 +34,7 @@ class MarketTopTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 6
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         if let order = askOrder {
             askPriceLabel.text = formatter.string(from: order.price)
             askQuantityLabel.text = formatter.string(from: order.quantity - order.dealQuantity)

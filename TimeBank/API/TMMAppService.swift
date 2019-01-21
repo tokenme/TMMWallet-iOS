@@ -12,6 +12,7 @@ import Hydra
 
 enum TMMAppService {
     case sdks(page: UInt, pageSize: UInt)
+    case submitBuild()
 }
 
 // MARK: - TargetType Protocol Implementation
@@ -27,23 +28,25 @@ extension TMMAppService: TargetType, AccessTokenAuthorizable, SignatureTargetTyp
         switch self {
         case let .sdks(page, pageSize):
             return "/sdks/ios/\(page)/\(pageSize)"
+        case .submitBuild:
+            return "/ios/submit-build"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .sdks:
+        case .sdks, .submitBuild:
             return .get
         }
     }
     var params: [String: Any] {
         switch self {
-        case .sdks:
+        case .sdks, .submitBuild:
             return [:]
         }
     }
     var task: Task {
         switch self {
-        case .sdks(_, _):
+        case .sdks(_, _), .submitBuild():
             return .requestParameters(parameters: self.params, encoding: URLEncoding.default)
         }
     }
@@ -51,6 +54,8 @@ extension TMMAppService: TargetType, AccessTokenAuthorizable, SignatureTargetTyp
         switch self {
         case .sdks(_, _):
             return "[]".utf8Encoded
+        case .submitBuild():
+            return "{}".utf8Encoded
         }
     }
     var headers: [String: String]? {
@@ -86,6 +91,30 @@ extension TMMAppService {
                                 reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
                             }
                         }
+                    }
+                case let .failure(error):
+                    reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))
+                }
+            }
+        })
+    }
+    
+    static func getSubmitBuild(provider: MoyaProvider<TMMAppService>) -> Promise<APIApp> {
+        return Promise<APIApp> (in: .background, { resolve, reject, _ in
+            provider.request(
+                .submitBuild()
+            ){ result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let resp = try response.mapObject(APIApp.self)
+                        if let errorCode = resp.code {
+                            reject(TMMAPIError.error(code: errorCode, msg: resp.message ?? I18n.unknownError.description))
+                        } else {
+                            resolve(resp)
+                        }
+                    } catch {
+                        reject(TMMAPIError.error(code: response.statusCode, msg: response.description))
                     }
                 case let .failure(error):
                     reject(TMMAPIError.error(code: 0, msg: error.errorDescription ?? I18n.unknownError.description))

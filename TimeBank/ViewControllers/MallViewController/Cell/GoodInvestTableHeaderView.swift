@@ -29,6 +29,7 @@ class GoodInvestTableHeaderView: UIView, NibOwnerLoadable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let income = formatter.string(from: good.investIncome)
         if good.totalInvestors == 0 && good.investIncome == 0 {
             titleLabel.text = "还没人投资"

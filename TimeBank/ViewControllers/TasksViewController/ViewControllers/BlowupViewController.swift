@@ -76,6 +76,7 @@ class BlowupViewController: UIViewController {
             formatter.maximumFractionDigits = 2
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             let rate: NSDecimalNumber = (currentSession?.rate ?? 0) + 1.0
             let rateStr = "\(formatter.string(from: rate)!)"
             
@@ -401,6 +402,7 @@ extension BlowupViewController {
                 formatter.maximumFractionDigits = 4
                 formatter.groupingSeparator = "";
                 formatter.numberStyle = NumberFormatter.Style.decimal
+                formatter.roundingMode = .floor
                 let points = formatter.string(from: ev.value * (ev.rate + 1))
                 let msg = String(format: I18n.escapeSuccessMsg.description, points!)
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.success.description, desc: msg, closeBtn: I18n.close.description)

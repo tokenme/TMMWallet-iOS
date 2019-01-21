@@ -163,6 +163,7 @@ class InviteViewController: UIViewController {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         subTitle.text = String(format: "邀请1位好友奖励%@元现金", formatter.string(from: inviteSummary?.inviterCashBonus ?? 0)!)
         
         if let avatar = URL(string: userInfo?.avatar ?? "") {

@@ -31,6 +31,7 @@ class RedeemCdpRecordTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedPoints = formatter.string(from: record.points)!
         let pointsTxt = "\(formattedPoints) \(I18n.points.description)"
         fromLabel.text = pointsTxt

@@ -76,6 +76,7 @@ class MyGoodInvestTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = decimals
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         
         let prefixAttributes = [NSAttributedString.Key.font:MainFont.light.with(size: 12),
                                 NSAttributedString.Key.foregroundColor:UIColor.darkSubText]

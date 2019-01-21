@@ -152,6 +152,7 @@ class TransferTableViewController: UITableViewController {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         balanceLabel.text = formatter.string(from: token.balance)
         balanceTitleLabel.text = I18n.balance.description
         transferButton.isEnabled = true

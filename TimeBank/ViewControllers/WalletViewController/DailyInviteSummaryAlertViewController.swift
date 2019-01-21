@@ -28,6 +28,7 @@ class DailyInviteSummaryAlertViewController: UIViewController {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let pointsStr = "\(formatter.string(from: summary.contribute)!)"
         let cashStr = "\(formatter.string(from: summary.cny)!)"
         

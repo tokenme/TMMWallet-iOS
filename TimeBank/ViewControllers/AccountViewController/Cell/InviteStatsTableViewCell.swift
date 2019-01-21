@@ -37,6 +37,7 @@ class InviteStatsTableViewCell: UITableViewCell, NibReusable {
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             inviteIncomeLabel.text = formatter.string(from: summary.points)
             inviteFriendsContributeLabel.text = formatter.string(from: summary.friendsContribute)
         }

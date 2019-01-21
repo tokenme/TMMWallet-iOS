@@ -37,20 +37,20 @@ class MallViewController: TabmanViewController {
             navigationController.navigationBar.setBackgroundImage(UIImage(color: UIColor(white: 0.98, alpha: 1)), for: .default)
             navigationController.navigationBar.shadowImage = UIImage(color: UIColor(white: 0.91, alpha: 1), size: CGSize(width: 0.5, height: 0.5))
             navigationItem.title = I18n.mall.description
-            if !isValidatingBuild() {
+            if CheckVersionStatus() == .beta {
                 let myInvestBarItem = UIBarButtonItem(title: I18n.myInvest.description, style: .plain, target: self, action: #selector(self.showMyInvestView))
                 navigationItem.rightBarButtonItem = myInvestBarItem
             }
         }
         
-        if isValidatingBuild() {
+        if CheckVersionStatus() == .validating {
             self.viewControllers = [
                 GoodsViewController.instantiate(collectionType: .cdp)
             ]
             self.bar.items = [
                 Item(title: I18n.redeemMobileData.description)
             ]
-        } else {
+        } else if CheckVersionStatus() == .beta {
             self.viewControllers = [
                 GoodsViewController.instantiate(collectionType: .invest),
                 GoodsViewController.instantiate(collectionType: .cdp)
@@ -59,6 +59,10 @@ class MallViewController: TabmanViewController {
                 Item(title: I18n.investGoods.description),
                 Item(title: I18n.redeemMobileData.description)
             ]
+        } else {
+            let vc = VersionStatusLoaderViewController()
+            vc.delegate = self
+            self.present(vc, animated: false, completion: nil)
         }
         self.bar.style = .buttonBar
         self.automaticallyAdjustsChildViewInsets = true
@@ -117,5 +121,32 @@ extension MallViewController: PageboyViewControllerDataSource {
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
+    }
+}
+
+extension MallViewController: VersionStatusLoaderViewControllerDelegate {
+    func success() {
+        if CheckVersionStatus() == .validating {
+            self.viewControllers = [
+                GoodsViewController.instantiate(collectionType: .cdp)
+            ]
+            self.bar.items = [
+                Item(title: I18n.redeemMobileData.description)
+            ]
+        } else if CheckVersionStatus() == .beta {
+            self.viewControllers = [
+                GoodsViewController.instantiate(collectionType: .invest),
+                GoodsViewController.instantiate(collectionType: .cdp)
+            ]
+            self.bar.items = [
+                Item(title: I18n.investGoods.description),
+                Item(title: I18n.redeemMobileData.description)
+            ]
+            let myInvestBarItem = UIBarButtonItem(title: I18n.myInvest.description, style: .plain, target: self, action: #selector(self.showMyInvestView))
+            navigationItem.rightBarButtonItem = myInvestBarItem
+        }
+        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? TMMTabBarViewController {
+            tabBarController.updateView()
+        }
     }
 }

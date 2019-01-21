@@ -112,7 +112,7 @@ PODS:
     - AutoInsetter (~> 1.3.0)
     - Pageboy (~> 2.6.0)
   - TinyLog (2.0.7)
-  - TMMSDK (0.5.0)
+  - TMMSDK (0.5.1)
   - UIViewKVO (2.0.0)
   - ViewAnimator (2.2.0)
   - ZHRefresh (0.1.9)
@@ -167,7 +167,7 @@ DEPENDENCIES:
   - SwiftyUserDefaults (= 4.0.0-alpha.1)
   - SwipeCellKit
   - Tabman (~> 1.10)
-  - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.5.0`)
+  - TMMSDK (from `https://github.com/tokenme/TMMSDK.git`, tag `0.5.1`)
   - ViewAnimator (~> 2.2)
   - ZHRefresh (from `https://github.com/tokenme/ZHRefresh.git`, tag `0.2.2`)
 
@@ -244,7 +244,7 @@ EXTERNAL SOURCES:
     :tag: 1.1.7
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
-    :tag: 0.5.0
+    :tag: 0.5.1
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
     :tag: 0.2.2
@@ -273,7 +273,7 @@ CHECKOUT OPTIONS:
     :tag: 1.1.7
   TMMSDK:
     :git: https://github.com/tokenme/TMMSDK.git
-    :tag: 0.5.0
+    :tag: 0.5.1
   ZHRefresh:
     :git: https://github.com/tokenme/ZHRefresh.git
     :tag: 0.2.2
@@ -330,11 +330,11 @@ SPEC CHECKSUMS:
   SwipeCellKit: d8f2617538ce3021cb0a11d1b93856a06a2f2e20
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   TinyLog: 073a9abfd44a944886d5d07aa49cbba5ef192335
-  TMMSDK: b34e76aa25c9c83e98e56d4ae581c1eb01d62122
+  TMMSDK: 955cb02d6a7f3bc69b5e0c7189eaf619d109d2e3
   UIViewKVO: 091f9e020d69e73c4bf5e5ef61cde7bff1c24bbf
   ViewAnimator: a849844cc3698620e1a562b510ed0c28aeafcdc5
   ZHRefresh: 876b409acc73dbd10ea4e7967e1f4aea2ef44a53
 
-PODFILE CHECKSUM: 272c3f66dafe764a9a30193be07e214df5edb72b
+PODFILE CHECKSUM: c95a985eb5ce98193e0de5b7abeeafcb69fde8a7
 
 COCOAPODS: 1.6.0.beta.1

@@ -79,6 +79,7 @@ class CdpCollectionViewCell: UICollectionViewCell, Reusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         pointsLabel.text = "\(formatter.string(from: cdp.points)!) \(I18n.points.description)"
     }
 }

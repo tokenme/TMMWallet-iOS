@@ -47,6 +47,7 @@ class SDKAppTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         growthFactorLabel.text = formatter.string(from: app.growthFactor)
         installButton.isEnabled = !installed
     }

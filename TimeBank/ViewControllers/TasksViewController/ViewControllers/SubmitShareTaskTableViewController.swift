@@ -103,7 +103,7 @@ class SubmitShareTaskTableViewController: UITableViewController {
             formatter.maximumFractionDigits = 6
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
-            
+            formatter.roundingMode = .floor
             urlTextField.text = task.link
             titleTextField.text = task.title
             descTextView.text = task.summary

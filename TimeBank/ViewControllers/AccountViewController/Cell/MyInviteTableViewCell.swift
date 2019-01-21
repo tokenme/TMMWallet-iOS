@@ -42,6 +42,7 @@ class MyInviteTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedValue = formatter.string(from: userInfo.contribute)!
         pointsLabel.text = "+\(formattedValue) \(I18n.points.description)"
     }

@@ -51,6 +51,12 @@ class AccountTableViewController: UITableViewController {
         }
     }
     
+    private var isValidatingBuild: Bool {
+        get {
+            return CheckVersionStatus() == .validating
+        }
+    }
+    
     let myInviteCodePresenter: Presentr = {
         let presentationType = PresentationType.dynamic(center: .center)
         let presenter = Presentr(presentationType: presentationType)
@@ -88,7 +94,7 @@ class AccountTableViewController: UITableViewController {
     
     private var creditLevels: [APICreditLevel] = []
     
-    private let sections: [[AccountTableCellType]] = [[.accountInfo, .creditLevelBanner], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .releaseNote, .help, .feedback], [.signout]]
+    private var sections: [[AccountTableCellType]] = [[.accountInfo, .creditLevelBanner], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .releaseNote, .help, .feedback], [.signout]]
     
     private var isUpdating: Bool = false
     private var loadingUserInfo: Bool = false
@@ -120,6 +126,13 @@ class AccountTableViewController: UITableViewController {
         versionLabel.textColor = UIColor.lightGray
         versionLabel.font = MainFont.light.with(size: 12)
         tableView.tableFooterView = versionLabel
+        if CheckVersionStatus() == .unknown {
+            let vc = VersionStatusLoaderViewController()
+            vc.delegate = self
+            self.present(vc, animated: false, completion: nil)
+        } else if CheckVersionStatus() == .validating {
+            sections = [[.accountInfo, .creditLevelBanner], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
+        }
         self.refresh()
     }
     
@@ -740,5 +753,16 @@ extension AccountTableViewController: InputTableViewCellDelegate {
 extension AccountTableViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
         self.refresh()
+    }
+}
+
+extension AccountTableViewController: VersionStatusLoaderViewControllerDelegate {
+    func success() {
+        if CheckVersionStatus() == .validating {
+            sections = [[.accountInfo, .creditLevelBanner], [.inviteSummary, .myInviteCode, .inviteCode], [.bindWechatAccount, .currency, .telegramGroup, .wechatGroup, .feedback], [.signout]]
+        }
+        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? TMMTabBarViewController {
+            tabBarController.updateView()
+        }
     }
 }

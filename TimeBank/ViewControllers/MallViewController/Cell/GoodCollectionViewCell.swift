@@ -112,6 +112,7 @@ class GoodCollectionViewCell: UICollectionViewCell, Reusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let price = good.price - good.purchaseWithdraw
         let priceStr = "¥\(formatter.string(from: price)!)"
         let oriPriceStr = "\(formatter.string(from: good.oriPrice)!)"

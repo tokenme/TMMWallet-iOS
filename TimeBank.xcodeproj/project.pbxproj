@@ -235,6 +235,8 @@
 		1D8081CB21CD06630099A9ED /* DevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8081C921CD06630099A9ED /* DevicesViewController.xib */; };
 		1D8081CF21D0B6F60099A9ED /* CdpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081CE21D0B6F60099A9ED /* CdpCollectionViewCell.swift */; };
 		1D8081D121D0ED5A0099A9ED /* TMMTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081D021D0ED5A0099A9ED /* TMMTabBarViewController.swift */; };
+		1D8081D421DC8DBD0099A9ED /* VersionStatusLoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8081D221DC8DBD0099A9ED /* VersionStatusLoaderViewController.swift */; };
+		1D8081D521DC8DBD0099A9ED /* VersionStatusLoaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8081D321DC8DBD0099A9ED /* VersionStatusLoaderViewController.xib */; };
 		1DA38EC72170753F0073DB8A /* TMMRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */; };
 		1DA38EC82170753F0073DB8A /* TMMRedeemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */; };
 		1DA38ECA217084380073DB8A /* APITMMWithdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */; };
@@ -516,6 +518,8 @@
 		1D8081C921CD06630099A9ED /* DevicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesViewController.xib; sourceTree = "<group>"; };
 		1D8081CE21D0B6F60099A9ED /* CdpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdpCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D8081D021D0ED5A0099A9ED /* TMMTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMTabBarViewController.swift; sourceTree = "<group>"; };
+		1D8081D221DC8DBD0099A9ED /* VersionStatusLoaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionStatusLoaderViewController.swift; sourceTree = "<group>"; };
+		1D8081D321DC8DBD0099A9ED /* VersionStatusLoaderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VersionStatusLoaderViewController.xib; sourceTree = "<group>"; };
 		1DA38EC52170753F0073DB8A /* TMMRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMRedeemViewController.swift; sourceTree = "<group>"; };
 		1DA38EC62170753F0073DB8A /* TMMRedeemViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TMMRedeemViewController.xib; sourceTree = "<group>"; };
 		1DA38EC9217084380073DB8A /* APITMMWithdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITMMWithdraw.swift; sourceTree = "<group>"; };
@@ -941,6 +945,7 @@
 				1D022E9E216DC8B10030E4CC /* RecaptchaViewController */,
 				1D77AD3421943686004EBCBF /* MallViewController */,
 				1D3441BE213CF68500B8E157 /* LoginViewController.swift */,
+				1D8081D621DC8DC30099A9ED /* VersionStatusLoader */,
 				1D8081D021D0ED5A0099A9ED /* TMMTabBarViewController.swift */,
 				1D3441D0213CF86A00B8E157 /* RegisterViewController.swift */,
 				1D151E68213D1148007C87DD /* ResetPasswordViewController.swift */,
@@ -1215,6 +1220,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		1D8081D621DC8DC30099A9ED /* VersionStatusLoader */ = {
+			isa = PBXGroup;
+			children = (
+				1D8081D221DC8DBD0099A9ED /* VersionStatusLoaderViewController.swift */,
+				1D8081D321DC8DBD0099A9ED /* VersionStatusLoaderViewController.xib */,
+			);
+			path = VersionStatusLoader;
+			sourceTree = "<group>";
+		};
 		1DB432922155046F0034B810 /* ExchangeViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1412,6 +1426,7 @@
 				1D31FC7B217F18D20014712B /* FeedbackReplyTableViewCell.xib in Resources */,
 				1D151E77213D463D007C87DD /* DeviceTableViewCell.xib in Resources */,
 				1D31FCA1218826750014712B /* JSDOMParser.js in Resources */,
+				1D8081D521DC8DBD0099A9ED /* VersionStatusLoaderViewController.xib in Resources */,
 				1D49E37B21B7AB7000475B85 /* UserInfoTableViewCell.xib in Resources */,
 				1D151ECD213F8F14007C87DD /* AppTaskTableViewCell.xib in Resources */,
 				1D151E83213D6394007C87DD /* DeviceAppTableViewCell.xib in Resources */,
@@ -1658,6 +1673,7 @@
 				1D151E69213D1148007C87DD /* ResetPasswordViewController.swift in Sources */,
 				1D05B4F521946800008EE10D /* APIGoodInvest.swift in Sources */,
 				1D3E42E721A555250014CEB1 /* GoodLoadingCollectionViewCell.swift in Sources */,
+				1D8081D421DC8DBD0099A9ED /* VersionStatusLoaderViewController.swift in Sources */,
 				1D31FC7E217F3B0E0014712B /* KeyboardTextField.swift in Sources */,
 				1DA38F3F2175B6730073DB8A /* TMMBonusService.swift in Sources */,
 				1D3E430421AEB3B80014CEB1 /* UINavigationController+Utils.swift in Sources */,

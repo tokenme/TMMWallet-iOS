@@ -201,6 +201,7 @@ class MyInvestsViewController: UIViewController {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         investLabel.text = formatter.string(from: summary.invest)
         incomeLabel.text = "¥\(formatter.string(from: summary.income)!)"
     }

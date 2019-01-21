@@ -37,6 +37,7 @@ class TasksViewController: TabmanViewController {
     
     private let viewControllers = [
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.suggest.rawValue, isVideo: false),
+        ShareTasksTableViewController.instantiate(cid: APIArticleCategory.shopping.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.suggest.rawValue, isVideo: true),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.sociaty.rawValue, isVideo: false),
         ShareTasksTableViewController.instantiate(cid: APIArticleCategory.finance.rawValue, isVideo: false),
@@ -66,15 +67,17 @@ class TasksViewController: TabmanViewController {
                 self.navigationItem.largeTitleDisplayMode = .automatic;
             }
             navigationController.navigationBar.isTranslucent = true
-            navigationItem.title = I18n.discover.description
-            if !isValidatingBuild() {
+            self.title = I18n.discover.description
+            if CheckVersionStatus() == .unknown {
+                let vc = VersionStatusLoaderViewController()
+                vc.delegate = self
+                self.present(vc, animated: false, completion: nil)
+            } else if CheckVersionStatus() == .beta {
                 let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showTaskRecords))
                 navigationItem.leftBarButtonItem = recordButtonItem
                 let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
                 navigationItem.rightBarButtonItem = submitTaskButtonItem
                 self.title = I18n.uEarn.description
-            } else {
-                self.title = I18n.discover.description
             }
             /*
             let menuItems = [I18n.discover.description, I18n.publishedByMe.description]
@@ -102,6 +105,7 @@ class TasksViewController: TabmanViewController {
         // configure the bar
         self.bar.items = [
             Item(title: APIArticleCategory.suggest.description),
+            Item(title: APIArticleCategory.shopping.description),
             Item(title: I18n.video.description),
             Item(title: APIArticleCategory.sociaty.description),
             Item(title: APIArticleCategory.finance.description),
@@ -236,6 +240,24 @@ extension TasksViewController: LoginViewDelegate {
                 (vc as? ShareTasksTableViewController)?.refresh()
             }
         }
+    }
+}
+
+extension TasksViewController: VersionStatusLoaderViewControllerDelegate {
+    func success() {
+        if CheckVersionStatus() == .beta {
+            let recordButtonItem = UIBarButtonItem(image: UIImage(named: "Records")?.kf.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showTaskRecords))
+            navigationItem.leftBarButtonItem = recordButtonItem
+            let submitTaskButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTaskAction))
+            navigationItem.rightBarButtonItem = submitTaskButtonItem
+            self.title = I18n.uEarn.description
+        } else {
+            self.title = I18n.discover.description
+        }
+        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? TMMTabBarViewController {
+            tabBarController.updateView()
+        }
+        self.shouldRefresh()
     }
 }
 

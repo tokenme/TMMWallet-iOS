@@ -38,6 +38,7 @@ class GoodInvestTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         
         let afterFix = "积分"
         let pointsStr = "\(formatter.string(from: good.points)!)"

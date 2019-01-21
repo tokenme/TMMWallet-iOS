@@ -90,6 +90,7 @@ class ETHWalletViewController: UIViewController {
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             balanceLabel.text = formatter.string(from: totalPrice)
             currencyLabel.text = Defaults[.currency] ?? Currency.USD.rawValue
         }
@@ -276,6 +277,7 @@ extension ETHWalletViewController: SwipeTableViewCellDelegate {
                     formatter.maximumFractionDigits = 4
                     formatter.groupingSeparator = "";
                     formatter.numberStyle = NumberFormatter.Style.decimal
+                    formatter.roundingMode = .floor
                     let message = String(format: I18n.needMinGasError.description, formatter.string(from: token.minGas)!)
                     UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: message, closeBtn: I18n.close.description)
                     return
@@ -552,6 +554,7 @@ extension ETHWalletViewController: RedeemDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let message = String(format: I18n.withdrawSuccessMsg.description, formatter.string(from: resp.tmm)!, "UC",  formatter.string(from: resp.cash)!, resp.currency)
         let alertController = AlertViewController(title: I18n.newTransactionTitle.description, body: message)
         let cancelAction = AlertAction(title: I18n.close.description, style: .cancel, handler: nil)

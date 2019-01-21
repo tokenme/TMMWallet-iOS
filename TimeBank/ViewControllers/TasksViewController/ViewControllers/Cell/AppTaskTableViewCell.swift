@@ -45,6 +45,7 @@ class AppTaskTableViewCell: SwipeTableViewCell, NibReusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedBonus = formatter.string(from: app.bonus)!
         bonusLabel.text = "\(I18n.earn.description) \(formattedBonus) \(I18n.pointsPerInstall.description)"
         installButton.isEnabled = !installed

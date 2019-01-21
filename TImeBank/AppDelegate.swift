@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppTaskChecker.sharedInstance.start()
         
         refreshToken()
-        /*
+        
         Siren.shared.checkVersion(checkType: .immediately)
         
         SwiftRater.daysUntilPrompt = 7
@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SwiftRater.showLaterButton = true
         SwiftRater.debugMode = false
         SwiftRater.appLaunched()
-        */
+ 
         setupShareSDK()
         
         let webView = UIWebView(frame: .zero)

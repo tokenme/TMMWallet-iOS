@@ -23,6 +23,7 @@ enum APIArticleCategory: UInt {
     case history = 10
     case culture = 11
     case life = 12
+    case shopping = 13
     
     var description: String {
         switch self {
@@ -39,6 +40,7 @@ enum APIArticleCategory: UInt {
         case .history: return NSLocalizedString("HistoryCategory", comment: "HistoryCategory")
         case .culture: return NSLocalizedString("CultureCategory", comment: "CultureCategory")
         case .life: return NSLocalizedString("LifeCategory", comment: "LifeCategory")
+        case .shopping: return NSLocalizedString("ShoppingCategory", comment: "ShoppingCategory")
         }
     }
 }
@@ -61,6 +63,7 @@ public class APIShareTask: APIResponse {
     var isVideo: UInt8 = 0
     var isTask: Bool = false
     var image: String?
+    var images: [String]?
     var points: NSDecimalNumber = 0
     var pointsLeft: NSDecimalNumber = 0
     var bonus: NSDecimalNumber = 0
@@ -94,6 +97,7 @@ public class APIShareTask: APIResponse {
         isVideo <- map["is_video"]
         isTask <- map["is_task"]
         image <- map["image"]
+        images <- map["images"]
         points <- (map["points"], decimalTransform)
         pointsLeft <- (map["points_left"], decimalTransform)
         bonus <- (map["bonus"], decimalTransform)

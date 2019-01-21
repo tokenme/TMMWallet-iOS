@@ -131,7 +131,7 @@ class DeviceAppsViewController: UIViewController {
             navigationController.navigationBar.isTranslucent = true
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
-            if !isValidatingBuild() {
+            if CheckVersionStatus() == .beta {
                 let exchangeRecordsBarItem = UIBarButtonItem(title: I18n.exchangeRecords.description, style: .plain, target: self, action: #selector(self.showExchangeRecordsView))
                 navigationItem.rightBarButtonItem = exchangeRecordsBarItem
             }
@@ -141,7 +141,13 @@ class DeviceAppsViewController: UIViewController {
         miningAppsLabel.text = I18n.miningApps.description
         moreAppsButton.setTitle(I18n.moreApps.description, for: .normal)
         guard let _ = self.device else { return }
-        setupSummaryView()
+        if CheckVersionStatus() != .unknown {
+            setupSummaryView()
+        } else {
+            let vc = VersionStatusLoaderViewController()
+            vc.delegate = self
+            self.present(vc, animated: false, completion: nil)
+        }
         SkeletonAppearance.default.multilineHeight = 10
         
         setupTableView()
@@ -221,7 +227,7 @@ class DeviceAppsViewController: UIViewController {
         
         summaryView.startAnimation()
         
-        if isValidatingBuild() {
+        if CheckVersionStatus() == .validating {
             summaryContainerView.isHidden = true
             let stackView = UIStackView()
             stackView.axis = .vertical
@@ -270,15 +276,13 @@ class DeviceAppsViewController: UIViewController {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         pointsLabel.text = formatter.string(from: device.points)
         balanceLabel.text = formatter.string(from: self.tmmBalance)
         tsLabel.text = device.totalTs.timeSpan()
         
-        let formatterGs = NumberFormatter()
-        formatterGs.maximumFractionDigits = 2
-        formatterGs.groupingSeparator = "";
-        formatterGs.numberStyle = NumberFormatter.Style.decimal
-        growthFactorLabel.text = formatterGs.string(from: device.growthFactor)
+        formatter.maximumFractionDigits = 2
+        growthFactorLabel.text = formatter.string(from: device.growthFactor)
     }
     
     private func setupTableView() {
@@ -659,5 +663,19 @@ extension DeviceAppsViewController: PointsTMMExchangeSelectorDelegate {
 extension DeviceAppsViewController: LoginViewDelegate {
     func loginSucceeded(token: APIAccessToken?) {
         self.refresh(true)
+    }
+}
+
+extension DeviceAppsViewController: VersionStatusLoaderViewControllerDelegate {
+    func success() {
+        self.setupSummaryView()
+        self.tableView.reloadDataWithAutoSizingCellWorkAround()
+        if CheckVersionStatus() == .beta {
+            let exchangeRecordsBarItem = UIBarButtonItem(title: I18n.exchangeRecords.description, style: .plain, target: self, action: #selector(self.showExchangeRecordsView))
+            navigationItem.rightBarButtonItem = exchangeRecordsBarItem
+        }
+        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? TMMTabBarViewController {
+            tabBarController.updateView()
+        }
     }
 }

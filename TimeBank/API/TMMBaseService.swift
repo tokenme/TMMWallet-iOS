@@ -140,12 +140,24 @@ let MaxSchemeQuery: () -> UInt64 = {
     return 0
 }
 
-let isValidatingBuild: () -> Bool = {
+enum VersionStatus {
+    case validating
+    case beta
+    case unknown
+}
+
+var ValidatingBuild: String?
+
+let CheckVersionStatus: () -> VersionStatus = {
+    if let build = ValidatingBuild {
+        return build == AppBuildClosure() ? .validating : .beta
+    }
     if let build = MTAConfig.getInstance()?.getCustomProperty(TMMConfigs.validatingBuildKey, default: "0") {
         #if DEBUG
-        //print("Validating Build: ", build)
+        print("Validating Build: ", build)
         #endif
-        return build == AppBuildClosure()
+        ValidatingBuild = build
+        return build == AppBuildClosure() ? .validating : .beta
     }
-    return true
+    return .unknown
 }

@@ -13,7 +13,7 @@ class TMMTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let toolBarItems = self.tabBar.items {
-            if isValidatingBuild() {
+            if CheckVersionStatus() == .validating {
                 toolBarItems[1].title = I18n.discover.description
                 toolBarItems[1].image = UIImage(named: "Discover")
                 toolBarItems[1].selectedImage = UIImage(named: "Discover")
@@ -24,5 +24,18 @@ class TMMTabBarViewController: UITabBarController {
             }
         }
     }
-
+    
+    public func updateView() {
+        if let toolBarItems = self.tabBar.items {
+            if CheckVersionStatus() == .validating {
+                toolBarItems[1].title = I18n.discover.description
+                toolBarItems[1].image = UIImage(named: "Discover")
+                toolBarItems[1].selectedImage = UIImage(named: "Discover")
+            } else {
+                toolBarItems[1].title = I18n.uEarn.description
+                toolBarItems[1].image = UIImage(named: "Money")
+                toolBarItems[1].selectedImage = UIImage(named: "Money")
+            }
+        }
+    }
 }

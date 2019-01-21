@@ -541,6 +541,7 @@ extension ExchangeViewController: UITextFieldDelegate {
         formatter.minimumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let totalEtherStr = formatter.string(from: totalEther)!
         totalEtherLabel.text = "Total Ether: \(totalEtherStr)"
     }
@@ -570,6 +571,7 @@ extension ExchangeViewController: ChartViewDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let quantity = formatter.string(from: data.quantity)
         let price = formatter.string(from: data.price)
         let low = formatter.string(from: data.low)

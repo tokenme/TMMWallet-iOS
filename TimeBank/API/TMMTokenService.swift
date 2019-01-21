@@ -199,6 +199,7 @@ extension TMMTokenService {
                                     formatter.maximumFractionDigits = 6
                                     formatter.groupingSeparator = "";
                                     formatter.numberStyle = NumberFormatter.Style.decimal
+                                    formatter.roundingMode = .floor
                                     let minETHStr = formatter.string(from: minETH.minETH)!
                                     let message = String(format: I18n.notEnoughETHError.description, minETHStr)
                                     reject(TMMAPIError.error(code: errorCode, msg: message))

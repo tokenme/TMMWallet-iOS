@@ -39,6 +39,7 @@ class TokenTableViewCell: SwipeTableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         balanceLabel.text = formatter.string(from: token.balance)
         if token.price > 0 {
             let currency = Defaults[.currency] ?? Currency.USD.rawValue

@@ -35,6 +35,7 @@ class BlowupBidTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let points = formatter.string(from: bid.value * (bid.rate + 1))
         nickLabel.text = bid.nick
         nickLabel.textColor = textColor

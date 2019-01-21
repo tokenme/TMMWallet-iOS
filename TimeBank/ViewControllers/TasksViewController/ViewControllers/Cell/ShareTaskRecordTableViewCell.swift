@@ -30,6 +30,7 @@ class ShareTaskRecordTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedBonus = formatter.string(from: task.points)!
         pointsLabel.text = "+\(formattedBonus)"
         viewersLabel.text = "\(I18n.view.description) \(task.viewers) \(I18n.times.description)"

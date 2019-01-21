@@ -80,6 +80,7 @@ class PointsTMMExchangeViewController: UIViewController {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let rateStr = formatter.string(from: rate)!
         exchangeRateLabel.text = String(format: I18n.currentPointsTMMExchangeRate.description, rateStr)
         amountTextField.tweePlaceholder = I18n.pointsAmount.description
@@ -118,6 +119,7 @@ extension PointsTMMExchangeViewController {
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             let minPointsStr = formatter.string(from: minPoints)!
             let message = String(format: I18n.invalidMinPointsError.description, minPointsStr)
             self.amountTextField.showInfo(message)
@@ -191,6 +193,7 @@ extension PointsTMMExchangeViewController: UITextFieldDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let tmmAmountStr = formatter.string(from: tmmAmount)
         let msg = String(format: I18n.pointsTMMChangeAmount.description, tmmAmountStr ?? "-")
         self.amountTextField.showInfo(msg)
@@ -205,6 +208,7 @@ extension PointsTMMExchangeViewController: UITextFieldDelegate {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let tmmAmountStr = formatter.string(from: tmmAmount)!
         let msg = String(format: I18n.pointsTMMChangeAmount.description, tmmAmountStr)
         self.amountTextField.showInfo(msg)

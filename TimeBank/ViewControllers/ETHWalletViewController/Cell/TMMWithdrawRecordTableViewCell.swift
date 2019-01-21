@@ -33,6 +33,7 @@ class TMMWithdrawRecordTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedTmm = formatter.string(from: record.tmm)!
         let formattedCash = formatter.string(from: record.cash)!
         if recordType == .tmm {
@@ -51,21 +52,16 @@ class TMMWithdrawRecordTableViewCell: UITableViewCell, NibReusable {
         }
         var statusBackgroundColor: UIColor = .lightGray
         var statusText: String = I18n.txPending.description
-        if recordType == .point {
+        switch record.withdrawStatus {
+        case .success:
             statusBackgroundColor = UIColor.greenGrass
             statusText = I18n.txSuccess.description
-        } else {
-            switch record.withdrawStatus {
-            case .success:
-                statusBackgroundColor = UIColor.greenGrass
-                statusText = I18n.txSuccess.description
-            case .failed:
-                statusBackgroundColor = UIColor.red
-                statusText = I18n.txFailed.description
-            case .pending:
-                statusBackgroundColor = .lightGray
-                statusText = I18n.txPending.description
-            }
+        case .failed:
+            statusBackgroundColor = UIColor.red
+            statusText = I18n.txFailed.description
+        case .pending:
+            statusBackgroundColor = .lightGray
+            statusText = I18n.txPending.description
         }
         (statusLabel as UILabel).backgroundColor = statusBackgroundColor
         (statusLabel as UILabel).text = statusText

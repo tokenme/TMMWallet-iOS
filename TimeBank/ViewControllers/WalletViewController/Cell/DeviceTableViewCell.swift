@@ -54,12 +54,10 @@ class DeviceTableViewCell: SwipeTableViewCell, NibReusable {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         pointsLabel.text = formatter.string(from: device.points)
-        let formatterGf = NumberFormatter()
-        formatterGf.maximumFractionDigits = 2
-        formatterGf.groupingSeparator = "";
-        formatterGf.numberStyle = NumberFormatter.Style.decimal
-        growthFactorLabel.text = formatterGf.string(from: device.growthFactor)
+        formatter.maximumFractionDigits = 2
+        growthFactorLabel.text = formatter.string(from: device.growthFactor)
         currentDeviceMark.isHidden = TMMBeacon.shareInstance()?.deviceId() != device.idfa
     }
 }

@@ -219,6 +219,7 @@ extension TMMRedeemService {
                                     formatter.maximumFractionDigits = 4
                                     formatter.groupingSeparator = "";
                                     formatter.numberStyle = NumberFormatter.Style.decimal
+                                    formatter.roundingMode = .floor
                                     let minPointsStr = formatter.string(from: exchangeRate.minPoints)!
                                     let message = String(format: I18n.invalidMinTMMError.description, minPointsStr)
                                     reject(TMMAPIError.error(code: errorCode, msg: message))
@@ -315,6 +316,7 @@ extension TMMRedeemService {
                                     formatter.maximumFractionDigits = 4
                                     formatter.groupingSeparator = "";
                                     formatter.numberStyle = NumberFormatter.Style.decimal
+                                    formatter.roundingMode = .floor
                                     let minPointsStr = formatter.string(from: exchangeRate.minPoints)!
                                     let message = String(format: I18n.invalidMinPointsError.description, minPointsStr)
                                     reject(TMMAPIError.error(code: errorCode, msg: message))

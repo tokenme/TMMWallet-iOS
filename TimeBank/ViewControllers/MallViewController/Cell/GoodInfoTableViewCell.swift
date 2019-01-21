@@ -44,6 +44,7 @@ class GoodInfoTableViewCell: UITableViewCell, NibReusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         priceLabel.text = "¥\(formatter.string(from: item.price)!)"
         withdrawLabel.text = "成交返现: ¥\(formatter.string(from: item.purchaseWithdraw)!)"
     }

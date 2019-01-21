@@ -15,6 +15,23 @@ import Kingfisher
 class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
     public let coverView = UIImageView()
     private let imgView = UIImageView()
+    private lazy var imagesStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 8
+        var counter: Int = 0
+        for idx in 0...2 {
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFit
+            stack.addArrangedSubview(imageView)
+            imageView.snp.makeConstraints { (maker) in
+                maker.width.equalTo(imageView.snp.height)
+            }
+        }
+        return stack
+    }()
+    
     private let playButton = UIButton(type: UIButton.ButtonType.custom)
     private let titleLabel = UILabel()
     private let summaryTextView = UITextView()
@@ -24,6 +41,12 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
     private let viewersLabel = UILabel()
     private let bonusLabel = UILabel()
     private let pointsLeftLabel = UILabel()
+    
+    private var isValidatingBuild: Bool {
+        get {
+            return CheckVersionStatus() == .validating
+        }
+    }
     
     private lazy var containerView: UIView = {
         let containerView = UIView()
@@ -35,6 +58,8 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         imgView.backgroundColor = .clear
         containerView.addSubview(imgView)
         imgView.contentMode = .scaleAspectFit
+        
+        containerView.addSubview(imagesStack)
         
         zhuanLabel.layer.cornerRadius = 5
         zhuanLabel.clipsToBounds = true
@@ -146,7 +171,62 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         return statsStackView
     }()
     
-    private func updateTitelConstraints(_ isTask: Bool, showRewardHint: Bool, haveImage: Bool) {
+    private func updateTitelConstraints(_ isTask: Bool, showRewardHint: Bool, haveImage: Bool, images: [String]?) {
+        if images != nil {
+            imgView.isHidden = true
+            imgView.snp.removeConstraints()
+            imagesStack.isHidden = false
+            if isTask && showRewardHint {
+                zhuanLabel.isHidden = false
+                zhuanLabel.snp.remakeConstraints { (maker) -> Void in
+                    maker.top.leading.equalToSuperview()
+                }
+                zhuanLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                zhuanLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                titleLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
+                    maker.top.trailing.equalToSuperview()
+                    guard let weakSelf=self else { return }
+                    maker.leading.equalTo(weakSelf.zhuanLabel.snp.trailing).offset(8)
+                }
+                titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
+            } else {
+                zhuanLabel.isHidden = true
+                zhuanLabel.snp.removeConstraints()
+                titleLabel.snp.remakeConstraints { (maker) -> Void in
+                    maker.top.leading.trailing.equalToSuperview()
+                }
+            }
+            if showRewardHint {
+                imagesStack.snp.remakeConstraints {[weak self] (maker) -> Void in
+                    maker.leading.trailing.equalToSuperview()
+                    guard let weakSelf = self else { return }
+                    maker.top.equalTo(weakSelf.titleLabel.snp.bottom).offset(8)
+                }
+            } else {
+                imagesStack.snp.remakeConstraints { (maker) -> Void in
+                    maker.leading.trailing.top.bottom.equalToSuperview()
+                }
+            }
+            for subview in imagesStack.arrangedSubviews {
+                if let imageView = subview as? UIImageView {
+                    imageView.image = nil
+                }
+            }
+            let maxImages = imagesStack.arrangedSubviews.count
+            var idx: Int = 0
+            for img in images! {
+                if let imageView = imagesStack.arrangedSubviews[idx] as? UIImageView {
+                    imageView.kf.setImage(with: URL(string: img)!)
+                }
+                idx += 1
+                if idx >= maxImages {
+                    break
+                }
+            }
+            return
+        }
+        imagesStack.isHidden = true
+        imagesStack.snp.removeConstraints()
         if haveImage {
             imgView.isHidden = false
             if showRewardHint {
@@ -213,7 +293,27 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         }
     }
     
-    private func updateSummaryViewConstraints(_ showRewardHint: Bool, haveImage: Bool) {
+    private func updateSummaryViewConstraints(_ showRewardHint: Bool, haveImage: Bool, images: [String]?) {
+        if images != nil {
+            imagesStack.isHidden = false
+            summaryTextView.isHidden = true
+            summaryTextView.snp.removeConstraints()
+            if showRewardHint {
+                rewardLabel.isHidden = false
+                rewardLabel.snp.remakeConstraints {[weak self] (maker) -> Void in
+                    maker.trailing.leading.bottom.equalToSuperview()
+                    guard let weakSelf = self else { return }
+                    maker.top.equalTo(weakSelf.imagesStack.snp.bottom).offset(8)
+                }
+            } else {
+                rewardLabel.isHidden = true
+                rewardLabel.snp.removeConstraints()
+            }
+            return
+        }
+        imagesStack.isHidden = true
+        imagesStack.snp.removeConstraints()
+        summaryTextView.isHidden = false
         if haveImage {
             if showRewardHint {
                 rewardLabel.isHidden = false
@@ -295,7 +395,7 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
     
     public func fill(_ task: APIShareTask, showStats: Bool) {
         self.containerView.needsUpdateConstraints()
-        let showRewardHint = task.showBonusHint && !isValidatingBuild()
+        let showRewardHint = task.showBonusHint && !isValidatingBuild
         if task.isVideo == 1 {
             self.imgView.isHidden = true
             self.imgView.snp.removeConstraints()
@@ -305,21 +405,26 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
                 coverView.image = nil
             }
             coverView.isHidden = false
-            updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: false)
+            updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: false, images: nil)
             summaryTextView.isHidden = true
             summaryTextView.snp.removeConstraints()
+            imagesStack.isHidden = true
+            imagesStack.snp.removeConstraints()
             updateCoverViewConstraint(showRewardHint)
         } else {
             self.coverView.isHidden = true
             self.coverView.snp.removeConstraints()
             summaryTextView.isHidden = false
-            if let image = task.image {
+            if let images = task.images, images.count>=3 {
+                updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: false, images:images)
+                updateSummaryViewConstraints(showRewardHint, haveImage: false, images: images)
+            }else if let image = task.image {
                 imgView.kf.setImage(with: URL(string: image))
-                updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: true)
-                updateSummaryViewConstraints(showRewardHint, haveImage: true)
+                updateTitelConstraints(task.isTask, showRewardHint: showRewardHint, haveImage: true, images:nil)
+                updateSummaryViewConstraints(showRewardHint, haveImage: true, images:nil)
             } else {
-                updateTitelConstraints(task.isTask, showRewardHint:showRewardHint, haveImage: false)
-                updateSummaryViewConstraints(showRewardHint, haveImage: false)
+                updateTitelConstraints(task.isTask, showRewardHint:showRewardHint, haveImage: false, images:nil)
+                updateSummaryViewConstraints(showRewardHint, haveImage: false, images:nil)
             }
         }
         
@@ -337,6 +442,7 @@ class ShareTaskSwipableTableViewCell: SwipeTableViewCell, Reusable {
         formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         //let formattedBonus: String = formatter.string(from: task.bonus)!
         let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
         let formattedMaxBonus: String = formatter.string(from: maxBonus)!

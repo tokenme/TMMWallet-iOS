@@ -11,6 +11,7 @@ import ObjectMapper
 
 public class APIApp: APIResponse {
     var id: String?
+    var submitBuild: String?
     var name: String = ""
     var version: String = ""
     var platform: APIPlatform = APIPlatform.iOS
@@ -38,6 +39,7 @@ public class APIApp: APIResponse {
     override public func mapping(map: Map) {
         super.mapping(map: map)
         id <- map["id"]
+        submitBuild <- map["submit_build"]
         name <- map["name"]
         version <- map["version"]
         platform <- map["platform"]

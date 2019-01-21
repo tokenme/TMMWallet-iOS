@@ -171,6 +171,7 @@ class TMMWebViewController: UIViewController {
             formatter.minimumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             let formattedPoints = formatter.string(from: points)!
             DispatchQueue.main.async {[weak self] in
                 self?.pointsLabel.text = String(format: I18n.getPointsReward.description, formattedPoints)
@@ -319,8 +320,12 @@ class TMMWebViewController: UIViewController {
             if self.shareItem != nil {
                 getPointsRate()
                 navigationItem.title = shareItem?.title
-                if isValidatingBuild() {
+                if CheckVersionStatus() == .validating {
                     toolbarView.isHidden = true
+                } else if CheckVersionStatus() == .unknown {
+                    let vc = VersionStatusLoaderViewController()
+                    vc.delegate = self
+                    self.present(vc, animated: false, completion: nil)
                 }
                 toolbarView.setNeedsDisplay()
                 self.updateTimer()
@@ -449,6 +454,7 @@ class TMMWebViewController: UIViewController {
             formatter.maximumFractionDigits = 4
             formatter.groupingSeparator = "";
             formatter.numberStyle = NumberFormatter.Style.decimal
+            formatter.roundingMode = .floor
             let maxBonus = task.bonus * NSDecimalNumber(value: task.maxViewers)
             let formattedMaxBonus: String = formatter.string(from: maxBonus)!
             let msg = String(format: I18n.toShareAlert.description, formatter.string(from: task.bonus)!, formattedMaxBonus)
@@ -583,6 +589,7 @@ class TMMWebViewController: UIViewController {
         formatter.maximumFractionDigits = 4
         formatter.groupingSeparator = "";
         formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.roundingMode = .floor
         let formattedPoints = formatter.string(from: points)!
         DispatchQueue.main.async {[weak self] in
             self!.approximatePointsLabel.text = String(format: I18n.approximateTime.description, self!.readTime.timeSpan(), formattedPoints)
@@ -761,5 +768,16 @@ extension TMMWebViewController: UIScrollViewDelegate {
                 guard let weakSelf = self else { return }
                 UCAlert.showAlert(weakSelf.alertPresenter, title: I18n.error.description, desc: (error as! TMMAPIError).description, closeBtn: I18n.close.description)
             })
+    }
+}
+
+extension TMMWebViewController: VersionStatusLoaderViewControllerDelegate {
+    func success() {
+        if CheckVersionStatus() == .validating {
+            toolbarView.isHidden = true
+        }
+        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? TMMTabBarViewController {
+            tabBarController.updateView()
+        }
     }
 }
